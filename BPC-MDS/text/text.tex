@@ -1,155 +1,28 @@
-\section{Lorem ipsum dolor} % Nadpis
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula vestibulum felis, hendrerit aliquet sapien sodales nec. Phasellus semper quis orci at ultricies. Mauris non magna vitae massa faucibus vestibulum vel id lorem. Vestibulum interdum lobortis nisl, ut rhoncus dui facilisis sed. Donec eget accumsan lectus. Etiam metus leo, tempus vitae velit non, sagittis tempus dui. Vestibulum nec consectetur velit.
-
-\subsection{Podnadpis}
-Aenean molestie lectus nec metus consectetur tincidunt. Vivamus volutpat varius nibh, vitae blandit turpis tincidunt nec. Donec a nulla sit amet risus tristique fringilla eu vel magna. Vivamus ultricies finibus erat, nec convallis lorem efficitur id. Nam vitae augue laoreet, rutrum nibh vel, ultrices ante. 
-
-Duis sollicitudin mi sit amet faucibus auctor. Curabitur non erat nibh. Nulla est orci, egestas a risus vel, faucibus finibus nunc. Nullam id arcu a libero bibendum tristique. Aliquam suscipit, velit a rutrum faucibus, purus urna mattis lacus, in sodales risus libero at dolor. Mauris efficitur fringilla metus, at cursus leo porttitor pharetra. Nullam blandit mattis dui, sodales sollicitudin est varius a. Vestibulum erat mauris, consequat vitae laoreet sit amet, sagittis id sem. Ut vel leo facilisis metus efficitur rhoncus ut quis neque. Mauris nisl eros, rutrum ac lectus vitae, condimentum congue leo. Suspendisse mattis urna in dui tristique placerat.
-
-\subsubsection{Podpodnadpis}
-Sed euismod dui at est vestibulum rhoncus. Curabitur mattis dui sit amet ligula sagittis bibendum. Fusce aliquam lorem eget mauris ullamcorper ornare. Duis quis arcu sapien. Cras dapibus volutpat dui, at malesuada massa auctor nec. Phasellus turpis quam, varius ac pharetra et, gravida nec ligula. Morbi lobortis elementum nibh, in pharetra dui pulvinar luctus. Fusce convallis dictum tempor.
-
-\vspace{0.5cm} % vertikální odsazení
-\noindent Víceúrovňový seznam: 
-\begin{itemize}[noitemsep]
-    \item Lorem:
-    \begin{itemize}[noitemsep]
-        \item Lorem ipsum dolor sit
-        \item Lorem ipsum dolor sit
-        \item Lorem ipsum dolor sit
-    \end{itemize}
-    \item Ipsum:
-    \begin{itemize}[noitemsep]
-        \item Lorem ipsum dolor sit
-        \item Lorem ipsum dolor sit
-        \item Lorem ipsum dolor sit
-    \end{itemize}
-\end{itemize}
-
-\newpage % konec stránky
-
-\section{Code bloky}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula vestibulum felis, hendrerit aliquet sapien sodales nec. Phasellus semper quis orci at ultricies. Mauris non magna vitae massa faucibus vestibulum vel id lorem. Vestibulum interdum lobortis nisl, ut rhoncus dui facilisis sed. Donec eget accumsan lectus. Etiam metus leo, tempus vitae velit non, sagittis tempus dui. Vestibulum nec consectetur velit.
-
-\begin{code} % obal code blocku pro možnost mít pod ním popis
-\begin{minted} % code block, mělo by stačit změnit pouze jazyk viz: https://www.overleaf.com/learn/latex/Code_Highlighting_with_minted#Reference_guide
-[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]
-{python}
-import random
-
-from .data import WORDS
-
-class TextLorem():
-    def __init__(self, wsep=' ', ssep=' ', psep='\n\n',
-                 srange=(4, 8), prange=(5, 10), trange=(3, 6),
-                 words=None):
-        self._wsep = wsep
-        self._ssep = ssep
-        self._psep = psep
-        self._srange = srange
-        self._prange = prange
-        self._trange = trange
-        if words:
-            self._words = words
-        else:
-            self._words = WORDS
-
-    def sentence(self):
-        n = random.randint(*self._srange)
-        s = self._wsep.join(self._word() for _ in range(n))
-        return s[0].upper() + s[1:] + '.'
-
-    def paragraph(self):
-        n = random.randint(*self._prange)
-        p = self._ssep.join(self.sentence() for _ in range(n))
-        return p
-
-    def text(self):
-        n = random.randint(*self._trange)
-        t = self._psep.join(self.paragraph() for _ in range(n))
-        return t
-
-    def _word(self):
-        return random.choice(self._words)
-\end{minted}
-\caption{Lorem ipsum generátor} % popis code bloku
-\label{code:loremipsum}         % pro hyperlinkování
-\end{code}
+\section{Jaké jsou základní měřitelné parametry kvality služeb v multimediálních sítích? Popište, jakým způsobem se zajišťuje kvalita služeb prostřednictvím integrovaných (Intserv) a diferencovaných (Diffserv) služeb, diskutujte hlavní rozdíly. K čemu slouží QoE?}
 
 \newpage
-
-\section{Obrázky}
-
-\begin{figure}[h!] % obal pro možnost popisku
-\begin{center}     % vycentrování
- \includegraphics[width=\textwidth]{images/Bug Fixing.png} % vložení obrázku o maximální šířce jako je šířka dokumentu
- \caption{Bug fixing (free to use obrázek z manypixels.co)}   % popis
- \label{img:1}      % odkaz
-\end{center}
-\end{figure}
+\section{Popište výhody a nevýhody multicastového přenosu. Popište modely mulsticastu ASM, SSM, jejich rozdíly a funkci protokolu protokol IGMP.}
 
 \newpage
+\section{Popište protokoly RTP a RTCP – k čemu protokoly slouží, jaké informace poskytují, kdy a proč se používají.}
 
-\vspace{0.5cm}
-\begin{figure}[h!]
-\begin{center}
-\begin{tikzpicture}
-  [auto=left,every node/.style={text width=2.5cm,fill=cyan!20},align=center,anchor=west]
-  
-  \node (A) at (-4.5,4)  {Lorem};
-  \node (B) at (0,4)     {Ipsum};
-  \node (C) at (0,2)     {Dolor};
-  \node (D) at (0,0)     {Sit};
-  \node (E) at (4.5,4)   {Amet};
-  \node (F) at (4.5,2)   {Consectetur};
+\newpage
+\section{Popište protokol SDP – k čemu protokol slouží, jaké informace poskytuje, kdy a proč se používá.}
 
-  \foreach \from/\to in {A/B,A/C,A/D,B/E,B/F}
-    \draw (\from.east) -- (\to.west);
-  
-\end{tikzpicture}
-\caption{Vektorová grafika}
-\label{img:2}
-\end{center}
-\end{figure}
+\newpage
+\section{Popište rozdíly mezi progresivním stahováním, streamováním a adaptivním streamováním. Popište standardy MPEG DASH, HLS a RTSP}
 
+\newpage
+\section[Popište komunikaci prostřednictvím rodiny protokolů H.323, vyjmenujte čtyři základní prvky sítě H.323, popište jejich funkce. Jaké protokoly se v rámci komunikace H.323 používají pro signalizaci hovoru, kompresi AV dat a přenos AV dat.]{Popište komunikaci prostřednictvím rodiny protokolů H.323, vyjmenujte čtyři základní prvky sítě\newline H.323, popište jejich funkce.\newline Jaké protokoly se v~rámci komunikace H.323 používají pro signalizaci hovoru, kompresi AV dat a~přenos AV dat.}
 
-\section{Odkazy}
+\newpage
+\section[Popište komunikaci prostřednictvím protokolu SIP, žádosti a odpovědi definované v doporučení RFC3261, prvky sítě SIP a základní schéma spojení bod-bod, bod-proxy server-bod.]{Popište komunikaci prostřednictvím protokolu SIP, žádosti a odpovědi definované v doporučení\newline RFC3261, prvky sítě SIP a základní schéma spojení bod-bod, bod-proxy server-bod.}
 
-Je možné používat hypertextové odkazy:
+\newpage
+\section{Webinar, Webcast, Videokonference, teleprezence – popište základní rozdíly (výhody/nevýhody), využívané protokoly, standardní i proprietární).}
 
-\vspace{0.5cm}
-\noindent Pro odkazování v rámci dokumentu slouží label, podívej se znovu na výpis~kódu~\ref{code:loremipsum} a obrázek~\ref{img:1} (klikni na číslo).
+\newpage
+\section{Komprese statických obrazových dat dle standardů JPEG - základní schéma, popis jednotlivých bloků - jejich funkce.}
 
-\vspace{0.5cm}
-\noindent Odkazy na webové stránky:
-
-\noindent For further references see \href{http://www.sharelatex.com}{Something Linky} 
-or go to the next url: \url{http://www.sharelatex.com}
-
-\section{Tabulky}
-
-\begin{center}
-\begin{tabular}{ c c c }
- cell1 & cell2 & cell3 \\ 
- cell4 & cell5 & cell6 \\  
- cell7 & cell8 & cell9    
-\end{tabular}
-\end{center}
-
-\begin{center}
-\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
- \hline
- \multicolumn{4}{|c|}{Country List} \\
- \hline
- Country Name     or Area Name& ISO ALPHA 2 Code &ISO ALPHA 3 Code&ISO numeric Code\\
- \hline
- Afghanistan   & AF    &AFG&   004\\
- Aland Islands&   AX  & ALA   &248\\
- Albania &AL & ALB&  008\\
- Algeria    &DZ & DZA&  012\\
- American Samoa&   AS  & ASM&016\\
- Andorra& AD  & AND   &020\\
- Angola& AO  & AGO&024\\
- \hline
-\end{tabular}
-\end{center}
+\newpage
+\section{Komprese pohyblivých obrazových dat dle standardů MPEG - základní schéma, popis jednotlivých bloků - jejich funkce, oblast použití kodeků.}
