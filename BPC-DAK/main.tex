@@ -1,0 +1,87 @@
+% Soubory musí být v kódování, které je nastaveno v příkazu \usepackage[...]{inputenc}
+
+\documentclass[             % Základní nastavení
+    12pt,       			% Velikost základního písma je 12 bodů
+    a4paper,    			% Formát papíru je A4
+    oneside,      			% Jednostranný tisk
+    unicode,				% Záložky a metainformace ve výsledném  PDF budou v kódování unicode
+]{article}				    % Dokument třídy 'zpráva', vhodná pro sazbu závěrečných prací s kapitolami
+
+% ############
+% # DŮLEŽITÉ #
+% ############
+
+\title{Název dokumentu}                     % Název dokumentu - Povinný
+\newcommand{\subtitle}{Popis dokumentu}     % Popis dokumentu - Nepovinný
+\author{Czechbol}                           % Autor           - Nepovinný
+\newcommand{\grammar}{Czechbol}             % Korektura       - Nepovinný
+\newcommand{\formatting}{Czechbol}          % Formátování     - Nepovinný
+% ##################
+% # PŘIDANÉ BALÍKY #
+% ##################
+
+\usepackage[utf8]		    % Kódování zdrojových souborů je UTF-8
+	{inputenc}				% Balíček pro nastavení kódování zdrojových souborů
+
+\usepackage[T1]{fontenc}        % nastavení výstupního kódování
+
+\usepackage[				% Nastavení geometrie stránky
+	hmargin={25mm,25mm},	% Vnitřní a vnější okraj
+	vmargin={25mm,25mm},	% Horní a dolní okraj
+	footskip=17mm,			% Velikost zápatí
+	nohead,					% Bez záhlaví
+]{geometry}
+
+\usepackage{graphicx}           % nutné pro vkládání obrázků
+\usepackage[czech]{babel}       % čeština pro LaTeX
+\usepackage{sectsty}            % pro nastavení stylu nadpisů
+\usepackage{tocloft}
+\usepackage[
+	breaklinks=true,		    % hypertextové odkazy mohou obsahovat zalomení řádku
+	hypertexnames=false         % názvy hypertext. odkazů budou tvořeny nezávisle na názvech TeXu
+]{hyperref}                     % balíček 'hyperref' pro sazbu hypertextových odkazů
+
+\usepackage{caption}            % umožňuje podrobnější nastavení popisků obrázků a výpisů
+\usepackage{ifthen}             % if-then-else podmínky (v title)
+\usepackage{amsmath}            % balíček pro sazbu náročnější matematiky
+\usepackage{enumitem}           % pro jednodušší odstranění mezer mezi prvky listu (v itemize)
+\usepackage[formats]{listings}	% Balíček pro sazbu zdrojových textů
+\usepackage{cmap} 		        % balíček cmap zajišťuje, že PDF vytvořené `pdflatexem' je
+											    % plně "prohledávatelné" a "kopírovatelné"
+\usepackage{tikz}               % pro vykreslování orientovaných grafů
+\usepackage[newfloat]{minted}   % syntax highlighting kódu
+
+% ####################
+% # NASTAVENÍ BALÍKŮ #
+% ####################
+\allsectionsfont{\sffamily}                               % všechny nadpisy bezpatkové
+\renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily} % formát nadpisu v Obsahu
+\renewcommand{\cftsubsecdotsep}{\cftdotsep}               % podnadpisy mají tečkované oddělení v obsahu
+\hypersetup{                                              % nastavení odkazů
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=blue
+}
+\usetikzlibrary{shapes,arrows}     % tikz rozšíření
+\usemintedstyle{pastie}            % nastavení vzhledu syntax highlightingu 
+                                        %(musí být odkomentované přidání balíčku minted)
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+
+% #########
+% # START #
+% #########
+
+\begin{document}
+
+\SetupFloatingEnvironment{listing}{name=Výpis kódu}
+
+\include{title}
+
+\tableofcontents
+
+\include{text/text}
+
+\end{document}
