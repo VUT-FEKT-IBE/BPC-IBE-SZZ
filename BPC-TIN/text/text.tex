@@ -1,5 +1,64 @@
 \section{Správa paměti, statické přidělování paměti, dynamické přidělování paměti, garbage collector, reprezentace informace v paměti.}
+Každá paměť, která je přiřazena procesu se dělí na 4 základní bloky:
+\begin{multicols}{2}
+\begin{itemize}
+    \item Segment instrukcí(Code)/Kódová oblast
+    \item Datový segment(Data)/Datová oblast
+    \item Halda/hromada(Heap)
+    \item Zásobník(Stack)
+    \vfill
+\end{itemize}
+\includegraphics[scale=0.3]{BPC-TIN/images/pamet.png}
+\end{multicols}
+\noindent\textbf{Code}\,--\,je to množina strojových instrukcí, které naprosto jednoznačně provádí program. Dle těchto instrukcí PC postupuje ve výpočtu.
 
+\noindent\textbf{Data}\,--\,v této části můžou být uložena data, která jsou známa při překladu programu (Hodnoty polí, konstant, proměnných, nějaké textové řetězce).
+
+\noindent Bloky Code a Data jsou známy v době překladu a jejich velikost se v průběhu nemění.
+
+\noindent\textbf{Heap}\,--\,slouží k alokaci dynamické paměti. Je založena na stromové datové struktuře. Obsahuje objekty a instance proměnných(atributy třídy).
+
+\noindent\textbf{Stack}\,--\,je důležitý pro volaní správné funkcí. Funguje na principu LIFO. Funguje tak že se ukládají funkce do stacku, se kterými se posunuje taktéž ukazatel na pozici v registeru. Po dokončení té funkce je odstraněna ze zásobníku a ukazatel změněn na předchozí funkci. Obsahuje metody/funkce, lokální proměnné a reference na proměnné. Video pro lepší vysvětlení \url{https://www.youtube.com/watch?v=uwV0hotRrLw}.
+
+\noindent Bloky Heap a Stack jsou dynamické a jejich velikost roste/zmenšuje u každého z jiným směrem v průběhu programu.
+
+\begin{Large}\vspace{0,5cm}\noindent \textbf{Statické přidělování paměti}
+\end{Large}
+
+\noindent Staticky se ukládají datové struktury, které jsou definovány při překladu programu. K jednotlivým paměťovým úsekům lze přistupovat pomocí názvu proměnné. V průběhu se adresa nemůže měnit.
+
+\begin{Large}\vspace{0,5cm}\noindent \textbf{Dynamické přidělování paměti}
+\end{Large}
+
+\noindent Dynamicky se paměť přiděluje na základě požadavku při průběhu programu. K dynamicky přidělenému paměťovému úseku se dá přistoupit pouze nepřímo pomocí ukazatele. Ukazatel je součástí statické nebo dynamické struktury. Dynamicky přidělovaná paměť se čerpá z vyhrazeného prostoru paměti počítače.
+
+\begin{Large}\vspace{0,5cm}\noindent \textbf{Dynamické přidělování paměti bez regenerace}
+\end{Large}
+
+\noindent Regenerace paměti je její pročištění od nepoužívaných částí paměti.
+
+\noindent Dynamické přidělovaní paměti bez regenerace přiděluje požadované úseky postupně tak jak jsou za sebou umístěny až do vyčerpaní vyhrazené paměti. Využívá pracovního ukazatele, který ukazuje na první adresu volné paměti. Nejčastěji pomocí operace "new" zapíše do paměti a změní ukazatel na novou hodnotu, která ukazuje na novou adresu volné části a v indikátoru paměti hodnotu obsazení označí true. Operace "free/delete" okamžitě neuvolní paměť, ale přepíše indikátor paměti na false. Kdy pak regenerace probíhá po větších částech. 
+
+\begin{Large}\vspace{0,5cm}\noindent \textbf{Dynamické přidělování paměti s regenerací}
+\end{Large}
+
+\noindent Na rozdíl od dynamického přidělovaní bez regenerací se zde regeneruje pro každé operaci "free/delete". S tím přichází problém s fragmentací paměti. Po uvolnění paměti by tyto části mohli vytvářet sekvence malých, oddělených a přitom sousedních prvků. Často je defragmentace těchto volných bloků spojena s operací "free/delete". Snaží se slučovat volné úseky se sousedními volnými úseky.
+
+\begin{Large}\vspace{0,5cm}\noindent \textbf{Garbage collector}
+\end{Large}
+
+\noindent Je nejpokročilejším způsobem dynamického přidělovaní paměti. Oproti předchozím způsobům je méně efektivní. 
+Skládá se ze tří fází:
+\begin{itemize}
+    \item \textbf{Allocation}\,--\,přiděluje po sobě jdoucí úseky stejně jako metoda bez regenerace až do vyčerpání celého vyhrazeného prostoru.
+    \item\textbf{Marking}\,--\,nastává pouze pokud je vyčerpán celý prostor. Prochází prostorem a vyhledává a označuje úseky, které nejsou aktivní a jejich návrat do společné paměti způsobí regeneraci.
+    \item\textbf{Garbage collecting}\,--\,provádí se defragmentace přesunem všech uvolněných úseků do jednoho souvislého úseku. Tím se vytvoří nový souvislý úsek pro alokaci.
+\end{itemize}
+
+\noindent Tyto tři fáze se opakují dokola, dokud nedojde k situaci, že nový úsek není dostačující pro fázi alokace. Z tohoto důvodu dojde k ukončení programu.
+
+\vspace{1cm}
+\noindent\textbf{Reprezentace informace v paměti}\,--\,pokud je datový typ primitivní je uložen na přímo v paměti a u objektů je reprezentován pouze ukazatelem na místo v paměti.
 \newpage
 \section{Jazyk UML a objektově orientovaný návrh - dědičnost, generalizace, asociace 1:n, n:1, n:n, agregace a kompozice.}
 
