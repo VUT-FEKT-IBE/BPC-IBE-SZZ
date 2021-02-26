@@ -101,9 +101,76 @@ Kdy není vhodný OO přístup? Není vhodné ho použít jestliže na cílové 
 
 \textbf{Dědičnost/generalizace}\,--\,se využívá jestliže mají některé třídy společné vlastnosti. Tím například nemusíme vytvářet duplicitní kód. Směr šipky udává od koho třída dědí (obrázek b dědí z a). Díky tomuto lze jednodušeji rozšířit třídu o atributy a operace. Neplést si z asociací nijak nesouvisí.\\
 \includegraphics[scale=1]{BPC-TIN/images/dedicnost.PNG}
+
 \newpage
 \section{Třídy složitosti paměťové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti známých algoritmů řazení. Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti.}
 
+Složitost je vztah algoritmu k prostředkům (čas a velikost paměti). Paměťová složitost je závislost paměťových nároků na vstupních datech. Zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na základě délky vstupních dat.
+
+\begin{Large}\vspace{0,5cm} \textbf{Asymptotická složitost}
+\end{Large}
+
+Jelikož ne vždy lze určit přesnou složitost algoritmu tak byla vyvinuta asymptotická složitost. Tato složitost aproximuje chovaní funkce ze tří pohledu:
+\begin{itemize}
+    \item Nejlepší případ $\Omega$ (Omega)\,--\,značí spodní hranici trvání algoritmu.
+    \item Průměrný případ $\Theta$ (Theta)\,--\,odhaduje nejpravděpodobnější dobu trvání algoritmu.
+    \item Nejhorší případ notace O (Omicron, big-O)\,--\,značí horní hranici trvání algoritmu. Je nejčastěji používaná.
+\end{itemize}
+
+\begin{table}[h]
+    \begin{tabularx}{\textwidth}{|c|c|X|}\hline
+        Konstantní & O(1) & Nezávisí na velikosti vstupních dat\\\hline
+        Logaritmická & O($\log{n}$) & Počet operací odpovídá logaritmu např. vstup 1\,000\,000\,000 $==$ 30 operací\\\hline
+        Lineární & O($n$)& počet operací je závislý na velikosti vstupních dat\\\hline
+        Kvazilineární& O($n\log{n}$)& Zástupce quicksort\\\hline
+        Kvadratická& O($n^2$)& Např 500 vstupů $==$ 250\,000 operací\\\hline
+        Kubická & O($n^3$)& Např. 200 vstupů $==$ 8\,000\,000 operací\\\hline
+        Exponenciální&O($2^n$)& Exponenciální růst počtu operací\\\hline
+        Faktoriální&O($n!$)& Faktoriální růst počtu operací\\\hline
+    \end{tabularx}
+\end{table}
+
+\textbf{Polynomiální algoritmy}\,--\,Jsou takové algoritmy jejichž notace v big-O je ohraničena polynomiální funkcí shora. Spadají zde například $\log{n}$, $k*n$, $3n^3 + 4n$, $2*n\log{n}$ a podobné. Nepatří sem exponenciální, faktoriální a jim podobné. Abychom algoritmus označili jako efektivní jeho vykonání by mělo být možné v polynomiálním čase jinak ho lze označit jako neefektivní. Při vysokých hodnotách v kryptografii by ne-polynomiální algoritmy byli nepoužitelné.
+
+\begin{Large}\vspace{0,5cm} \textbf{Algoritmy řazení.}
+\end{Large}
+
+Třídění pomocí algoritmů Bubble Sort, Insert Sort a Select Sort má složitost O($n^2$). Algoritmus Quick Sort má složitost $\theta$($n\log{n}$), kdy v nejhorším případě může nabývat až O($n^2$). Algoritmus Merge Sort má složitost O($n\log{n}$).
+
+\vspace{1cm}
+\begin{Large}\vspace{0,5cm} \textbf{Lineární a nelineární struktury.}
+\end{Large}
+
+\textbf{Lineární}\,--\,zde spadají pole, seznamy, zásobník, fronta.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}\hline
+         Struktura & Přidat & Vyhledat & Smazat & Výběr dle indexu\\\hline
+         Pole & O($n$) & O($n$) & O($n$) & O($1$) \\\hline
+         Seznam & O($1$) & O($n$) & O($n$) & O($n$)\\\hline
+         Pole proměnlivé délky & O($1$) & O($n$) & O($n$) & O($1$) \\\hline
+         Zásobník & O($1$) & -- & O($1$) & -- \\\hline
+         Fronta & O($1$) & -- & O($1$) & -- \\\hline
+    \end{tabular}
+\end{table}
+
+\textbf{Nelineární}\,--\,zde můžou spadat stromy, které pokud jsou nějak vyvažovány, tak mají náročnost O($\log{n}$). Pokud se nevyvažují tak náročnost je O($n$).
+
+\begin{Large}\vspace{0,5cm} \textbf{Vztah časové a paměťové složitosti.}
+\end{Large}
+
+Většina algoritmů je kompromisem mezi těmito dvěma druhy složitosti. Pokud bychom měli algoritmus s vysokými nároky na časovou složitost (aby byl co nejrychlejší) tak jeho paměťová složitost bude vzrůstat. Většinu algoritmů je nějakým způsobem optimalizovaná nebo ji lze optimalizovat.
+
+\begin{Large}\vspace{0,5cm} \textbf{Třídy složitosti}
+\end{Large}
+
+Vyjadřuje jak náročný je výpočet je nezbytný k vyřešení problému.\\
+Rozdělení:
+\begin{itemize}
+    \item Třída P\,--\,schůdné algoritmy. Jsou proveditelné v polynomiálním čase na deterministickém turingově stroji.
+    \item Třída NP\,--\,neschůdné algoritmy. Je možné je provést v polynomiálním čase na \textbf{nedeterministickém} TS (nebyl doposud sestaven). Spadají pod ně i všechny algoritmy z třídy P
+    \item Třída NP-těžké\,--\,přinejmenším tak těžké, jako nejtěžší z NP. Nemusí být vykonatelné pomocí TS.
+\end{itemize}
 \newpage
 \section{Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a~vyhledávání prvku v ADT lineární seznam. ADT zásobník, ADT fronta.}
 
@@ -118,6 +185,7 @@ Kdy není vhodný OO přístup? Není vhodné ho použít jestliže na cílové 
 
 \newpage
 \section{Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.}
+%https://geoinformatika-1.vsb.cz/apu/prednasky/04_APU_Sorting.pdf
 
 \newpage
 \section{Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šířky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
