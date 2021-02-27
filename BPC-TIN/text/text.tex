@@ -59,6 +59,13 @@ Skládá se ze tří fází:
 
 \vspace{1cm}
 \textbf{Reprezentace informace v paměti}\,--\,pokud je datový typ primitivní je uložen na přímo v paměti a u objektů je reprezentován pouze ukazatelem na místo v paměti.
+
+
+
+
+
+
+
 \newpage
 \section{Jazyk UML a objektově orientovaný návrh - dědičnost, generalizace, asociace 1:n, n:1, n:n, agregace a kompozice.}
 
@@ -101,6 +108,11 @@ Kdy není vhodný OO přístup? Není vhodné ho použít jestliže na cílové 
 
 \textbf{Dědičnost/generalizace}\,--\,se využívá jestliže mají některé třídy společné vlastnosti. Tím například nemusíme vytvářet duplicitní kód. Směr šipky udává od koho třída dědí (obrázek b dědí z a). Díky tomuto lze jednodušeji rozšířit třídu o atributy a operace. Neplést si z asociací nijak nesouvisí.\\
 \includegraphics[scale=1]{BPC-TIN/images/dedicnost.PNG}
+
+
+
+
+
 
 \newpage
 \section{Třídy složitosti paměťové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti známých algoritmů řazení. Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti.}
@@ -171,24 +183,191 @@ Rozdělení:
     \item Třída NP\,--\,neschůdné algoritmy. Je možné je provést v polynomiálním čase na \textbf{nedeterministickém} TS (nebyl doposud sestaven). Spadají pod ně i všechny algoritmy z třídy P
     \item Třída NP-těžké\,--\,přinejmenším tak těžké, jako nejtěžší z NP. Nemusí být vykonatelné pomocí TS.
 \end{itemize}
+
+
+
+
+
+
+
+
+
 \newpage
 \section{Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a~vyhledávání prvku v ADT lineární seznam. ADT zásobník, ADT fronta.}
+
+Abstraktní datový typ je množina druhů dat (hodnot) a příslušných operací, které jsou přesně specifikovány a to nezávisle na konkrétní implementaci. Zjednodušeně ADT je reprezentováno rozhraním, kde uživatele tohoto rozhraní zajímá pouze, jak se používá a ne jak je implementováno. Poté co je konkrétní ADT implementován v programovacím jazyce stává se z něj datová struktura.
+
+ADT dělíme podle počtu datových položek na statický a dynamický datový typ. Statický datový typ má neměnnou velikost a dynamický mění velikost dle provedené operace. Dále se dělí jestli mají jednoznačného bezprostředního následníka na lineární a nelineární. Lineární mají následníka a u nelineárních neexistuje přímý jednoznačný následník.
+
+\textbf{Dělení ADT:}
+\begin{itemize}
+    \item Lineární
+    \begin{itemize}
+        \item Pole\,--\,statický
+        \item Seznam\,--\,dynamický
+        \item Zásobník\,--\,dynamický
+        \item Fronta\,--\,dynamický
+    \end{itemize}
+    \item Nelineární
+    \begin{itemize}
+        \item Strom\,--\,dynamický
+        \item Množina (Set)\,--\,dynamický
+    \end{itemize}
+\end{itemize}
+
+\begin{Large}\vspace{0,5cm} \textbf{Lineární seznam}
+\end{Large}
+
+ADT lineární seznam je seznam, kde každý uzel má unikátního následníka.
+Výhodou lineárního seznamu je že má efektivní vkládání a mazání ale neefektivní přístup k prvkům. Na rozdíl od pole, kde je rychlá indexace prvků. Každý prvek obsahuje data a ukazatel na další prvek v seznamu.
+\begin{center}
+    \includegraphics[scale=0.5]{BPC-TIN/images/linsez.PNG}
+\end{center}
+
+Možné operace s ADT seznamem:
+\begin{itemize}
+    \item Nalezení délky N seznamu
+    \item Výpis všech prvků seznamu
+    \item Vytvoření prázdného seznamu
+    \item Získaní k-tého prvku ze seznamu
+    \item Vložení novéhé prvku za k-tý prvek seznamu
+    \item Smazaní prvku ze seznamu
+    \item Nalezení následujícího prvku za aktuálním v seznamu
+    \item Nalezení předchozího prvku před aktuálním v seznamu
+\end{itemize}
+
+\textbf{Cyklický lineární seznam}\,--\,stejný jako lineární ale poslední prvek nemá ukazatel null ale odkaz na první prvek seznamu.
+
+\begin{center}
+\includegraphics[scale=0.5]{BPC-TIN/images/cycsez.PNG}
+\end{center}
+
+\textbf{Obousměrně vázaný lineární seznam}\,--\,nemá pouze ukazatel na další prvek ale i na předchozí. Umožňuje procházení v obou směrech.
+
+\begin{center}
+\includegraphics[scale=0.5]{BPC-TIN/images/obousez.PNG}
+\end{center}
+
+\textbf{Vkládaní do lineárního seznamu}\,--\,vložit prvek na určitou pozici funguje tak, že se najde pozice k kde se zde vloží prvek který bude odkazovat na prvek, který byl předtím na pozici k a v prvku k-1 se přepíše ukazatel na nový prvek. Operace fungují stejně jen jsou vázány na obě strany.
+
+\begin{center}
+    
+\includegraphics[scale=0.5]{BPC-TIN/images/sezins.PNG}
+\end{center}
+
+Pokud vkládáme na začátek tak se přepisuje ukazatel pole na první prvek a ve vkládaném prvku se přidá ukazatel na předchozí první prvek.
+
+\begin{center}
+\includegraphics[scale=0.5]{BPC-TIN/images/sezinsfirst.PNG}
+
+\vspace{1cm}
+\includegraphics[scale=0.5]{BPC-TIN/images/sezinsempty.PNG}
+\end{center}
+
+\textbf{Mazaní v lineárním seznamu}\,--\,mazaní prvku na pozici k funguje tak že prvek k-1 přepíše ukazatel na prvek k+1. U prvního prvku se přepíše pouze ukazatel na další prvek.
+\begin{center}
+\includegraphics[scale=0.5]{BPC-TIN/images/sezdel.PNG}
+\end{center}
+
+\textbf{Vyhledávaní v lineárním seznamu}\,--\,dá se vyhledávat podle prvku nebo podle dat. Pomalu iteruje seznamem dokud nenarazí na ten prvek nebo konec seznamu. U obousměrného se dá hledat od začátku a od konce.
+
+\begin{Large}\vspace{0,5cm} \textbf{Zásobník}
+\end{Large}
+
+Je dynamická datová struktura umožnující vkládaní a odebírání hodnot tak, že naposledy vložená hodnota se odebere jako první (LIFO). Základní operace jsou Vložený na vrchol, odebraní z vrcholu a test na prázdnost zásobníku. 
+
+\begin{Large}\vspace{0,5cm} \textbf{Fronta}
+\end{Large}
+
+Je dynamická datová struktura, kde se odebírají prvky v tom pořadí v jakém byli vloženy (FIFO). Základní operace jsou stejné jako u zásobníku. Existuje tzv. prioritní fronta, která funguje na principu fronty ale bere z ní podle priority.
+
+
+
+
+
+
+
 
 \newpage
 \section{Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranění, smazání uzlu stromu).}
 
+
+
+
+
+
+
+
+
+
 \newpage
 \section{Průchody stromy in-order, pre-order, post-order.}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \newpage
 \section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a hashovacích tabulek.]{Problematika nevyvážených stromů. Vyvažování stro-mů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stro-mů a hashovacích tabulek.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \newpage
 \section{Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.}
 %https://geoinformatika-1.vsb.cz/apu/prednasky/04_APU_Sorting.pdf
 
+
+
+
+
+
+
+
+
+
+
+
+
 \newpage
 \section{Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šířky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \newpage
 \section{Evluční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, křížení, chromozom. Princip evolučních algoritmů.}
