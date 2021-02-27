@@ -378,7 +378,23 @@ LP
 
 \newpage
 \section{Průchody stromy in-order, pre-order, post-order.}
+\textbf{Pre-order}\,--\,nejprve se zpracuje kořen, poté levý podstrom a nakonec pravý podstrom. Využívá se k vytvoření kopie stromu. Tak aby vypadal stejně.
+\begin{center}
+\includegraphics[scale=1]{BPC-TIN/images/tree.PNG}
+\end{center}
+Čtení pomocí pre-order bude posloupnost 5, 2, 4, 3, 15, 9, 7, 11, 12, 17.
 
+\textbf{In-order}\,--\,nejprve se zpracuje levý podstrom poté kořen a nakonec pravý podstrom. Výsledkem je v příkladu čísel posloupnost od nejmenšího k největšímu. Využívá se k získaní popořadě jdoucích hodnot závislých tak jak máme vytvořen komparátor.
+\begin{center}
+\includegraphics[scale=1]{BPC-TIN/images/tree.PNG}
+\end{center}
+Čtení pomocí in-order bude posloupnost 2, 3, 4, 5, 7, 9, 11, 12, 15, 17.
+
+\textbf{Post-order}\,--\,nejprve se zpracuje levý podstrom poté pravý a nakonec kořen. Využívá se k mazání stromu od listů ke kořenu.
+\begin{center}
+\includegraphics[scale=1]{BPC-TIN/images/tree.PNG}
+\end{center}
+Čtení pomocí post-order bude posloupnost 3, 4, 2, 7, 12, 11, 9, 17, 15, 5.
 
 
 
