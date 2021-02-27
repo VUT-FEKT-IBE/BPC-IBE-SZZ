@@ -291,11 +291,87 @@ Je dynamická datová struktura, kde se odebírají prvky v tom pořadí v jaké
 \newpage
 \section{Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranění, smazání uzlu stromu).}
 
+\textbf{ADS typu strom}\,--\,je nelineární dynamická abstraktní datová struktura. Každý uzel stromu může mít n potomků a zároveň má pouze jednoho předchůdce. Nejčastější zástupci jsou obecný strom nebo n-ární strom. Rozdíl je v tom, že n-ární má maximální počet potomků rovný n. Skládá se z uzlů, které se pojmenovávají:
+\begin{itemize}
+    \item Kořenu\,--\,existuje pouze jeden. Je to uzel bez předchůdce.
+    \item List\,--\,jsou to uzly, které nemají následníka
+    \item Vnitřní uzel\,--\,jsou to uzly které nejsou kořenem ani listem stromu.
+\end{itemize}
+\begin{center}
+    \begin{tikzpicture}[sibling distance=10em,
+  every node/.style = {shape=circle,
+    draw, align=center,
+    top color=white, bottom color=white}]]
+  \node {Kořen}
+    child { node {List} }
+    child { node {Vnitřní\\uzel}
+      child { node {List}}
+      child { node {List} } };
+\end{tikzpicture}
+\end{center}
+
+\begin{Large}\vspace{0,5cm} \textbf{Binarní strom}
+\end{Large}
+
+Binární strom je strom, který má nanejvýše 2 potomky na jeden uzel.
+
+Za \textbf{Úplný binární strom} se považuje binární strom, který se plní po úrovni hloubky z levé strany. Dokud není plně zaplněn levý potomek tak se neplné pravý. Hezká ukázka zde \url{https://home.cs.colorado.edu/~main/supplements/pdf/notes10a.pdf}
+
+\begin{Large}\vspace{0,5cm} \textbf{Binarní vyhledávací stromy}
+\end{Large}
+
+U těchto stromů musí platit, že levá část potomků musí být vždy menší než kořen a pravá část vždy vetší. Tzn. prvky jsou seřazeny. Tyto stromy mohou být nevyvážené ale častěji se také vyvažují, aby bylo dosaženo jejich optimální složitosti O($\log{n}$). Mohl by totiž nastat případ, kdy by ze stromu vznikl pouze strom.
+\begin{multicols}{2}
+\begin{center}
+Vyvážený strom
+    \begin{tikzpicture}[sibling distance=10em,
+  every node/.style = {shape=circle,
+    draw, align=center,
+    top color=white, bottom color=white}]]
+  \node {7}
+    child { node {5} }
+    child { node {8}};
+\end{tikzpicture}
+
+\vspace{3cm}
+Nevyvážený strom
 
 
+    \begin{tikzpicture}[sibling distance=10em,
+  every node/.style = {shape=circle,
+    draw, align=center,
+    top color=white, bottom color=white}]]
+  \node {5}
+    child { node {7}
+      child { node {8} } };
+\end{tikzpicture}
+\end{center}
+\end{multicols}
+U nevyvážené stromu lze vidět, že by se jednalo spíše o seznam. U vyvážených bin stromů by rozdíl hloubky levé a pravé části měl být 0 nebo 1.
 
+\textbf{Vyhledávaní v binárních vyvážených stromech}\,--\,postupuje se od kořene směrem dolů, kde se porovnává jestli prvek bude v levém nebo pravém uzlu pokud to už není námi hledaný prvek. Tak se postupuje vždy na každém navštíveném uzly dokud nenajdeme hledanou hodnotu nebo konec uzlu. Při hledání min/max se vždy vydáme do leva/prava dokud nenarazíme na uzel, který má svůj levý/pravý uzel roven null.
 
+\textbf{Vložení do binárních stromů}\,--\,postupujeme stejně jako při vyhledávaní jen z rozdílem toho, že vkládáme až najdeme hodnotu null nebo úplně stejnou položku v tom případě záleží, jak se s tím v implementaci poradíme (přepíšeme/nepřepíšeme).
 
+\textbf{Odstranění prvků}\,--\,nemají žádného potomka, má jednoho potomka, má dva potomky.
+
+\textbf{Nemají potomka}\,--\,uzel se pouze odstraní a z jeho rodiče se smaže reference na něj.
+
+\textbf{Mají jednoho potomka}\,--\,máme-li uzel tak jeho rodič zamění referenci toho uzlu za referenci potomka.
+
+\textbf{Mají dva potomka}\,--\,dvě varianty. Buď pravého prvku (PL) nebo levého prvku (LP).\\
+Pro pravý prvek to bude nalezneme uzel, který je nejvíc napravo v levém stromu a ten zaměníme za uzel, který chceme smazat. Takže nejpravější uzel v levém stromu převezme referenci z mazaného uzlu a rodič mazaného uzlu změní referenci na nejpravější uzel levého stromu. \\
+Pro levý prvek je to podobné jen se vybírá nejlevější uzel z pravého stromu. Viz obrázky.
+
+PL
+\begin{center}
+\includegraphics[scale=0.8]{BPC-TIN/images/treePL.PNG}
+\end{center}
+
+LP
+\begin{center}
+\includegraphics[scale=0.8]{BPC-TIN/images/treeLP.PNG}
+\end{center}
 
 
 
