@@ -431,10 +431,89 @@ LP
 \section{Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.}
 %https://geoinformatika-1.vsb.cz/apu/prednasky/04_APU_Sorting.pdf
 
+\begin{Large}\vspace{0,5cm} \textbf{Typy řazení}
+\end{Large}
 
+\textbf{Řazení výběrem}\,--\,najde se vždy nejmenší se zbývajících prvků a uloží se na konec už seřazených.
 
+\textbf{Řazení vkládáním}\,--\,z neseřazené množiny se postupně bere prvek po prvku a vkládá se na správné místo přičemž začáteční množina už seřazených je prázdná.
 
+\textbf{Řazení záměnou}\,--\,v množině najdeme vždy dvojici, která je ve špatném pořadí a přehodíme ji.
 
+\textbf{Řazení slučováním}\,--\,vstupní množinu rozdělíme na části, které se seřadí. Tyto seřazené části se poté sloučí takovým způsobem aby byli seřazené.
+
+\begin{Large}\vspace{0,5cm} \textbf{Porovnání algoritmů}
+\end{Large}
+
+Třídění pomocí algoritmů Bubble Sort, Insert Sort a Select Sort má složitost O($n^2$). Algoritmus Quick Sort má složitost $\theta$($n\log{n}$), kdy v nejhorším případě může nabývat až O($n^2$). Algoritmus Merge Sort má složitost O($n\log{n}$).
+
+\begin{Large}\vspace{0,5cm} \textbf{Stabilita řízení}
+\end{Large}
+
+Dělíme na stabilní a nestabilní. Vstupní data můžou obsahovat několik prvků se stejnou hodnotou. Podle vzájemné polohy těchto prvků před a po seřazení se rozlišují tyto druhy. Stabilní algoritmus zachovává vzájemné pořadí položek se stejnou hodnotou a u nestabilního jejich zachování není zaručeno. Stabilní je vhodné využívat pokud řadíme podle dvou parametrů například jméno příjmení. Př. jestli řadíme osoby podle křestního jména a poté podle příjmení tak Stabilní algoritmus by měl odpovídat očekávání. (První Karel Novák a následoval by Václav Novák). Pokud bychom na toto použili nestabilní algoritmus tak by druhé řazení mohlo zpřeházet výsledky prvního. (První by mohl být Václav a až za ním Karel.)
+
+\begin{Large}\vspace{0,5cm} \textbf{Bubble sort}
+\end{Large}
+
+Je jednoduchý stabilní řadící algoritmus se složitostí O($n^2$).
+
+Porovnávají se dva sousední prvky, pokud je nižší číslo nalevo od vyššího tak se prohodí. A tak probublávají postupně dokud se neseřadí. Pokud jsou čísla v průběhu už správně seřazena tak je neprohodí ale postupuje dále.
+
+Animace \url{https://www.algoritmy.net/article/3/Bubble-sort}
+
+\begin{Large}\vspace{0,5cm} \textbf{Insertion sort}
+\end{Large}
+
+Je jednoduchý stabilní řadící algoritmus se složitostí O($n^2$).
+
+Máme jeden prvek a ten vložíme do už seřazené množiny, která je prázdná. Vezmeme následující prvek a ten umístíme na správné místo v již seřazení množině. A takto pokračujeme dokud nedorazíme nakonec.
+
+Animace \url{https://www.algoritmy.net/article/8/Insertion-sort}
+
+\begin{Large}\vspace{0,5cm} \textbf{Selection sort}
+\end{Large}
+
+Je jednoduchý nestabilní řadící algoritmus se složitostí O($n^2$).
+
+Funguje na principu výběru největšího prvku, který pak dá na začátek. Pak vezme druhý největší a ten dá nakonec seřazené části.
+
+Animace \url{https://www.algoritmy.net/article/4/Selection-sort}
+
+\begin{Large}\vspace{0,5cm} \textbf{Shell sort}
+\end{Large}
+
+Je nestabilní kvadratický řadící algoritmus se složitostí O($n^2$).
+
+Funguje na principu insertion sort. Rozdíl je v tom že z počátku neřadí prvky které jsou vedle sebe ale prvky které mají určitou mezeru mezi sebou. Tato mezera se poté každou iteraci snižuje. Jak dojde na mezeru 1 tak probíhá už pouze insertion sort.
+
+Animace \url{https://www.algoritmy.net/article/154/Shell-sort}
+
+\begin{Large}\vspace{0,5cm} \textbf{Merge sort}
+\end{Large}
+
+Je stabilní složitý řadící algoritmus se složitostí O($n\log{n}$).
+
+Dělíme pole neustále na poloviny dokud nemáme pole o jednom prvku. Jakmile mám rozděleno na jednotlivé prvky tak porovnám prvky vzájemně dva vedlejší prvky. Takže vzniknou pole o dvou prvcích, které jsou už seřazené. Takto postupuji až k začátku dělení. Jakmile má pole více elementů tak porovnám první prvek prvního pole s prvním prvkem druhého pole a seřadím je pokud je větší porovnám s druhým prvkem prvního pole. Pokud je zase vetší tak je seřazeno. Pokud je menší tak ho přiřadím před druhý prvek prvního pole a pokračuji s druhým prvkem druhého pole. Ten už porovnávám pouze s prvkem který byl vyšší než první prvek druhého pole. Tento proces opakuji dokud nedojdu k seřazenému poli.
+
+Video \url{https://www.youtube.com/watch?v=qdv3i6X0PiQ}
+
+\begin{Large}\vspace{0,5cm} \textbf{Heap sort}
+\end{Large}
+
+Je nestabilní složitý řadící algoritmus se složitostí O($n\log{n}$). Je jeden z nejefektivnějších řadících algoritmů.
+
+Funguje na principu prioritní fronty (stromová struktura). Prvně vytvoříme úplný binární strom (řazení vždy zleva doprava). Přetvoříme tento strom na binární haldu/heap. nový heap vytvoříme tak že probubláváme prvky stromu od nejnižších podstromů dle toho, jestli použijeme min/max heap při min haldě bude kořenem vždy nejmenší číslo a při max to bude naopak. Z vytvořeného binárního stromu vezmeme kořen a dáme ho do množiny seřazených prvků a v stromu přepíšeme kořen na poslední element stromu. Tento strom zase řadíme dokud klidně opakovaně dokud nemáme na každém kořenu min/max hodnotu. Tak pokračujeme dokud nezůstane žádný prvek
+
+Video \url{https://www.youtube.com/watch?v=LbB357_RwlY}
+
+\begin{Large}\vspace{0,5cm} \textbf{Quick sort}
+\end{Large}
+
+Je nestabilní složitý řadící algoritmus se složitostí O($n^2$) ale očekávaná složitost je $\Theta$($n\log{n}$).
+
+Prvně vybereme pivot (se špatně vybraným pivotem se může zhoršit složitost). Dále všechny menší prvky než pivot přesuneme na jednu stranu a všechny vetší na druhou. Dále vybereme nový pivot z prvků na levé straně a provedeme stejný postup co ze základním polem. To stejné uděláme s pravou stranou. Pivot vždy zůstává na místě a nic se s nedělá, jelikož je považován za setříděný. Tak postupuje dokud nám na každé straně nezůstane jen 1 prvek.
+
+Video \url{https://www.youtube.com/watch?v=ZHVk2blR45Q}
 
 
 
