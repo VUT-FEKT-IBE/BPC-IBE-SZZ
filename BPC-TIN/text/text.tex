@@ -412,12 +412,52 @@ LP
 \newpage
 \section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a hashovacích tabulek.]{Problematika nevyvážených stromů. Vyvažování stro-mů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stro-mů a hashovacích tabulek.}
 
+Nevyvážený strom je problematický v tom, že jeho složitost může klesnout až na O($n$) z O($\log{n}$). Z tohoto důvodu má smysl stromy vyvažovat.
+
+Vyvážený strom má hloubku levého a pravého podstromu rovnou vždy 0 nebo 1. Pokud má hloubku větší tak se označuje za nevyvážený a z pohledu problematiky by se měl vyvážit například metodou AVL nebo Red-Black stromy.
+
+\begin{Large}\vspace{0,5cm} \textbf{Vyvažování}
+\end{Large}
+
+\textbf{AVL stromy}\,--\,mají výhodu v tom, že jsou dobře vyvážené ale hrozí zde problém mnohonásobné rotace. Takže vkládání může být méně efektivní. Mají velice efektivní vyhledávání.
+
+Vyvažuje se dvěma typy rotace, u kterých pak dále rozlišujeme stranu. Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/AVLtree.html}
+
+\textbf{Red-Black stromy}\,--\,nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rotace. Efektivní vkládání, ale méně efektivní vyhledávání.
+
+Při vyvažování platí pravidla:
+\begin{itemize}
+    \item Každý uzel je červený nebo černý.
+    \item Kořen je vždy černý.
+    \item Všechny listy jsou černé.
+    \item Potomci červeného jsou vždy černí.
+    \item Každá cesta z libovolného uzlu do jeho podřízených listů obsahuje stejný počet černých uzlů.
+\end{itemize}
+Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/RedBlack.html}
 
 
+\begin{Large}\vspace{0,5cm} \textbf{Hashovací tabulka}
+\end{Large}
 
+Hashovací tabulka spojuje klíč s odpovídající hodnotou. Klíč je vypočítán z obsahu položky tak aby byl klíč co nejjednoznačnější a nedocházelo ke kolizím, vše vychází z pravděpodobnosti o hashovacích funkcích. Využívají se nejčastěji v databázích nebo k rychlému vyhledávaní v polích.
 
+\textbf{Vkládání}\,--\,Z vkládaného prvku se se udělá hash. Tento hash se přiřadí do pole, na místo, které mu odpovídá. Jestliže je místo obsazeno přiřadíme mu další volné místo dle algoritmu.
 
+\textbf{Vkládání}\,--\,Při vyhledávání využijeme klíče, který nám vrátí index položky. Jestliže na odpovídajícím indexu se nenachází daná položka tak pomocí algoritmu vypočteme, kde je další místo, kde se položka může nacházet.
 
+\begin{Large}\vspace{0,5cm} \textbf{Hashovací tabulka\,--\,řešení kolizí}
+\end{Large}
+
+\textbf{Řetězení tabulek}\,--\,pokud dojde ke kolizi vložíme prvky do lineárního seznamu za sebe.
+
+\textbf{Otevřené adresování linear probing}\,--\,pokud dojde ke kolizi, tak prvek vkládáme na další možné volné místo. Zde si musíme hlídat, aby se tabulka celá nenaplnila.
+
+\textbf{Otevřené adresování double hashing}\,--\,podobné linear probing jen se neposunujeme na další volné místo ale hashujeme dále.
+
+\begin{Large}\vspace{0,5cm} \textbf{Hashovací tabulka vs binární strom}
+\end{Large}
+
+Hashovací tabulka je rychlejší na vyhledávání pokud je dobře napsána hashovací funkce ve špatném případě lze dojít k O(n). Nevýhoda je, že nelze vyhledávat pokud máme jen částečný klíč nebo potřebujeme v nějakém intervalu. Další nevýhodou je složitost vytvoření hashovacích tabulek oproti stromu.
 
 
 
@@ -429,7 +469,6 @@ LP
 
 \newpage
 \section{Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.}
-%https://geoinformatika-1.vsb.cz/apu/prednasky/04_APU_Sorting.pdf
 
 \begin{Large}\vspace{0,5cm} \textbf{Typy řazení}
 \end{Large}
@@ -595,6 +634,9 @@ Video \url{https://www.youtube.com/watch?v=GazC3A4OQTE}
 \textbf{A*}\,--\,využívá prioritní frontu a nějaký seznam navštívených vrcholů. Každému z vrcholu přidělíme vzdálenost od cíle. Postupuje se stejně jako u Dijktrova algoritmu ale s tím rozdílem že sčítáme vzdálenost + hodnotu hrany. Dle této sečtené hodnoty vybíráme další navštívený prvek z prioritní fronty.
 
 Video \url{https://www.youtube.com/watch?v=ySN5Wnu88nE}
+
+
+
 
 
 
