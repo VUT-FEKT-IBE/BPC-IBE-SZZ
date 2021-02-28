@@ -467,6 +467,7 @@ Hashovací tabulka je rychlejší na vyhledávání pokud je dobře napsána has
 
 
 
+
 \newpage
 \section{Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.}
 
@@ -642,5 +643,83 @@ Video \url{https://www.youtube.com/watch?v=ySN5Wnu88nE}
 
 
 \newpage
-\section{Evluční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, křížení, chromozom. Princip evolučních algoritmů.}
+\section{Evoluční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, křížení, chromozom. Princip evolučních algoritmů.}
 
+Optimalizace a jejími úlohami se setkáváme při řešení praktických úloh, při kterých hledáme to nejlepší možné řešení. O nejlepším řešení se rozhodujeme dle parametrů.
+
+\begin{Large}\vspace{0,5cm} \textbf{Evoluční algoritmy}
+\end{Large}
+
+Je jeden ze způsobů optimalizace. Byli vytvořeny, aby sjednotili optimalizační metody co využívají \uv{evoluční} principy. Evoluční algoritmy zastřešují pod sebou řadu přístupů využívající modely biologické evoluce. Tyto modely jsou přirozený výběr (výběr silnějšího jedince, podle fitness funkce), náhodný genetický drift (mutace, decimuje jedince s vysokou fitness) a reprodukční proces (křížení jedinců). Spadají zde přístupy jako genetické algoritmy, genetické programovaní, evoluční strategie, evoluční programovaní.
+
+Obecný evoluční algoritmus funguje zjednodušeně, že prvně máme nějakou základní populaci. S této populace uděláme výběr jedinců. Vybrané jedince zkřížíme. Tyto jedinci následně zmutují a vytvoří se nová populace. Tyto kroky se opakují v N iteracích. Kde ukončení stanovuje předem stanovený počet iterací, dosažení požadovaného jedince popřípadě minimální změnou fitness populace po několik iterací.
+
+\begin{Large}\vspace{0,5cm} \textbf{Genetické algoritmy}
+\end{Large}
+
+Genetické algoritmy jsou založeny na Darwinově myšlence že přežije nejsilnější. Využívá metody křížení, mutace a selekce.
+
+TODO Kódování řetězci má také svou analogii v gentice, kdy v podstatě řetězce odpovídají chromozómům, jednotlivé pozice v řetězci jednotlivým genům a konkrétní hodnoty na těchto pozicích pak alelám.
+
+Genetické algoritmy pracují tak že prvně vyberou nějakou populaci přípustných řešení. Abychom s nimi mohly pracovat musíme je převést do řetězce/pole. Poté přichází na řadu výběr jedinců, kteří se budou podílet na nové generaci. Vetšinou to probíhá tak, že ohodnotíme každého jedince pomocí fitness funkce a na základě tohoto parametru vybereme nejvhodnější kandidáty (metod výběru je více). Tito vybraní jedinci se mezi sebou kříží. Nakonec každý kandidát mutuje. 
+
+Výhody GA jsou že nevyžadují žádné speciální znalosti o cílové funkci, jsou odolné, aby nesklouzli do lokálního optima.
+
+Nevýhody GA jsou že mají problém s nalezením přesného optima, vyžadují velké množství vyhodnocování cílové funkce.
+
+\begin{Large}\vspace{0,5cm} \textbf{Genetické programování}
+\end{Large}
+
+Hledá samotnou funkci a ne její parametry. Oproti GA se liší v reprezentaci jedinců. V GP jsou jedinci vytvořeni stromem s proměnlivou délkou chromozomu. Zjednodušeně je to převedení GA do programovacích jazyků.
+
+\begin{Large}\vspace{0,5cm} \textbf{Základní pojmy}
+\end{Large}
+
+\textbf{Populace}\,--\,je množina jedinců o určité velikosti, z které následně vybíráme jedince na operace (křížení, mutace atd) při evoluci. Konkrétní populace se nazývá genotyp. 
+
+\textbf{Jednice}\,--\,člen populace, který je definován jedním chromozomem.
+
+\textbf{Chromozom}\,--\,je to řetězec tvořený geny, který má za úkol se odlišit od zbytku populace (DNA). Lze ho kódovat např. binárně, reálnými čísly, znaky, objekty(instance třídy v programovaní).
+
+\textbf{Gen}\,--\,na i-té pozici reprezentuje stejnou charakteristiku v každém jedinci.
+
+\textbf{Alela}\,--\,hodnota které může nabývat gen (např 0, 1).
+
+\textbf{Fitness funkce}\,--\,kvantitativně vyjadřuje kvalitu každého řešení. Např. dosažení požadované přesnosti algoritmu, množství času potřebné pro výpočet algoritmu, množství chyb mezi skutečným a požadovaným výstupem.
+
+Více druhů metod vytvoření fitness funkce (Hrubá, standardizovaná, přizpůsobená, normalizovaná)
+
+\textbf{Selekce ruletový výběr varianta 1}\,--\,pravděpodobnost výběru závisí na kvalitě jedince (kolik místa na ruletě zabírá). Pokud jedince bude převyšovat ostatní o hodně nové populace budou tvořeny jeho geny, k tomu se dají použít techniky potlačení/podpory.
+
+\textbf{Selekce ruletový výběr varianta 2}\,--\,jedinci jsou seřazeni vzestupně podle hodnoty fitness a velikost místa je určena rovnicí. Tímto se potlačují nadprůměrní jedinci, kteří by negativně ovlivňovali další generace.
+
+\textbf{Selekce turnajový výběr}\,--\,náhodně se vybere n jedinců a postupným porovnáváním je vybrán nejlepší.
+
+\begin{Large}\vspace{0,5cm} \textbf{Metody křížené}
+\end{Large}
+
+\textbf{Elitářství}\,--\,zaručuje monotonní hodnotu fitness nejlepšího jedince, předchází ztrátě nejlepšího řešení.
+
+\begin{center}
+\includegraphics[scale=0.7]{BPC-TIN/images/elita.PNG}
+\end{center}
+
+\textbf{Křížení n-bodové}\,--\,dělí se v n bodech a vymění se mezi sebou.
+
+\begin{center}
+\includegraphics[scale=0.55]{BPC-TIN/images/1bod.PNG}
+\includegraphics[scale=0.55]{BPC-TIN/images/2bod.PNG}
+
+\end{center}
+
+\textbf{Křížení uniformní}\,--\,rozvrací kód chromozomu, dobrý pro vnešení diverzity.
+
+\begin{center}
+\includegraphics[scale=0.7]{BPC-TIN/images/uniform.PNG}
+\end{center}
+
+\textbf{Mutace}\,--\,Aplikuje se s malou pravděpodobností, důležitá pokud máme málo jedinců.
+
+\begin{center}
+\includegraphics[scale=0.7]{BPC-TIN/images/mutace.PNG}
+\end{center}
