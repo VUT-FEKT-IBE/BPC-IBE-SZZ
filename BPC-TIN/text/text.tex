@@ -522,20 +522,79 @@ Video \url{https://www.youtube.com/watch?v=ZHVk2blR45Q}
 
 
 
+
+
 \newpage
 \section{Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šířky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
 
+\begin{Large}\vspace{0,5cm} \textbf{Graf/ teorie grafů}
+\end{Large}
+
+Graf je definován jako uspořádaná dvojice množiny vrcholů V a množin hran E (\textit{G(V,E)}). Kde vrcholy (vertices/nodes) jsou uzly grafu a hrany (edges) jsou spoje mezi vrcholy. 
+
+Graf může být jakýkoliv rovinný nebo prostorový útvar, který bude znázorňovat důležité vazby mezi důležitými prvky (vrcholy).
+
+\textbf{Hrana}\,--\,znázorňuje vztah mezi vrcholy. Rozlišujeme na hrany orientované a neorientované. U orientovaných lze stanovit počáteční a koncový vrchol a u neorientovaného to nelze. Hrany lze ohodnotit, kdy hodnota může například představovat délku, zátěž atd.
+
+\textbf{Vrchol}\,--\,je nějaký prvek, který chceme spojit s druhým vrcholem pomocí hrany tak aby nám vznikl graf (ne vždy tyto prvky musí být spojené). Vrchol lze ohodnotit, kde hodnota může představovat například počet připojených hran. Pokud využije zrovna označení připojených hran tak tím získáme stupeň vrcholu. Pokud vybereme vrchol s největší hodnotou ze všech vrcholů tak tuto hodnotu lze nazvat stupeň grafu.
+
+\textbf{Dělení grafů dle typu hran:}
+\begin{itemize}
+    \item Neorientované grafy\,--\,obsahují pouze neorientované hrany. Hrana je obousměrná.
+    \item Orientované grafy\,--\,obsahují pouze orientované hrany. Hrana je pouze jednosměrná.
+    \item Smíšené grafy\,--\,obsahují oba typy hran.
+\end{itemize}
+
+\begin{Large}\vspace{0,5cm} \textbf{Vyhledávaní v grafu}
+\end{Large}
+
+\textbf{Druhy prohledávaní:}
+\begin{itemize}
+    \item Slepé prohledávání\,--\,prohledávají náhodně bez přemýšlení.
+    \item Informované metody\,--\,snaží se odhadnout, kudy pokračovat ve vyhledávání aby byli co nejdříve v cíli.
+\end{itemize}
+
+\textbf{Nalezení kostry grafu spanning tree}\,--\,kostra grafu je nějaký strom, který neobsahuje cykly. Kostra se vytváří tak, aby propojila všechny body a celková váha byla co minimální. Při hledání kostry s co nejmenší váhou tento postup nazýváme minimal spanning tree. Nejznámějším algoritmem je Kruskalův algoritmus a distribuovaný algoritmus.
+
+\textbf{Kruskalův algoritmus}\,--\,funguje na principu shlukování dvou množin hran. Ze všech hran se vybere hrana s nejnižší hodnotou a množiny vrcholů jenž hrana propojuje se seskupí do jedné množiny. Tak se postupuje tak dlouho dokud všechny vrcholy nejsou v jedné množině. Pokud cesta propojuje vrcholy ze stejné množiny vrcholů tak se nepoužije a pokračuje se z následující hranou. Využívá se pokud známe celou topologii grafu.
+
+Animace \url{https://www.cs.usfca.edu/~galles/visualization/Kruskal.html}
+
+\textbf{Distribuovaný algoritmus}\,--\,zde se pracuje na principu, že se kostra tvoří na každé množině zároveň. Z každého vrcholu se vyrazí směrem po nejmenší hodnotě hrany. Pokud se vrcholy na cestě potkají tak vytvoří množinu pokud se nepotkají nic se neděje. Dále se pak vysílají znovu po nejmenší hodnotě hrany. Toto se děje dokud se celá kostra nenajde. Tento algoritmus se nejčastěji využívá v telekomunikačních sítích, kde neznáme celou topologii grafu.
+
+\begin{center}
+\includegraphics[scale=0.5]{BPC-TIN/images/distributed1.PNG}
+\includegraphics[scale=0.5]{BPC-TIN/images/distributed2.PNG}
+\end{center}
+
+\begin{Large}\vspace{0,5cm} \textbf{Slepé prohledávání}
+\end{Large}
+
+\textbf{BFS}\,--\,využívá frontu do kterého prvně vloží vstupní vrchol. Z tohoto vrcholu se vezmou všichni sousedé a vloží se do fronty, z které se bere postupně a jejich sousedé se přidávají do fronty. Při tomto se každá už navštívený vrchol ukládá do nějakého pole/seznamu navštívených abychom ho nenavštěvovali znovu.
+
+Video \url{https://www.youtube.com/watch?v=oDqjPvD54Ss}
+
+\textbf{DFS}\,--\,pracuje na principu, že prozkoumává prvně vrchol na jednu stranu a v ní pokračuje dokud nedojde na konec nebo nedorazí do už navštíveného vrcholu. Využívá zásobník.
+
+Video \url{https://youtu.be/pcKY4hjDrxk?t=279}
+
+BFS vs DFS rozdíl je že DFS je méně paměťově náročné ale BFS je optimální.
+
+\textbf{DLS}\,--\,vychází z DFS ale je omezen na maximální hloubku.
+
+\textbf{IDLS}\,--\,iterativní prohledávaní do hloubky. Vychází z DFS ale v každé iteraci se prohledává jen o hloubku níž. Video \url{https://www.youtube.com/watch?v=Y85ECk_H3h4}
+
+\textbf{Dijkstrův algoritmus}\,--\,využívá prioritní frontu a nějaký seznam navštívených vrcholů. Z prvního vrcholu se přidají všechny soudní vrcholy z jejich hodnotou hrany do prioritní fonty. Z prioritní fronty se vždy vezme nejmenší prvek. Z nejnižšího vrcholu se prozkoumají znovu sousedé ale tentokrát se nepoužije pouze vzdálenost mezi nimi ale přičte se už i vzdálenost k aktuálnímu vrcholu. Tak se bere dokud se nedorazí k cílovému vrcholu.
+
+Video \url{https://www.youtube.com/watch?v=GazC3A4OQTE}
 
 
+\begin{Large}\vspace{0,5cm} \textbf{Informovaná metoda}
+\end{Large}
 
+\textbf{A*}\,--\,využívá prioritní frontu a nějaký seznam navštívených vrcholů. Každému z vrcholu přidělíme vzdálenost od cíle. Postupuje se stejně jako u Dijktrova algoritmu ale s tím rozdílem že sčítáme vzdálenost + hodnotu hrany. Dle této sečtené hodnoty vybíráme další navštívený prvek z prioritní fronty.
 
-
-
-
-
-
-
-
+Video \url{https://www.youtube.com/watch?v=ySN5Wnu88nE}
 
 
 
