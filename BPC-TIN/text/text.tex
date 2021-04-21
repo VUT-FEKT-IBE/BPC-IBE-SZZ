@@ -18,9 +18,9 @@ Každá paměť, která je přiřazena procesu se dělí na 4 základní bloky:
 
 \textbf{Heap}\,--\,slouží k alokaci dynamické paměti. Je založena na stromové datové struktuře. Obsahuje objekty a instance proměnných(atributy třídy).
 
-\textbf{Stack}\,--\,je důležitý pro volaní správné funkcí. Funguje na principu LIFO. Funguje tak že se ukládají funkce do stacku, se kterými se posunuje taktéž ukazatel na pozici v registeru. Po dokončení té funkce je odstraněna ze zásobníku a ukazatel změněn na předchozí funkci. Obsahuje metody/funkce, lokální proměnné a reference na proměnné. Video pro lepší vysvětlení \url{https://www.youtube.com/watch?v=uwV0hotRrLw}.
+\textbf{Stack}\,--\,je důležitý pro volaní správných funkcí. Funguje na principu LIFO. Funguje tak že se ukládají funkce do stacku, se kterými se posunuje taktéž ukazatel na pozici v registeru tj. stack pointer. Po dokončení té funkce je odstraněna ze zásobníku a ukazatel změněn na předchozí funkci. Obsahuje metody/funkce, lokální proměnné a reference na proměnné. Video pro lepší vysvětlení \url{https://www.youtube.com/watch?v=uwV0hotRrLw}.\\
 
- Bloky Heap a Stack jsou dynamické a jejich velikost roste/zmenšuje u každého z jiným směrem v průběhu programu.
+ Bloky Heap a Stack jsou dynamické a jejich velikost roste/se zmenšuje u každého jiným směrem v průběhu programu.
 
 \begin{Large}\vspace{0,5cm} \textbf{Statické přidělování paměti}
 \end{Large}
@@ -58,7 +58,7 @@ Skládá se ze tří fází:
  Tyto tři fáze se opakují dokola, dokud nedojde k situaci, že nový úsek není dostačující pro fázi alokace. Z tohoto důvodu dojde k ukončení programu.
 
 \vspace{1cm}
-\textbf{Reprezentace informace v paměti}\,--\,pokud je datový typ primitivní je uložen na přímo v paměti a u objektů je reprezentován pouze ukazatelem na místo v paměti.
+\textbf{Reprezentace informace v paměti}\,--\,pokud je datový typ primitivní je uložen na přímo v paměti a u objektů je reprezentován pouze ukazatelem na místo v paměti.\footnote{Pokud si to nedokážete představit, tak například jeden \textit{integer} jednoduše zabere v paměti 32bitů. Zatímco \textit{objekt} (v C si lze představit jako \textit{struct}) obsahující dva integery, bude v paměti reprezentován jako \textit{odkaz} (pointer) na tu část paměti kde začíná první integer. (nedá se úplně s jistotou říct, že zabere 64bitů, jelikož se zpravidla dodá padding pro metadata)} 
 
 
 
