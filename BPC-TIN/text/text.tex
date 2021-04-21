@@ -8,7 +8,7 @@ Každá paměť, která je přiřazena procesu se dělí na 4 základní bloky:
     \item Zásobník(Stack)
     \vfill
 \end{itemize}
-\includegraphics[scale=0.3]{BPC-TIN/images/pamet.png}
+\includegraphics[scale=0.3]{images/pamet.png}
 \end{multicols}
 \textbf{Code}\,--\,je to množina strojových instrukcí, které naprosto jednoznačně provádí program. Dle těchto instrukcí PC postupuje ve výpočtu.
 
@@ -95,19 +95,19 @@ Kdy není vhodný OO přístup? Není vhodné ho použít jestliže na cílové 
 \end{Large}
 
 \textbf{Závislost}\,--\, je dynamický a zároveň nejslabší vztah. Ukazuje jak co na sobě závisí.\\
-\includegraphics[scale=1]{BPC-TIN/images/zavislost.PNG}
+\includegraphics[scale=1]{images/zavislost.PNG}
 
 \textbf{Asociace}\,--\, je pevný vztah. Určuje vztah mezi dvěma prvky, které mohou existovat nezávisle na sobě. Asociace může mít směr od jednoho prvku k druhému nebo obousměrně. Objekt ve směru šipky může nalézt odkaz na následujíc objekty. \\
-\includegraphics[scale=1]{BPC-TIN/images/asociace.PNG}
+\includegraphics[scale=1]{images/asociace.PNG}
 
 \textbf{Násobnost asociací}\,--\, určuje kolik vazeb může mít danný objekt. Například 1:n může být 1 objekt a ten mít reference na n objektů ke kterým má asociaci (faktura:n * položka).
 
-\textbf{Agregace}\,--\, je typ asociace. reprezentuje vztah typu celek--část. Zde je u celku umístěn kosočtverec. Celek je entita, která drží kolekci prvků. Část může existovat bez celku nebo být součástí jiných kolekcí. \\\includegraphics[scale=1]{BPC-TIN/images/agregace.PNG}
+\textbf{Agregace}\,--\, je typ asociace. reprezentuje vztah typu celek--část. Zde je u celku umístěn kosočtverec. Celek je entita, která drží kolekci prvků. Část může existovat bez celku nebo být součástí jiných kolekcí. \\\includegraphics[scale=1]{images/agregace.PNG}
 
-\textbf{Kompozice}\,--\, je typ asociace. Je to nejsilnější vztah a je podobná agregaci. S rozdílem v tom že část nemá bez celku smysl. pokud zanikne celek zaniknou i části. U celku je násobnost vždy 1.\\ \includegraphics[scale=1]{BPC-TIN/images/kompozice.PNG}
+\textbf{Kompozice}\,--\, je typ asociace. Je to nejsilnější vztah a je podobná agregaci. S rozdílem v tom že část nemá bez celku smysl. pokud zanikne celek zaniknou i části. U celku je násobnost vždy 1.\\ \includegraphics[scale=1]{images/kompozice.PNG}
 
 \textbf{Dědičnost/generalizace}\,--\,se využívá jestliže mají některé třídy společné vlastnosti. Tím například nemusíme vytvářet duplicitní kód. Směr šipky udává od koho třída dědí (obrázek b dědí z a). Díky tomuto lze jednodušeji rozšířit třídu o atributy a operace. Neplést si z asociací nijak nesouvisí.\\
-\includegraphics[scale=1]{BPC-TIN/images/dedicnost.PNG}
+\includegraphics[scale=1]{images/dedicnost.PNG}
 
 
 
@@ -221,7 +221,7 @@ ADT dělíme podle počtu datových položek na statický a dynamický datový t
 ADT lineární seznam je seznam, kde každý uzel má unikátního následníka.
 Výhodou lineárního seznamu je že má efektivní vkládání a mazání ale neefektivní přístup k prvkům. Na rozdíl od pole, kde je rychlá indexace prvků. Každý prvek obsahuje data a ukazatel na další prvek v seznamu.
 \begin{center}
-    \includegraphics[scale=0.5]{BPC-TIN/images/linsez.PNG}
+    \includegraphics[scale=0.5]{images/linsez.PNG}
 \end{center}
 
 Možné operace s ADT seznamem:
@@ -239,34 +239,34 @@ Možné operace s ADT seznamem:
 \textbf{Cyklický lineární seznam}\,--\,stejný jako lineární ale poslední prvek nemá ukazatel null ale odkaz na první prvek seznamu.
 
 \begin{center}
-\includegraphics[scale=0.5]{BPC-TIN/images/cycsez.PNG}
+\includegraphics[scale=0.5]{images/cycsez.PNG}
 \end{center}
 
 \textbf{Obousměrně vázaný lineární seznam}\,--\,nemá pouze ukazatel na další prvek ale i na předchozí. Umožňuje procházení v obou směrech.
 
 \begin{center}
-\includegraphics[scale=0.5]{BPC-TIN/images/obousez.PNG}
+\includegraphics[scale=0.5]{images/obousez.PNG}
 \end{center}
 
 \textbf{Vkládaní do lineárního seznamu}\,--\,vložit prvek na určitou pozici funguje tak, že se najde pozice k kde se zde vloží prvek který bude odkazovat na prvek, který byl předtím na pozici k a v prvku k-1 se přepíše ukazatel na nový prvek. Operace fungují stejně jen jsou vázány na obě strany.
 
 \begin{center}
     
-\includegraphics[scale=0.5]{BPC-TIN/images/sezins.PNG}
+\includegraphics[scale=0.5]{images/sezins.PNG}
 \end{center}
 
 Pokud vkládáme na začátek tak se přepisuje ukazatel pole na první prvek a ve vkládaném prvku se přidá ukazatel na předchozí první prvek.
 
 \begin{center}
-\includegraphics[scale=0.5]{BPC-TIN/images/sezinsfirst.PNG}
+\includegraphics[scale=0.5]{images/sezinsfirst.PNG}
 
 \vspace{1cm}
-\includegraphics[scale=0.5]{BPC-TIN/images/sezinsempty.PNG}
+\includegraphics[scale=0.5]{images/sezinsempty.PNG}
 \end{center}
 
 \textbf{Mazaní v lineárním seznamu}\,--\,mazaní prvku na pozici k funguje tak že prvek k-1 přepíše ukazatel na prvek k+1. U prvního prvku se přepíše pouze ukazatel na další prvek.
 \begin{center}
-\includegraphics[scale=0.5]{BPC-TIN/images/sezdel.PNG}
+\includegraphics[scale=0.5]{images/sezdel.PNG}
 \end{center}
 
 \textbf{Vyhledávaní v lineárním seznamu}\,--\,dá se vyhledávat podle prvku nebo podle dat. Pomalu iteruje seznamem dokud nenarazí na ten prvek nebo konec seznamu. U obousměrného se dá hledat od začátku a od konce.
@@ -365,12 +365,12 @@ Pro levý prvek je to podobné jen se vybírá nejlevější uzel z pravého str
 
 PL
 \begin{center}
-\includegraphics[scale=0.8]{BPC-TIN/images/treePL.PNG}
+\includegraphics[scale=0.8]{images/treePL.PNG}
 \end{center}
 
 LP
 \begin{center}
-\includegraphics[scale=0.8]{BPC-TIN/images/treeLP.PNG}
+\includegraphics[scale=0.8]{images/treeLP.PNG}
 \end{center}
 
 
@@ -380,19 +380,19 @@ LP
 \section{Průchody stromy in-order, pre-order, post-order.}
 \textbf{Pre-order}\,--\,nejprve se zpracuje kořen, poté levý podstrom a nakonec pravý podstrom. Využívá se k vytvoření kopie stromu. Tak aby vypadal stejně.
 \begin{center}
-\includegraphics[scale=1]{BPC-TIN/images/tree.PNG}
+\includegraphics[scale=1]{images/tree.PNG}
 \end{center}
 Čtení pomocí pre-order bude posloupnost 5, 2, 4, 3, 15, 9, 7, 11, 12, 17.
 
 \textbf{In-order}\,--\,nejprve se zpracuje levý podstrom poté kořen a nakonec pravý podstrom. Výsledkem je v příkladu čísel posloupnost od nejmenšího k největšímu. Využívá se k získaní popořadě jdoucích hodnot závislých tak jak máme vytvořen komparátor.
 \begin{center}
-\includegraphics[scale=1]{BPC-TIN/images/tree.PNG}
+\includegraphics[scale=1]{images/tree.PNG}
 \end{center}
 Čtení pomocí in-order bude posloupnost 2, 3, 4, 5, 7, 9, 11, 12, 15, 17.
 
 \textbf{Post-order}\,--\,nejprve se zpracuje levý podstrom poté pravý a nakonec kořen. Využívá se k mazání stromu od listů ke kořenu.
 \begin{center}
-\includegraphics[scale=1]{BPC-TIN/images/tree.PNG}
+\includegraphics[scale=1]{images/tree.PNG}
 \end{center}
 Čtení pomocí post-order bude posloupnost 3, 4, 2, 7, 12, 11, 9, 17, 15, 5.
 
@@ -603,8 +603,8 @@ Animace \url{https://www.cs.usfca.edu/~galles/visualization/Kruskal.html}
 \textbf{Distribuovaný algoritmus}\,--\,zde se pracuje na principu, že se kostra tvoří na každé množině zároveň. Z každého vrcholu se vyrazí směrem po nejmenší hodnotě hrany. Pokud se vrcholy na cestě potkají tak vytvoří množinu pokud se nepotkají nic se neděje. Dále se pak vysílají znovu po nejmenší hodnotě hrany. Toto se děje dokud se celá kostra nenajde. Tento algoritmus se nejčastěji využívá v telekomunikačních sítích, kde neznáme celou topologii grafu.
 
 \begin{center}
-\includegraphics[scale=0.5]{BPC-TIN/images/distributed1.PNG}
-\includegraphics[scale=0.5]{BPC-TIN/images/distributed2.PNG}
+\includegraphics[scale=0.5]{images/distributed1.PNG}
+\includegraphics[scale=0.5]{images/distributed2.PNG}
 \end{center}
 
 \begin{Large}\vspace{0,5cm} \textbf{Slepé prohledávání}
@@ -701,25 +701,25 @@ Více druhů metod vytvoření fitness funkce (Hrubá, standardizovaná, přizp�
 \textbf{Elitářství}\,--\,zaručuje monotonní hodnotu fitness nejlepšího jedince, předchází ztrátě nejlepšího řešení.
 
 \begin{center}
-\includegraphics[scale=0.7]{BPC-TIN/images/elita.PNG}
+\includegraphics[scale=0.7]{images/elita.PNG}
 \end{center}
 
 \textbf{Křížení n-bodové}\,--\,dělí se v n bodech a vymění se mezi sebou.
 
 \begin{center}
-\includegraphics[scale=0.55]{BPC-TIN/images/1bod.PNG}
-\includegraphics[scale=0.55]{BPC-TIN/images/2bod.PNG}
+\includegraphics[scale=0.55]{images/1bod.PNG}
+\includegraphics[scale=0.55]{images/2bod.PNG}
 
 \end{center}
 
 \textbf{Křížení uniformní}\,--\,rozvrací kód chromozomu, dobrý pro vnešení diverzity.
 
 \begin{center}
-\includegraphics[scale=0.7]{BPC-TIN/images/uniform.PNG}
+\includegraphics[scale=0.7]{images/uniform.PNG}
 \end{center}
 
 \textbf{Mutace}\,--\,Aplikuje se s malou pravděpodobností, důležitá pokud máme málo jedinců.
 
 \begin{center}
-\includegraphics[scale=0.7]{BPC-TIN/images/mutace.PNG}
+\includegraphics[scale=0.7]{images/mutace.PNG}
 \end{center}

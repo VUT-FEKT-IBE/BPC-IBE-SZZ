@@ -1,0 +1,168 @@
+name: Build all subject PDFs
+
+on:
+  push:
+    branches:
+      - main
+      - ci-debug
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clone the repository
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      # Make the builds
+      # If there is a better way to do this, I'll gladly remove this
+      - name: Build BPC-AKR
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-AKR
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-DAK
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-DAK
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-HWS
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-HWS
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-IC2
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-IC2
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-KKR
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-KKR
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-KOM
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-KOM
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-MDS
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-MDS
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-PNA
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-PNA
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-SOS
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-SOS
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-SPR
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-SPR
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-TIN
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-TIN
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-UP2A
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-UP2A
+          root_file: main.tex
+        if: ${{ always() }}
+
+      - name: Build BPC-ZSY
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: BPC-ZSY
+          root_file: main.tex
+        if: ${{ always() }}
+
+
+      # Zip the PDF files
+      - name: Zip PDFs
+        if: ${{ always() }}
+        run: |
+          zip output.zip */main.pdf
+
+      # Prepare tag name
+      - name: Create tag
+        id: create_tag
+        run: |
+          tag=build-$(date +%Y%m%d-%H%M%S)
+          echo "::set-output name=tag::$tag"
+
+      # Create release draft, so we can add the files
+      - name: Create draft release
+        id: create_draft_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          release_name: ${{ steps.create_tag.outputs.tag }}
+          draft: true
+          prerelease: false
+
+      # Add the zip to the release
+      - name: Add PDFs to release
+        uses: actions/upload-release-asset@v1.0.1
+        id: add_pdfs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./output.zip
+          asset_name: generated-PDFs.zip
+          asset_content_type: application/zip
+
+      # Publish the release
+      - name: Publish release
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_draft_release.outputs.id }}
