@@ -1,1 +1,13 @@
 *.zip
+# LaTeX build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+# Cache directories
+**/cache*
+# Generated PDFs
+main.pdf
