@@ -60,6 +60,36 @@ Hlavní rozdíly mezi autorským právem a patentem.
 
 \newpage
 \section{Autorství software\,--\,autor, spoluautor, kolektivní dílo, souborné dílo, odvozené dílo, otázka autorství umělé inteligence}
+\textbf{Autorem} může být jakákoliv fyzická osoba, která dílo vytvořila. \href{https://www.zakonyprolidi.cz/cs/2000-121#p5}{Autorský zákon §5}
+
+Zákonná domněnka autorství\,--\,Autorem díla je fyzická osoba, jejíž pravé jméno je obvyklým způsobem uvedeno na díle nebo je u díla uvedeno v rejstříku předmětů ochrany vedeném příslušným kolektivním správcem, není-li prokázán opak. \href{https://www.zakonyprolidi.cz/cs/2000-121#p6}{Autorský zákon §6}
+
+Anonym a pseudonym\,--\,totožnost autora není možné zveřejnit bez jeho souhlasu. Jeho práva zastupuje osoba, která dílo zveřejnila. \href{https://www.zakonyprolidi.cz/cs/2000-121#p7}{Autorský zákon §7}
+
+\textbf{Spoluautorem} je autor, který se podílel svou tvůrčí činností na vytvoření díla, společně s dalšími autory. Všem zúčastněným autorům připadá stejné právo a o nakládání s dílem musí být rozhodnuto jednomyslně. Bráni-li spoluautor bez vážného důvodu může jeho souhlas být doplněn soudně.
+
+O spoluautorské dílo se jedná pokud jednotlivé části nejsou způsobilé samostatného užití, jedna~část potřebuje druhou.
+
+Spoluautorem není osoba, která přispěla k vzniku díla pouze poskytnutím pomoci nebo rady technické, administrativní nebo odborné povahy. Dále poskytnutím dokumentačního nebo technického materiálu. Nakonec ten, kdo dal pouze podnět ke vzniku díla. \href{https://www.zakonyprolidi.cz/cs/2000-121#p8}{Autorský zákon §8}
+
+\textbf{Kolektivní dílo} (\href{https://www.zakonyprolidi.cz/cs/2000-121#p59}{Autorský zákon §59}) je dílo, na~kterém se podílí více autorů a~je vytvořeno z podnětu a~pod vedením FO/PO a~uváděno na~veřejnost pod jejím jménem. Považují se často za~zaměstnanecká díla.
+
+\textbf{Souborné dílo}\,--\,soubor nezávislých děl nebo prvků, který je způsobem výběru či uspořádáním obsahu jedinečným výsledkem tvůrčí činnosti autora (např. sborník, časopis, encyklopedie, \textbf{databáze} apod.). V souborném díle je chráněn způsob výběru nebo struktura (např. výběr hesel v encyklopedii či tematické uspořádání prvků). Autorem je fyzická osoba, která tvůrčím způsobem vybrala nebo uspořádala prvky souborného díla a tím nejsou dotčena práva autorů děl, které byli do souborného díla zařazeny. \href{https://www.zakonyprolidi.cz/cs/2000-121#p2}{Autorský zákon §2}
+
+\textbf{Odvozené dílo}\,--\,je nové dílo, které vychází z již existujícího díla, které je chráněno autorským zákonem. Autorská práva původního vlastníka nejsou nijak dotčena, ale zároveň musí dát souhlas k vzniku odvozeného díla. Například při překladu knihy. U SW to znamená například oprava, rozšíření SW mimo autora, tak musí být udělena licence. 
+
+\vspace{1cm}
+\noindent\textbf{AI}
+
+\noindent Momentálně dle autorského zákona~může být autorem pouze FO -- pokud SW vytvoří SW tak primární SW není autorem sekundárního SW. Pokud je při vývoji SW vysoká účast člověka, je sekundární SW brán jako výsledek lidské činnosti a~AI je použito jako pomocník při vývoji. v~tom případě je sekundární SW chráněn autorským právem. Při nízké účasti člověka~není rozhodnutí jednoznačné. Porovnávají se prvky objektivní vnímatelnosti, tvůrčí svobody, možnosti vyjádření apod. Obecně AI jejich výtvorů není definována. 
+
+Rozlišujeme dva~druhy AI -- silné a~slabé. Slabá AI -- nefunguje jako blackbox, neboli dokážeme predikovat výstup a~víme, jak funguje na~pozadí. Silná AI -- funguje jako blackbox takže nevíme co se děje na~pozadí. U slabé AI je vlastníkem licence autor AI, zatímco při silné AI se žádný případ doposud neřešil, ani není stanovené nějaké právo takže se momentálně nedá jednoznačně říci.
+
+\textbf{SW paradox} -- máme vývojáře, který vytvoří AI1 a~to licencuje uživateli 1. AI1 vytvoří AI2 a~tu bude využívat uživatel 2 a~v~té chvíli vzniká otázka, kdo ho má licencovat. Jestli vývojáři, uživatel 1 nebo AI1. Neví se přímo, na~koho se obrátit a~jestli nevyžadovat i licenci k AI1. Z tohoto plyne jakási nejistota~o platnosti licence. Autorské právo je postaveno na~objektivním pravidle. Kdo něco vytvořil tvůrčí činností, je autor a~může produkt licencovat. Jelikož si nejsme jistí od koho licencovat a~jestli se vůbec jedná o tvůrčí výsledek, může tato skutečnost paralyzovat jakoukoliv~licenční smlouvu a~její užívaní.
+
+AI jako objekt práva~nemá právní osobnost a~způsobilost. Momentálně chybí přesvědčivý argument. 
+
+Shrnutí: nejvíce relavantními jsou nároky tvůrců AI a~uživatelů -- něco jako spoluautorství. AI může být \uv{tvůrčí}, ale ne autor.
 
 \newpage
 \section{Osobnostní a majetková práva autora software -- obsah, doba trvání, vyčerpání práv}
@@ -69,6 +99,19 @@ Hlavní rozdíly mezi autorským právem a patentem.
 
 \newpage
 \section{Ochrana neliterárních složek software\,--\,ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)}
+
+K přiměřené ochraně samostatné funkcionality je použita~\textbf{patentová ochrana}. Patentově nelze chránit počítačové programy ale tzv.\ vynálezy uskutečňované počítačem. Není tedy použita autorskoprávní ochrana.
+
+Je uvedeno, že myšlenky a~principy, na~nichž je založen prvek programu, nejsou chráněny autorským zákonem. SW směrnice -- Myšlenky a~zásady na~kterých je založen kterýkoliv~prvek programu, nebo jeho rozhraní, nejsou chráněny. 
+
+\textbf{Datová} -- jedná se o rozhraní, která slouží k ukládaní a~přenosu dat v~určitém formátu. Dle SW směrnice tyto rozhraní nebudou chráněna. Pokud by bylo bráno jako normální dílo, lze uvažovat o standardní ochraně.
+
+\textbf{Uživatelská (GUI)} -- Při převzetí GUI se nejedná o rozmnoženinu počítačového programu. \textrightarrow Nejedná se o zásah do vyhrazeného práva. Pokud bychom ale naplnili při tvorbě GUI podmínku jedinečnosti, může být chráněno podle obecné autorskoprávní ochrany. Vzniká problém u právních systémů neoperujících s pojmem originálnost, např. UK. Tam GUI chráněna~nejsou.
+
+\textbf{Aplikační (API)} -- Není specifikováno, zda~se jedná o myšlenku nebo vyjádření. SDEU neřešil ale lze předpokládat, že by to bylo podobné jako u GUI. Pokud by se jednalo o vyjádření tak je chráněno. Momentálně Google vs Oracle, o kterém by měl soud rozhodnout v~2021. Google pro Android využil stejné API jako je v~Javě. v~prvním řešení bylo rozhodnuto že API není chráněno. Poté odvolací soud rozhodl že API je chráněno, že byla~splněna~podmínka~originality. Momentálně je případ u nejvyššího soudu USA. \textbf{UPDATE} V dubnu 2021 bylo rozhodnuto ve prospěch Google, kde použití API v tomto případě bylo označeno na \uv{fair use}, kdy se začalo s možností, že API může podléhat autorskoprávní ochraně. Ve zkratce soud nerozhodl jestli je API pod autorskoprávní ochranou ale pouze o tom, že ze strany Google nešlo o porušení.  
+
+
+
 
 \newpage
 \section{Software jako zaměstnanecké dílo, školní dílo, kolektivní dílo a dílo na objednávku}
