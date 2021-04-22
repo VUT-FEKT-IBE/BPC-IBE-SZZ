@@ -150,6 +150,24 @@ Jelikož ne vždy lze určit přesnou složitost algoritmu tak byla vyvinuta asy
 Třídění pomocí algoritmů Bubble Sort, Insert Sort a Select Sort má složitost O($n^2$). Algoritmus Quick Sort má složitost $\theta$($n\log{n}$), kdy v nejhorším případě může nabývat až O($n^2$). Algoritmus Merge Sort má složitost O($n\log{n}$).
 
 \vspace{1cm}
+\begin{Large}\vspace{0,5cm} \textbf{Algoritmy hledání.}
+\end{Large}
+
+Dva základní algoritmy pro hledání jsou \textit{Binary search}\footnote{Funguje na principu půlení seřazeného seznamu, pokud je hledaná hodnota v půlce tak skončí, pokud je menší tak půlí levou stranu a pokud větší tak pravou. Takto iteruje dokud nenajde číslo. Více:  \url{https://en.wikipedia.org/wiki/Binary_search_algorithm}} a \textit{Linear search}\footnote{Linear search je naprosto jednoduchý lineární průchod seznamem, kde se postupně hledá požadovaná hodnota. Alternativa je Linear Sentinel search, která přidá hledanou hodnotu na konec seznamu. Více: \url{https://www.geeksforgeeks.org/linear-search/} \url{https://algorithmoftheweek.blog/2020/06/10/sentinel-linear-search/}} . \textit{Binary} funguje lépe než, \textit{Linear} ale pouze pro větší seznamy, zároveň je třeba předem seznam seřadit. \\
+
+\textbf{Složitosti (Big-O):}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}\hline
+         Algoritmus & Časová & Paměťová\\\hline
+         Linear Search & O($n$) & O($1$)\\\hline
+         Binary Search & O($\log n$) & O($1$)\\\hline
+    \end{tabular}
+\end{table}
+
+
+\vspace{1cm}
 \begin{Large}\vspace{0,5cm} \textbf{Lineární a nelineární struktury.}
 \end{Large}
 
@@ -172,6 +190,8 @@ Třídění pomocí algoritmů Bubble Sort, Insert Sort a Select Sort má složi
 \end{Large}
 
 Většina algoritmů je kompromisem mezi těmito dvěma druhy složitosti. Pokud bychom měli algoritmus s vysokými nároky na časovou složitost (aby byl co nejrychlejší) tak jeho paměťová složitost bude vzrůstat. Většinu algoritmů je nějakým způsobem optimalizovaná nebo ji lze optimalizovat.
+
+\newpage
 
 \begin{Large}\vspace{0,5cm} \textbf{Třídy složitosti}
 \end{Large}
