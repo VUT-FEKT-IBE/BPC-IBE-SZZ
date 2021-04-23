@@ -8,9 +8,12 @@
 
 \newpage
 \section{Symetrická kryptografie -- proudové šifry, synchronní a asynchronní proudové šifry.}
+\label{question-4}
+% Promised by jedla97
 
 \newpage
 \section{Blokové šifry -- Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.}
+% Promised by jedla97
 
 \newpage
 \section{Asymetrické algoritmy -- RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.}
@@ -23,6 +26,44 @@
 
 \newpage
 \section{Generování náhodných čísel -- kryptografické generátory, požadavky, použití, princip, testování generátorů.}
+
+Hlavními požadavky na~RNG jsou \textbf{rovnoměrné rozložení} (hodnoty jsou generovány se~stejnou pravděpodobností), \textbf{nezávislost hodnot} (neexistuje korelace mezi nimi), \textbf{nepredikovatelnost} (na~základě znalosti čísla nebo řady čísel nelze předpovědět následující, tzv. \emph{next-bit test}) a~často také \textbf{rychlé generování} nebo odolnost vůči kompromitaci (při~zjištění vnitřního stavu nelze zpětně rekonstruovat dosavadní vygenerovanou posloupnost, tzv. \emph{state compromise}). \emph{Next-bit} ochrana a~zábrana kompromitaci jsou požadavky kryptograficky bezpečných generátorů.
+
+K~vytvoření dostatečného počtu (pseudo)náhodných čísel je nutná dostatečná entropie (míra náhodnosti/nepředvídatelnosti). Když útočník následující hodnotu zná, entropie je nulová. Lze ji vyjádřit jako $H(X) = - \sum_{i=1}^{n} p_i \log_2 p_i$ kde $X$ je generovaná hodnota, $p_1, \dots, p_n$ jsou pravděpodobnosti hodnot $X_1, \dots, X_n$ které je generátor schopen vygenerovat.
+
+\subsection{Typy generátorů}
+
+\subsubsection*{Fyzikální generátory (TRNG)}
+
+Teoreticky jsou nedeterministické, nejsou ale známy přesné parametry, kterými by se daly popsat a~modelovat. Zaručují maximální bezpečnost a~neopakovatelnost. Nevýhodou je pomalé generování či~problematická technická realizace. Příklady: radioaktivní rozpad, tepelný šum, kvantové generátory.
+
+\subsubsection*{Algoritmické generátory (PRNG)}
+
+Posloupnost náhodná není, pokud útočníkovi nejsou známy některé parametry generátoru. Výhodami je rychlost, nízká odchylka od~poměru 1:1 nebo snadná realizace. Nevýhodami jsou bezpečnost či~periodicita. Příklady: čas, teplota HW komponent, šum na~\emph{low-level} sběrnicích (USB, pohyb myši), pohyb HDD.
+
+\subsubsection*{Smíšené generátory}
+
+TRNG z~fyzikálního generátoru se~spojí s~PRNG výstupem pomocí XOR.
+
+\subsection{Příklady realizace PRNG}
+
+\textbf{Bloková šifra v~režimu čítače}: náhodně se zvolí klíč a~počáteční hodnota $i$; zvoleným klíčem se šifrují hodnoty $i, i+1, \dots$ -- perioda u~$n$-bitové šifry je $2^n$. \\
+\textbf{Hashovací funkce aplikovaná na~čítač}: hashuje se $i, i+1, \dots$. \\
+\textbf{Proudové šifry}: viz otázku \ref{question-4}.
+
+\subsection{Konkrétní příklady}
+
+\textbf{\href{https://en.wikipedia.org/wiki/Blum_Blum_Shub}{Blum-Blum-Shub PRNG}} má formu $x_{n+1} = x_n^2 \mod M$ (kde $M = pq$ je násobek dvou velkých prvočísel), výstup je~získán pomocí bitové parity výsledku, nebo z~jednoho či více nejméně významých bitů. Byl navrhnut v~roce 1986. \emph{Seed} by mělo být číslo nesoudělné s~$M$, s~vyloučením $\{0, 1\}$.
+
+\textbf{Linuxový PRNG} sbírá události (myš, klávesnice, HDD, síť, \emph{system interrupts}, systémový čas). Zdroj \texttt{/dev/random} je blokující (při~nedostatku entropie se~čeká), na~rozdíl od~\texttt{/dev/urandom} (\emph{unblocked random}), kdy je vráceno \enquote{méně náhodné číslo}.
+
+\textbf{EGD (Entropy Gathering Daemon)} využívají některé linuxové programy (OpenSSL, GPG, Apache HTTP) pokud není dostatečné množství náhodných bitů v~\texttt{/dev/random}. Entropii sbírá ve~stavu CPU, IO nebo sítě.
+
+\subsection{Testování}
+
+K~ověření vlastností PRNG se využívají statistické testy. Odhalí nekvalitní PRNG, ale neprokážou kvalitní PRNG. Testy vrací $p$-hodnotu, která vyjadřuje sílu důkazů proti nulové hypotéze (\enquote{Testovaná posloupnost je nádhodná.}). Pokdu $p$-hodnota překročí určitou mez, nulovou hypotézu považujeme za~neplatnou.
+
+\textbf{Frekvenční test}: Obsahuje testovaná posloupnost bitů přibližně stejný počet nul a~jedniček? \textbf{Runs test}: Je počet a~délka řetězců po~sobě jdoucích stejných bitů na~úrovni náhodné posloupnosti? \textbf{Test hodností matic}, \textbf{spektrální test}.
 
 \newpage
 \section{Bezpečnostní architektura RM OSI -- služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách.}
