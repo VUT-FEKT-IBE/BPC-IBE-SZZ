@@ -1,10 +1,14 @@
 name: Build all subject PDFs
 
+# Feel free to increment this counter in your attempts to do things
+# the smart way instead of the easy way.
+#
+# total_hours_wasted = 7
+
 on:
   push:
     branches:
       - main
-      - ci-debug
 
 jobs:
   build:
@@ -16,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       # Make the builds
-      # If there is a better way to do this, I'll gladly remove this
+      # If there is a better way to do this, instead of doing it one-by-one, let me know
       - name: Build BPC-AKR
         uses: xu-cheng/latex-action@v2
         with:
@@ -121,19 +125,13 @@ jobs:
           root_file: main.tex
         if: ${{ always() }}
 
-
-      # Zip the PDF files
-      - name: Zip PDFs
-        if: ${{ always() }}
-        run: |
-          zip output.zip */main.pdf
-
       # Prepare tag name
       - name: Create tag
         id: create_tag
         run: |
           tag=build-$(date +%Y%m%d-%H%M%S)
           echo "::set-output name=tag::$tag"
+        if: ${{ always() }}
 
       # Create release draft, so we can add the files
       - name: Create draft release
@@ -147,17 +145,137 @@ jobs:
           draft: true
           prerelease: false
 
-      # Add the zip to the release
-      - name: Add PDFs to release
+      # Upload the assets
+      # Again, if there is better way, please, let me know.
+      - name: Add BPC-AKR to release
         uses: actions/upload-release-asset@v1.0.1
-        id: add_pdfs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
-          asset_path: ./output.zip
-          asset_name: generated-PDFs.zip
-          asset_content_type: application/zip
+          asset_path: ./BPC-AKR/main.pdf
+          asset_name: BPC-AKR.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-DAK to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-DAK/main.pdf
+          asset_name: BPC-DAK.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-HWS to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-HWS/main.pdf
+          asset_name: BPC-HWS.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-IC2 to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-IC2/main.pdf
+          asset_name: BPC-IC2.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-KKR to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-KKR/main.pdf
+          asset_name: BPC-KKR.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-KOM to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-KOM/main.pdf
+          asset_name: BPC-KOM.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-MDS to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-MDS/main.pdf
+          asset_name: BPC-MDS.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-PNA to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-PNA/main.pdf
+          asset_name: BPC-PNA.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-SOS to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-SOS/main.pdf
+          asset_name: BPC-SOS.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-SPR to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-SPR/main.pdf
+          asset_name: BPC-SPR.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-TIN to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-TIN/main.pdf
+          asset_name: BPC-TIN.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-UP2A to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-UP2A/main.pdf
+          asset_name: BPC-UP2A.pdf
+          asset_content_type: application/pdf
+
+      - name: Add BPC-ZSY to release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
+          asset_path: ./BPC-ZSY/main.pdf
+          asset_name: BPC-ZSY.pdf
+          asset_content_type: application/pdf
 
       # Publish the release
       - name: Publish release
