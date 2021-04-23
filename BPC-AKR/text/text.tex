@@ -18,7 +18,71 @@
 \newpage
 \section{Asymetrické algoritmy -- RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.}
 
-\newpage
+Problém diskrétního logaritmu%
+\footnote{\emph{Discrete Logarithm Problem}, DLP}%
+: $$c = m^n \Mod p$$ je pro velká čísla neřešitelné.
+
+\subsection[RSA]{\href{https://en.wikipedia.org/wiki/RSA_(cryptosystem)}{RSA}}
+
+Jde o~relativně pomalý algoritmus, proto se s~ním nešifrují přenášená data samotná, ale pouze klíče pro~symetrickou kryptografii.
+
+\begin{table}[ht]
+\begin{tabular}{ll}
+Vygenerování privátních prvočísel & $p, q$ \\
+Vypočítání privátního čísla & $\phi(n) = (p-1)(q-1)$ \\
+Vypočítání veřejného čísla & $n = r \cdot s$ \\
+Vypočítání veřejného klíče & $k_{\mathrm{pub}} \in [1, n], \mathrm{GCD}(k_{\mathrm{pub}}, \phi(n)) = 1$ \\
+Vypočítání privátního klíče & $k_{\mathrm{priv}} = k_{\mathrm{pub}}^{-1} \Mod \phi(n)$ \\
+\end{tabular}
+\end{table}
+
+Parametry $p, q$ by měly být podobně velké, i~když s~trochu rozdílnou velikostí (pro~ztížení útoků). Jejich společné faktory by měly být co nejmenší, pokud to prvočísla nejsou. Místo funkce $\phi$ se v~praxi používá Carmichaelovu funkci $\lambda$, protože $\phi$ může generovat čísla větší než je třeba.
+
+\begin{table}[ht]
+\begin{tabular}{ll}
+šifrování & $c = m^{k_{\mathrm{pub}}} \Mod n$ \\
+dešifrování & $m = c^{k_{\mathrm{priv}}} \Mod n$ \\
+podepisování & $\mathrm{Sig}_m = m^{k_{\mathrm{priv}}} \Mod n$ \\
+ověření & $\mathrm{Sig}_m^{k_{\mathrm{priv}}} \stackrel{?}{=} m \Mod n$ \\
+\end{tabular}
+\end{table}
+
+\subsection[Diffie--Hellman výměna]{\href{https://en.wikipedia.org/wiki/Diffie-Hellman_key_exchange}{Diffie-Hellman výměna}}
+
+Veřejnými prvky jsou prvočíslo $p$ (s~velikostí nad~2048~b), prvočíslo $q$ (větší než~224~b) a~generátor $z \in \mathbb{Z}_p^*$ velikosti $q$. Jde o~systém náchylný na~MitM, klíče nejsou nijak autentizované.
+
+\begin{table}[ht]
+\begin{tabular}{lcl}
+Alice && Bob \\
+$1 \le a \le p-2$ && $1 \le b \le p-2$ \\
+$A = g^a \Mod p$ & $\stackrel{A}{\rightarrow}$ $\stackrel{B}{\leftarrow}$ & $B = g^b \Mod p$ \\
+$k = B^a \Mod p$ && $k = A^b \Mod p$ \\
+\end{tabular}
+\end{table}
+
+\subsection{Diffie--Hellman výměna nad~eliptickými křivkami}
+
+Vlastnosti ECDH jsou totožné s~DH, DLP je pouze nahrazen jeho verzí nad~křivkami (ECDLP). Násobení na~eliptických křivkách je aplikováno jako opakované přičítání bodu. Asymetrické kryptosystémy nad~eliptickými křivkami nabízí stejnou bezpečnost při~mnohem kratší délce klíče (3072~b DH $\approx$ 160~b ECDH).
+
+\begin{table}[ht]
+\begin{tabular}{lcl}
+Alice && Bob \\
+$a$ && $b$ \\
+$A = aP \Mod p$ & $\stackrel{A}{\rightarrow}$ $\stackrel{B}{\leftarrow}$ & $B = bP \Mod p$ \\
+$k = aB \Mod p$ && $k = bA \Mod p$ \\
+\end{tabular}
+\end{table}
+
+\subsection{Digitální podpisy}
+
+RSA, ElGamal, DSA, ECDSA, ověření certifikátu, blockchain, PKCS\#1, X.509, \dots
+
+\begin{center}
+{\huge \dots} zde je třeba doplnit zbytek {\huge \dots} \\
+(vlastně sám nevím co by tu přesně mělo být)
+\end{center}
+
+\clearpage
 \section{Hašovací funkce -- vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.}
 
 \newpage
@@ -53,7 +117,7 @@ TRNG z~fyzikálního generátoru se~spojí s~PRNG výstupem pomocí XOR.
 
 \subsection{Konkrétní příklady}
 
-\textbf{\href{https://en.wikipedia.org/wiki/Blum_Blum_Shub}{Blum-Blum-Shub PRNG}} má formu $x_{n+1} = x_n^2 \mod M$ (kde $M = pq$ je násobek dvou velkých prvočísel), výstup je~získán pomocí bitové parity výsledku, nebo z~jednoho či více nejméně významých bitů. Byl navrhnut v~roce 1986. \emph{Seed} by mělo být číslo nesoudělné s~$M$, s~vyloučením $\{0, 1\}$.
+\textbf{\href{https://en.wikipedia.org/wiki/Blum_Blum_Shub}{Blum-Blum-Shub PRNG}} má formu $x_{n+1} = x_n^2 \Mod M$ (kde $M = pq$ je násobek dvou velkých prvočísel), výstup je~získán pomocí bitové parity výsledku, nebo z~jednoho či více nejméně významých bitů. Byl navrhnut v~roce 1986. \emph{Seed} by mělo být číslo nesoudělné s~$M$, s~vyloučením $\{0, 1\}$.
 
 \textbf{Linuxový PRNG} sbírá události (myš, klávesnice, HDD, síť, \emph{system interrupts}, systémový čas). Zdroj \texttt{/dev/random} je blokující (při~nedostatku entropie se~čeká), na~rozdíl od~\texttt{/dev/urandom} (\emph{unblocked random}), kdy je vráceno \enquote{méně náhodné číslo}.
 

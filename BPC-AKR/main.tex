@@ -46,6 +46,7 @@
 \usepackage{caption}            % umožňuje podrobnější nastavení popisků obrázků a výpisů
 \usepackage{ifthen}             % if-then-else podmínky (v title)
 \usepackage{amsmath}            % balíček pro sazbu náročnější matematiky
+\usepackage{amssymb}            % matematické symboly, např. dvojité znaky pomocí \mathbb{}
 \usepackage{enumitem}           % pro jednodušší odstranění mezer mezi prvky listu (v itemize)
 \usepackage[formats]{listings}	% Balíček pro sazbu zdrojových textů
 \usepackage{cmap} 		        % balíček cmap zajišťuje, že PDF vytvořené `pdflatexem' je
@@ -71,6 +72,14 @@
                                         %(musí být odkomentované přidání balíčku minted)
 
 \newenvironment{code}{\captionsetup{type=listing}}{}
+
+% ###################
+% # DEFINICE FUNKCÍ #
+% ###################
+
+% Náhrada za \mod a \pmod, které mají přehaně velký prost před svou značkou
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+\newcommand{\Pmod}[1]{\ (\mathrm{mod}\ #1)}
 
 % #########
 % # START #
