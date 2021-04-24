@@ -80,11 +80,11 @@ $a^{-1} = a^{\phi(n) - 1} \Mod n$. Obecně platí $a^{\phi(n)} = 1 \Mod n$
 \end{table}
 
 \noindent
-Počítání probíhá nejprve v~prvních dvou sloupcích, poté zespoda nahoru ve~třetím (barvy napovídají odkud je které číslo). Po~získání výsledku je~nutné zkontrolovat znaméno (tj. je možné, že bude nutné výsledku přidat mínus a~přičíst $n$.)
+Počítání probíhá nejprve v~prvních dvou sloupcích, poté zespoda nahoru ve~třetím. Po~získání výsledku je~nutné zkontrolovat znaménko (tj. je možné, že bude nutné výsledku přidat mínus a~přičíst $n$.)
 
 \subsection{Square \& Multiply}
 
-Urychlení modulárního mocnění příkladů typu \enquote{ $a^k \Mod p$}. Při~řešení příkladu \enquote{$5^{11} \Mod 17$} lze exponent přepsat do~binární podoby: $11_{10} = 1011_2$. Jednotlivé bity se vypíší do~sloupečku tabulky odspoda nahoru (na~prvním řádku je LSB). Postupuje se zeshora dolů, a~pokud je hodnota $k_i$ 1, vykoná se krok $b$.
+Urychlení modulárního mocnění příkladů typu \enquote{ $a^k \Mod p$}. Při~řešení příkladu \enquote{$5^{11} \Mod 17$} lze exponent přepsat do~binární podoby: $11_{10} = 1011_2$. Jednotlivé bity se vypíší do~sloupečku tabulky odspoda nahoru (na~prvním řádku je LSB). Postupuje se zeshora dolů, a~pokud platí $k_i = 1$, vykoná se krok $b$.
 
 \begin{table}[ht]
 \centering
@@ -175,28 +175,32 @@ ověření & $\mathrm{Sig}_m^{k_{\mathrm{priv}}} \stackrel{?}{=} m \Mod n$ \\
 
 \subsection[Diffie--Hellman výměna]{\href{https://en.wikipedia.org/wiki/Diffie-Hellman_key_exchange}{Diffie-Hellman výměna}}
 
-Veřejnými prvky jsou prvočíslo $p$ (s~velikostí nad~2048~b), prvočíslo $q$ (větší než~224~b) a~generátor $z \in \mathbb{Z}_p^*$ velikosti $q$. Jde o~systém náchylný na~MitM, klíče nejsou nijak autentizované.
+Veřejnými prvky jsou prvočíslo $p$ (s~velikostí nad~2048b), prvočíslo $q$ (větší než~224b) a~generátor $z \in \mathbb{Z}_p^*$ velikosti $q$. Jde o~systém náchylný na~MitM, klíče nejsou nijak autentizované.
 
 \begin{table}[ht]
+\centering
 \begin{tabular}{lcl}
 Alice && Bob \\
 $1 \le a \le p-2$ && $1 \le b \le p-2$ \\
 $A = g^a \Mod p$ & $\stackrel{A}{\rightarrow}$ $\stackrel{B}{\leftarrow}$ & $B = g^b \Mod p$ \\
 $k = B^a \Mod p$ && $k = A^b \Mod p$ \\
 \end{tabular}
+\caption*{Znázornění DH výměny.}
 \end{table}
 
 \subsection{Diffie--Hellman výměna nad~eliptickými křivkami}
 
-Vlastnosti ECDH jsou totožné s~DH, DLP je pouze nahrazen jeho verzí nad~křivkami (ECDLP). Násobení na~eliptických křivkách je aplikováno jako opakované přičítání bodu. Asymetrické kryptosystémy nad~eliptickými křivkami nabízí stejnou bezpečnost při~mnohem kratší délce klíče (3072~b DH $\approx$ 160~b ECDH).
+Vlastnosti ECDH jsou totožné s~DH, DLP je pouze nahrazen jeho verzí nad~křivkami (ECDLP). Násobení na~eliptických křivkách je aplikováno jako opakované přičítání bodu. Asymetrické kryptosystémy nad~eliptickými křivkami nabízí stejnou bezpečnost při~mnohem kratší délce klíče (3072b DH $\approx$ 160b ECDH).
 
 \begin{table}[ht]
+\centering
 \begin{tabular}{lcl}
 Alice && Bob \\
 $a$ && $b$ \\
 $A = aP \Mod p$ & $\stackrel{A}{\rightarrow}$ $\stackrel{B}{\leftarrow}$ & $B = bP \Mod p$ \\
 $k = aB \Mod p$ && $k = bA \Mod p$ \\
 \end{tabular}
+\caption*{Znázornění ECDH výměny.}
 \end{table}
 
 \subsection{Digitální podpisy}
@@ -217,7 +221,7 @@ Bezkoliznost prvního řádu (\emph{preimage resistance}) zabraňuje nalezení v
 
 \subsection{Konstrukce}
 
-Jedním ze~způsobů je rozdělení na~$n$-bitové bloky, které jsou zpracovány XOR. Je možné bloky řetězit: $h_i = E(m_i, h_{i-1})$, použít kompresní funkci ($h_i = f(m_i, h_{i-1})$). Před vstupem do~iteračního procesu se zarovnává poslední blok a~přidává se za~ním blok s~délkou zprávy (tzv. Damgard-Merklovo zesílení).
+Jedním ze~způsobů je rozdělení na~$n$-bitové bloky, které jsou zpracovány XOR. Také je možné bloky řetězit: $h_i = E(m_i, h_{i-1})$, použít kompresní funkci ($h_i = f(m_i, h_{i-1})$). Před vstupem do~iteračního procesu se zarovnává poslední blok a~přidává se za~ním blok s~délkou zprávy (tzv. Damgard-Merklovo zesílení).
 
 \subsection{Využití}
 
@@ -230,7 +234,7 @@ Na~běžné současné hashovací funkce neexistují způsoby, jakými by šla p
 
 Pro~kolizi prvního řádu (nalezení vzoru) je složitost $O(2^n)$, kde $n$ je délka původní zprávy. Pro~kolizi druhého řádu (nalezení kolizního souboru) je složitost $(O^{n/2})$, což vyplývá z~tzv.~narozeninového paradoxu\footnote{
 Stačí 23 náhodně vybraných lidí k~tomu, aby se s~pravděpodobností 50~\% našla dvojice, která má narozeniny ve~stejný den, u~skupiny třiceti lidí je pravděpodobnost 70~\%. Pravděpodobnost, že nikdo shodný datum narozenin mít nebude, je $\bar{p}(n) = \frac{365!}{365^n(365 - n)!}$. Obrácené tvrzení $p(n) = 1 - \bar{p}(n)$ překračuje hranici 0.5 pro~$n=23$.
-Tomuto útoku se říká \href{https://cs.wikipedia.org/wiki/Narozeninový_útok}{narozeninový útok} a narozeninovou hranici lze spočítat právě jako $2^{n/2}$.
+Tomuto útoku se říká \href{https://en.wikipedia.org/wiki/Birthday_attack}{narozeninový útok} a narozeninovou hranici lze spočítat právě jako $2^{n/2}$.
 }.
 
 \subsection{Příklady}
@@ -246,9 +250,9 @@ Tomuto útoku se říká \href{https://cs.wikipedia.org/wiki/Narozeninový_útok
 \clearpage
 \section{Generování náhodných čísel -- kryptografické generátory, požadavky, použití, princip, testování generátorů.}
 
-Hlavními požadavky na~RNG jsou \textbf{rovnoměrné rozložení} (hodnoty jsou generovány se~stejnou pravděpodobností), \textbf{nezávislost hodnot} (neexistuje korelace mezi nimi), \textbf{nepredikovatelnost} (na~základě znalosti čísla nebo řady čísel nelze předpovědět následující, tzv. \emph{next-bit test}) a~často také \textbf{rychlé generování} nebo odolnost vůči kompromitaci (při~zjištění vnitřního stavu nelze zpětně rekonstruovat dosavadní vygenerovanou posloupnost, tzv. \emph{state compromise}). \emph{Next-bit} ochrana a~zábrana kompromitaci jsou požadavky kryptograficky bezpečných generátorů.
+Hlavními požadavky na~RNG jsou \textbf{rovnoměrné rozložení} (hodnoty jsou generovány se~stejnou pravděpodobností), \textbf{nezávislost hodnot} (neexistuje korelace mezi nimi), \textbf{nepredikovatelnost} (na~základě znalosti čísla nebo řady čísel nelze předpovědět následující, tzv. \emph{next-bit test}) a~často také \textbf{rychlé generování} nebo odolnost vůči kompromitaci (při~zjištění vnitřního stavu nelze zpětně rekonstruovat dosavadní vygenerovanou posloupnost, tzv. \emph{state compromise}). \emph{Next-bit} ochrana a~zábrana kompromitace jsou požadavky kryptograficky bezpečných generátorů.
 
-K~vytvoření dostatečného počtu (pseudo)náhodných čísel je nutná dostatečná entropie (míra náhodnosti/nepředvídatelnosti). Když útočník následující hodnotu zná, entropie je nulová. Lze ji vyjádřit jako $H(X) = - \sum_{i=1}^{n} p_i \log_2 p_i$ kde $X$ je generovaná hodnota, $p_1, \dots, p_n$ jsou pravděpodobnosti hodnot $X_1, \dots, X_n$ které je generátor schopen vygenerovat.
+K~vytvoření dostatečného počtu (pseudo)náhodných čísel je nutná dostatečná entropie (míra náhodnosti/nepředvídatelnosti). Když útočník následující hodnotu zná, entropie je nulová. Lze ji vyjádřit jako $H(X) = - \sum_{i=1}^{n} p_i \log_2 p_i$ kde $X$ je generovaná hodnota a~$p_1, \dots, p_n$ jsou pravděpodobnosti hodnot $X_1, \dots, X_n$ které je generátor schopen vygenerovat.
 
 \subsection{Typy generátorů}
 
