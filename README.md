@@ -16,15 +16,15 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-AKR
 
-- [ ] Prvočísla – popište způsob generování a uveďte příklad pravděpodobnostního testu a skutečného testu.
+- [x] Prvočísla – popište způsob generování a uveďte příklad pravděpodobnostního testu a skutečného testu.
 - [ ] Teorie čísel, algebraické struktury – popište účel a způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.
-- [ ] Modulární aritmetika – popište algoritmus Square and Multiply a Čínskou větu o zbytcích.
+- [x] Modulární aritmetika – popište algoritmus Square and Multiply a Čínskou větu o zbytcích.
 - [ ] Symetrická kryptografie – proudové šifry, synchronní a asynchronní proudové šifry.
 - [ ] Blokové šifry - Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.
-- [ ] Asymetrické algoritmy - RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.
-- [ ] Hašovací funkce - vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.
+- [x] Asymetrické algoritmy - RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.
+- [x] Hašovací funkce - vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.
 - [ ] PKI - certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.
-- [ ] Generování náhodných čísel - kryptografické generátory, požadavky, použití, princip, testování generátorů.
+- [x] Generování náhodných čísel - kryptografické generátory, požadavky, použití, princip, testování generátorů.
 - [ ] Bezpečnostní architektura RM OSI - služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách. 
 
 ### BPC-IC2
@@ -55,16 +55,16 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-TIN
 
-- [ ] Správa paměti, statické přidělování paměti, dynamické pěidelování paměti, garbage collector, reprezentace informace v paměti
-- [ ] Jazyk UML a objektově orientovaný návrh - dědicnost, generalizace, asociace 1:n, n:1, n:n, agregace a kompozice.
-- [ ] Třídy složitosti pamětové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů. 4) Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti. 
-- [ ] Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a vyhledávání prvku v ADT lineární seznam. ADT zásobník, ADT fronta.
-- [ ] Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranení, smazání uzlu stromu). Průchody stromy in-order, pre-order, post-order.
-- [ ] Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. 7) Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Rešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromu a hashovacích tabulek.
-- [ ] Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.
-- [ ] Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šírky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). 10) Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*
-- [ ] Evlouční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, krížení, chromozom. Princip evolučních algoritmů.
-- [ ] Parallel computing and architectures, processes, threads and their synchroization. Dead lock.
+- [x] Správa paměti, statické přidělování paměti, dynamické pěidelování paměti, garbage collector, reprezentace informace v paměti
+- [x] Jazyk UML a objektově orientovaný návrh - dědicnost, generalizace, asociace 1:n, n:1, n:n, agregace a kompozice.
+- [x] Třídy složitosti pamětové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů. 4) Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti. 
+- [x] Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a vyhledávání prvku v ADT lineární seznam. ADT zásobník, ADT fronta.
+- [x] Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranení, smazání uzlu stromu). Průchody stromy in-order, pre-order, post-order.
+- [x] Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. 7) Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Rešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromu a hashovacích tabulek.
+- [x] Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.
+- [x] Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šírky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). 10) Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*
+- [x] Evlouční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, krížení, chromozom. Princip evolučních algoritmů.
+- [x] Parallel computing and architectures, processes, threads and their synchroization. Dead lock.
 
 
 ## Informační bezpečnost v praxi: Informatika
@@ -182,8 +182,8 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [ ] Datové schránky – právní úprava a praxe používání
 - [ ] Provozní a lokalizační údaje a jejich využití v trestním řízení
 - [ ] Právní úprava kybernetické bezpečnosti v CR - základní principy
-- [ ] Ochrana osobních údajů – vymezení osob a základní principy zpracování osobních údajů
-- [ ] Povinnosti správce a zpracovatele osobních údajů
-- [ ] Práva subjektu údajů ve vztahu ke správci a zpracovateli
+- [x] Ochrana osobních údajů – vymezení osob a základní principy zpracování osobních údajů
+- [x] Povinnosti správce a zpracovatele osobních údajů
+- [x] Práva subjektu údajů ve vztahu ke správci a zpracovateli
 - [ ] Informace veřejného sektoru – pojem, česká a evropská právní úprava
-- [ ] Otevřená data – pojem a právní úprava
+- [x] Otevřená data – pojem a právní úprava
