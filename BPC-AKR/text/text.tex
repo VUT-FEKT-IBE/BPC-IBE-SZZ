@@ -1,21 +1,102 @@
 \section{Prvočísla -- popište způsob generování a uveďte příklad pravděpodobnostního testu a skutečného testu}
 
-\newpage
+\clearpage
 \section{Teorie čísel, algebraické struktury -- popište účel a~způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.}
 
-\newpage
+\clearpage
 \section{Modulární aritmetika -- popište algoritmus Square and Multiply a Čínskou větu o zbytcích.}
 
-\newpage
+Modulární aritmetika pracuje s~celými čísly v~daném intervalu. Pro~čísla platí: \\
+-- \textbf{reflexivita}: $a \equiv a \Pmod n$ \\
+-- \textbf{symetrie}: $a \equiv b \wedge b \equiv a \Pmod n$ \\
+-- \textbf{tranzitivita}: $a \equiv b \wedge b \equiv c \Rightarrow a \equiv c \Pmod n$
+
+\vspace*{1em} \noindent
+\textbf{Malá Fermatova věta} urychluje modulární mocnění: \\
+$a^p \equiv a \Pmod p$ (také \enquote{$a^p - a$ je dělitelné $p$}).
+
+\vspace*{1em} \noindent
+\textbf{Eulerova-Fermatova věta} umožňuje získat inverzní prvek: \\
+$a^{-1} = a^{\phi(n) - 1} \Mod n$. Obecně platí $a^{\phi(n)} = 1 \Mod n$
+
+\vspace*{1em} \noindent
+\textbf{Rozšířený Euklidův algoritmus} umožňuje získat inverzní prvek (zde $5^{-1} \Mod 13$):
+
+\begin{table}[ht]
+	\centering
+\begin{tabular}{ll|l}
+	$12 = n$                               & {}                                           & \boxed{\stackrel{?}{\pm} 5} $=$ {\color{violet}2} $\cdot$ {\color{blue}2} + {\color{brown}1} (mod 12) \\
+	\hline
+	$5 = x$                                & {\color{violet}2} $= \lfloor 12 / 5 \rfloor$ & {\color{blue}2} = {\color{red}2} $\cdot$ {\color{brown}1} + {\color{teal}0} \\
+	$2 = 12 - (5 \cdot {\color{violet}2})$ & {\color{red}2}    $= \lfloor 5 / 2 \rfloor$  & {\color{brown}1} \\
+	$1 = 5 - (2 \cdot {\color{red}2})$     & {\color{purple}2} $= \lfloor 2 / 1 \rfloor$  & {\color{teal}0} \\
+	$0 = 2 - (1 \cdot {\color{purple}2})$  & {}                                           & {}
+\end{tabular}
+\caption*{Ukázka výpočtu inverzního prvku použitím Rozšířeného Euklidova algoritmu.}
+\end{table}
+
+\noindent
+Počítání probíhá nejprve v~prvních dvou sloupcích, poté zespoda nahoru ve~třetím (barvy napovídají odkud je které číslo). Po~získání výsledku je~nutné zkontrolovat znaméno (tj. je možné, že bude nutné výsledku přidat mínus a~přičíst $n$.)
+
+\subsection{Square \& Multiply}
+
+Urychlení modulárního mocnění příkladů typu \enquote{ $a^k \Mod p$}. Při~řešení příkladu \enquote{$5^{11} \Mod 17$} lze exponent přepsat do~binární podoby: $11_{10} = 1011_2$. Jednotlivé bity se vypíší do~sloupečku tabulky odspoda nahoru (na~prvním řádku je LSB). Postupuje se zeshora dolů, a~pokud je hodnota $k_i$ 1, vykoná se krok $b$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|ll}
+$k_i$      & $A$                                                & $b = {\color{magenta}1}$ \\
+\hline
+\textbf{1} & ${\color{red}5} = a$                               & ${\color{teal}5} = {\color{magenta}1} \cdot {\color{red}5}$ \\
+\textbf{1} & ${\color{violet}8} = {\color{red}5}^2 \Mod 17$     & ${\color{blue}6} = {\color{teal}5} \cdot {\color{violet}8} \Mod 17$ \\
+        0  & ${\color{purple}13} = {\color{violet}8}^2 \Mod 17$ & \\
+\textbf{1} & ${\color{brown}16} = {\color{purple}13}^2 \Mod 17$ & $\boxed{11} = {\color{blue}6} \cdot {\color{brown}16} \Mod 17$ \\
+\end{tabular}
+\caption*{Ukázka výpočtu pomocí Square \& Multiply.}
+\end{table} 
+
+\clearpage
+\subsection{Čínská věta o~zbytcích}
+
+Používá se pro~modulární mocnění. $m_1, \dots, m_k$ jsou nesoudělná čísla. $a_1, \dots, a_k \in \mathbb{Z}$. Systém
+
+\begin{align*}
+x &\equiv a_1 \,(\mathrm{mod}\, m_1) \\
+x &\equiv a_2 \,(\mathrm{mod}\, m_2) \\
+&\dots \\
+x &\equiv a_k \,(\mathrm{mod}\, m_k) \\
+\end{align*} %
+má výsledné modulo $M = m_1 \cdot m_2 \cdots m_k$. Řešení lze vypočítat vzorcem
+
+$$ x = \sum_{i=1}^{k} a_i N_i L_i \Mod M $$
+kde $M = m_1 \cdot m_2 \cdots m_k$, $N_i = M / m_i$, $L_i = N_i^{-1} \Mod m_i$.
+
+\begin{figure}[ht]
+\centering
+\begin{align*}
+x &\equiv 3 \Pmod 6 (= a_1 \Pmod {m_1}) \\
+x &\equiv 2 \Pmod 7 (= a_2 \Pmod {m_2}) \\
+M = m_1 \cdot m_2 &= 6 \cdot 7 = 42 \\
+N_1 = M / m_1 &= 42 / 6 = 7 \\
+N_2 = M / m_2 &= 42 / 7 = 6 \\
+L_1 = N_1^{-1} \Mod m_1 &= 7^{-1} \Mod 6 = 1 \\
+L_2 = N_2^{-1} \Mod m_2 &= 6^{-1} \Mod 7 = 6 \\
+x = (a_1 N_1 L_1 + a_2 N_2 L_2) \Mod M &= 3 \cdot 7 \cdot 1 + 2 \cdot 6 \cdot 6 \Mod 42 = \boxed{9} \\
+\end{align*}
+\vspace*{-4em}
+\caption*{Ukázka výpočtu čínské věty o~zbytcích.}
+\end{figure}
+
+\clearpage
 \section{Symetrická kryptografie -- proudové šifry, synchronní a asynchronní proudové šifry.}
 \label{question-4}
 % Promised by jedla97
 
-\newpage
+\clearpage
 \section{Blokové šifry -- Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.}
 % Promised by jedla97
 
-\newpage
+\clearpage
 \section{Asymetrické algoritmy -- RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.}
 
 Problém diskrétního logaritmu%
@@ -85,10 +166,12 @@ RSA, ElGamal, DSA, ECDSA, ověření certifikátu, blockchain, PKCS\#1, X.509, \
 \clearpage
 \section{Hašovací funkce -- vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.}
 
-\newpage
+
+
+\clearpage
 \section{PKI -- certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.}
 
-\newpage
+\clearpage
 \section{Generování náhodných čísel -- kryptografické generátory, požadavky, použití, princip, testování generátorů.}
 
 Hlavními požadavky na~RNG jsou \textbf{rovnoměrné rozložení} (hodnoty jsou generovány se~stejnou pravděpodobností), \textbf{nezávislost hodnot} (neexistuje korelace mezi nimi), \textbf{nepredikovatelnost} (na~základě znalosti čísla nebo řady čísel nelze předpovědět následující, tzv. \emph{next-bit test}) a~často také \textbf{rychlé generování} nebo odolnost vůči kompromitaci (při~zjištění vnitřního stavu nelze zpětně rekonstruovat dosavadní vygenerovanou posloupnost, tzv. \emph{state compromise}). \emph{Next-bit} ochrana a~zábrana kompromitaci jsou požadavky kryptograficky bezpečných generátorů.
@@ -129,5 +212,5 @@ K~ověření vlastností PRNG se využívají statistické testy. Odhalí nekval
 
 \textbf{Frekvenční test}: Obsahuje testovaná posloupnost bitů přibližně stejný počet nul a~jedniček? \textbf{Runs test}: Je počet a~délka řetězců po~sobě jdoucích stejných bitů na~úrovni náhodné posloupnosti? \textbf{Test hodností matic}, \textbf{spektrální test}.
 
-\newpage
+\clearpage
 \section{Bezpečnostní architektura RM OSI -- služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách.}
