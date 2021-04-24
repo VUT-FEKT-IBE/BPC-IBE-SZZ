@@ -8,7 +8,7 @@ Operační systém si lze (opravdu zjednodušeně) představit jako program skl�
 \end{enumerate}
     
 \begin{center}
-    \includegraphics[scale=1]{images/OS_kernel_apps.png}
+    \includegraphics[scale=1]{BPC-SOS/images/OS_kernel_apps.png}
 \end{center}
 
 V Operačních Systémech zpravidla rozlišujeme dva základní režimy operací:
@@ -28,7 +28,7 @@ V uživatelském režimu běží všechny aplikace, krom jádra. Více viz \ref{
 Jak již napovídá samotný název, \textit{monolitický systém} je systém který prakticky nemá skoro žádnou strukturu. Jádro je pouze souhrn procedur, které se navzájem volají. Tento druh jádra vzniká kompilací zdrojových kódů na objektové soubory (končící na .o), tyto objektové soubory jsou potom \textit{svázány}/\textit{spojeny} v tzv. \textit{linkeru} do jednoho spustitelného souboru. Tady vyplývá na povrch první značná nevýhoda \textit{monolitických} jader, při jakékoliv změně v jádře je třeba jej kompletně překompilovat! 
 
 \begin{center}
-    \includegraphics[scale=1]{images/OS_mono_kernel.png}
+    \includegraphics[scale=1]{BPC-SOS/images/OS_mono_kernel.png}
 \end{center}
 
 I když jsme si řekli, že tento systém vlastně žádnou strukturu nemá, šla by i tak popsat takto (s pomocí obrázku výše):
@@ -113,12 +113,12 @@ Uživatelský kontext procesu se skládá z neměnné (statické) části a dyna
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{images/proc_user_context.png}
+    \includegraphics[width=\textwidth]{BPC-SOS/images/proc_user_context.png}
     \caption{Uživatelský kontext procesu}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{images/proc_data_segment.png}
+    \includegraphics[width=\textwidth]{BPC-SOS/images/proc_data_segment.png}
     \caption{Datová část paměti procesu}
   \end{minipage}
 \end{figure}
@@ -151,7 +151,7 @@ V tomto kontextu jsou udržovány informaci o rozložení uživatelského kontex
     
     \newpage
     
-    \item Stav činnosti procesu:
+    \item Stav činnosti procesu (zjednodušeně):
     \begin{enumerate}
         \item Nový - proces je vytvářený
         \item Připravený - proces čeká na to, až mu bude přidělen procesor
@@ -164,7 +164,7 @@ V tomto kontextu jsou udržovány informaci o rozložení uživatelského kontex
 Po vytvoření procesu je ve stavu \textit{připravený}. Poté co je vybrán plánovačem procesů tak je \textit{vykonáván}. Vykonávání se ukončí buď dobrovolným opuštěním procesu, nebo v případu příchozího přerušení, nebo zablokování procesu z důvodu čekání na určitou událost (například na načítající se data). Při zablokování, poté co proces již není ve stavu \textit{čekání} je opět ve stavu \textit{připravený}. A celý $"$cyklus$"$ se opakuje. Pokud proces svou práci dokončí, tak přejde do stavu \textit{ukončený} do kterého lze přejít pouze ze stavu \textit{vykonávaný}! Při změně vykonávání procesu - přepnutí kontextu - se aktuální stav běhu procesu uloží v řídící tabulce procesů, ze které se i načítá poslední stav běhu procesu.
 
 \begin{center}
-    \includegraphics[scale=1]{images/proc_states.png}
+    \includegraphics[scale=1]{BPC-SOS/images/proc_states.png}
 \end{center}
 
 \begin{Large}
@@ -183,7 +183,7 @@ Právě skrz sdílený uživatelský kontext vláken je třeba aby programátor 
 Poté z pohledu spravování vláken je lze rozdělit na dva typy, \textit{vlákna jádra} (z programu jádra) a \textit{uživatelská vlákna} (z programů mimo jádro). Mezi uživatelskými vlákny a vlákny jádra existuje několik možných návazností/modelů:
 
 \begin{center}
-    \includegraphics[scale=1]{images/thread_models.png}
+    \includegraphics[scale=1]{BPC-SOS/images/thread_models.png}
 \end{center}
 
 \begin{itemize}
@@ -194,6 +194,49 @@ Poté z pohledu spravování vláken je lze rozdělit na dva typy, \textit{vlák
 
 \newpage
 \section{Činnost procesů\,--\,stavy činnosti, rozšířený stavový model běhu procesů}
+
+Dříve vyjmenované stavy nejsou kompletní výčet. Skutečný stavový model má devět položek, které jsou:
+
+\begin{enumerate}
+    \item Proces je vykonáván v uživatelském režimu
+    \item Proces je vykonáván v režimu jádra
+    \item Proces je připraven ke zpracování a je uložen v hlavní paměti
+    \item Proces je spící a je uložen v hlavní paměti
+    \item Proces je připraven ke zpracování a je uložen v odkládací paměti
+    \item Proces je spící a je uložen v odkládací paměti
+    \item Vykonávání procesu je nuceně přerušeno
+    \item Proces je vytvořený a je v přechodovém stavu
+    \item Proces je ve stavu \textit{zombie}, neexistuje, ale v systému je o něm záznam 
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[scale=0.9]{BPC-SOS/images/proc_extended_states.png}
+\end{center}
+
+Je důležité si povšimnout, že se prakticky jedná o rozšíření zkráceného modelu. Například stav \textit{vykonávaný} je zde rozšířen o informaci v jakém režimu běží. A jaký je rozdíl mezi \textit{uživatelským režimem} a \textit{režimem jádra}? Do režimu jádra se proces dostane pomocí systémových volání nebo přerušení, jinak (s výjimkou jádru vlastních procesů) běží v uživatelském režimu!
+
+\vspace{0,5cm}
+
+Stav \textit{čekající} je zde rozšířen na \textit{spící a uložen v hlavní paměti} a \textit{spící a uložen v odkládací paměti}. Přechod mezi těmito dvěma stavy řídí plánovač II. úrovně, který vyměňuje procesy mezi hlavní (RAM) a odkládací pamětí (swap na disku). Změna stavu zde může být pouze do odkládací paměti. 
+
+\vspace{0,5cm}
+
+\textit{Připravený} je nahrazen stavy \textit{připravený ke zpracování a uložen v hlavní paměti} a \textit{připraven ke zpracování a uložen v odkládací paměti}. Přechod je zde opět dán plánovačem II. úrovně. Tentokrát však dochází k obousměrným přechodům. 
+
+\vspace{0,5cm}
+
+\textit{Proces v hlavní paměti} zahrnuje stavy \textit{připraven ke zpracování a uložen v hlavní paměti} a \textit{spící a uložen v hlavní paměti}. Přechod mezi těmito stavy je jednosměrný a je způsoben probuzením procesu (dočkáním se na událost kvůli které byl uspán).
+
+\vspace{0,5cm}
+
+\textit{Proces v odkládací paměti} zahrnuje stavy \textit{připraven ke zpracování a uložen v odkládací paměti} a \textit{spící uložen v odkládací paměti}. Přechod funguje stejně jako v předešlém odstavci. 
+
+\begin{Large}
+    \vspace{0,5cm}    
+    \textbf{Více do hloubky}
+\end{Large}
+
+% TODO
 
 \newpage
 \section{Plánování procesů\,--\,okamžiky rozhodnutí, plánovací algoritmy, systém priorit}
