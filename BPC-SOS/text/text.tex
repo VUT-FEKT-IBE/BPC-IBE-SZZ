@@ -8,7 +8,7 @@ Operační systém si lze (opravdu zjednodušeně) představit jako program skl�
 \end{enumerate}
     
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/OS_kernel_apps.png}
+    \includegraphics[scale=1]{images/OS_kernel_apps.png}
 \end{center}
 
 V Operačních Systémech zpravidla rozlišujeme dva základní režimy operací:
@@ -28,7 +28,7 @@ V uživatelském režimu běží všechny aplikace, krom jádra. Více viz \ref{
 Jak již napovídá samotný název, \textit{monolitický systém} je systém který prakticky nemá skoro žádnou strukturu. Jádro je pouze souhrn procedur, které se navzájem volají. Tento druh jádra vzniká kompilací zdrojových kódů na objektové soubory (končící na .o), tyto objektové soubory jsou potom \textit{svázány}/\textit{spojeny} v tzv. \textit{linkeru} do jednoho spustitelného souboru. Tady vyplývá na povrch první značná nevýhoda \textit{monolitických} jader, při jakékoliv změně v jádře je třeba jej kompletně překompilovat! 
 
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/OS_mono_kernel.png}
+    \includegraphics[scale=1]{images/OS_mono_kernel.png}
 \end{center}
 
 I když jsme si řekli, že tento systém vlastně žádnou strukturu nemá, šla by i tak popsat takto (s pomocí obrázku výše):
@@ -113,12 +113,12 @@ Uživatelský kontext procesu se skládá z neměnné (statické) části a dyna
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{BPC-SOS/images/proc_user_context.png}
+    \includegraphics[width=\textwidth]{images/proc_user_context.png}
     \caption{Uživatelský kontext procesu}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{BPC-SOS/images/proc_data_segment.png}
+    \includegraphics[width=\textwidth]{images/proc_data_segment.png}
     \caption{Datová část paměti procesu}
   \end{minipage}
 \end{figure}
@@ -164,7 +164,7 @@ V tomto kontextu jsou udržovány informaci o rozložení uživatelského kontex
 Po vytvoření procesu je ve stavu \textit{připravený}. Poté co je vybrán plánovačem procesů tak je \textit{vykonáván}. Vykonávání se ukončí buď dobrovolným opuštěním procesu, nebo v případu příchozího přerušení, nebo zablokování procesu z důvodu čekání na určitou událost (například na načítající se data). Při zablokování, poté co proces již není ve stavu \textit{čekání} je opět ve stavu \textit{připravený}. A celý $"$cyklus$"$ se opakuje. Pokud proces svou práci dokončí, tak přejde do stavu \textit{ukončený} do kterého lze přejít pouze ze stavu \textit{vykonávaný}! Při změně vykonávání procesu - přepnutí kontextu - se aktuální stav běhu procesu uloží v řídící tabulce procesů, ze které se i načítá poslední stav běhu procesu.
 
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/proc_states.png}
+    \includegraphics[scale=1]{images/proc_states.png}
 \end{center}
 
 \begin{Large}
@@ -183,7 +183,7 @@ Právě skrz sdílený uživatelský kontext vláken je třeba aby programátor 
 Poté z pohledu spravování vláken je lze rozdělit na dva typy, \textit{vlákna jádra} (z programu jádra) a \textit{uživatelská vlákna} (z programů mimo jádro). Mezi uživatelskými vlákny a vlákny jádra existuje několik možných návazností/modelů:
 
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/thread_models.png}
+    \includegraphics[scale=1]{images/thread_models.png}
 \end{center}
 
 \begin{itemize}
