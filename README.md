@@ -123,15 +123,16 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-ZSY
 
-- [ ] Systémy PZS (Architektura PZS. Prvky PZS. Typy systémů PZS podle komunikace. Dvojitě vyvážená smyčka.)
-- [ ] Předmětové a překážkové detektory PZS (Typy detektorů z hlediska vícevrstvé ochrany. Typy předmětových detektorů – účel a jejich fyzikální princip. Typy překážkových detektorů – účel a jejich fyzikální princip. V rámci odpovědi vysvětlit i fungování piezoelektrického snímače, akcelerometru a tenzometru.)
-- [ ] Objemové a hraniční detektory PZS (Typy objemových detektorů – účel a jejich fyzikální princip. Typy hraničních detektorů – účel a jejich fyzikální princip. V rámci odpovědi vysvětlit i fungování pyroelektrického snímače.)
-- [ ] Dohledové videosystémy (Účel. Základní prvky. Schéma hybridního a digitálního systému. Architektura kamery. Kalkulace záběru. Techniky zpracování signálu - integrace snímků, BLC, WDR a HLC).
-- [ ] Systémy EPS a hlásiče EPS (Účel. Architektura. Základní prvky. Schéma a princip fungování smyčkového a sběrnicového systému. Bodové hlásiče a jejich fyzikální principy. Lineární hlásiče a jejich fyzikální principy. Prostorové hlásiče a jejich fyzikální principy.)
-- [ ] Systémy EKV (Účel, prvky a architektura systému EKV. Typy autentizace – princip a vlastnosti. Karty s magnetickým páskem – princip a vlastnosti. Bezkontaktní karty podle ISO 14443 – princip a vlastnosti.)
-- [ ] Biometrické systémy EKV (Architektura a správa biometrického systému EKV. Autentizace otisky prstů, cévním řečištěm prstu a dlaně, obličejem a duhovkou – principy a vlastnosti.)
-- [ ] Systémy na ochranu zboží (Účel a klasifikace. Kabelové systémy – princip a vlastnosti. AM systémy – princip a vlastnosti. RF systémy – princip a vlastnosti.)
-- [ ] Elektronické platební systémy (Účel. Typy a jejich charakteristika. Vysvětlit protokol TLS. Vysvětlit nespřažený platební protokol.) 
+- [x] Systémy PZS (Architektura PZS. Prvky PZS. Typy systémů PZS podle komunikace. Dvojitě vyvážená smyčka.)
+- [x] Předmětové a překážkové detektory PZS (Typy detektorů z hlediska vícevrstvé ochrany. Typy předmětových detektorů – účel a jejich fyzikální princip. Typy překážkových detektorů – účel a jejich fyzikální princip. V rámci odpovědi vysvětlit i fungování piezoelektrického snímače, akcelerometru a tenzometru.)
+- [x] Objemové a hraniční detektory PZS (Typy objemových detektorů – účel a jejich fyzikální princip. Typy hraničních detektorů – účel a jejich fyzikální princip. V rámci odpovědi vysvětlit i fungování pyroelektrického snímače.)
+- [x] Dohledové videosystémy (Účel. Základní prvky. Schéma hybridního a digitálního systému. Architektura kamery. Kalkulace záběru. Techniky zpracování signálu - integrace snímků, BLC, WDR a HLC).
+- [x] Systémy EPS a hlásiče EPS (Účel. Architektura. Základní prvky. Schéma a princip fungování smyčkového a sběrnicového systému. Bodové hlásiče a jejich fyzikální principy. Lineární hlásiče a jejich fyzikální principy. Prostorové hlásiče a jejich fyzikální principy.)
+- [x] Systémy EKV (Účel, prvky a architektura systému EKV. Typy autentizace – princip a vlastnosti. Karty s magnetickým páskem – princip a vlastnosti. Bezkontaktní karty podle ISO 14443 – princip a vlastnosti.)
+- [x] Biometrické systémy EKV (Architektura a správa biometrického systému EKV. Autentizace otisky prstů, cévním řečištěm prstu a dlaně, obličejem a duhovkou – principy a vlastnosti.)
+- [x] Systémy na ochranu zboží (Účel a klasifikace. Kabelové systémy – princip a vlastnosti. AM systémy – princip a vlastnosti. RF systémy – princip a vlastnosti.)
+- [x] Elektronické platební systémy (Účel. Typy a jejich charakteristika. Vysvětlit protokol TLS. Vysvětlit nespřažený platební protokol.) 
+- [x] Ochrany digitálních děl (Účel a klasifikace ochran.Vzdálené DRM ochrany – typy, principy a vlastnosti.Lokální DRM ochrany – typy, principy a vlastnosti.)
 
 
 ## Informační bezpečnost v praxi: Právo
@@ -164,11 +165,11 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-SPR
 
-- [ ] Software jako předmět právní ochrany - srovnání ochrany autorskoprávní a patentové ochrany
-- [ ] Autorství software - autor, spoluautor, kolektivní dílo, souborné dílo, odvozené dílo, otázka autorství umělé inteligence
+- [x] Software jako předmět právní ochrany - srovnání ochrany autorskoprávní a patentové ochrany
+- [x] Autorství software - autor, spoluautor, kolektivní dílo, souborné dílo, odvozené dílo, otázka autorství umělé inteligence
 - [ ] Osobnostní a majetková práva autora software - obsah, doba trvání, vyčerpání práv
-- [ ] Omezení rozsahu práv autora k software - dekompilace, reverzní inženýrství a další
-- [ ] Ochrana neliterárních složek software - ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)
+- [x] Omezení rozsahu práv autora k software - dekompilace, reverzní inženýrství a další
+- [x] Ochrana neliterárních složek software - ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)
 - [ ] Software jako zaměstnanecké dílo, školní dílo, kolektivní dílo a dílo na objednávku
 - [ ] Právní ochrana databází - pojem, způsoby ochrany, obsah a rozdíly
 - [ ] Smlouvy a software - licenční smlouva, smlouva o dílo a SLA - pojem, strany, obsah, forma a proces uzavírání
