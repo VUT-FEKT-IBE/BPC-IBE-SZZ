@@ -1,4 +1,48 @@
-\section{Prvočísla -- popište způsob generování a uveďte příklad pravděpodobnostního testu a skutečného testu}
+\section{Prvočísla -- popište způsob generování a~uveďte příklad pravděpodobnostního testu a~skutečného testu}
+
+Jsou extrémně důležitá pro téměř všechny kryptosystémy: asymetrické šifrování, digitální podpisy, ustanovení klíčů i~vyšší systémy (TLS, PKI).
+
+Prvočísel je nekonečně mnoho, počet $\pi(n)$ menší než $n$ lze pro~velké hodnoty aproximovat jako $\pi(n) = \frac{n}{\ln(n)}$. Současné kryptosystémy využívají prvočísla o~velikosti 2048-4096b (600 - 1200 cifer).
+
+\subsection{Typy prvočísel}
+
+\textbf{Mersennova prvočísla}: $M_p = 2^n - 1$ (např. 31). \\
+\textbf{Sophie-Germain prvočísla}: $p$ pokud $2p + 1$ je také prvočíslo (např. 11). \\
+\textbf{Bezpečná prvočísla}: $B_p = 2p + 1$ (např. 23).
+
+\subsection{Generování}
+
+Velmi neefektivním způsobem je Eratosthenovo síto. Sestaví se seznam všech čísel od~2 do~$n$. První se ze~seznamu vyřadí a~prohlásí se za~prvočíslo, všechny jeho násobky se ze~seznamu vyřadí. Takto se pokračuje dokud nedosáhneme $\sqrt{n}$, kdy zbývají pouze prvočísla.
+
+Prakticky se buď volí bezpečná prvočísla, nebo se náhodně vygeneruje číslo požadované velikosti a~otestuje se, zda se o~prvočíslo jedná.
+
+\subsection{Pravděpodobnostní testy}
+
+\textbf{Fermatův test} je založen na~modulárním mocnění. Zvolíme libovolné $a: 1 \leq a \leq n-1$, spočteme $a^{n-1} \stackrel{?}{\equiv} 1 \Pmod n$. Pokud kongruence platí, opakujeme pro~jiné $a$, pokud neplatí, $n$ prvočíslo není. Čím více pokusů, tím větší šance že se o~prvočíslo jedná. Nedokáže odlišit prvočísla a~Carmichaelova čísla\footnote{%
+Carmichaelovo číslo splnňuje kongurenci $b^{n-1} \equiv 1 \Pmod n$ pro~všechna $b$ nesoudělná s~$n$.
+}.
+
+\noindent \textbf{Miller-Rabinův test} je spolehlivější než~Fermatův; složená čísla projdou iterací s~maximálně 25\% pravděpodobností.
+
+\begin{table}[ht]
+\begin{tabular}{l|l}
+0 & $n = 2^s r + 1$ kde $r$ je liché \\
+1 & $a: 1 \leq a \leq n-1$ \\
+2 & $\begin{cases}
+a^r \equiv 1 \Pmod n & \mathrm{nov\acute{a}\ iterace} \\
+a^r \not\equiv 1 \Pmod n & \mathrm{bod\ 3} \\
+\end{cases}$ \\
+3 & Platí $a^{2^i r} \equiv n-1 \Pmod n$ pro všechna $i: 0 \leq i \leq s-1$ $\begin{cases}
+\mathrm{ano:} & \mathrm{nov\acute{a}\ iterace} \\
+\mathrm{ne:} & \mathrm{je\ slo\check{z}en\acute{e}} \\
+\end{cases}$ \\
+\end{tabular}
+\end{table}
+
+\subsection{Skutečné testy}
+
+\textbf{Lucas-Lehmerův test} funguje pouze pro~Mersenova prvočísla ($M_p = 2^s - 1$). \\
+$u_0 = 4$, $u_{n+1} = (u_n^2 - 2) \Mod n$, \dots, $u_{s-2} \stackrel{?}{=} 0$.
 
 \clearpage
 \section{Teorie čísel, algebraické struktury -- popište účel a~způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.}
