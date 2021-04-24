@@ -91,6 +91,7 @@ x = (a_1 N_1 L_1 + a_2 N_2 L_2) \Mod M &= 3 \cdot 7 \cdot 1 + 2 \cdot 6 \cdot 6 
 \section{Symetrická kryptografie -- proudové šifry, synchronní a asynchronní proudové šifry.}
 \label{question-4}
 % Promised by jedla97
+% Je možné tu u proudových šifrer nějak zmínit PRNG, případně to doplnit u otázky 9?
 
 \clearpage
 \section{Blokové šifry -- Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.}
@@ -166,7 +167,34 @@ RSA, ElGamal, DSA, ECDSA, ověření certifikátu, blockchain, PKCS\#1, X.509, \
 \clearpage
 \section{Hašovací funkce -- vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.}
 
+Hashovací funkce slouží k~vyjádření reprezentace dat pomocí krátného řetězce. Jejími požadavky jsou \textbf{jednosměrnost} (z~hashe nelze získat původní data), \textbf{bezkoliznost} (vytvořit dva soubory se~stejným otiskem je velmi obtížné až~nemožné) a~\textbf{rychlost}.
 
+Bezkoliznost prvního řádu (\emph{preimage resistance}) zabraňuje nalezení vzoru, bezkoliznost řádu druhého (\emph{second preimage resistance}) zabraňuje ke~zprávě $m_1$ nalézt $m_2$ takovou, aby platilo $h(m_1) = h(m_2)$.
+
+\subsection{Konstrukce}
+
+Jedním ze~způsobů je rozdělení na~$n$-bitové bloky, které jsou zpracovány XOR. Je možné bloky řetězit: $h_i = E(m_i, h_{i-1})$, použít kompresní funkci ($h_i = f(m_i, h_{i-1})$). Před vstupem do~iteračního procesu se zarovnává poslední blok a~přidává se za~ním blok s~délkou zprávy (tzv. Damgard-Merklovo zesílení).
+
+\subsection{Využití}
+
+\textbf{Zkrácení zprávy} na~její otisk (pro~digitální podpisy), \textbf{autentizace}, zrychlení vyhledávání v~databázích, \textbf{hesla}, PRNG, \dots.
+
+
+\subsection{Kolize}
+
+Na~běžné současné hashovací funkce neexistují způsoby, jakými by šla původní data získat. Proto je nutné použít útok hrubou silou a~zkoušet jeden vstup za~druhým. % TODO Rainbow tables
+
+Pro~kolizi prvního řádu (nalezení vzoru) je složitost $O(2^n)$, kde $n$ je délka původní zprávy. Pro~kolizi druhého řádu (nalezení kolizního souboru) je složitost $(O^{n/2})$, což vyplývá z~tzv.~narozeninového paradoxu\footnote{
+Stačí 23 náhodně vybraných lidí k~tomu, aby se s~pravděpodobností 50~\% našla dvojice, která má narozeniny ve~stejný den, u~skupiny třiceti lidí je pravděpodobnost 70~\%. Pravděpodobnost, že nikdo shodný datum narozenin mít nebude, je $\bar{p}(n) = \frac{365!}{365^n(365 - n)!}$. Obrácené tvrzení $p(n) = 1 - \bar{p}(n)$ překračuje hranici 0.5 pro~$n=23$.
+Tomuto útoku se říká \href{https://cs.wikipedia.org/wiki/Narozeninový_útok}{narozeninový útok} a narozeninovou hranici lze spočítat právě jako $2^{n/2}$.
+}.
+
+\subsection{Příklady}
+
+128b \textbf{LM~Hash} je stará funkce využívaná v~OS Windows od~osmdesátých let do~verze Vista/Server 2008, v~nejnovějších systémech je možné ji zapnout. Dva (\emph{null-padded}) bloky po~sedmi bajtech jsou zašifrovány dvěma DES klíči a~spojeny zpět k~sobě. \\
+128b \textbf{MD5} aplikuje 64 rund (XOR, bit shift, posouvání subbloků, \dots). Poprvé plně prolomena v~roce 2004, od~roku 2010 oficiálně prohlášena za~nedostatečně bezpečnou. Stále je možné ji používat jako kontrolu integrity. \\
+224b/256b/384b/512b \textbf{SHA-2} se sada hashovacích funkcí využívajících XOR, \emph{bit shift} a~modulární sčítání. Existují útoky na~oslabené verze (méně rund), všechny funkce z~této rodiny jsou považovány za~bezpečné. \\
+224b/256b/384b/512b \textbf{SHA-3} využívá algoritmus Keccak (\enquote{princip houby}) a~je součást SHA rodiny od~roku 2015.
 
 \clearpage
 \section{PKI -- certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.}
