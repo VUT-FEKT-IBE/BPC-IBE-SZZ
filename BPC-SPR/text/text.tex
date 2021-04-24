@@ -97,6 +97,23 @@ Shrnutí: nejvíce relavantními jsou nároky tvůrců AI a~uživatelů -- něco
 \newpage
 \section[Omezení rozsahu práv autora k software\,--\,dekompilace, reverzní inženýrství a další]{Omezení rozsahu práv autora k software\,--\,dekompi-lace, reverzní inženýrství a další}
 
+Dekompilace programu, není povolena~v~každém případě. Lze provádět pouze za~účelem interoperability (je schopnost různých systémů vzájemně spolupracovat, poskytovat si služby, dosáhnout vzájemné součinnosti) a~je třeba~provádět jen nezbytně nutné úkony. Dekompilovat lze pouze až po vyčerpání všech možností jako je obrácení se na~autora. Platí pouze za~speciálních podmínek. Při dekompilaci lze pouze provádět rozmnožovaní kódu a~překlad formy kódu ve smyslu čl. 4 SW směrnice -- stále nebo dočasné rozmnožovaní, překlady, zpracovaní, a~jiné úpravy programu. Taktéž nelze dekompilovat pokud program, se kterým chceme dosáhnout interoperability neexistuje alespoň ve formě návrhu. Dále může dekompilovat pouze oprávněná osoba, nelegální držitelé licence dekompilaci nemohou provádět. Všechny potřebné informace mohou být použity pouze k dosažení interoperability. K tomu si musíme definovat, kdo je to oprávněný nabyvatel a uživatel.
+
+Reverzní inženýrství lze provádět buď na základě dekompilace nebo blackbox a whitebox testovaní. 
+
+\textbf{Oprávněný nabyvatel} -- může být ten, kdo si program zakoupil, pronajal, získal licenci přímo od držitele práv, a~i od původního oprávněného nabyvatele.
+
+\textbf{Oprávněný uživatel} -- problematické, oprávněný uživatel může být na základě smlouvy, nebo zákona~\href{https://www.zakonyprolidi.cz/cs/2000-121#p66-6}{§66} \uv{\emph{Oprávněným uživatelem je oprávněný nabyvatel rozmnoženiny, který k ní má vlastnické nebo jiné právo za~účelem využití}}. Tato definice je tautologická nebolí říká že oprávněným uživatelem je oprávněný uživatel. Řešil to nejvyšší soud i~soudní dvůr EU, který stanovil, že se může jednat i o jinou osobu než o tu se kterou byla~smlouva~uzavřena~(lze přeprodat licenci), ale původní uživatel musí odstranit SW ze svého PC a~nepoužívat jej. Nejvyšší soud se zabýval poslaným CD s licenčním klíčem na produkty Microsoftu, v kterém vzal v potaz i rozhodnutí soudního dvora EU.
+
+\textbf{Třístupňový test} -- hledání výjimky, platné jsou pouze výjimky stanovené v~zákoně, aplikace vyjímek je dovolena~jen, pokud to není v~rozporu s užitím díla~a~nejsou tím nepřiměřeně dotčeny oprávněné zájmy autora. I při dovoleném reverzním inženýrství musíme projít tímto testem.
+
+\textbf{Blackbox analýza} -- mohu zkoumat nebo studovat funkčnost programu za~účelem zjištění myšlenek a~principů na~nichž je založen jakýkoliv~prvek programu a činím-li tak při zavedení, uložení do paměti počítače nebo při jeho zobrazení, provozu či přenosu, ke kterému je uživatel oprávněn. Není zde omezení jak nakládat se získanými informacemi. Charakteristika je, že není přístup ke zdrojovému kódu.  (\href{https://www.zakonyprolidi.cz/cs/2000-121#p66}{Autorský zákon §66} písmeno d)
+
+\textbf{Whitebox analýza} -- je charakteristický tím že je znám zdrojový kód a můžeme si tedy představit co očekávat na výstupu při určitém vstupu na rozdíl od blackboxu. Zde je to podobné jako u dekompilace takže je povoleno pouze k dosažení interoperability a musí se projít třístupňovým testem.
+
+
+
+
 \newpage
 \section{Ochrana neliterárních složek software\,--\,ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)}
 
