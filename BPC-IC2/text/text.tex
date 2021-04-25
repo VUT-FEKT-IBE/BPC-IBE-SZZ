@@ -1,30 +1,122 @@
 \section{Definujte a vysvětlete základní pojmy (aktiva, hrozba, ochrana, bezpečnost, zranitelnost, riziko, incident a~dopad).}
 
-\newpage
+\begin{table}[ht]
+\begin{tabular}{l|l}
+\textbf{aktiva}       & cokoliv cenného: data, služby, hardware, software, \dots \\
+\textbf{hrozba}       & možnost ztráty aktiv \\
+\textbf{ochrana}      & opatření ke~snížení rizika, četnosti nebo velikosti ztrát \\
+\textbf{bezpečnost}   & stav, kdy riziko ztráty aktiv nepřesahuje určitou míru \\
+\textbf{zranitelnost} & místo bez~dostatečné ochrany \\
+\textbf{incident}     & realizace hrozby \\
+\textbf{dopad}        & důsledek útoku, rozsah škod \\
+\end{tabular}
+\end{table}
+
+\clearpage
 \section{Bezpečná konfigurace přepínače a směrovače (základní postupy konfigurace, bezpečnostní funkce, útoky, Port Security, port Fast, hardening).}
 
-\newpage
+L1:~rozbočovač (hub) a~opakovač (repeater), L2:~most (bridge) a~přepínač (switch), L3:~směrovač (router), přepínač (switch) a~brána (gateway), L4-L7:~sondy, brány, firewally, \dots
+
+\subsection{Konfigurace}
+\label{question2-1}
+
+Jako v~případě veškerého síťového hardware je třeba \textbf{fyzicky zabezpečit přístup} k~přepínači (klíče, kódy, biometrie), připojit UPS, nepoužívané fyzické porty umístit do~\enquote{mrtvé} VLAN (aby~nebylo možné jen tak připojit nové zařízení). Je nutné zkontrolovat \textbf{požadavky na~síťový přístup} (HTTPS, dostatečné SSH klíče, logování přístupů a~manipulace, ACL), \textbf{vypnout služby a~porty} které nejsou využívány, \textbf{zapnout bezpečnostní funkce} (\href{https://en.wikipedia.org/wiki/DHCP_snooping}{DHCP Snooping}, \href{https://en.wikipedia.org/wiki/MAC_filtering}{MAC filtering/Port Security}, AAA, IPS, VPN). Také je třeba \textbf{zálohovat} konfigurace, nastavení testovat a~ověřovat, \textbf{aktualizovat} software i~firmware.
+
+% TODO Tuto sekci je třeba projít a zkontrolovat, nevyznám se v tom dost na to, abych tomu plně věřil
+\subsection{Zabezpečení přepínače}
+
+\textbf{\href{https://en.wikipedia.org/wiki/MAC_filtering}{Port Security}} je omezení počtu MAC adres na~port/ochrana před~MAC útoky. \textbf{PortFast} nastavení porty na~forwarding state ihned po~zapojení (připojení stanic a~serverů). \textbf{BPDU Guard} chrání síť před~zasíláním BPDU zpráv (Spanning Tree) na~porty, které by takové zprávy v~normálním provozu z~těchto portů nedostaly. \textbf{Root Guard} zabraňuje nahrazení Root Bridge \emph{spoofovanou} zprávou od~útočníka, nastaví všechny root porty pro~STP.
+
+Mezi útoky patří \textbf{MAC address spoofing} (příjem cizích dat pomocí nelegitimní změny směrovacích tabulek), \textbf{ARP Poisoning} (úprava ARP cache vede k~MitM), \textbf{Rough DHCP Server Spoofing} (falešný DHCP server odpovídá rychleji $\rightarrow$ MitM, DoS), \textbf{DHCP Starvation} (DHCP je zaplaven velkým množstvím dotazů s~cílem vyčerpání paměti IP adres), \textbf{STP Manipulation} (útočník jako Root Bridge pro~příjem provozu v~síti), \textbf{MAC address table overflow} (vyčerpá se MAC tabulka adres na~přepínači, který se přepne na~HUB a~data posílá všemi porty), \textbf{LAN storm} (přepínače přeposílají broadcast všemi porty, čímž se~přetíží CPU a~dojde k~DoS).
+
+\subsection{Zabezpečení směrovače}
+
+Bezpečná konfigurace je~popsána výše v~podkapitole \ref{question2-1}.
+
+Mezi typické útoky na~směrovače patří pokiusy o~\textbf{průnik do~nastavení} (zneužití výchozích hesel), \textbf{Routing Table Poisoning} (\emph{spoofování} routovacích protokolů a~vyvolání nežádoucích změn ve~směrovacích tabulkách), \textbf{Hit and Run} (posílání škodlivých paketů v~náhodných intervalech), \textbf{(D)DoS} (vytížení CPU/RAM velkým množstvím paketů, logické útoky typu \href{https://en.wikipedia.org/wiki/Christmas_tree_packet}{Christmas tree packet} attack).
+
+\clearpage
 \section{Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).}
 
-\newpage
+\textbf{Log}, záznamová data, logovací zpráva je soubor nebo sada souborů obsahujících záznamy reprezentující popis konkrétní události, která nastala ve~sledovaném systému.
+
+\subsection{Úrovně}
+
+-- \textbf{ladící} (\texttt{DEBUG}): využívané při~vývoji a~hledání problémů, \\
+-- \textbf{informační} (\texttt{INFO}): popisují stavy a~události, \\
+-- \textbf{varovné} (\texttt{WARNING}): chybějící funkce nebo~součást systému, \\
+-- \textbf{chybové} (\texttt{ERROR}): chyby ohrožující funkčnost systému, \\
+-- \textbf{pohotovostní} (\texttt{CRITICAL}): událost spojená s~bezpečností nebo stav, ve~kterém sytém již dále nedokáže pracovat.
+
+\subsection{Formát}
+
+\textbf{Textový} formát má výhodu ve~skutečnosti, že ho lze otevřít v~jakémkoliv textovém editoru. Jeho vytváření je nenáročné na~systémové prostředky, existuje společná syntaxe pro~mnoho aplikací. \\
+\textbf{Binární} formát lze číst pouze k~tomu určeným programem. Binární logy bývají menší než textové (data lze ukládat efektivnějí), lépe se ukládají do~databáze a~mají lepší optimalizaci využíti prostředků. Binární logování využívá například OS~Windows nebo Systemd.
+
+\subsection{Obsah}
+
+Každý záznam musí mít časové razítko, aby bylo v~případě problémů lehké zjistit posloupnost událostí. Také by měl obsahovat zdroj, který záleží na~typu logu: aplikační log by měl ukládat soubor či funkci, systémový program a~uživatele, síťový konkrétní stroj a~jeho adresu. Nesmí dojít k~ukládání hesel nebo klíčů.
+
+Každému záznamu je také přiřazena úroveň pro~účely filtrace a~oddělení informačních údajů od~těch, kterým je potřeba věnovat zvýšenou pozornost. A~také musí být obsažena informace samotná, včetně informace o~chybě (\emph{traceback}), je-li k~dispozici.
+
+\subsection{Ochrana a~manipulace}
+
+Administrátor systému by měl mít přehled o~souborech, do~kterých logy zapisují klíčové programy a~démony (přihlašování, změna nastavení systému). Tyto logy by měly být zálohovány a~chráněny -- v~případě existence centrálního logovacího serveru je potřeba zajistit jejich bezpečnost i~při~přenosu po~síti.
+
+\subsection{Analýza}
+
+V~případě incidentu, nebo i~při~pravidelné kontrole, lze využívat filtraci i~další programy, které hlídají zaznamenané události. Při~ruční analýze lze využít základní nástroje jako \texttt{tail}, \texttt{cat}, \texttt{grep} nebo Event Viewer, automatické nástroje využívají postup \enquote{agregace $\rightarrow$ filtrace $\rightarrow$ normalizace $\rightarrow$ korelace $\rightarrow$ reporting}. SIEM%
+\footnote{Security Information and~Event Management} %
+nepokrývají všechny potřeby organizace a~velkou část korelací událostí je~nutné doprogramovat.
+
+\subsubsection{Detekce anomálií}
+
+\textbf{Frekvenční model} počítá výskyty definovaného jevu za~pevně daný okamžik. \textbf{Referenční model} porovnáva model \enquote{normálního} chování a~sleduje, zda se sledované jevy pohybují v~povolených odchylkách -- data jsou sbírána a~porovnávána s~modelem. Přesnost je velmi závislá na~množství a~kvalitě dat ze~kterých byl model vytvořen. \textbf{Model strojového učení} klasifikuje vstupní data do~tříd a~shlukuje je do~skupin s~posobnými vlastnostmi.
+
+Anomáliemi mohou být nadměrný provoz, změna chování síťového prvku, přihlášení pomocí VPN mimo pracovní hodiny, opakovaná neúspěšná přihlášení, přihlášení z~více IP během krátké doby, \dots
+
+\clearpage
 \section{Definice operací nutných k aplikaci automatické analýzy logů (blokové schéma včetně popisu funkce jednotlivých bloků). Jakým způsobem je realizován blok korelace při detekci známých a neznámých událostí.}
 
-\newpage
+\clearpage
 \section{Detekce nepříznivých událostí na základě signatur a~anomálií, systémy IDS/IPS (vzájemný vztah, efektivita a ladění, umístění, základní architektura, zástupci, referenční model).}
 
-\newpage
+\clearpage
 \section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).}
 
-\newpage
+\clearpage
 \section{(D)DoS útoky (princip, rozdělení, popis základních útoků, SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slowloris). Zátěžové testování (typy testů, nejznámější nástroje).}
 
-\newpage
+\clearpage
 \section{Netechnické typy útoků, sociální inženýrství, phising (používané techniky), útoky MitM (ARP spoofing, DNS spoofing, SSL strip, SSL sniff).}
 
-\newpage
+\textbf{sociální inženýrství}: psychická manipulace s~lidmi za~účelem zisku informací, přístupu ke~službě nebo provedení podvodu \\
+\textbf{phishing}: kontaktování uživatelů s~cílem získání citlivých informaci pro~škodlivé účely \\
+\textbf{spear phisthing}: phishing mířený na~konkrétní osoby \\
+\textbf{clone phishing}: vytvoření phishing zprávy z~původně legitimní \\
+\textbf{whaling}: cílení na~vlivné představitele firm či organizací nebo na~veřejné osoby \\
+\textbf{baiting}: zanechání malware na~médiu, které má oběť objevit a~připojit ke~svému sytému \\
+vydávání se za~jinou profesi (technická podpora, údržba) \\
+\textbf{tailgating}: průnik do~chráněných prostor s~nevědomou pomocí legitimního uživatele \\
+\textbf{insider threats}: hrozby od~vnitřního uživatele
+
+\subsection*{Phishing}
+
+\textbf{Vektory} bývají e-mail, sociální sítě, webové portály nebo instant messaging. \textbf{Cílem} bývá přístup k~bankovnictví, webovým portálům, sociálním sítím nebo IT službám. \textbf{Obranou} je legislativa, školení uživatelů, veřejná informovanost, technická opatření (e-mail filtering, vynucení 2FA).
+
+Využívá se \textbf{manipulace s~odkazy} (modifikace URL, rozdíl mezi obsahem a~cílem \texttt{<a>} tagu pomocí JS), \textbf{obcházení filtrace} (využití obrázků či videa místo textu), \textbf{website tampering} (podvržení webových stránek) nebo \textbf{covert redirect} (přesměrování odkazů na~phishing stránky s~XSS/falešným přihlášením).
+
+% TODO
+\subsection*{MitM}
+
+\textbf{ARP spoofing} \dots \textbf{DNS spoofing} \dots \textbf{SSL strip} \dots \textbf{SSL sniff} \dots
+
+\begin{center}
+{\huge \dots} zde je třeba doplnit zbytek {\huge \dots}
+\end{center}
+
+\clearpage
 \section{Protokoly IPsec a TLS (princip, umístění TCP/IP, průběh komunikace, autentizace, utajení a integrita dat).}
 
-\newpage
+\clearpage
 \section{Zabezpečení 802.11 (WPA2, používaná kryptografická primitiva, klíčové hospodářství, popis 4Way Handshake, testování bezpečnosti).}
-
-\newpage
