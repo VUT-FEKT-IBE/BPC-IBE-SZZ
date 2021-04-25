@@ -123,7 +123,59 @@ data loss                   & ano &     & ano & ano  &     & --- \\
 \section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).}
 
 \clearpage
-\section{(D)DoS útoky (princip, rozdělení, popis základních útoků, SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slowloris). Zátěžové testování (typy testů, nejznámější nástroje).}
+\section{(D)DoS útoky (princip, rozdělení, popis základních útoků: SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slow-Loris). Zátěžové testování (typy testů, nejznámější nástroje).}
+
+\textbf{DDoS} (\emph{Distributed Denial of~Services}) je DoS útok realizovaný z~více uzlů, které s~hlavním útočníkem spolupracují a~napadají cílový uzel.
+
+\textbf{Botnet} je skupina uzlů (až statisíce), které zpravidla bez~vědomí svých majitelů útočí na~cíle na~internetu. Svému majiteli vytváří zpravidla zisk nebo jiné prostředky (exploit, trojan, pronájem, těžba kryptoměn, krádež dat).
+
+% TODO Možná by se hodilo ty útoky nalinkovat, pokud k nim něco existuje?
+\subsection{Typy útoků}
+
+\subsubsection{Záplavové útoky}
+
+\textbf{ARP flood}: ARP dotazy \\
+\textbf{RST flood}: pakety obsahují falešné IP adresy s~parametrem RST, který resetuje spojení \\
+\textbf{SYN flood}: otevření spojení bez~následného potvrzení \\
+\textbf{HTTP flood}: legitimní, ale náročné GET a~POST dotazy \\
+\textbf{UDP flood}: legitimní UDP datagramy \\
+\textbf{PingSweep}: zprávy od~uzlů požadují odpovědi od~cílového systému \\
+\textbf{Smurf}: ICMP pakety se \emph{spoofovanou} adresou oběti jsou posílány na~broadcast adresu \\
+\textbf{Reflection attack}: malý dotaz se~zdrojovou adresou oběti: DNS/NTP amplifikace
+
+\subsubsection{Logické útoky}
+
+\textbf{Teardrop}: fragmenty paketů se špatně nastaveným offsetem: cíl není schopen správně sestavit celý packet \\
+% TODO Opravdu je to "Land"?
+\textbf{Land}: TCP-SYN mají cílovou IP adresu i~port shodné se~zdrojovou adresou \\
+\textbf{Ping of~Death}: ICMP ping s~velikostí nad~65kB \\
+\textbf{ReDoS}: extrémní zátěž pomocí regulérních výrazů
+
+\subsubsection{Další typy útoků}
+
+\textbf{RandomUnreachableHost}, \textbf{UnreachableHost}: neautorizované přerušení spojení \\
+\textbf{XMasTree}: TCP paket má v~hlavičce nastaveny příznaky FIN, URG, PST \\
+\textbf{Slow-Loris}: nekompletní pomalý GET dotaz
+
+\subsection{Detekce a~mitigace}
+
+Detekce signatur a~anomálií. Robustní a~bezpečná síťová infrastruktura; firewally, IDS, honeypoty, redundantní linky a~servery; vysokorychlostní DDoS filtry; blacklisting \& whitelisting; \emph{tarpit} (udržení příchozích spojení v~open-state, snížení TCP window na~nulu); rate limiting na~směrovačích; filtrace na~základě reputace zdroje (IP rozsah, geolokace, služba).
+
+\subsection{Zátěžové testování}
+
+Lze testovat sítě jako celek, síťová zařízení (servery, routery, firewally), koncové stanice (počítače, telefony) nebo aplikační vrstvu (webové služby, operační systémy, aplikace).
+
+Postup testování: \textbf{definice} (specifikace cíle, požadavků a~běžného provozu), \textbf{příprava} (nastavení sítě a~testeru), \textbf{realizace} (monitoring, opakování), \textbf{vyhodnocení} (dokumentace).
+
+Hlídanými \textbf{parametry} jsou: doba, počet dotazů, čas na~dotaz, dotazy za~čas, přenesená data, distribuční rozložení odpovědí, \dots
+
+\textbf{Performance test} je zatížení systému definovanou zátěží pro~změření chování. \textbf{Stress test} je postupné zatěžování narůstajícím počtem paralelních spojení. \textbf{Soak test} je dlouhodobé testování. \textbf{Failover test} je ověření chování systému v~případě selhání. \textbf{Targeted infrastructure test} slouží k~detekci nejslabších míst. \textbf{Volume test} je ověření chování při~zvýšeném objemu dat.
+
+Je vhodné testovat mimo běžnou špičku, aby nebyla ohrožena finanční (služby zákazníkům) nebo bezpečnostná strana sítě.
+
+\subsection{Software testery}
+
+Avalanche (hardware, do~40Gbps), Apache jMeter, LOIC.
 
 \clearpage
 \section{Netechnické typy útoků, sociální inženýrství, phising (používané techniky), útoky MitM (ARP spoofing, DNS spoofing, SSL strip, SSL sniff).}
