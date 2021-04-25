@@ -29,9 +29,9 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-IC2
 
-- [ ] Definujte a vysvětlete základní pojmy (aktiva, hrozba, ochrana, bezpečnost, zranitelnost, riziko, incident a dopad).
-- [ ] Bezpečná konfigurace přepínače a směrovače (základní postupy konfigurace, bezpečnostní funkce, útoky, Port Security, port Fast, hardening).
-- [ ] Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).
+- [x] Definujte a vysvětlete základní pojmy (aktiva, hrozba, ochrana, bezpečnost, zranitelnost, riziko, incident a dopad).
+- [x] Bezpečná konfigurace přepínače a směrovače (základní postupy konfigurace, bezpečnostní funkce, útoky, Port Security, port Fast, hardening).
+- [x] Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).
 - [ ] Definice operací nutných k aplikaci automatické analýzy logů (blokové schéma včetně popisu funkce jednotlivých bloků). Jakým způsobem je realizován blok korelace při detekci známých a neznámých událostí.
 - [ ] Detekce nepříznivých událostí na základě signatur a anomálií, systémy IDS/IPS (vzájemný vztah, efektivita a ladění, umístění, základní architektura, zástupci, referenční model).
 - [ ] Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).
@@ -110,9 +110,9 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-SOS
 
-- [ ] Struktura OS – systémové jádro, monilitický systém, architektura klient-server, virtuální stroje
-- [ ] Procesy – uživatelský kontext, kontext jádra, vlákna
-- [ ] Činnost procesů – stavy činnosti, rozšířený stavový model běhu procesů
+- [x] Struktura OS – systémové jádro, monilitický systém, architektura klient-server, virtuální stroje
+- [x] Procesy – uživatelský kontext, kontext jádra, vlákna
+- [x] Činnost procesů – stavy činnosti, rozšířený stavový model běhu procesů
 - [ ] Plánování procesů – okamžiky rozhodnutí, plánovací algoritmy, systém priorit
 - [ ] Synchronizace procesů – souběh, vzájemné vyloučení, uvíznutí procesů
 - [ ] Správa paměti – vyměňování procesů, virtuální paměť pomocí stránkování a segmentace
