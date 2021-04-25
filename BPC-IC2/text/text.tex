@@ -119,6 +119,66 @@ data loss                   & ano &     & ano & ano  &     & --- \\
 \clearpage
 \section{Detekce nepříznivých událostí na základě signatur a~anomálií, systémy IDS/IPS (vzájemný vztah, efektivita a ladění, umístění, základní architektura, zástupci, referenční model).}
 
+\emph{Intrusion Detection Systems} odchytávají pakety a~provádí jejich analýzu, \emph{Intrusion Prevention Systems} k~tomu umí vytvářet vlastní aktivitu v~potlačování nevhodné aktivity.
+
+Typicky jsou nasazeny \enquote{inline} jako síťové firewally. Umístění je rozhodující pro~jejich správnou funkčnost, často to bývá mezi komponetnami síťové infrastruktury.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+\tikzstyle{block} = [rectangle, minimum width=2cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{rounded} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{arrow} = [thick,-,>=stealth]
+%
+\node (internet) [rounded] {\textbf{internet}};
+\node (ids-out) [block, right of=internet] {\emph{IPS}};
+\node (firewall) [block, right of=ids-out] {\textbf{firewall}};
+\node (ids-server) [block, below of=firewall, yshift=1cm] {\emph{IPS}};
+\node (server1) [block, left of=ids-server] {Mail};
+\node (server2) [block, right of=ids-server] {Web};
+\node (ids-in) [block, right of=firewall] {\emph{IDS}};
+\node (lan) [rounded, right of=ids-in] {\textbf{LAN}};
+%
+\draw [arrow] (internet) -- (ids-out);
+\draw [arrow] (ids-out) -- (firewall);
+\draw [arrow] (firewall) -- (ids-server);
+\draw [arrow] (ids-server) -- (server1);
+\draw [arrow] (ids-server) -- (server2);
+\draw [arrow] (firewall) -- (ids-in);
+\draw [arrow] (ids-in) -- (lan);
+\end{tikzpicture}
+\end{figure}
+
+IDS/IPS existují ve~třech variantách: \textbf{komplexní} zařízení je hardware a~software vytvořený k~efektivnímu odchytávání a~analýze provozu, \textbf{softwarová} zařízení jsou speciální programy nainstalované na~server (Snort, Suricata), \textbf{cloudová} jsou dostupná od~ISP (Radware, F5).
+
+V~\textbf{jednovrstvé} architektuře je IPS/IDS tvořen jedinou komponentou, která obstarává všechny funkce. Ve~\textbf{vícevrstvé} architektuře (zpravidla třívrstvé) existuje jeden manažer (analyzuje hlášení a~realizuje opatření), kterému náleží agenti (analyzují protokoly a~služby), kteří využívají senzory (monitorující provoz a~předávající data).
+
+\subsection{Referenční model IPS}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=5.5cm]
+\tikzstyle{block} = [rectangle, minimum width=5cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+%
+\node (1) [block] {Výběr souboru dat};
+\node (2) [block, right of=1]                              {Zvolení časového intervalu};
+\node (3) [block, right of=2]                              {Vypočtení modelu};
+\node (4) [block, below of=3, yshift=3.5cm]                {Získání dat na~porovnání};
+\node (5) [block, below of=2, yshift=1.5cm, xshift=2.75cm] {Porovnání};
+\node (6) [block, below of=2, yshift=3.5cm]                {Přidání nových dat};
+\node (7) [block, left of=5]                               {Reakce na~výsledek};
+%
+\draw [arrow] (1) -- (2);
+\draw [arrow] (2) -- (3);
+\draw [arrow] (3) -- (4);
+\draw [arrow] (4) -- (5);
+\draw [arrow] (5) -- (6);
+\draw [arrow] (6) -- (3);
+\draw [arrow] (5) -- (7);
+\end{tikzpicture}
+\end{figure}
+
 \clearpage
 \section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).}
 
