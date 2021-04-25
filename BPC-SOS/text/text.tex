@@ -1,3 +1,7 @@
+%%%%%%
+% OS %
+%%%%%%
+
 \section{Struktura OS – systémové jádro, monolitický systém, architektura klient-server, virtuální stroje} \label{kernel}
 
 Operační systém si lze (opravdu zjednodušeně) představit jako program skládající se z \textit{jádra} (tj. \textit{kernel}) a \textit{systémových programů}. \textit{Systémové programy} jsou takové programy, které poskytují prostředí pro spouštění a běh \textit{aplikačních programů} (aplikace které nejsou součástí OS). Dále pak  \textit{systémová volání} fungují jako jakési API pro \textit{systémové programy} aby mohly volat funkce z jádra. (toto např. umožňuje čtení\footnote{pomocí systémového volání \textit{open}, kde můžeme nastavovat různé možnosti, jako \textit{O\_APPEND,O\_CREAT}} ze souboru nebo jejich vytváření\footnote{může se například vytvořit pomocí systémového volání \textit{open} s možností \textit{O\_CREAT}, která soubor vytvoří pokud neexistuje})
@@ -8,7 +12,7 @@ Operační systém si lze (opravdu zjednodušeně) představit jako program skl�
 \end{enumerate}
     
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/OS_kernel_apps.png}
+    \includegraphics[scale=1]{images/OS_kernel_apps.png}
 \end{center}
 
 V Operačních Systémech zpravidla rozlišujeme dva základní režimy operací:
@@ -28,7 +32,7 @@ V uživatelském režimu běží všechny aplikace, krom jádra. Více viz \ref{
 Jak již napovídá samotný název, \textit{monolitický systém} je systém který prakticky nemá skoro žádnou strukturu. Jádro je pouze souhrn procedur, které se navzájem volají. Tento druh jádra vzniká kompilací zdrojových kódů na objektové soubory (končící na .o), tyto objektové soubory jsou potom \textit{svázány}/\textit{spojeny} v tzv. \textit{linkeru} do jednoho spustitelného souboru. Tady vyplývá na povrch první značná nevýhoda \textit{monolitických} jader, při jakékoliv změně v jádře je třeba jej kompletně překompilovat! 
 
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/OS_mono_kernel.png}
+    \includegraphics[scale=1]{images/OS_mono_kernel.png}
 \end{center}
 
 I když jsme si řekli, že tento systém vlastně žádnou strukturu nemá, šla by i tak popsat takto (s pomocí obrázku výše):
@@ -81,6 +85,9 @@ Základní myšlenkou je tzv. \textit{abstrakce hardware} do několika různých
 \vspace{0,5cm}
 Každý virtuální stroj má své jádro, který musí běžet v kontextu jádra. Zároveň se však jedná o uživatelský proces, proto se vytváří virtuální uživatelský kontext a virtuální kontext jádra který však běží v uživatelském režimu na hostovacím systému. Pokud dojde ve virtuálním prostředí k sys. volání, bude obsloužení emulováno pomocí virtualizačního software (značně pomalejší než reálný systém). 
 
+%%%%%%%%%%%
+% PROCESY %
+%%%%%%%%%%%
 
 \newpage
 \section{Procesy\,--\,uživatelský kontext, kontext jádra, vlákna} \label{procesy}
@@ -113,12 +120,12 @@ Uživatelský kontext procesu se skládá z neměnné (statické) části a dyna
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{BPC-SOS/images/proc_user_context.png}
+    \includegraphics[width=\textwidth]{images/proc_user_context.png}
     \caption{Uživatelský kontext procesu}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{BPC-SOS/images/proc_data_segment.png}
+    \includegraphics[width=\textwidth]{images/proc_data_segment.png}
     \caption{Datová část paměti procesu}
   \end{minipage}
 \end{figure}
@@ -164,7 +171,7 @@ V tomto kontextu jsou udržovány informaci o rozložení uživatelského kontex
 Po vytvoření procesu je ve stavu \textit{připravený}. Poté co je vybrán plánovačem procesů tak je \textit{vykonáván}. Vykonávání se ukončí buď dobrovolným opuštěním procesu, nebo v případu příchozího přerušení, nebo zablokování procesu z důvodu čekání na určitou událost (například na načítající se data). Při zablokování, poté co proces již není ve stavu \textit{čekání} je opět ve stavu \textit{připravený}. A celý $"$cyklus$"$ se opakuje. Pokud proces svou práci dokončí, tak přejde do stavu \textit{ukončený} do kterého lze přejít pouze ze stavu \textit{vykonávaný}! Při změně vykonávání procesu - přepnutí kontextu - se aktuální stav běhu procesu uloží v řídící tabulce procesů, ze které se i načítá poslední stav běhu procesu.
 
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/proc_states.png}
+    \includegraphics[scale=1]{images/proc_states.png}
 \end{center}
 
 \begin{Large}
@@ -183,7 +190,7 @@ Právě skrz sdílený uživatelský kontext vláken je třeba aby programátor 
 Poté z pohledu spravování vláken je lze rozdělit na dva typy, \textit{vlákna jádra} (z programu jádra) a \textit{uživatelská vlákna} (z programů mimo jádro). Mezi uživatelskými vlákny a vlákny jádra existuje několik možných návazností/modelů:
 
 \begin{center}
-    \includegraphics[scale=1]{BPC-SOS/images/thread_models.png}
+    \includegraphics[scale=1]{images/thread_models.png}
 \end{center}
 
 \begin{itemize}
@@ -192,8 +199,12 @@ Poté z pohledu spravování vláken je lze rozdělit na dva typy, \textit{vlák
     \item Mnoho k mnoha - Kombinace předešlých, přiřazuje vláknům stejný nebo menší počet vláken v kernelu. Počet těchto vláken může být omezen vzhledem k aplikaci nebo druhu zařízení (např. jednoprocesorové vs. víceprocesorové)
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%
+% ČINNOST PROCESŮ %
+%%%%%%%%%%%%%%%%%%%
+
 \newpage
-\section{Činnost procesů\,--\,stavy činnosti, rozšířený stavový model běhu procesů}
+\section{Činnost procesů\,--\,stavy činnosti, rozšířený stavový model běhu procesů} \label{proces-work}
 
 Dříve vyjmenované stavy nejsou kompletní výčet. Skutečný stavový model má devět položek, které jsou:
 
@@ -210,7 +221,7 @@ Dříve vyjmenované stavy nejsou kompletní výčet. Skutečný stavový model 
 \end{enumerate}
 
 \begin{center}
-    \includegraphics[scale=0.9]{BPC-SOS/images/proc_extended_states.png}
+    \includegraphics[scale=0.9]{images/proc_extended_states.png}
 \end{center}
 
 Je důležité si povšimnout, že se prakticky jedná o rozšíření zkráceného modelu. Například stav \textit{vykonávaný} je zde rozšířen o informaci v jakém režimu běží. A jaký je rozdíl mezi \textit{uživatelským režimem} a \textit{režimem jádra}? Do režimu jádra se proces dostane pomocí systémových volání nebo přerušení, jinak (s výjimkou jádru vlastních procesů) běží v uživatelském režimu!
@@ -236,7 +247,64 @@ Stav \textit{čekající} je zde rozšířen na \textit{spící a uložen v hlav
     \textbf{Více do hloubky}
 \end{Large}
 
-% TODO
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Vytvoření procesu}
+\end{large}
+
+Proces vzniká pomocí sys. volání \textit{fork} kde z původního procesu (\textit{rodič}) se vytvoří nový proces (\textit{potomek}). Pro možnost identifikace rodiče potomka se zavádí identifikátor \textit{PPID} (Parent Process IDentifier), zároveň zpravidla platí, že proces má jednoho rodiče, ale rodič může mít více potomků\footnote{Všechny procesy jsou následovníkem procesu \textit{init}.}. 
+
+\vspace{0,5cm}
+
+Sys. volání \textit{fork} je voláno rodičem jednou a vráceno dvakrát. Vrací se PID rodiče a PID 0 pro potomka (zjednodušuje rozlišení potomka a rodiče při programování), potomek následně volá sys. volání \textit{execve}, kterým spustí programový kód nového procesu. Ale co paměť, procesu? \textit{Fork} vytvoří kopii rodičovského procesu, existují pak tedy dva stejné procesy.
+
+\vspace{0,5cm}
+
+\textit{Fork} je vykonáván v režimu jádra, zde se vyhledá volná pozice v tabulce procesů a obsadí se záznamem potomka (jeho kontext jádra, viz \ref{procesy}) a poté se alokuje paměť pro uživatelský kontext potomka (taktéž v kapitole \ref{procesy}) který se naplní kopií uživatelského kontextu rodiče\footnote{Textová část může být buď kopírována nebo sdílena.}. Proces skončí jakmile dokončí svůj kód a vyvolá sys. volání pro své ukončení (např. \textit{exit}). Proces však nemusí ukončit jen sám sebe, pokud má dostatečná oprávnění může ukončit i jiný proces. Po ukončení procesu je rodiči navrácen PID ukončeného procesu. 
+
+\vspace{0,5cm}
+
+Proces může ze stavu $"$vytvořený$"$ přejít do stavu $"$připraven na zpracování$"$, záleží však kolik je volného místa v paměti. Pokud je ho dost, tak přejde do stavu $"$připraven ke zpracování v hlavní paměti$"$ kde čeká až jej vybere plánovač I. úrovně a pak přejde do stavu $"$vykonávaný v režimu jádra$"$ kde se obslouží sys. volání. Nakonec přejde do režimu $"$vykonáván v uživatelském režimu$"$.
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Vykonávání procesu}
+\end{large}
+
+Už víme, že proces je vykonáván buď v režimu jádra nebo v uživatelském režimu, kde přechází do režimu jádra pomocí volání sys. volání a obsluhy přerušení. Je však třeba podotknout, že procesy se nestřídají pouze po dokončení práce, nebo při dobrovolném čekání. Může totiž docházet i k preemptivnímu střídání procesů, kdy každý proces má povolenou maximální dobu vykonávání. Pokud tato doba uběhne, je proces přerušen a přejde do stavu $"$nuceně přerušený$"$ (který je totožný se stavem \textit{připraven na zpracování v hlavní paměti}\footnote{Jediný rozdíl je v tom jak se proces do tohoto stavu dostal.}). Plánovač pak vybere jiný proces k vykonávání. 
+
+\vspace{0,5cm}
+
+Druhou možností je, že proces se dobrovolně ukončí před uplynutím maximálního časového intervalu a opět přejde do stavu \textit{připraven ke zpracování v hlavní paměti}.
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Uspání procesu}
+\end{large}
+
+Předpokládejme, že aby proces mohl pokračovat ve svém úkolu, tak musí počkat na vstupně/výstupní (I/O - Input/Output) operaci. Proces zavolá systémové volání pro zápis/čtení dat a přejde ze stavu \textit{vykonáván v uživatelském režimu} do stavu \textit{vykonáván v režimu jádra}. Aby proces neplýtval zdroje čekáním v tomto stavu, tak se sám zablokuje (\textit{uspí}) a přejde do stavu \textit{spící v hlavní paměti}. Tímto uvolní místo pro jiný proces čekající v hlavní paměti. 
+
+\vspace{0,5cm}
+
+Po dokončení, v tomto případě, vstupně/výstupní operace je proces probuzen a je připraven v hlavní paměti. Zde čeká až jej vybere Plánovač I. úrovně. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Odložení procesu}
+\end{large}
+
+Pokud je v systému spuštěno tolik procesů, že se nevejdou do hlavní paměti přichází na řadu Plánovač II. úrovně (tzv. vyměňovací proces), který vybere proces k přesunutí z hlavní paměti do odkládací paměti (\textit{připravený v hlavní paměti} $\xrightarrow{}$ \textit{připravený, odložený}). Stejně tak může přesouvat spící procesy z hlavní paměti do odkládací paměti. Po probuzení jej může Plánovač opět přesunout zpět do hlavní paměti.
+
+\vspace{0,5cm}
+
+Je třeba mít na vědomí, že plánovač II. úrovně vybírá procesy tak aby se všechny vystřídaly v hlavní paměti. Tam pak čekají na plánovač I. úrovně. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Ukončení procesu}
+\end{large}
+
+Proces ve uživatelském režimu zavolá sys. volání (např. dříve zmíněný \textit{exit}), přejde tedy do režimu jádra a dále do stavu \textit{zombie}. V tomto stavu proces neexistuje, ale je o něm stále udržován záznam v tabulce procesů. Jakmile rodič zpracuje informaci o jeho ukončení, tak je proces definitivně ukončen. 
 
 \newpage
 \section{Plánování procesů\,--\,okamžiky rozhodnutí, plánovací algoritmy, systém priorit}
