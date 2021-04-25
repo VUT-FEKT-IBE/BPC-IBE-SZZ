@@ -172,8 +172,8 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Ochrana neliterárních složek software - ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)
 - [ ] Software jako zaměstnanecké dílo, školní dílo, kolektivní dílo a dílo na objednávku
 - [ ] Právní ochrana databází - pojem, způsoby ochrany, obsah a rozdíly
-- [ ] Smlouvy a software - licenční smlouva, smlouva o dílo a SLA - pojem, strany, obsah, forma a proces uzavírání
-- [ ] Veřejné licence a software, free a open source software
+- [x] Smlouvy a software - licenční smlouva, smlouva o dílo a SLA - pojem, strany, obsah, forma a proces uzavírání
+- [x] Veřejné licence a software, free a open source software
 - [ ] Autorskoprávní a trestněprávní prostředky ochrany software - účel, nároky, tresty a realizace
 
 ### BPC-UP2A
