@@ -63,20 +63,58 @@ Každému záznamu je také přiřazena úroveň pro~účely filtrace a~oddělen
 
 Administrátor systému by měl mít přehled o~souborech, do~kterých logy zapisují klíčové programy a~démony (přihlašování, změna nastavení systému). Tyto logy by měly být zálohovány a~chráněny -- v~případě existence centrálního logovacího serveru je potřeba zajistit jejich bezpečnost i~při~přenosu po~síti.
 
-\subsection{Analýza}
+\clearpage
+\section{Definice operací nutných k~aplikaci automatické analýzy logů (blokové schéma včetně popisu funkce jednotlivých bloků). Jakým způsobem je realizován blok korelace při~detekci známých a~neznámých událostí.}
 
-V~případě incidentu, nebo i~při~pravidelné kontrole, lze využívat filtraci i~další programy, které hlídají zaznamenané události. Při~ruční analýze lze využít základní nástroje jako \texttt{tail}, \texttt{cat}, \texttt{grep} nebo Event Viewer, automatické nástroje využívají postup \enquote{agregace $\rightarrow$ filtrace $\rightarrow$ normalizace $\rightarrow$ korelace $\rightarrow$ reporting}. SIEM%
-\footnote{Security Information and~Event Management} %
-nepokrývají všechny potřeby organizace a~velkou část korelací událostí je~nutné doprogramovat.
+\begin{wrapfigure}{r}{0.35\textwidth}
+\begin{tikzpicture}[node distance=1.5cm]
+\tikzstyle{block} = [rectangle, minimum width=2.5cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{rounded} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+%
+\node (agregace)    [block] {Agregace};
+\node (filtrace)    [block, below of=agregace] {Filtrace};
+\node (úložiště)    [rounded, right of=filtrace, xshift=2cm] {Úložistě};
+\node (normalizace) [block, below of=filtrace] {Normalizace};
+\node (korelace)    [block, below of=normalizace] {Korelace};
+\node (reporting)   [block, below of=korelace] {Reporting};
+%
+\draw [arrow] (agregace) -- (filtrace);
+\draw [arrow] (filtrace) -- node[anchor=south] {data} (úložiště);
+\draw [arrow] (filtrace) -- (normalizace);
+\draw [arrow] (normalizace) -- (korelace);
+\draw [arrow] (korelace) -- (reporting);
+\end{tikzpicture}
+\end{wrapfigure}
 
-\subsubsection{Detekce anomálií}
+Při~\textbf{agregaci} začíná proces stahování záznamů na~jedno centrální místo. \textbf{Filtrace} je analýza surových dat a~rozhodování, která data jsou potřebná. \textbf{Normalizace} je úprava záznamů na~společný formát (který využívá databáze a~analytické systémy). \textbf{Korelace} je spojení podobných i~zcela odlišných událostí ve~znalost o~větší probíhající události. Představuje nejproblematičtější blok. Výsledná data jsou posílána e-mailem, zobrazena graficky odlišeným způsobem nebo jsou nějakou formou předložena lidskému operátorovi, který vykoná další akce.
+
+V~případě incidentu, nebo i~při~pravidelné kontrole, lze využívat filtraci i~další programy, které hlídají zaznamenané události. Při~ruční analýze lze využít základní nástroje jako \texttt{tail}, \texttt{cat}, \texttt{grep} nebo Event Viewer.
+
+\subsection{Detekce signatur (známých událostí)}
+
+Shromažďovaná data jsou analyzována a~sledována. V~případě aktivace pravidla je realizována akce -- upozornění, obrana. Automatické SIEM (\emph{Security Information and~Event Management}) systémy nepokrývají všechny potřeby organizace a~velkou část korelací událostí je~nutné doprogramovat.
+
+\subsection{Detekce anomálií (neznámých událostí)}
 
 \textbf{Frekvenční model} počítá výskyty definovaného jevu za~pevně daný okamžik. \textbf{Referenční model} porovnáva model \enquote{normálního} chování a~sleduje, zda se sledované jevy pohybují v~povolených odchylkách -- data jsou sbírána a~porovnávána s~modelem. Přesnost je velmi závislá na~množství a~kvalitě dat ze~kterých byl model vytvořen. \textbf{Model strojového učení} klasifikuje vstupní data do~tříd a~shlukuje je do~skupin s~posobnými vlastnostmi.
 
 Anomáliemi mohou být nadměrný provoz, změna chování síťového prvku, přihlášení pomocí VPN mimo pracovní hodiny, opakovaná neúspěšná přihlášení, přihlášení z~více IP během krátké doby, \dots
 
-\clearpage
-\section{Definice operací nutných k aplikaci automatické analýzy logů (blokové schéma včetně popisu funkce jednotlivých bloků). Jakým způsobem je realizován blok korelace při detekci známých a neznámých událostí.}
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|ccccc|l}
+\textbf{klasifikovaná data} & NOP & NPP & FWA & VPNM & LF  & \textbf{odhadnutý výsledek} \\
+\hline
+brute force                 &     &     & ano &      & ano & --- \\
+DDoS                        &     & ano & ano &      &     & --- \\
+data loss                   & ano &     & ano & ano  &     & --- \\
+\hline
+--- & ano & & ano & & ano & brute force \\
+--- & ano & & ano & ano & & data loss \\
+\end{tabular}
+\end{table}
+
 
 \clearpage
 \section{Detekce nepříznivých událostí na základě signatur a~anomálií, systémy IDS/IPS (vzájemný vztah, efektivita a ladění, umístění, základní architektura, zástupci, referenční model).}

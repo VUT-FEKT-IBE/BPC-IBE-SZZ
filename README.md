@@ -32,7 +32,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Definujte a vysvětlete základní pojmy (aktiva, hrozba, ochrana, bezpečnost, zranitelnost, riziko, incident a dopad).
 - [x] Bezpečná konfigurace přepínače a směrovače (základní postupy konfigurace, bezpečnostní funkce, útoky, Port Security, port Fast, hardening).
 - [x] Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).
-- [ ] Definice operací nutných k aplikaci automatické analýzy logů (blokové schéma včetně popisu funkce jednotlivých bloků). Jakým způsobem je realizován blok korelace při detekci známých a neznámých událostí.
+- [x] Definice operací nutných k aplikaci automatické analýzy logů (blokové schéma včetně popisu funkce jednotlivých bloků). Jakým způsobem je realizován blok korelace při detekci známých a neznámých událostí.
 - [ ] Detekce nepříznivých událostí na základě signatur a anomálií, systémy IDS/IPS (vzájemný vztah, efektivita a ladění, umístění, základní architektura, zástupci, referenční model).
 - [ ] Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).
 - [ ] DoS/DDoS útoky (princip, rozdělení, popis základních útoků, SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slowloris). Zátěžové testování (typy testů, nejznámější nástroje).
