@@ -110,9 +110,9 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-SOS
 
-- [ ] Struktura OS – systémové jádro, monilitický systém, architektura klient-server, virtuální stroje
-- [ ] Procesy – uživatelský kontext, kontext jádra, vlákna
-- [ ] Činnost procesů – stavy činnosti, rozšířený stavový model běhu procesů
+- [x] Struktura OS – systémové jádro, monilitický systém, architektura klient-server, virtuální stroje
+- [x] Procesy – uživatelský kontext, kontext jádra, vlákna
+- [x] Činnost procesů – stavy činnosti, rozšířený stavový model běhu procesů
 - [ ] Plánování procesů – okamžiky rozhodnutí, plánovací algoritmy, systém priorit
 - [ ] Synchronizace procesů – souběh, vzájemné vyloučení, uvíznutí procesů
 - [ ] Správa paměti – vyměňování procesů, virtuální paměť pomocí stránkování a segmentace
