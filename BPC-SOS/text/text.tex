@@ -306,8 +306,151 @@ Je třeba mít na vědomí, že plánovač II. úrovně vybírá procesy tak aby
 
 Proces ve uživatelském režimu zavolá sys. volání (např. dříve zmíněný \textit{exit}), přejde tedy do režimu jádra a dále do stavu \textit{zombie}. V tomto stavu proces neexistuje, ale je o něm stále udržován záznam v tabulce procesů. Jakmile rodič zpracuje informaci o jeho ukončení, tak je proces definitivně ukončen. 
 
+%%%%%%%%%%%%%%
+% SCHEDULING %
+%%%%%%%%%%%%%%
+
 \newpage
-\section{Plánování procesů\,--\,okamžiky rozhodnutí, plánovací algoritmy, systém priorit}
+\section{Plánování procesů\,--\,okamžiky rozhodnutí, plánovací algoritmy, systém priorit} \label{planning}
+
+V dnešní době se plánování procesů (\textit{scheduling}) musí plánovat na více procesorech a jádrech. Jak tedy zajistit, že každý proces dostane procesorový čas a nebude žádný vynechán? Proto přichází na řadu plánovač (\textit{process scheduler}) a plánovací algoritmy. Tyto se využívají za účelem navození pocitu, že vše v Operačním Systému běží současně, přitom se jedná o neustálé a rychlé přepínání kontextu.
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Okamžiky rozhodnutí}
+\end{Large}
+
+Okamžiky kdy se plánovač musí rozhodnout, který proces bude vykonáván jsou následující:
+\begin{enumerate}
+    \item Vytvoření procesu - bude se vykonávat rodič nebo potomek?
+    \item Ukončení procesu - který proces jej nahradí?
+    \item Blokování procesu - při čekání na I/O operaci, který proces jej nahradí?
+    \item Přerušení procesu - a) přerušení od zařízení b) přerušení od hodin; který jej nahradí?
+\end{enumerate}
+
+Průběh při výkonu dvou procesů, lze jednoduše ukázat na následujícím obrázku. Procesy se střídají podle toho, který zrovna čeká (např. na I/O operaci). Při přerušení může dojít k rozhodnutí o přepnutí procesu, přerušení od hodin může také být signál pro rozhodnutí o přepnutí procesu. Toto přepnutí může být provedeno při každém \textit{n-tém} přerušení. 
+\vspace{0,5cm}
+Dále je třeba rozlišit jestli je systém nepreemptivní (kooperativní) či preemptivní. V prvním případě dochází ke přepínání pouze pokud proces dobrovolně uvolní procesor. Ve druhém případě (preemptivní) se přepíná na základě nuceného přerušení od hodin, kdy pak plánovač zvolí jiný proces k vykonávání. 
+
+\begin{center}
+    \includegraphics[scale=1]{images/proc_changing.png}
+    \includegraphics[scale=1]{images/proc_preemption.png}
+\end{center}
+
+\begin{Large}
+    \textbf{Typy plánovacích algoritmů}
+\end{Large}
+
+I když nám to tak mže připadat, tak ne všechny počítače mají stejný účel, například letové systémy vyžadují co nejrychlejší odezvu v určeném časovém úseku na rozdíl od našeho domácího počítače, který upředostňuje komfort a ne splňování \textit{deadlinů}.
+
+\begin{large}
+    \vspace{0,5cm}
+    Dávkové systémy
+\end{large}
+
+Tj. \textit{Batch} systémy, zpracovávají úkoly v tzv. dávkách bez účasti uživatele. Tímto jsou eliminovány prodlevy způsobené čekáním na akce od uživatele. Používá se nepreemptivních plánovačů (tedy proces sám musí uvolnit procesor). 
+
+\vspace{0,5cm}
+
+Tyto systémy jsou typické pro nákladné a výkonné informační centra, kde je prioritou co nejlépe využít drahý hardware. Sledují se především tyto parametry:
+
+\begin{itemize}
+    \item Výkonnost - počet úloh zpracovaných za jednotku času\footnote{Pozor, plánovač co zvyšuje výkonnost nemusí nutně zvyšovat rychlost obsluhy. Za účelem zvýšení výkonnosti může upřednostňovat kratší úlohy, na které se však musí déle čekat. Výkonnost stoupá, ale rychlost obsluhy klesá.} 
+    \item Rychlost obsluhy - průměrný čas od doby přijetí požadavku do jeho splnění
+    \item Využití CPU - preferuje se maximální využití a minimální prostoje
+\end{itemize}
+
+Například systémy od IBM a GCOS (General Comprehensive Operating System) od firmy Bull SAS.
+
+\begin{large}
+    \vspace{0,5cm}
+    Interaktivní systémy
+\end{large}
+
+Zde je chod systému ovlivňován uživatelem a právě jeho požadavky by měly být vyřizovány přednostně. Uživatel předpokládá, že program který má právě v popředí bude pracovat co nejrychleji a stejně tak reagovat, interaktivní systémy se snaží tento předpoklad splnit. Plánovač sice nemůže ovlivnit složitost úlohy a rychlost zpracování, může však přispět ke splnění očekávání uživatele. Je zřejmé, že se upřednostňuje užívání preemptivního přepínání, aby nemohl žádný proces zabrat CPU na příliš dlouhou dobu. 
+
+\vspace{0,5cm}
+Co se sleduje?
+\begin{itemize}
+    \item Čas odezvy - čas od vyslání příkazy po obdržení výsledku
+    \item Přiměřenost - přiměřenost složitosti úlohy k době jejího zpracování
+\end{itemize}
+
+\vspace{0,5cm}
+
+Jedná se o klasické desktop systémy, jako Windows, MacOS a různé distribuce OS Linux. 
+
+\begin{large}
+    \vspace{0,5cm}
+    Real-Time systémy
+\end{large}
+
+Používají se pro zpracování úloh, které slouží jako vstup dalších navazujících činností. Tyto systémy musí splnit úlohu v reálném čase (v předem daném časovém úseku). Tyto systémy jsou používány v automatizovaných procesech, robotice a také telekomunikacích. Používá se opět preemptivní plánování. 
+
+\vspace{0,5cm}
+
+Podle toho jak moc se tlačí na splnění požadavků v daném času můžeme tyto systémy dělit:
+
+\begin{itemize}
+    \item \textit{hard} - časové záruky jsou pouze přibližné, určité časové odchylky jsou povoleny.
+    \item \textit{soft} - časové záruky jsou plně zajištěny. 
+\end{itemize}
+
+\vspace{0,5cm}
+
+Sledujeme parametry:
+
+\begin{itemize}
+    \item Dodržování časových termínů - nejdůležitější požadavek!!
+    \item Předvídatelnost/pravidelnost - například u systémů pro zpracování multimediálních dat.
+\end{itemize}
+
+\vspace{0,5cm}
+Příkladem real-time systémů jsou FreeRTOS (open source\footnote{\url{https://github.com/FreeRTOS/FreeRTOS}}) a VxWorks od firmy Wind River. 
+
+\vspace{0,5cm}
+
+Na základě znalosti času který je potřeba pro obsloužení periodických událostí můžeme prohlásit, zda je systém schopný činnosti. Mějme \textit{m} periodických událostí, kde se událost \textit{i} vyskytuje s periodou $\mathrm{P_i}$ a vyžaduje $\mathrm{C_i}$ procesorového času. Aby real-systém byl běhu schopný, musí splňovat následující podmínku:
+
+\begin{equation}
+    \sum\limits_{i=1}^m \frac{C_i}{P_i} \leq 1 \nonumber \nonumber 
+\end{equation}
+
+\newpage
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Systém priorit}
+\end{Large}
+
+Plánovač I. úrovně vybírá procesy, které jsou připravené a v hlavní paměti aby získali procesorový čas. Algoritmus plánování je postaven na \textit{paralelních frontách}, kde každá fronta je spojena s intervalem priorit. Uživatelské procesy mají kladnou prioritu (na UNIX,Linux) a procesy jádra mají záporné hodnoty (opět UNIX, Linux). Z toho vyplývá, že nižší hodnota znamená vyšší prioritu (takže procesy jádra mají nejvyšší prioritu - obsluhují sys. volání).  
+
+\vspace{0,5cm}
+
+Plánovač prochází fronty od nejnižších intervalů (nejvyšší priorita) dokud nenalezne obsazenou frontu. Poté vybere první proces z dané fronty a po vykonání je proces vložen na konec místní fronty (round-robin). Priorita každého procesu je počítána (pro začátek každého intervalu, např. každou sekundu) pomocí následujícího vzorce:
+
+\begin{equation}
+    P = V + N + B \nonumber \notag
+\end{equation}
+
+Podle této nové priority je proces přiřazen do fronty. Fronta bývá zvolena na základě dělení vypočtené priority zvolenou konstantou. 
+
+\vspace{0,5cm}
+
+\textit{V} je prakticky prostě čítač, představující využití procesoru. Tato hodnota se inkrementuje s každým taktem procesorových hodin (pokud je proces vykonáván na procesoru). Tímto způsobem se upřednostňují nové procesy, které ještě nezískali procesorový čas. Zároveň lze procesy co zrovna využily procesor penalizovat pomocí navýšení původní hodnoty \textit{V} o aktuální hodnotu z daného intervalu a výsledek je vydělen dvěma. Tímto způsobem jsou penalizovány nedávno vykonané procesy a předchází se \textit{stárnutí procesů}.
+
+\vspace{0,5cm}
+
+Hodnota \textit{N} (tj. \textit{nice}) je implicitně nastavena na 0 (povolený rozsah je -20 až +19). Tato hodnota je zděděna od rodičovského procesu.
+
+\begin{itemize}
+    \item Běžný uživatel může nastavovat hodnoty 0 - 19, čímž může vlastní procesy penalizovat.
+    \item Administrátor může procesy \textit{preferovat} snížením hodnoty \textit{N} v rozmezí -20 až -1.
+\end{itemize}
+
+\vspace{0,5cm}
+
+\textit{B} tj. \textit{báze} je použita pokud se proces zablokuje (např. protože čeká na I/O operaci), proces je tedy odstraněn z plánovací fronty (jelikož není ve stavu \textit{připraven}). Až se dočká události, je znovu zařazen do fronty, ale s jinou prioritou. Volba fronty/priority závisí na události, na kterou proces čekal (nastaví se hodnota B).
 
 \newpage
 \section{Synchronizace procesů\,--\,souběh, vzájemné vyloučení, uvíznutí procesů} \label{sync}
