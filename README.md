@@ -114,7 +114,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Procesy – uživatelský kontext, kontext jádra, vlákna
 - [x] Činnost procesů – stavy činnosti, rozšířený stavový model běhu procesů
 - [x] Plánování procesů – okamžiky rozhodnutí, plánovací algoritmy, systém priorit
-- [ ] Synchronizace procesů – souběh, vzájemné vyloučení, uvíznutí procesů
+- [x] Synchronizace procesů – souběh, vzájemné vyloučení, uvíznutí procesů
 - [ ] Správa paměti – vyměňování procesů, virtuální paměť pomocí stránkování a segmentace
 - [ ] Využití paměti – přidělování paměti procesům, algoritmy přesunu stránek do odkládacího prostoru
 - [ ] Souborové systémy – organizace dat na paměťovém úložišti, metody ukládání datových bloků
