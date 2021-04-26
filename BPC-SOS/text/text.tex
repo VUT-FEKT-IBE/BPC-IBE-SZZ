@@ -452,8 +452,190 @@ Hodnota \textit{N} (tj. \textit{nice}) je implicitně nastavena na 0 (povolený 
 
 \textit{B} tj. \textit{báze} je použita pokud se proces zablokuje (např. protože čeká na I/O operaci), proces je tedy odstraněn z plánovací fronty (jelikož není ve stavu \textit{připraven}). Až se dočká události, je znovu zařazen do fronty, ale s jinou prioritou. Volba fronty/priority závisí na události, na kterou proces čekal (nastaví se hodnota B).
 
+%%%%%%%%%%%%%%%%%
+% SYNCHRONIZACE %
+%%%%%%%%%%%%%%%%%
 \newpage
 \section{Synchronizace procesů\,--\,souběh, vzájemné vyloučení, uvíznutí procesů} \label{sync}
+
+Zajištění synchronizace je zásadní problém v jakémkoliv paralelně běžícím systému. Jeden proces může svým během ovlivnit jiný proces nebo jím být ovlivněn, aby k tomu nedošlo zavádíme synchronizační techniky. Čeho tím chceme docílit? 
+\begin{enumerate}
+    \item Vyloučení konfliktu kritických činností pro zamezení souběhu
+    \item Zajištění časové souslednosti pro paralelní programování
+\end{enumerate}
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Souběh}
+\end{Large}
+
+Nastává při práci procesů se sdílenými prostředky. Například si představme frontu pro tiskárnu s ukazatelem \textit{in} ukazující poslední volné místo ve frontě a dva procesy A a B. Proces A načte z fronty že první volné místo je na pozici 10 a tuto informaci uloží do lokální proměnné. Následně však plánovač přepne kontext na proces B, který udělá to stejné a uloží svůj soubor na index 10 a inkrementuje jej na 11. Plánovač poté přepne kontext zpět na proces A, který má stále uloženou hodnotu 10! Tedy přepíše soubor procesu B! 
+
+\begin{center}
+    \includegraphics[scale=1]{images/proc_soubeh.png}
+\end{center}
+
+Toto čtení nekonzistentních dat z důvodu přepnutí kontextu nazýváme \textit{souběh} tj. \textit{race condition}. Problémem je, že k souběhu nemusí vždy dojít, záleží čistě na plánovači a kdy dojde k přepnutí kontextu, proto se tato chyba velmi špatně zachytává při testování. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Zajištění časové souslednosti}
+\end{large}
+
+Používá se, když proces musí čekat na dokončení celé množiny operací, než může pokračovat. Toho lze docílit pomocí paralelního programování za využití vláken a tzv. \textit{bariér}/\textit{časové mezníky}. 
+
+\vspace{0,5cm}
+
+Představme si aplikaci používající vlákna. Všechny vlákna musí dokončit svou úlohu z fáze 1 než mohou přejít do fáze 2 a i když vlákna vykonávají stejný kód, tak mohou pracovat různými rychlostmi. Pokud nějaké vlákno skončí s úlohou z fáze 1 dřív jak jiné, bude pozastaveno než je dokončí všechny ostatní vlákna.
+
+\begin{center}
+    \includegraphics[scale=1]{images/proc_barrier.png}
+\end{center}
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Vzájemné vyloučení pomocí kritické sekce}
+\end{large}
+
+Souběhu lze zabránit výlučným přístupem ke sdílenému prostředku, tedy že dokud jeden proces pracuje se sdíleným prostředkem ostatní jsou zablokované a čekají na uvolnění prostředku. Tohoto lze docílit například pomocí určení části kódu, kterou označíme za \textit{kritickou sekci} ve které se smí nacházet vždy nanejvýše jeden proces. 
+
+\vspace{0,5cm}
+
+Této myšlence se obecně říká \textit{zámek} (tj. \textit{mutex}), tedy že přístup ke sdílené proměnné je uzamčen pro ostatní procesy. Mezi často používané patří například semafory. Proces zkontroluje zámek, pokud je \textit{odemčený} \textit{uzamče} jej a přistoupí k proměnné (vstoupí do kritické sekce). Po dokončení operací zámek \textit{odemče} a umožní přístup ostatním procesům. 
+
+\vspace{0,5cm}
+
+Krom vzájemné vyloučení je potřeba zajistit i následující podmínky:
+\begin{enumerate}
+    \item Blokování jiného procesu je pouze možné v případě, že jiný proces je v kritické sekci. Blokování procesem mimo KS je nepřijatelné. 
+    \item Doba čekání na vstup do kritické sekce musí být konečná
+\end{enumerate}
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Vzájemné vyloučení pomocí proměnných}
+\end{large}
+
+\begin{itemize}
+    \item sdílená dvouhodnotová proměnná
+    \item striktní střídání procesů
+\end{itemize}
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Sdílená dvouhodnotová proměnná}
+\end{large}
+
+Mějme sdílenou proměnnou \textit{lock}, která může nabývat stavů \textit{FALSE} a \textit{TRUE}. \textit{FALSE} značí, že v kritické sekci není žádný proces a \textit{TRUE} značí obsazenou kritickou sekci. Procs tedy před vstupem do KS zkontroluje proměnnou a postupuje tak jak bylo popsáno dříve. Pokud je \textit{lock} uzamčený (\textit{TRUE}) proces čeká v čekající smyčce\footnote{Tomuto se říká aktivní čekání a jedná se o skvělý způsob jak plýtvat zdroji.} na uvolnění prostředků. 
+
+\vspace{0,5cm}
+
+Problémem je však skutečnost, že tento způsob je náchylný na souběh. Může se stát, že proces A přistoupí k \textit{lock} a načte jeho hodnotu jako \textit{FALSE}, poté plánovač přepne kontext na proces B který vstoupí do kritické sekce, a nastaví \textit{lock} na \textit{TRUE}.  Plánovač opět přepne kontext a proces A vstoupí do kritické sekce, výsledkem jsou dva procesy v kritické sekci najednou. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Striktní střídání procesů}
+\end{large}
+
+Opět může být docíleno pomocí sdílené dvou-stavové proměnné, např. \textit{turn} nabývající hodnot 0 a 1 (0 = A, 1 = B). Pokud je zrovna hodnota 0, tak proces A může vstoupit do KS a proces B je v čekací smyčce. Po dokončení práce procesu A, je \textit{turn} nastaven na 1.
+
+\vspace{0,5cm}
+
+Problém nastává když jeden z procesů vstupuje do KS častěji jak druhý. Pak je například hodnota \textit{turn} nastavena na 1 a proces A musí čekat na proces B, který však zatím ani v KS není. Tímto se porušilo pravidlo, že proces může být blokován pouze procesem v kritické sekci. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Vzájemné vyloučení pomocí hardwarových funkcí}    
+\end{large}
+
+\begin{itemize}
+    \item zákazem přerušení
+    \item atomickými instrukcemi
+\end{itemize}
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Zákazem přerušení}    
+\end{large}
+
+Toto řešení platí pro preemptivní systémy, kde se zákazem přerušení na procesoru zajistí, že proces nelze přerušit dokud nevystoupí z kritické sekce. Přerušení mohou obecně zakazovat uživatelské i systémové programy, ovšem povolit zakazování přerušení pro uživatelský program je velmi riskantní. 
+
+\vspace{0,5cm}
+
+Tento přístup však funguje pouze na jednoprocesorových systémech. Pokud je procesorů více, tak na jednom je přerušení sice zakázáno, ale tento zákaz neplatí pro procesy na ostatních procesorech. Zavedení zákazu přerušení na všech procesorech by vyžadovalo zaslání zprávy všem procesorům, což je časově neefektivní operace. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Atomickými instrukcemi}    
+\end{large}
+
+Jedná se o instrukce, které umožní číst a měnit hodnotu (nebo zaměnit obsah dvou proměnných) a nelze je přerušit. Princip lze pochopit na instrukci \textit{TestAndSet} (tj. \textit{TSL - Test and Set Lock}). Tato instrukce testuje proměnnou, pokud je nastavena na FALSE nastaví na TRUE a proces vstoupí do KS. Ostatní procesy potom čekají v aktivní smyčce (opakovaně volají \textit{TestAndSet} dokud není \textit{lock} opět FALSE). Poté co proces skončí v KS nastaví proměnnou na FALSE. 
+
+\vspace{0,5cm}
+
+Princip je podobný jako u přístupu se sdílenou proměnnou, krom toho že instrukce je nepřerušitelná, tedy nemůže dojít k přepnutí kontextu a tím pádem k souběhu. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Vzájemné vyloučení pomocí sys. volání}    
+\end{large}
+
+Předešlé metody využívají aktivního čekání, které má následující nevýhody:
+\begin{itemize}
+    \item Plýtvání časem CPU\footnote{Pokud je předpoklad, že se nebude čekat moc dlouho, jde využít aktivního čekání.}
+    \item Porušení základní podmínky, že čekání na vstup do kritické sekce musí být konečná.
+\end{itemize}
+
+Další problém se kterým se můžeme u paralelizmu setkat, je \textit{problém opačné priority}. Pokud máme dva procesy, kde proces A má vyšší prioritu jak B a proces B je v kritické sekci. Plánovač zvolí k vykonání proces A (s vyšší prioritou), který čeká na přístup do KS. Jelikož je však procesu A dávána přednost, tak proces B nikdy z KS nevystoupí. 
+
+\vspace{0,5cm}
+
+Jak lze tento problém vyřešit? Procesy se mohou navzájem uspávat, v tomto případě by tedy proces A uspal B a zaslal by mu signál na probuzení až po výstupu z KS. I zde však může nastat souběh. Toto lze ilustrovat na tzv. \textit{producer-consumer problem}, kde máme dva procesy, jednoho producenta a spotřebitele. Procesy pracují se sdílenou pamětí o omezené velikosti, producent paměť naplňuje a jakmile je plná tak přejde do režimu spánku, následně spotřebitel odebere položku z paměti, čímž probudí producenta. Pokud chce spotřebitel odebrat z paměti a je prázdná tak se uspí. Ke sledování stavu v paměti se může použít sdílené proměnné (\textit{counter}) a komunikace probíhá pomocí sys. volání.
+
+\vspace{0,5cm}
+
+Pokud je paměť prázdná (tedy \textit{counter = 0}) spotřebitel přečte hodnotu sdílené proměnné, ale před uspáním dojde k přepnutí kontextu. Producent uvidí, že paměť je prázdná a začne ji naplňovat. Jakmile zvýší proměnnou o jedna zavolá sys. volání aby probudil spotřebitele (v domnění že je uspaný), tím že spotřebitel nespí nemá volání žádný účinek. Producent tedy kompletně naplní paměť a uspí se. Dojde k přepnutí kontextu a spotřebitel se také uspí. Došlo tedy k \textit{fatálnímu souběhu}. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Uvíznutí tj. deadlock}    
+\end{large}
+
+Skupina procesů je ve stavu uvíznutí, pokud každý z nich čeká na událost, kterou může způsobit pouze jiný proces z této skupiny. Uvíznutí může nastat nad různými prostředky (hardwarové či softwarové), které dělíme na \textbf{sdílitelné} (globální proměnné, sdílený úsek paměti, záznam v databázi, ...) a \textbf{nesdílitelné} (tiskárny, scannery, DVD, ...). Sdílené prostředky mohou být uzamčené. Dále lze rozdělit na \textbf{přepínatelné}\footnote{Uvíznutí nenastává nad sdílitelnými prostředky bez jejich uzamčení, nebo nad přepínatelnými prostředky kde lze uvíznutí předejít předáním jinému procesu.} a \textbf{nepřepínatelné}\footnote{Odebrání přepínatelného prostředku nezpůsobí žádnou škodu - např. hlavní paměť. Nepřepínatelný prostředek je takový, jehož odebrání způsobí nefunkčnost procesu.}. 
+
+\vspace{0,5cm}
+
+Využití sdíleného prostředku se skládá ze tří částí:
+\begin{enumerate}
+    \item Žádost - Proces žádá o využití prostředku a aktivně čeká pokud je využitý
+    \item Používání - Proces využívá prostředek
+    \item Uvolnění - Proces ukončil práci a předal o tom zprávu
+\end{enumerate}
+
+Důvody k uvíznutí mohou být například, že první proces čeká na prostředek obsazený druhým procesem, který je také ve stavu čekání na prostředek obsazený prvním procesem (obrázek níže). Často se jedná i o chybu v programu při předávání informace o využívání prostředku.
+
+\begin{center}
+    \includegraphics[scale=1]{images/proc_deadlock.png}
+\end{center}
+
+Tato situace se řeší (v různých OS) následovně:
+\begin{itemize}
+    \item Předcházení uvíznutí
+    \item Připuštění, že se systém dostane do stavu uvíznutí, ale se schopností tento stav detekovat a obnovit nomální činnost
+    \item Ignorovat tento problém
+\end{itemize}
+
+Detekce a napravení deadlocku vyžaduje neustálé spouštění algoritmu se dvěma metodami obnovení činnosti:
+
+\begin{itemize}
+    \item Procesy ve stavu uvíznutí jsou násilně ukončeny: 
+    \begin{enumerate}
+        \item postupně - pomalejší řešení, po každém ukončeném procesu je potřeba znovu spustit detekční algoritmus, volba procesu může být například na základě stáří
+        \item všechny najednou - rychlejší řešení s velkými náklady (například ztráta předešlých výpočtů a dat)
+    \end{enumerate}
+    
+    \item Procesům jsou násilně odebrány všechny prostředky a předávány jiným procesům ve stavu uvíznutí- Po každém odebrání je opět potřeba spustit detekční algoritmus, aby se zjistilo zda bylo uvíznutí vyřešeno.
+\end{itemize}
 
 \newpage
 \section{Správa paměti\,--\,vyměňování procesů, virtuální paměť pomocí stránkování a segmentace}
