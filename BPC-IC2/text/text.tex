@@ -182,6 +182,45 @@ V~\textbf{jednovrstvé} architektuře je IPS/IDS tvořen jedinou komponentou, kt
 \clearpage
 \section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).}
 
+Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~testovaného systému. Nutností je mít souhlas majitele systému.
+
+\subsection{Dělení penetračních testů}
+
+\subsubsection*{Dle znalosti}
+
+\textbf{Black Box}: útočník zná jen vstupy a~potenciální výstupy systému, neví nic o~vnitřním uspořádání, tj. je v~pozici běžného uživatle. \textbf{White Box}: k~dispozici má topologii sítě, přístupové údaje, dokumentaci, tj. je v~pozici vývojáře/technika. \textbf{Grey Box}: kombinace dvou předchozích, k~dispozici jsou pouze základní znalosti o~systému.
+
+\subsubsection*{Dle realizace}
+
+\textbf{Automatizované testy} využívají specializovaných nástrojů schopných detekce vlastností a~chyb zkoumaného systému. Výhodou je rychlost či~velké pokrytí \emph{attack surface}, tester však musí znát limitace aplikace a~možnosti jejího nastavení. \textbf{Manuální testy} se provádí ručně a~jsou tedy časově mnohem náročnější a~od~testera vyžadují hlubokou znalost oblasti, umožní však testování na~míru a~pokrytí detailů, které automatizované testy nepokryjí. Tyto dvě formy se v~praxi kombinují.
+
+\subsubsection*{Dle cíle}
+
+Síťová infrastruktura. Webové aplikace. Programy. Telefonní aplikace.
+
+\subsection{Metodologie}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{p{3cm}|p{12cm}}
+plánování      & určují se~detailní cíle a~časový plán, vymezují se priority \\
+sběr informací & zjištění informací o~síti/systému: IP rozsahy, porty, služby \\
+odhalování     & zjištění typu a~verzí služeb běžících za~otevřenými porty \\
+zneužití       & využívání nalezených zranitelností \\
+report         & předání výsledků, které povedou ke~zvýšení bezpečnosti \\
+\end{tabular}
+\end{table}
+
+\subsection{Testování webových aplikací}
+
+\textbf{OWASP} je nezisková organizace zaměřená na~zlepšování bezpečnosti software. Jejím cílem je neomezený přístup jednotlivců i~organizací k~informacím o~bezpečnostních hrozbách.
+
+% TODO Další informace -- xnomas?
+
+\begin{center}
+{\huge \dots} zde je třeba doplnit zbytek {\huge \dots}
+\end{center}
+
 \clearpage
 \section{(D)DoS útoky (princip, rozdělení, popis základních útoků: SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slow-Loris). Zátěžové testování (typy testů, nejznámější nástroje).}
 
