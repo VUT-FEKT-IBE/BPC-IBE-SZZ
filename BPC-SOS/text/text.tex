@@ -733,8 +733,95 @@ Na rozdíl od stránkování je segmentace mechanismus který je procesu viditel
 
 Nevýhodou oproti stránkování je právě dynamická velikost segmentů, což způsobuje externí fragmentaci paměti (viz Obrázek výše).
 
+%%%%%%%%%%%%%%%%%%
+% VYUŽITÍ PAMĚTI %
+%%%%%%%%%%%%%%%%%%
+
 \newpage
 \section{Využití paměti\,--\,přidělování paměti procesům, algoritmy přesunu stránek do odkládacího prostoru}
+
+Existují tři základní způsoby přidělování hlavní paměti:
+\begin{itemize}
+    \item rovnoměrně - nerespektuje rozdílné paměťové nároky procesů a ani jejich prioritu
+    \item podle velikosti procesu - nerespektuje prioritu procesu
+    \item podle velikosti a priority procesu
+\end{itemize}
+
+Abychom mohli určit jaký počet rámců procesům přidělit, využíváme metodu na vyhodnocování frekvence výpadků stránek. Účelem je vyhnout se stavu, kdy je proces zdržován velkým množstvím výpadků stránek, tzv. \textit{trashing}. Proto se snažíme udržet frekvenci výpadků stránek na přibližně stejné úrovni, zároveň pokud dochází k příliš mnoha výpadkm značí to nedostatek rámců, a naopak pokud je výpadků moc málu má proces příliš mnoho paměti. Jedná se o tzv. algoritmus \textit{Page Fault Frequency Replacement}. 
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_freq_page.png}
+\end{center}
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Přesuny stránek}
+\end{Large}
+
+Jak již bylo zmíněno, virtuální paměť je založena na odkládání stránek z hlavní paměti do odkládací (na disk). Když je zavolán výpadek stránky je třeba přesunout jednu stránku do volného rámce. Operační Systém zajišťuje aby vždy byly dostupné volné rámce, proto periodicky přesunuje určitý počet stránek do odkládací paměti. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Odkládací paměť}
+\end{large}
+
+Při odložení z hlavní paměti mohou nastat dvě situace podle dat ve stránce:
+
+\begin{enumerate}
+    \item Data jsou pouze pro čtení/nebyly provedeny změny - stránka je z hlavní paměti smazána
+    \item Data byla změněna - stránka musí být přesunuta do virtuální paměti
+\end{enumerate}
+
+Stránky mohou být svázány s určitým souborem v sytému, takový soubor může obsahovat kód procesu (read-only data) nebo se jedná o soubor připojený do uživatelského kontextu procesu, tzv. \textit{paměťově mapovaný soubor}\footnote{Tyto soubory v paměti mohou být jak v režimu pouze pro čtení tak i pro zápis.}. Takto lze jednoduše sdílet soubor mezi procesy. Pro práci s tímto souborem se používají paměťové funkce, což zvyšuje rychlost operací čtení a zápisu. Nevýhodou může potencionální plýtvání paměti\footnote{Uvažujme stránky o velikosti 4KiB a soubor o velikosti 6KiB, pak musíme využít dvě stránky ale z toho jsou 2KiB nevyužity.}. 
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_page_file.png}
+\end{center}
+
+\textit{Anonymní stránky} jsou stránky co nejsou svázané se souborem a jsou odkládány do speciálního \textit{odkládacího souboru} (\textit{swap file}) na \textit{odkládacím oddílu} (\textit{swap partition}) souborového systému. Jedná se o data z haldy a zásobníku.
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_page_anon.png}
+\end{center}
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Algoritmus LRU (Least Recently Used)}
+\end{Large}
+
+Funguje na předpokladu, že nedávno používané stránky budou patrně použity znovu a ty starší pravděpodobně ne. Z tohoto důvodu je třeba udržovat pořadový seznam všech stránek v hlavní paměti podle jejich doby použití. Na začátku je naposledy použitá stránka a na konci nejdéle nepoužitá. Seznam se navíc aktualizuje při každém použití stránky. Pro rychlé provedení algoritmu se využívá hardware.
+
+\vspace{0,5cm}
+
+Jedna z možností je použití hardware s 64 bitovým čítačem, který je inkrementován po vykonání každé instrukce. Každá stránka má přiděleno jedno návěští kde je hodnota čítače. Po použití stránky se do návěští uloží aktuální hodnota čítače. Když je potřeba odstranit stránku je vybrána ta s nejnižší hodnotou čítače, jelikož byla nižší hodnota čítače znamená, že již proběhlo mnoho instrukcí $\xrightarrow[]{}$ stará stránka. 
+
+\newpage
+
+Druhá možnost spočívá ve využití matic (opět v hardwaru). Pro \textit{n} možných stránek ve FAP je použita matice $n \times n$ bitů. Při každém použití stránky \textit{k} se nastaví bity řádku \textit{k} na 1 a poté se vynuluje sloupec \textit{k}. Řádek s nejnižší binární hodnotu patří stránce nejdéle nepoužité a je tedy vybrán\footnote{Skripta na straně 72 mají pěkný příklad}. 
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Algoritmus NFU (Not Frequently Used)}
+\end{Large}
+
+NFU je naopak softwarové řešení, které také využívá čítače. Pro každou stránku je udržován bit A (accessed), který je nastaven kdykoliv je daná stránka použita. Toto je monitorováno v intervalech daných přerušením od hodin, každý interval jsou všechny stránky prohledány a hodnota bitu A je přidána k čítači.  0 se přidává pokud ke stránce nebylo přistoupeno, 1 pokud bylo. Algoritmus vybírá stránku s nejnižší hodnotou čítače (stránka není často používaná). 
+
+\vspace{0,5cm}
+
+Nevýhodou klasického NFU je, že nikdy nenuluje hodnoty, preferuje tedy dříve často využívané stránky. Modifikovaný algoritmus tento problém \textit{stárnutí stránek} řeší následovně. Před přičtením hodnoty bitu A k čítači provede bitový posun o 1bit do prava (prakticky dělení dvěma). Následně je bit A přičten k bitu s nejvyšší váhou MSB (\textit{Most Significant Bit})\footnote{Prakticky bit co nejvíce vlevo.}. U klasického NFU to byl LSB (\textit{Least Significant Bit}). 
+
+\vspace{0,5cm}
+
+Nedostatky této modifikace:
+
+\begin{itemize}
+    \item Pokud má dojít k rozhodnutí mezi dvěma stránkami, vždy se vybere ta stránka s menší hodnotou čítače. Nemáme však záruku že se jedná o nejdéle nepoužitou stránku. 
+    \item Čítače mají omezený počet bitů, po určitém čase mohou být všechny bity vynulované, pak nelze říct jestli byla stránka využita před \textit{n+1} intervaly (kde n je počet bitů čítače) nebo před 100 intervaly. Stránky jsou pak vybrány náhodně. 
+\end{itemize} 
+
+%%%%%%%%%%%%%%%%%%%%%
+% SOUBOROVÉ SYSTÉMY %
+%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
 \section{Souborové systémy\,--\,organizace dat na paměťovém úložišti, metody ukládání datových bloků}
