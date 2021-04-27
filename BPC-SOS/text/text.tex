@@ -637,8 +637,101 @@ Detekce a napravení deadlocku vyžaduje neustálé spouštění algoritmu se dv
     \item Procesům jsou násilně odebrány všechny prostředky a předávány jiným procesům ve stavu uvíznutí- Po každém odebrání je opět potřeba spustit detekční algoritmus, aby se zjistilo zda bylo uvíznutí vyřešeno.
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%
+% SPRÁVA PAMĚTI %
+%%%%%%%%%%%%%%%%%
+
 \newpage
 \section{Správa paměti\,--\,vyměňování procesů, virtuální paměť pomocí stránkování a segmentace}
+
+Paměť dělíme na dvě části:
+\begin{itemize}
+    \item Fyzický Adresový Prostor (FAP; hlavní paměť, RAM) - reálná kapacita fyzické paměti v počítači která je dána nainstalovanou pamětí. Aby proces byl vykonáván musí být celý, nebo jeho vykonávaná část, v RAM paměti. Hlavní důvod je rychlost přístupu do této paměti. 
+    \item Logický Adresový Prosto (LAP; vedlejší paměť, virtuální paměť) - jedná se o paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť) tak \textit{odkládací prostor}.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_lap.png} \label{mem:lap}
+\end{center}
+
+Pokud počítač pracuje s 32bitovými adresami, může nabízet 4 GiB ($2^{32}$) LAP i když fyzicky má pouze 256 MiB FAP. Virtuální paměť lze realizovat mnoha způsoby:
+\begin{itemize}
+    \item Vyměňováním celých procesů
+    \item Stránkováním
+    \item Segmentací
+\end{itemize}
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Vymeňování procesů}
+\end{Large}
+
+Jak již bylo zmíněno dřív, paměť lze přidělovat celým procesům nebo jejich částem. Ty jsou poté vyměňovány mezi hlavní a odkládací pamětí, tak aby se postupně vyměnili všechny procesy. Při práci s celými procesy se načte celý proces do paměti a po nějaké době je odložen do odkládací paměti (\textit{připraven v odkládací paměti}). Po určité době je vybrán plánovačem II. úrovně k přesunutí do hlavní paměti kde bude opět vybrán plánovačem I. úrovně k vykonání. 
+
+\vspace{0,5cm}
+
+Velikost a umístění využitých paměťových úseků se dynamicky mění podle toho který proces je načten do paměti (jaká je aktuální velikost jejich paměťového prostoru). Toto však způsobuje tzv. \textit{externí fragmentaci paměti} kdy vznikají v paměti volné úseky paměti, které však nejsou dostatečné velké pro kterýkoliv proces (nedochází pak k efektivnímu využívání paměti! viz obrázek níže s procesy A,B,C). Tento jev lze sice napravit tzv. \textit{defragmentací}, tedy spojením volných paměťových úseků a vytvoření souvislého paměťového prostoru.
+
+\newpage
+
+Aby se mohl tento úsek vytvořit je třeba přesunout všechny procesy do jednoho souvislého bloku zabrané paměti, tento proces je časově náročný (navíc by se musel dělat periodicky), proto se k němu většinou nepřikračuje. 
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_fragmentace.png}
+\end{center}
+
+Lze však proces rozdělit mezi hlavní a odkládací paměť díky jeho rozdělení na dílčí části (\textit{overlays}). Proces lze vykonávat pokud má v paměti svou první část, po dokončení se načte druhá apod. Nebo držet v paměti více částí procesu najednou. (viz Obrázek \ref{mem:lap})
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Stránkování}
+\end{Large}
+
+Paměťový prostor procesu je rozdělen na stejně velké části tzv. \textit{stránky} (\textit{pages}), které jsou v případě potřeby přesouvány z odkládací paměti do stejně velkých míst v hlavní paměti tzv. \textit{rámců} (\textit{frames}). Přenesení stránek do hlavní paměti je zavolání tzv. \textit{page fault} (\textit{výpadek stránky}), tedy že proces potřebuje pracovat se stránkou která právě v paměti není. Proces sám však \textit{page fault} nevyvolá, procesor rozpozná, že chybí stránka a zavolá \textit{výpadek}\footnote{Proces tuto výměnu ani nevidí, viditelný je pro OS, který vede evidenci jednotlivých stránek.}. Umístění stránek je uloženo v \textit{tabulce stránek} (page table).
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_page_table.png}
+\end{center}
+
+Díky pevné velikosti stránek je lze efektivně umístit do stejně velkých rámců. Díky tomu nedochází k \textit{externí fragmentaci} volného prostoru v hlavní paměti. Nevýhodou je, že proces do této struktury nevidí, tudíž neví, že části které patří k sobě by se měli přesouvat do paměti společně za účelem zredukování množství \textit{page fault}.
+
+\vspace{0,5cm}
+
+Důležitým parametrem je volba velikosti stránky. Jelikož se stránkováním nemůže docházet k externí fragmentaci, ale k interní ano. Pokud jsou stránky moc velké, tak poslední stránka nebude nikdy kompletně naplněna a zůstane v ní nevyužitý prostor. Zároveň pokud proces vyžaduje 4 KiB paměti, ale stránky jsou 32 KiB, je potřeba do paměti načíst zbytečně 32 KiB. Zřejmě je asi výhodnější mít menší stránky. Na druhou stranu to však znamená větší počet výpadků stránek a větší tabulku stránek\footnote{Čas přenesení stránky je tvořen převážně jejím vyhledáním, proto doba přenosu malých stránek trvá přibližně stejně jako velkých.}. 
+
+\newpage
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Segmentace}
+\end{Large}
+
+Pomocí segmentace je paměťový prostor procesů dělen na logicky související části různé velikosti nazývané \textit{segmenty}. Každý segment má svůj název a velikost, které vytváří kompilátor podle zdrojového kódu programu. Obecné segmenty mohou být:
+
+\begin{itemize}
+    \item Textový - instrukce programu.
+    \item Datový - inicializované globální a statické proměnné.
+    \item BSS (Block Started by Symbol) - neinicializované globální a statické proměnné, kde hodnota může být náhodná hodnota z paměti nebo O (pro ukazatele \textit{null}).
+    \item Halda - dynamické proměnné.
+    \item Zásobník
+\end{itemize}
+
+Blíže mohou být segmenty děleny například na:
+
+\begin{itemize}
+    \item Kódy jednotlivých funkcí
+    \item Velké datové struktury
+    \item Knihovny linkované s programem 
+    \item Objekty
+\end{itemize}
+
+Na rozdíl od stránkování je segmentace mechanismus který je procesu viditelný. Pokud proces potřebuje nějakou část segmentu v hlavní paměti, tak je přenesen celý segment. Výhoda tohoto přístupu je, že jakmile je v dalších krocích potřeba další část segmentu nemusí být opět načten do paměti. Tímto je redukován počet výpadků segmentů (\textit{segment fault}) oproti výpadkům stránek. A stejně tak jako se stránkami vede operační systém záznamy o všech segmentech v tabulce segmentů (\textit{segment table}). 
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_segment_table.png} \label{mem:segment-table}
+\end{center}
+
+Nevýhodou oproti stránkování je právě dynamická velikost segmentů, což způsobuje externí fragmentaci paměti (viz Obrázek výše).
 
 \newpage
 \section{Využití paměti\,--\,přidělování paměti procesům, algoritmy přesunu stránek do odkládacího prostoru}
