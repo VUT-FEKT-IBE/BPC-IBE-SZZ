@@ -170,8 +170,8 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [ ] Osobnostní a majetková práva autora software - obsah, doba trvání, vyčerpání práv
 - [x] Omezení rozsahu práv autora k software - dekompilace, reverzní inženýrství a další
 - [x] Ochrana neliterárních složek software - ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)
-- [ ] Software jako zaměstnanecké dílo, školní dílo, kolektivní dílo a dílo na objednávku
-- [ ] Právní ochrana databází - pojem, způsoby ochrany, obsah a rozdíly
+- [x] Software jako zaměstnanecké dílo, školní dílo, kolektivní dílo a dílo na objednávku
+- [x] Právní ochrana databází - pojem, způsoby ochrany, obsah a rozdíly
 - [x] Smlouvy a software - licenční smlouva, smlouva o dílo a SLA - pojem, strany, obsah, forma a proces uzavírání
 - [x] Veřejné licence a software, free a open source software
 - [ ] Autorskoprávní a trestněprávní prostředky ochrany software - účel, nároky, tresty a realizace
