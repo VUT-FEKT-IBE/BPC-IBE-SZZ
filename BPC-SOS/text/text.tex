@@ -826,6 +826,82 @@ Nedostatky této modifikace:
 \newpage
 \section{Souborové systémy\,--\,organizace dat na paměťovém úložišti, metody ukládání datových bloků}
 
+Souborový systém definuje jak jsou organizovaná data uložena na paměťovém médiu, a to jak vestavěném tak externím. Data jsou organizována ve formě souborů, které se potom sdružovány do adresářů\footnote{Adresářová struktura bývá poskádána hierarchicky. Pro jednouživatelské systémy se užívá \textit{plochý} systém, kde je jeden adresář a v něm všechny soubory.}. 
+
+\vspace{0,5cm}
+
+Souborové systémy udržují informace o umístění dat jednotlivých souborů na paměťovém médiu. Mimo to mohou poskytovat i časové informace (vytvoření a modifikace souboru). Ve víceuživatelských systémech se uchovávají i informace o \textit{vlastnících} a \textit{přístupových právech} k souboru. Informace o souboru dělíme na data a metadata:
+\begin{itemize}
+    \item data - obsah souboru.
+    \item metadata - data potřebná pro práci se soubory jako informace o umístění, časová informace nebo přístupová práva. 
+\end{itemize}
+
+Paměťová média se typicky rozdělují na několik samostatných částí. První je \textit{MBR} (\textit{Master Boot Record}) obsahující zavaděč operačního systému, identifikátor disku a tabulku oddílů (\textit{partition table}) a může obsahovat i další části. MBR zavaděč je spouštěn kódem v BIOS (\textit{Basic Input-Output System}). Úkolem zavaděče je načíst zaváděcí sektor z aktivního oddílu, ten obsahuje Operační Systém který se spustí\footnote{Zaváděcí sektor se liší podle OS}. 
+
+\begin{center}
+    \includegraphics[scale=1]{images/mem_partitions.png}
+\end{center}
+
+V tabulce oddílů jsou uloženy informace o umístění jednotlivých oddílů, tedy kde začínají a kde končí. Na oddílech se mohou vyskytovat různé souborové systémy a na těch pak OS.
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Datové bloky}
+\end{Large}
+
+Souborové systémy ukládají soubory do tzv. \textit{datových bloků} (\textit{fragmentů}). Důležité je jak velký jeden blok je, jelikož velké bloky mohou podléhat \textit{interní fragmentaci} z důvodu, že je soubor nenaplní a \textit{datový blok} je nejmenší jednotka souborového systému. Naopak velmi malé bloky zpomalují operace se soubory, jelikož každý blok vyžaduje vyhledání jeho umístění. 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Kontinuální ukládání bloků}
+\end{large}
+
+Bloky jsou ukládány na paměťovém médiu za sebou, tento způsob je vhodný u plotnových disků, jelikož minimalizuje přesun čtecích hlav (mimo přesun hlav mezi cylindry). Záznam adresářů udržuje jen počáteční adresu souboru a počet bloků (tj. jeho velikost). Problém vzniká při rozšiřování souborů nebo zmenšování souborů. 
+
+\vspace{0,5cm}
+
+Navíc dochází k \textit{externí fragmentaci} skrz změny ve velikostech souborů vznikají volné oblasti mezi záznamy, 
+které však nejsou dostatečně velké pro jakýkoliv soubor. 
+
+\newpage
+
+Procesu odstranění tohoto problému se říká \textit{defragmentace}, dělávalo se tak, že se přesunuly všechny využité bloky na jiné file systém, původní data (na původním oddílu) byla smazána. Nakonec byla data překopírována zpět v kontinuálním způsobu. Velmi časově náročné a muselo se vykonávat periodicky! 
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Ukládání bloků nesouvisle s ukazateli v bloku}
+\end{large}
+
+Bloky nejsou na médiu rozděleny souvisle, místo toho je část jejich prostoru obětován ukazateli na další blok souboru. Při vytvoření souboru je nalezen volný blok kdekoliv na paměťovém médiu a je použit pro nová data\footnote{Pokud má soubor nulovou velikost je ukazatel nastaven jako neplatný.}. Takto prakticky funguje jako \textit{linked list} a nenastává problém s externí fragmentací. 
+
+\vspace{0,5cm}
+
+Avšak přesně tento přístup je nevýhodou této možnosti. Při čtení je potřeba nejprve načíst první blok a postupně hledat bloky pomocí ukazatelů. Každé načtení je tedy z jiného sektoru disku a zpomaluje program. Další problém je, že ukazatel ubírá místo z bloku. Řešením pro tento problém je seskupit bloky a zavést ukazatel na ně, pointer pak zabírá menší procenty paměti a urychluje se práce s daty. Bohužel ale dochází k \textit{interní fragmentaci}\footnote{Existuje i možnost poškození ukazatele, pokud se jedná o první ukazatel tak se přijde o celý soubor.}.
+
+\begin{large}
+    \vspace{0,5cm}
+    \textbf{Ukládání bloků nesouvisle s ukazateli v indexačním bloku}
+\end{large}
+
+Funguje prakticky stejně jako předešlá implementace, akorát ukazatele nejsou obsaženy v samotném bloku, nýbrž v tabulce ukazatelů pro daný soubor (udržováno ukazatelem v adresáři kde se soubor vyskytuje). Při vytvoření jsou všechny ukazatele neplatné, při zápisu dat do volných bloků se postupně aktualizují ukazatele. 
+
+\vspace{0,5cm}
+
+Nedochází sice k externí fragmentaci, ale k plýtvání paměti. Pokud se vytvoří malý soubor tak bude zabrán jeden celý blok navíc pro udržování indexační tabulky, který se však nezaplní. Proto je třeba vhodně volit velikost tabulky.
+
+\vspace{0,5cm}
+
+Přístupy pro práci s indexačními bloky:
+\begin{itemize}
+    \item Přímé odkazy - indexační blok obsahuje ukazatele na datové bloky, v případě velkého souboru lze propojit více indexačních bloků, poslední ukazatel je tedy buď neplatný (pro malé soubory) nebo ukazuje na začátek další tabulky.
+    \item Nepřímé odkazy - indexační blok obsahuje odkazy na další indexační bloky, které obsahují přímé odkazy na datové bloky. Pro přístup k blokům se nejprve načte indexační blok přes nepřímý odkaz a až poté se načte blok přes přímý odkaz. 
+    \item Kombinace - Indexační blok obsahuje přímé i nepřímé a dokonce i zanořené nepřímé odkazy, tedy nepřímý odkaz na nepřímý odkaz. Je vhodný pro velké soubory (nepřímé odkazy s několika úrovněmi) i pro malé soubory (přímé odkazy).
+\end{itemize}
+
+\begin{center}
+    \includegraphics[scale=1.2]{images/mem_block_index.png}
+\end{center}
+
 \newpage
 \section{Konzistence dat\,--\,data a metadata, žurnálovací souborové systémy}
 

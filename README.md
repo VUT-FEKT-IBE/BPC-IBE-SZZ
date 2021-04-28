@@ -116,8 +116,8 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Plánování procesů – okamžiky rozhodnutí, plánovací algoritmy, systém priorit
 - [x] Synchronizace procesů – souběh, vzájemné vyloučení, uvíznutí procesů
 - [x] Správa paměti – vyměňování procesů, virtuální paměť pomocí stránkování a segmentace
-- [ ] Využití paměti – přidělování paměti procesům, algoritmy přesunu stránek do odkládacího prostoru
-- [ ] Souborové systémy – organizace dat na paměťovém úložišti, metody ukládání datových bloků
+- [x] Využití paměti – přidělování paměti procesům, algoritmy přesunu stránek do odkládacího prostoru
+- [x] Souborové systémy – organizace dat na paměťovém úložišti, metody ukládání datových bloků
 - [ ] Konzistence dat – data a metadata, žurnálovací souborové systémy
 - [ ] Síťová část OS – stavy soketů při komunikaci, síťová systémová volání, procesy síťových služeb
 
