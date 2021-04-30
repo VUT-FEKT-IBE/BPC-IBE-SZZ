@@ -902,8 +902,92 @@ Přístupy pro práci s indexačními bloky:
     \includegraphics[scale=1.2]{images/mem_block_index.png}
 \end{center}
 
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Ukládání dat a metadat na HDD}
+\end{Large}
+
+Pevný disk se skládá z ploten\footnote{Pro čtení z ploten se používá více hlav.} (které jsou uspořádány nad sebou), které jsou rozděleny na stopy a ty zase na sektory. Sektor je nejmenší jednotka pro ukládání dat na pevném disku. Datové bloky souborových systémů, mohou zabírat jeden nebo více sektorů. Při práci s daty se nejprve načtou metadata o souboru (přístupová práva a o uložení dat), tedy hlavice musí přejít na pozici metadat a až poté na pozici dat\footnote{Přilíž velkému množství přesunů se zamezuje pomocí organizace do tzv. \textit{cylindrů}, což je sada nad sebou umístěných stop. Tyto společně udržují data a metadata.}.  
+
+\begin{center}
+    \includegraphics[scale=1]{BPC-SOS/images/mem_hdd.png}
+\end{center}
+
+%%%%%%%%%%%%%%%
+% KONZISTENCE %
+%%%%%%%%%%%%%%%
+
 \newpage
 \section{Konzistence dat\,--\,data a metadata, žurnálovací souborové systémy}
+
+Když se v souborovém systému pracuje s daty (zapisování a mazání), může dojít k situaci kdy se data dostanou do nekonzistentního stavu, z důvodu pádu systému. Nekonzistentními situacemi mohou být:
+
+\begin{itemize}
+    \item Soubor nebyl smazán, i když k tomu byl zadá požadavek.
+    \item Část dat byla aktualizována zápisem, další část ne. 
+\end{itemize}
+
+Jak probíhá mazání souboru?
+
+\begin{enumerate}
+    \item Odstranění záznamu o souboru z adresáře,
+    \item uložení čísla i-uzlu (viz dále) souboru do seznamu volných i-uzlů,
+    \item uložení datových bloků souboru do seznamu volných bloků k použití.
+\end{enumerate}
+
+Pokud dojde k pádu systému mezi kroky 1 a 2, tak zůstane i-uzel v použitém stavu i když tomu tak není. Tato skutečnost plýtvá pamětí, jelikož i-uzel nemůže být využit pro jiná data. Podobná situace nastává při pádu mezi kroky 2 a 3. Jako řešení tohoto problému byly navrhnuty žurnálovací systémy (také viz dále). 
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Ukládání metadat}
+\end{Large}
+
+Metadata se ukládají ve speciální struktuře, zvané \textit{i-uzel}\footnote{Detaily budou specifické pro OS Linux} (tj. \textit{i-node}). Tyto struktury obsahují metadata o souboru, jako typ souboru, vlastník, skupina vlastníka, přístupová práva, délka souboru, čas vytvoření, čas posledního přístupu a čas modifikace. Dále i-uzel obsahuje ukazatele na bloky souboru. 
+
+\vspace{0,5cm}
+
+V adresářích se vyskytují položky obsahující jméno souboru a číslo relevantního \textit{i-uzlu}, tyto informace jsou důležité pro nalezení souborů. Navíc může být v různých adresářích více souborů se stejným jménem ukazující na jeden soubor/\textit{i-uzel} (tj. \textit{pevné odkazy}/\textit{hard link})\footnote{Při smazání pevného odkazu je počet těchto odkazů snížen o jedno. Pokud je počet roven 0 je soubor definitivně smazán.}.
+
+\vspace{0,5cm}
+
+Dále existuje \textit{symbolický odkaz} (\textit{symlink}), kdy soubor odkazuje na jiný. Při smazání souboru, na který \textit{symlink} odkazuje, nedochází ke smazání souboru se symbolickým odkazem. 
+
+\newpage
+
+\begin{Large}
+    \textbf{Žurnálovací souborové systémy}
+\end{Large}
+
+Tyto systémy udržují ve svém $"$žurnálu$"$ záznamy o plánovaných změnách před jejich provedením. Pokud dojde k pádu systému, je schopen dostat data a metadata do konzistentního stavu pomocí předešle uložených plánů operací v žurnálu. 
+Uložená operace je však proveditelná, pouze pokud je kompletně uložená. 
+
+\vspace{0,5cm}
+
+Pokud není operace zapsána jako celek do žurnálu před pádem systému, je ignorována. Kontrolu lze provádět pomocí kontrolního součtu, v případě pádu systému před kompletním zápisem do žurnálu nebude součet sedět a zápis bude ignorován.
+
+\vspace{0,5cm}
+
+Do žurnálu lze ukládat pouze metadata nebo metadata a vlastní data souboru. Je jasné, že první varianta je rychlejší ale s možností ztráty konzistence, zatímco druhá možnost je pravý opak.
+
+\begin{itemize}
+    \item Při ukládání pouze metadat může dojít k inkonzistenci mezi metadaty. Např. při přidání dat do souboru:
+    \begin{enumerate}
+        \item Změna záznamu o velikosti souboru v jeho i-uzlu (metadata).
+        \item Z volných datových bloků je vybrán prostor pro nová data (metadata).
+        \item Do vybraných bloků jsou zapsány data (data). 
+    \end{enumerate}
+    Pokud dojde k pádu systému před třetím krokem, budou v žurnálu zaznamenány datové bloky, ale v těch bude náhodná změť paměti. 
+    
+    \item Při ukládání s daty souborů jsou do žurnálu ukládány kopie všech datových bloků do kterých se bude zapisovat. Pokud dojde k pádu, je operace zápisu provedena znovu nad kopií datových bloků. Toto ,samo sebou, značně zpomaluje operaci zápisu. Využívá se pouze v systémech, kde vyžadujeme naprostou ochranu dat. 
+\end{itemize}
+
+Základní implementace:
+
+\begin{enumerate}
+    \item Kopie žurnálu mohou být umístěny na různých paměťových médiích za účelem zálohování v případě poruchy jiného média.
+    \item Plánované změny v žurnálu mohou být dále ukládány v jiném žurnálu z důvodu zvýšení redundance.
+    \item Žurnál je ukládán na stejném nebo jiném médiu, z důvodu vyšší rychlosti. 
+\end{enumerate}
 
 \newpage
 \section{Síťová část OS\,--\,stavy soketů při komunikaci, síťová systémová volání, serverové procesy}
