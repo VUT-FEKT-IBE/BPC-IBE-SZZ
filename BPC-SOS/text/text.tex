@@ -989,5 +989,134 @@ Základní implementace:
     \item Žurnál je ukládán na stejném nebo jiném médiu, z důvodu vyšší rychlosti. 
 \end{enumerate}
 
+%%%%%%%%%%%%%%
+% NETWORK OS %
+%%%%%%%%%%%%%%
+
 \newpage
 \section{Síťová část OS\,--\,stavy soketů při komunikaci, síťová systémová volání, serverové procesy}
+
+Co je to soket? Jedná se o vstupně výstupní bod do sítě zahrnující adresu síťové i transportní vrstvy. Pomocí IP adresy specifikuje koncovou stanici a pak s portem v kombinaci s protokolem cílovou službu stanice. Sokety na straně klienta a serveru vytvoří komunikační kanál k přenosu dat.
+
+\begin{center}
+    \includegraphics[scale=1]{images/network_socket.png}
+\end{center}
+
+Při realizaci síťové komunikace (v tomto případě spojově orientované - TCP) procházejí sokety různými stavy:
+\begin{enumerate}
+    \item Čekání na spojení
+    \item Sestavování spojení (příznaky SYN/ACK)
+    \item Přenos dat (příznaky PSH/ACK)
+    \item Ukončování spojení (příznaky FIN/ACK)
+\end{enumerate}
+
+Přechody mezi stavy soketů jsou řízeny příznaky v záhlaví TCP segmentů:
+\begin{itemize}
+    \item ACK - potvrzení přijatých dat
+    \item PSH - přenos dat
+    \item SYN - žádost o sestavení spojení
+    \item FIN - ukončení spojení
+\end{itemize}
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Stavy soketů více do hloubky}
+\end{Large}
+
+\vspace{0,5cm}
+\textbf{Sestavení spojení}
+
+První jednosměrné spojení se zahájí zasláním segmentu s příznakem SYN, naslouchající soket na straně serveru segment přijme a potvrzuje žádost klienta zasláním segmentu s příznakem ACK. Tento stejný segment zasílá žádost o sestavení druhého jednosměrného spojení s příznakem SYN. Třetí segment opět potvrzuje. 
+
+\begin{center}
+    \includegraphics[scale=1]{images/network_three_handshake.png}
+\end{center}
+
+Soket na straně serveru může při sestavování být ve stavu LISTEN (naslouchá/čeká na spojení) nebo SYN\_RCVD (první SYN segment přijat). A naopak soket na straně klienta může být ve stavu SYN\_SENT (SYN segment zaslán). Po navázání se přechází do stavu ESTABLISHED.
+
+\vspace{0,5cm}
+\textbf{Přenos dat}
+
+Následuje přenos dat, při kterém mají TCP segmenty příznak PSH. Jako odpověď se opět zasílají segmenty s příznakem ACK pro potvrzení přijetí dat. 
+
+\vspace{0,5cm}
+\textbf{Ukončení spojení}
+
+Spojení může ukončit jakákoliv strana zasláním segmentu s příznakem FIN\footnote{Opět se potvrzuje ACK.}, ovšem pouze svoje jednosměrné spojení. Druhé zůstává otevřené a může stále zasílat data, dokud jej druhá strana neukončí. Při ukončování spojení prochází sokety těmito stavy:
+\begin{itemize}
+    \item FIN\_WAIT1 - stav soketu stanice která jako první ukončila jednosměrné spojení (zasláním FIN).
+    \item CLOSE\_WAIT - stanice přijala segment s příznakem FIN a potvrzení bylo vysláno. 
+    \item FIN\_WAIT2 - stanice obdržela potvrzení o ukončení spojení, tento stav setrvává dokud druhá stanice také nepošle FIN. 
+    \item LAST\_ACK - druhá stanice ukončuje druhé jednosměrné spojení (zasláním FIN).
+    \item TIME\_WAIT - stanice potvrzuje ukončení spojení, avšak typicky počká pár minut. Důvodem je fakt, že zaslané potvrzení se může ztratit, stanice si o něj případně zažádá znovu. 
+    \item CLOSED - potvrzení přijato a spojení ukončeno.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[scale=1]{images/network_tcp_close.png}
+\end{center}
+
+\begin{Large}
+    \vspace{0,5cm}
+    \textbf{Síťová sys. volání}
+\end{Large}
+
+Správa soketů v OS Linux se provádí pomocí systémových volání:
+
+\vspace{0,5cm}
+\textbf{socket}
+
+Sys. volání pro založení nového soketu.
+
+\vspace{0,5cm}
+\textbf{connect}
+
+Sys. volání na straně klienta pro navázání spojení se soketem na straně serveru. Navazování spojení probíhá pomocí three-way handshake (popsán výše).
+
+\vspace{0,5cm}
+\textbf{bind}
+
+Přiřadí soketu IP adresu a port. Je použito na straně serveru, pokud by se nezavolalo byl by soket svázán s náhodným portem z dynamického rozsahu (49152-65535). U serveru se ovšem očekává, že bude naslouchat na portu svázaném se službou (FTP - port 21, SSH - port 22, HTTP - 80, HTTPS - 443, apod.). U klienta je port generován z dynamického rozsahu $\xrightarrow[]{}$ sys. volání \textbf{bind} se nepoužívá.  
+
+\vspace{0,5cm}
+\textbf{listen}
+
+Převede soket na straně serveru do pasivního režimu kdy přijímá příchozí spojení (pomocí sys. volání \textbf{accept}). Vytvoří se vstupní fronta pro příchozí spojení.  
+
+\vspace{0,5cm}
+\textbf{accept}
+
+Voláno na straně severu k vyzvednutí požadavku o spojení ze vstupní fronty. Volání vytvoří nový soket podle parametrů žádosti o spojení. Pokud je \textbf{accept} zavolán v době, kdy je vstupní fronta prázdná, tak je zablokováno do doby než žádost přijde.
+
+\vspace{0,5cm}
+\textbf{close}
+
+Uzavírá soket. Ukončení spojení zmíněno dříve.
+
+\vspace{0,5cm}
+\textbf{write} a \textbf{read}
+
+Sys. volání pro přenos dat. Data jsou přenášena s dříve zmíněnými příznaky segmentů PSH a ACK.
+
+\newpage
+
+\begin{Large} 
+    \textbf{Serverové procesy}
+\end{Large}
+
+Jedná se o síťové služby, které jsou zprostředkovány programy (tj. \textit{servery}). Proces každého serveru má přiřazenou adresu - port, ta rozlišuje jednotlivé servery v rámci jedné stanice\footnote{Servery pracující na pozadí označujeme jako \textit{démony} (\textit{daemon})}. Servery lze spouštět dvojím způsobem:
+\begin{itemize}
+    \item Stále - spuštěn při startu OS.
+    \item Na požádání - spuštěn pouze když je potřeba.
+\end{itemize}
+
+Stále spuštěné servery typicky musí reagovat rychle a obsluhují velké množství žádostí. Naopak u serverů na vyžádání se předpokládá méně časté využití, proto je spouští tzv. \textit{superserver/superdémon} (jeden ze stále běžísích serverů)\footnote{Je třeba se správně rozhodnout jak servery rozdělit. Stále běžící permanentně ubírají systémové prostředky, zatímco servery na vyžádání budou reagovat se zpožděním při zahájení komunikace.}.
+
+\begin{center}
+    \vspace{0,5cm}
+    \includegraphics[scale=1]{images/network_server_proc.png}
+\end{center}
+
+Příklad použití superserveru lze vidět na obrázku výše. Superserver \textbf{inetd} běží stále a naslouchá na \textbf{FTP} a \textbf{TELNET} portech (21 resp. 23). V případě, že přijde požadavek na jeden z těchto prostů aktivuje superserver korespondující server. Servery \textbf{httpd} (HTTP) a \textbf{sshd} (SSH) jsou svázány přímo s portem a běží stále.
+
+

@@ -119,7 +119,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Využití paměti – přidělování paměti procesům, algoritmy přesunu stránek do odkládacího prostoru
 - [x] Souborové systémy – organizace dat na paměťovém úložišti, metody ukládání datových bloků
 - [x] Konzistence dat – data a metadata, žurnálovací souborové systémy
-- [ ] Síťová část OS – stavy soketů při komunikaci, síťová systémová volání, procesy síťových služeb
+- [x] Síťová část OS – stavy soketů při komunikaci, síťová systémová volání, procesy síťových služeb
 
 ### BPC-ZSY
 
