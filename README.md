@@ -38,7 +38,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] DoS/DDoS útoky (princip, rozdělení, popis základních útoků, SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slowloris). Zátěžové testování (typy testů, nejznámější nástroje).
 - [x] Netechnické typy útoků, sociální inženýrství, phising (používané techniky), útoky MitM (ARP spoofing, DNS spoofing, SSL strip, SSL sniff).
 - [x] Protokoly IPsec a TLS (princip, umístění TCP/IP, průběh komunikace, autentizace, utajení a integrita dat).
-- [ ] Zabezpečení 802.11 (WPA2, používaná kryptografická primitiva, klíčové hospodářství, popis 4Way Handshake, testování bezpečnosti).
+- [x] Zabezpečení 802.11 (WPA2, používaná kryptografická primitiva, klíčové hospodářství, popis 4Way Handshake, testování bezpečnosti).
 
 ### BPC-KOM
 
