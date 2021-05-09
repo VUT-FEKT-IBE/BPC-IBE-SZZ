@@ -385,4 +385,57 @@ Security strings, např.~\texttt{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256}.
 \end{figure}
 
 \clearpage
-\section{Zabezpečení 802.11 (WPA2, používaná kryptografická primitiva, klíčové hospodářství, popis 4Way Handshake, testování bezpečnosti).}
+% TODO WPA handshake není kompletní. Není popsáno co je GTK a jaké jsou obecně požadavky. Celá otázka by chtěla zrevidovat a doplnit
+\section{Zabezpečení 802.11 (WPA2, používaná kryptografická primitiva, klíčové hospodářství, popis 4Way handshake, testování bezpečnosti).}
+
+\textbf{WEP} (Wired Equivalent Privacy): nevhodná implementace šifrování, chybí management klíčů, předvídatelný obsah. Šifrování pomocí 64b/128b RC4 klíčů, integrita CRC-32, jednostranná autentizace. 2w~handshake: open system (pouze požadavek s~SSID sítě), 4w~handshake: požadavek s~SSID, nádhodný řetězec $r$, odpověď $E_{k_\mathrm{priv}}(r)$, přijmutí/odmítnutí. \\
+\textbf{WPA} (WiFi Protected Access): rychlé vydání kvůli nedostatečné bezpečnostni WEP. Autentizace pomocí PSK/IEEE 802.1x, důvěrnost TKIP (Temporal Key Integrity Protocol) s~per-packet obměnou klíče, integrita MIC (Message Integrity Check). Zachována zpětná kompatibilita s~WEP. \\
+\textbf{WPA2} (WPA II): Důvěrnost pomocí AES, integrita CCMP%
+\footnote{Útok \href{https://krackattacks.com}{\textbf{KRACK}}: Key Reinstallation Attacks z~roku 2017.}%
+. \\
+\textbf{WPA3} (WPA III): AES-256-GCM, HMAC SHA-384. SAE (Simultaneous Authentication of~Equals) zajišťuje bezpečnější výměnu a~dopřednou bezpečnost v~Personal módu%
+\footnote{V~dubnu 2019 byla ve~WPA3 objevena zranitelnost \href{https://wpa3.mathyvanhoef.com/}{\textbf{Dragonblood}} umožňující \emph{downgrade} spojení a~útok postranními kanály: umožnění zjištění hesla silou a~DoS útoku na~stanici.}%
+.
+
+\vspace*{1em}\noindent
+\textbf{PMK} (Pairwise Master Key) je získán z~úspěšné autentizace (u~Enterprise zaslán serverem, u~Personal je shodný s~PSK, který se~odvozuje z~hesla%
+\footnote{$\mathrm{PSK} = \mathrm{PBKDF2}(password, SSID, SSID\_length, \mathrm{rounds}=4096, \mathrm{output}=256)$, viz \href{https://datatracker.ietf.org/doc/html/rfc8018}{RFC~8018}.}%
+), další klíče jsou z~něj derivovány hashováním: \\
+\textbf{KCK} (Key Confirmation Key): autentizační zprávy MIC během čtyřcestné výměny, \\
+\textbf{KEK} (Key Encryption Key): zajištění důvěrnostni dat během čtyřcestné výměny, \\
+\textbf{TEK} (Temporary Encryption Key): šifrování dat v~TKIP a~CCMP, \\
+\textbf{TMK} (Temporary MIC Key): autentizace dat v~TKIP.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+\textbf{klient} && \textbf{AP} \\
+\hline
+$\leftarrow$ & ANonce & $\leftarrow$ \\
+vytvoření PTK && \\
+$\rightarrow$ & SNonce + MIC & $\rightarrow$ \\
+&& vytvoření PTK \\
+$\leftarrow$ & GTK + MIC & $\leftarrow$ \\
+$\rightarrow$ & ACK & $\rightarrow$ \\
+\end{tabular}
+\caption*{Čtyřcestná WPA výměna}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|ccccc}
+& \textbf{WPA-PSK} & \textbf{WPA} & \textbf{WPA2-PSK} & \textbf{WPA2} \\
+\hline
+\textbf{Autentizace} & PSK & 802.1x (PEAP) & PSK & 802.1x (PEAP) \\
+\textbf{Šifrování} & TKIP (RC4) & TKIP (RC4) & CCMP (AES) & CCMP (AES) \\
+\textbf{Enterprise} & nevhodné & dobrá úroveň & nevhodné & nejlepší úroveň \\
+\textbf{Personal} & dobrá úroveň & nevhodné & nejlepší úroveň & nevhodné \\
+\end{tabular}
+\end{table}
+
+\subsection{Testování bezpečnosti}
+
+\textbf{WEP}: pasivní: \texttt{aurodump-ng}, aktivní: \texttt{aireplay-ng} (Chopchop attack, Caffe Latte attack, \dots) \\
+\textbf{WPA}: bruteforce (\texttt{airodump-ng}, \texttt{aircrack-ng}) \& dictionary/rainbow attacks \\
+zmatení uživatele: vytvoření falešného AP a~vyzrazení hesla \\
+automatické nástroje \texttt{wifite}, \texttt{fluxion}
