@@ -328,20 +328,22 @@ Pro~ustanovení klíče IPSec využívá symetrickou kryptografii: pre-shared ke
 \clearpage
 \subsection{TLS}
 
-Pracuje na~transportní vrstvě (L4): end-to-end šifrování TCP/UDP mezi~klientem a~serverem. Je~složen z~\textbf{handshake} (inicializace spoje, autentikace stran, ustanovení klíče), \textbf{record} (datový přenos, MAC autentizace) a~\textbf{alert} (notifikace chyb a~varování) protokolů.
+Pracuje na~transportní vrstvě (L4): end-to-end šifrování TCP/UDP mezi~klientem a~serverem, pro~aplikační vrstvu transparentní. Je~složen z~\textbf{handshake} (inicializace spoje, autentikace stran, ustanovení klíče), \textbf{record} (datový přenos, MAC autentizace) a~\textbf{alert} (notifikace chyb a~varování) protokolů.
 
 Security strings, např.~\texttt{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256}.
 
+\begin{itemize}[noitemsep]
+\item Ustanovení klíče: ECDHE, DHE
+\item Podpis: RSA, DSA, ECDSA
+\item Šifrování: AEC-GCM, ChaCha
+\item Hashování: SHA-256, SHA-384
+\end{itemize}
+
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.5\textwidth]{images/tls}
+\includegraphics[width=0.7\textwidth]{images/tls}
+\caption*{Výměna zpráv v~TLS 1.2 a~TLS 1.3}
 \end{figure}
-
-% TODO Doplnit TLS, je toho tady málo
-
-\begin{center}
-{\huge \dots} zde je třeba doplnit zbytek {\huge \dots}
-\end{center}
 
 \clearpage
 \section{Zabezpečení 802.11 (WPA2, používaná kryptografická primitiva, klíčové hospodářství, popis 4Way Handshake, testování bezpečnosti).}
