@@ -188,7 +188,7 @@ Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~t
 
 \subsubsection*{Dle znalosti}
 
-\textbf{Black Box}: útočník zná jen vstupy a~potenciální výstupy systému, neví nic o~vnitřním uspořádání, tj. je v~pozici běžného uživatle. \textbf{White Box}: k~dispozici má topologii sítě, přístupové údaje, dokumentaci, tj. je v~pozici vývojáře/technika. \textbf{Grey Box}: kombinace dvou předchozích, k~dispozici jsou pouze základní znalosti o~systému.
+\textbf{Black Box}: útočník zná jen vstupy a~potenciální výstupy systému, neví nic o~vnitřním uspořádání, tj. je v~pozici běžného uživatele. \textbf{White Box}: k~dispozici má topologii sítě, přístupové údaje, dokumentaci, tj. je v~pozici vývojáře/technika. \textbf{Grey Box}: kombinace dvou předchozích, k~dispozici jsou pouze základní znalosti o~systému.
 
 \subsubsection*{Dle realizace}
 
@@ -224,8 +224,7 @@ report         & předání výsledků, které povedou ke~zvýšení bezpečnost
 \clearpage
 \section{(D)DoS útoky (princip, rozdělení, popis základních útoků: SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slow-Loris). Zátěžové testování (typy testů, nejznámější nástroje).}
 
-\textbf{DDoS} (\emph{Distributed Denial of~Services}) je DoS útok realizovaný z~více uzlů, které s~hlavním útočníkem spolupracují a~napadají cílový uzel.
-
+\textbf{DDoS} (\emph{Distributed Denial of~Services}) je DoS útok realizovaný z~více uzlů, které s~hlavním útočníkem spolupracují a~napadají cílový uzel. \\
 \textbf{Botnet} je skupina uzlů (až statisíce), které zpravidla bez~vědomí svých majitelů útočí na~cíle na~internetu. Svému majiteli vytváří zpravidla zisk nebo jiné prostředky (exploit, trojan, pronájem, těžba kryptoměn, krádež dat).
 
 % TODO Možná by se hodilo ty útoky nalinkovat, pokud k nim něco existuje?
@@ -308,11 +307,11 @@ Také \emph{ARP cache Poisoning} nebo \emph{ARP poison Routing}. Jde o~způsob p
 \tikzstyle{rounded} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm, text centered, draw=black]
 \tikzstyle{arrow} = [thick,<->,>=stealth]
 %
-\node (user)     [block]                                  {User};
-\node (switch)   [block,   right of=user]                 {Switch};
+\node (user)     [block]                                  {uživatel};
+\node (switch)   [block,   right of=user]                 {směrovač};
 \node (gateway)  [block,   right of=switch]               {gateway};
 \node (internet) [rounded, right of=gateway]              {internet};
-\node (attacker) [block,   below of=switch, yshift=1.5cm] {\color{red} attacker};
+\node (attacker) [block,   below of=switch, yshift=1.5cm] {\color{red} útočník};
 %
 \draw [arrow]      (user)           -- (switch);
 \draw [arrow]      (switch)         -- (gateway);
@@ -321,7 +320,7 @@ Také \emph{ARP cache Poisoning} nebo \emph{ARP poison Routing}. Jde o~způsob p
 \draw [arrow, red] (user.east)      -- (attacker.north);
 \draw [arrow, red] (attacker.north) -- (gateway.west);
 \end{tikzpicture}
-\caption*{ARP spoofed network}
+\caption*{Síť pod~ARP spoof útokem}
 \end{figure}
 
 Při~překladu lokální IP adresy na~MAC dochází k~zaslání broadcast paketu, na~který zařízení s~požadovanou IP adresou pošle odpověď. Tyto zprávy nejsou nijak autentizované, ARP je stateless protokol a~všechna zařízení na~síti automaticky \emph{cachují} ARP odpovědi bez~ohledu na to, jestli o~ně požádaly.
@@ -341,7 +340,7 @@ Degradace HTTPS spojení na~HTTP. Tři roky po~jeho \enquote{objevení} v~roce 2
 
 \subsubsection{SSL sniff}
 
-Zachycení TLS. Útočník musí mít k~dispozici certifikát kterému důvěřuje prohlížeč, tj. ukradený certifikát podepsaný CA, nebo falešný a~importovaný do~prohlížeče/systému oběti.
+Zachycení TLS. Útočník musí mít k~dispozici certifikát kterému důvěřuje prohlížeč, tj.~ukradený certifikát podepsaný CA, nebo falešný a~importovaný do~prohlížeče/systému oběti.
 
 \clearpage
 \section{Protokoly IPsec a TLS (princip, umístění TCP/IP, průběh komunikace, autentizace, utajení a integrita dat).}
@@ -357,7 +356,7 @@ Pracuje na~síťové vrstvě (L3): end-to-end šifrování TCP/UDP komunikace me
 
 \textbf{Authentication header} zajišťuje integritu a~autentičnost IP paketů, chrání proti replay útokům. \textbf{Encapsulationg Security Payloads} zajišťuje důvěrnost pomocí šifrování. \textbf{Security Association} popisuje IPSec spojení včetně parametrů zabezpečení. Aktivní spojení je uloženo v~databázi (SAD), management a~pravidla jsou uložena v~SPD (Security Policy Database).
 
-Pro~ustanovení klíče IPSec využívá symetrickou kryptografii: pre-shared key, IKE1/IKE2, Kerberos.
+Pro~ustanovení klíče IPSec využívá symetrickou kryptografii: pre-shared key, IKE1/2, Kerberos.
 
 \begin{figure}[ht]
 \centering
