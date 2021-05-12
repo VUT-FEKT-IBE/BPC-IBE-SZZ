@@ -159,22 +159,66 @@ K~vygenerování proudu se využívá $n$ předchozích znaků zašifrovaného t
 
 \clearpage
 \section{Blokové šifry -- Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.}
-% Promised by jedla97
 
-\textbf{Feistelova síť} je konstrukt iterativního míchání bloků: $$L_i = R_{i-1}, R_i = L_{i-1} \oplus f(R_{i-1}, k_i)$$ kde $k_i$ je podklíč použitý v~$i$-té rundě a $f$ je libovolná funkce. Tento princip využívá DES: 64b bloky, 56b klíč ($+$8b parita), 16 rund.
+Na~rozdíl od~proudových šifer operují na~blocích dat o~dané velikosti pomocí symetrického klíče. Algoritmy pro~šifrování i~dešifrování mají na~vstupu blok o~velikosti $n$ a~klíč velikosti $k$, na~výstupu je $n$-bitový blok \emph{ciphertextu}. Formálně lze šifrování zapsat jako $E_K (P) := E(K, P): \{0, 1\}^k \times \{0, 1\}^n \rightarrow \{0, 1\}^n$ a~platí $\forall K: D_K (E_K (P)) = P$.
+
+\textbf{Produktová šifra} kombinuje více transformací vstupu za~účelem ztížení kryptoanalýzy. Využívá transformace jako substituce (S-box), permutace (P-box) a~modulární artitmetiku. Výraz \textbf{SPN} (\emph{Substitution-permutation network}) se využívá k~popsání série S- a~P-boxů v~blokových šifrách. S-box zajišťuje konfuzi (vazbu \emph{ciphertextu} na~více částí klíče), P-box difuzi (změna jednoho bitu \emph{plaintextu} změní polovinu \emph{ciphertextu}, tzv.~lavinový efekt).
+
+\textbf{\href{https://en.wikipedia.org/wiki/Feistel_network}{Feistelova síť}} je konstrukt iterativního míchání bloků: $$L_i = R_{i-1}, R_i = L_{i-1} \oplus f(R_{i-1}, k_i)$$ kde $k_i$ je podklíč použitý v~$i$-té rundě (tj. rundovní klíč) a $f$ je libovolná funkce. Altenativou je \href{https://en.wikipedia.org/wiki/Lai-Massey_scheme}{Lai-Massey schéma}, které se konstruktem velmi Feistelově síti podobá, ale rundovní funkce $f$ nemusí být invertovatelná.
+
+Blokové šifry velmi často využívají algoritmus ARX (\emph{modular addition}, \emph{byte rotation}, XOR), konfuzi a~difuzi (DES, AES) nebo modulární násobení (IDEA).
+
+\subsection{Módy operací}
+
+Šifrovaná data jsou rozdělena na~bloky, které se šifrují postupně. Nejprimitivnější kódování, ECB, bloky šifruje nezávisle -- stejný \emph{plaintext} tak má při~stejném klíči stejný \emph{ciphertext} a~v~zašifrované zprávě se tak mohou objevit vzorce vedoucí k~dešifrování zprávy útočníkem.
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{p{1cm}|p{14cm}}
-ECB & každý blok je šifrován samostatně, $m = m' \Rightarrow c = c'$ \\
-CBC & $c_i = c_{i-1} \oplus k$ \\
-CFB & bloková šifra je zdroj hesla pro~proudovou šifru \\
-OPF & zpětná vazba z~výstupu generátoru, vlastnosti proudové šifry \\
-CTR & iniciační IV je lineárně inkrementován \\
+ECB & $c_i = f(p_i, k)$ \\
+CBC & $c_i = f(c_{i-1} \oplus p_i, k)$ \\
+CFB & $c_i = f(c_{i-1}, k) \oplus p_i$ \\
+OFB & $c_i = f(f(c_{i-1}, k), k) \oplus p_i$ \\
+CTR & $c_i = f(\mathrm{nonce}, \mathrm{CTR}_i) \oplus p_i$ \\
 MAC & obdoba CBC, šifrování a~autentizace \\
 GCM & základem je inkrementace CTR$_0$, XORování se vstupem \\
 \end{tabular}
 \end{table}
+
+\begin{figure}[ht]
+	\centering
+	\subfloat{{\includegraphics[width=0.499\textwidth]{images/block-ecb}}}
+	\subfloat{{\includegraphics[width=0.499\textwidth]{images/block-cbc}}}
+	\\
+	\subfloat{{\includegraphics[width=0.499\textwidth]{images/block-cfb}}}
+	\subfloat{{\includegraphics[width=0.499\textwidth]{images/block-ofb}}}
+	\\
+	\subfloat{{\includegraphics[width=0.499\textwidth]{images/block-ctr}}}
+
+	\caption*{Schémata některých módů operací. Převzato z~\href{https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation}{Block cipher mode of~operation}.}
+\end{figure}
+
+\subsection{\href{https://en.wikipedia.org/wiki/Data_Encryption_Standard}{DES}}
+
+Jedna z~prvních globálně používaných blokových šifer. Využívá 56b klíče a~pracuje s~64b bloky v~šestnácti rundách. Využívá Feistelovo schéma (pro~\enquote{míchání} dvou 32b polovin bloku). Funkce $f$ se skládá z~expanze (32b půlblok na~48b), XOR s~rundovním klíčem (ten je získán pomocí \emph{Key scheduleru} různými bitovými posuny), S-boxu a P-boxu.
+
+Není dostatečně bezpečný (brute-force útoky, diferenciální a~lineární kryptoanalýza). Poprvé zlomen 1997, v~roce 2016 zlomený během patnácti dnů na GTX 1080 Ti.
+
+\subsubsection{3DES}
+
+Také Triple DES, TDES. Využívá DES třikrát za~sebou za~účelem zvýšení jeho bezpečnosti. 3DES využívá tři 56b klíče a~\emph{ciphertext} je získán výpočtem $c = E_{K3}(D_{K2}(E_{K1}(m)))$%
+\footnote{Šifrování prvním klíčem, dešifrování druhým a~šifrování třetím. 3DES totiž nabízí možnost použít i~dva klíče, kdy $K3=K1$.}%
+. 3DES je náchylný na~\href{https://en.wikipedia.org/wiki/Meet-in-the-middle_attack}{\emph{Meet-in-the-Middle} útok} a~některé \emph{chosen-plaintext}/\emph{known-plaintext} útoky, OpenSSL ho neobsahuje od~roku 2016 a~NISTem byl prohlášen za~nedostatečně bezpečný v~roce 2017.
+
+\subsection{\href{https://en.wikipedia.org/wiki/Advanced_Encryption_Standard}{Rijndael}}
+
+Ke~konci 90. let bylo třeba vyměnit nedostatečně silné DES/3DES, Rijndael%
+\footnote{Rijndael, holandská výslovnost [\textipa{"rEinda:l}]}
+je výtězný kandidát pro~šifru AES, je rychlý na~hardware i~sofware. AES využívá klíče o~délce 128b/192b/256b a~128b bloky.
+
+\textbf{Rundovní operace} (na~bloku 4x4B): \underline{substituce} (S-box): šestnáct bijektivních operací, v~software řešeno překladovou tabulkou, \underline{\emph{row shift}} (bajtová permutace): rotace $i$-tého řádku o~$i-1$ pozic doleva, \underline{\emph{column mix}} (lineární transformace): vynásobení matic, \underline{\emph{key addition}}: XOR s~rundovním klíčem. V~první rundě se provádí pouze přidání klíče, v~poslední pouze substituce, \emph{row shift} a~přidání klíče.
+
+I~když existují útoky na~oslabené verze AES (nižší počet rund a~menší velikost klíčů), jde o~bezpečný protokol který je využitý v~TLS, OpenSSH a~většině ostatních současných protokolů.
 
 \clearpage
 \section{Asymetrické algoritmy -- RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.}
