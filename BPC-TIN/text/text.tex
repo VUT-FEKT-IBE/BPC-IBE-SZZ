@@ -113,11 +113,17 @@ Kdy není vhodný OO přístup? Není vhodné ho použít jestliže na cílové 
 
 
 
-
+%TODO
 \newpage
-\section{Třídy složitosti paměťové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti známých algoritmů řazení. Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti.}
+\section{Třídy složitosti paměťové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů.}
+\begin{Large}\vspace{0,5cm} \textbf{Teorie vyčíslitelnosti}
+\end{Large}
 
-Složitost je vztah algoritmu k prostředkům (čas a velikost paměti). Paměťová složitost je závislost paměťových nároků na vstupních datech. Zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na základě délky vstupních dat.
+Zkoumá otázku algoritmické řešitelnosti problému, ne z pohledu času ale jestli jdou vůbec řešit. Vyčíslitelnost je zkoumána pomocí teoretických výpočetních modelů\,--\,deterministický a nedeterministický konečný automat, zásobníkový automat, turingův stroj a další. 
+
+
+
+Složitost je vztah algoritmu k prostředkům (čas a velikost paměti). Paměťová složitost je závislost paměťových nároků na vstupních datech. Zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na základě délky vstupních dat. Měli by se brát v potaz oba dva typy složitosti, jelikož může nastat že máme dva algoritmy na řešení daného problému a jeden má menší časovou složitost a druhý zase paměťovou. Zde výběr z těchto složitostí závisí hlavně, kde bude daný algoritmus implementován.
 
 \begin{Large}\vspace{0,5cm} \textbf{Asymptotická složitost}
 \end{Large}
@@ -144,12 +150,55 @@ Jelikož ne vždy lze určit přesnou složitost algoritmu tak byla vyvinuta asy
 
 \textbf{Polynomiální algoritmy}\,--\,Jsou takové algoritmy jejichž notace v big-O je ohraničena polynomiální funkcí shora. Spadají zde například $\log{n}$, $k*n$, $3n^3 + 4n$, $2*n\log{n}$ a podobné. Nepatří sem exponenciální, faktoriální a jim podobné. Abychom algoritmus označili jako efektivní jeho vykonání by mělo být možné v polynomiálním čase jinak ho lze označit jako neefektivní. Při vysokých hodnotách v kryptografii by ne-polynomiální algoritmy byli nepoužitelné.
 
-\begin{Large}\vspace{0,5cm} \textbf{Algoritmy řazení.}
+\begin{Large}\vspace{0,5cm} \textbf{Posouzení složitosti algoritmů.}
 \end{Large}
+
+Vybrané algoritmy a jejich složitost jsou popsány v dalších otázkách. Zde jsou jenom lehce shrnuty z složitost je udávána z pohledu časové složitosti.  
+
+\begin{large}\vspace{0,2cm} \textbf{Algoritmy řazení.}
+\end{large}
 
 Třídění pomocí algoritmů Bubble Sort, Insert Sort a Select Sort má složitost O($n^2$). Algoritmus Quick Sort má složitost $\theta$($n\log{n}$), kdy v nejhorším případě může nabývat až O($n^2$). Algoritmus Merge Sort má složitost O($n\log{n}$).
 
-\vspace{1cm}
+\begin{large}\vspace{0,2cm} \textbf{Algoritmy hledaní.}
+\end{large}
+
+Binární vyhledávání má složitost O($\log{n}$) a lineární/sekvenční má složitost O($n$).
+
+
+\begin{Large}\vspace{0,5cm} \textbf{Třídy složitosti}
+\end{Large}
+
+Vyjadřuje jak náročný je výpočet je nezbytný k vyřešení problému.\\
+Rozdělení:
+\begin{itemize}
+    \item Třída P\,--\,schůdné algoritmy. Jsou proveditelné v polynomiálním čase na deterministickém turingově stroji.
+    \item Třída NP\,--\,neschůdné algoritmy. Je možné je provést v polynomiálním čase na \textbf{nedeterministickém} TS (nebyl doposud sestaven). Spadají pod ně i všechny algoritmy z třídy P
+    \item Třída NP-těžké\,--\,přinejmenším tak těžké, jako nejtěžší z NP. Nemusí být vykonatelné pomocí TS.
+\end{itemize}
+
+
+\begin{Large}\vspace{0,5cm} \textbf{Turingův stroj}
+\end{Large}
+
+\begin{itemize}
+    \item Turingův stroj\,--\,nelze měnit program
+    \item univerzální Turingův stroj\,--\,lze přepsat program, dnešní pc, mobil atd.
+    \item Nedeterministický Turingův stroj\,--\,doposud nesestaven, sestrojení by znamenalo konec asymetrické kryptografie, neví se jestli ho lze vůbec sestrojit (P vs PN)
+    \item Paralelní Turingův stroj\,-\,z pohledu vyčíslitelnosti je ekvivalentní s běžným jen přináší více výkonu
+    \item Kavantový Turingův stroj\,--\,založen na superpozicích stavů, dokáže řešit \uv{exponenciální explozi} a převést ji na problém se složitostí v polynomiálním čase
+\end{itemize}
+
+
+
+
+
+
+
+
+\newpage
+\section{Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti. Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a~vyhledávání prvku v ADT lineární seznam. ADT zásobník, ADT fronta.}
+
 \begin{Large}\vspace{0,5cm} \textbf{Algoritmy hledání.}
 \end{Large}
 
@@ -184,36 +233,15 @@ Dva základní algoritmy pro hledání jsou \textit{Binary search}\footnote{Fung
     \end{tabular}
 \end{table}
 
-\textbf{Nelineární}\,--\,zde můžou spadat stromy, které pokud jsou nějak vyvažovány, tak mají náročnost O($\log{n}$). Pokud se nevyvažují tak náročnost je O($n$).
+\textbf{Nelineární}\,--\,zde můžou spadat stromy, které pokud jsou nějak vyvažovány, tak mají náročnost O($\log{n}$). Pokud se nevyvažují tak náročnost je O($n$). Tyto složitosti jsou pro všechny operace stejné.
 
 \begin{Large}\vspace{0,5cm} \textbf{Vztah časové a paměťové složitosti.}
 \end{Large}
 
 Většina algoritmů je kompromisem mezi těmito dvěma druhy složitosti. Pokud bychom měli algoritmus s vysokými nároky na časovou složitost (aby byl co nejrychlejší) tak jeho paměťová složitost bude vzrůstat. Většinu algoritmů je nějakým způsobem optimalizovaná nebo ji lze optimalizovat.
 
-\newpage
-
-\begin{Large}\vspace{0,5cm} \textbf{Třídy složitosti}
+\begin{Large}\vspace{0,5cm} \textbf{Abstraktní datový typ.}
 \end{Large}
-
-Vyjadřuje jak náročný je výpočet je nezbytný k vyřešení problému.\\
-Rozdělení:
-\begin{itemize}
-    \item Třída P\,--\,schůdné algoritmy. Jsou proveditelné v polynomiálním čase na deterministickém turingově stroji.
-    \item Třída NP\,--\,neschůdné algoritmy. Je možné je provést v polynomiálním čase na \textbf{nedeterministickém} TS (nebyl doposud sestaven). Spadají pod ně i všechny algoritmy z třídy P
-    \item Třída NP-těžké\,--\,přinejmenším tak těžké, jako nejtěžší z NP. Nemusí být vykonatelné pomocí TS.
-\end{itemize}
-
-
-
-
-
-
-
-
-
-\newpage
-\section{Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a~vyhledávání prvku v ADT lineární seznam. ADT zásobník, ADT fronta.}
 
 Abstraktní datový typ je množina druhů dat (hodnot) a příslušných operací, které jsou přesně specifikovány a to nezávisle na konkrétní implementaci. Zjednodušeně ADT je reprezentováno rozhraním, kde uživatele tohoto rozhraní zajímá pouze, jak se používá a ne jak je implementováno. Poté co je konkrétní ADT implementován v programovacím jazyce stává se z něj datová struktura.
 
@@ -309,7 +337,7 @@ Je dynamická datová struktura, kde se odebírají prvky v tom pořadí v jaké
 
 
 \newpage
-\section{Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranění, smazání uzlu stromu).}
+\section{Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranění, smazání uzlu stromu). Průchody stromy in-order, pre-order, post-order.}
 
 \textbf{ADS typu strom}\,--\,je nelineární dynamická abstraktní datová struktura. Každý uzel stromu může mít n potomků a zároveň má pouze jednoho předchůdce. Nejčastější zástupci jsou obecný strom nebo n-ární strom. Rozdíl je v tom, že n-ární má maximální počet potomků rovný n. Skládá se z uzlů, které se pojmenovávají:
 \begin{itemize}
@@ -330,7 +358,7 @@ Je dynamická datová struktura, kde se odebírají prvky v tom pořadí v jaké
 \end{tikzpicture}
 \end{center}
 
-\begin{Large}\vspace{0,5cm} \textbf{Binarní strom}
+\begin{Large}\vspace{0,1cm} \textbf{Binarní strom}
 \end{Large}
 
 Binární strom je strom, který má nanejvýše 2 potomky na jeden uzel.
@@ -355,7 +383,6 @@ Vyvážený strom
 
 \vspace{3cm}
 Nevyvážený strom
-
 
     \begin{tikzpicture}[sibling distance=10em,
   every node/.style = {shape=circle,
@@ -395,9 +422,6 @@ LP
 
 
 
-
-\newpage
-\section{Průchody stromy in-order, pre-order, post-order.}
 \textbf{Pre-order}\,--\,nejprve se zpracuje kořen, poté levý podstrom a nakonec pravý podstrom. Využívá se k vytvoření kopie stromu. Tak aby vypadal stejně.
 \begin{center}
 \includegraphics[scale=1]{images/tree.PNG}
@@ -430,7 +454,8 @@ LP
 
 
 \newpage
-\section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a hashovacích tabulek.]{Problematika nevyvážených stromů. Vyvažování stro-mů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stro-mů a hashovacích tabulek.}
+\section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy]{Problematika nevyvážených stromů. Vyvažování stro-mů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy.
+}
 
 Nevyvážený strom je problematický v tom, že jeho složitost může klesnout až na O($n$) z O($\log{n}$). Z tohoto důvodu má smysl stromy vyvažovat.
 
@@ -442,6 +467,13 @@ Vyvážený strom má hloubku levého a pravého podstromu rovnou vždy 0 nebo 1
 \textbf{AVL stromy}\,--\,mají výhodu v tom, že jsou dobře vyvážené ale hrozí zde problém mnohonásobné rotace. Takže vkládání může být méně efektivní. Mají velice efektivní vyhledávání.
 
 Vyvažuje se dvěma typy rotace, u kterých pak dále rozlišujeme stranu. Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/AVLtree.html}
+
+
+\includegraphics[scale=0.3]{BPC-TIN/images/Rotation1Type.JPG}
+\includegraphics[scale=0.3]{BPC-TIN/images/Rotation2Type.JPG}
+
+
+\vspace{0,5cm}
 
 \textbf{Red-Black stromy}\,--\,nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rotace. Efektivní vkládání, ale méně efektivní vyhledávání.
 
@@ -456,16 +488,38 @@ Při vyvažování platí pravidla:
 Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/RedBlack.html}
 
 
-\begin{Large}\vspace{0,5cm} \textbf{Hashovací tabulka}
+
+
+
+
+
+
+\section{Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a hashovacích tabulek.}
+
+
+\begin{Large}\vspace{0,2cm} \textbf{Hashovací tabulka}
 \end{Large}
 
-Hashovací tabulka spojuje klíč s odpovídající hodnotou. Klíč je vypočítán z obsahu položky tak aby byl klíč co nejjednoznačnější a nedocházelo ke kolizím, vše vychází z pravděpodobnosti o hashovacích funkcích. Využívají se nejčastěji v databázích nebo k rychlému vyhledávaní v polích.
+Hashovací tabulka spojuje klíč s odpovídající hodnotou. Klíč je vypočítán z obsahu položky tak aby byl klíč co nejjednoznačnější a nedocházelo ke kolizím, vše vychází z pravděpodobnosti o hashovacích funkcích. Využívají se nejčastěji v databázích nebo k rychlému vyhledávaní v polích. Paměťová složitost je O($n$).
 
 \textbf{Vkládání}\,--\,Z vkládaného prvku se se udělá hash. Tento hash se přiřadí do pole, na místo, které mu odpovídá. Jestliže je místo obsazeno přiřadíme mu další volné místo dle algoritmu.
 
 \textbf{Vkládání}\,--\,Při vyhledávání využijeme klíče, který nám vrátí index položky. Jestliže na odpovídajícím indexu se nenachází daná položka tak pomocí algoritmu vypočteme, kde je další místo, kde se položka může nacházet.
 
-\begin{Large}\vspace{0,5cm} \textbf{Hashovací tabulka\,--\,řešení kolizí}
+\begin{table}[h]
+    \centering
+    \caption{Časová složitost v dobře a špatně optimalizovaných tabulkách}
+    \begin{tabular}{|c|c|c|}
+    \hline
+         Operace & Průměrná & Nejhorší \\\hline
+         Vkládání & O(1) & O($n$) \\\hline 
+         Mazání & O(1) & O($n$) \\\hline
+         Vyhledání & O(1) & O($n$) \\\hline
+    \end{tabular}
+\end{table}
+
+
+\begin{Large}\vspace{0,2cm} \textbf{Hashovací tabulka\,--\,řešení kolizí}
 \end{Large}
 
 \textbf{Řetězení tabulek}\,--\,pokud dojde ke kolizi vložíme prvky do lineárního seznamu za sebe.
@@ -476,6 +530,17 @@ Hashovací tabulka spojuje klíč s odpovídající hodnotou. Klíč je vypočí
 
 \begin{Large}\vspace{0,5cm} \textbf{Hashovací tabulka vs binární strom}
 \end{Large}
+
+
+\begin{table}[th]
+    \begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+         ADT & Výhody & Nevýhody \\\hline
+         Binární strom & Rychlé vkládání, mazaní a hledání pokud je vyvažován & Algoritmus mazání je časově náročný. \\\hline
+         AVL a Red-black stromy & Stejné jako binární stromy jen jsou vždy vyvážené takže optimální. & Jsou složité. \\\hline
+         Hashovací tabulka & Rychlé vkládání, při existenci klíče rychlé vyhledávání. & Pomalý přístup pokud klíč není nalezen. Neefektivní využití paměti.\\\hline
+    \end{tabularx}
+\end{table}
 
 Hashovací tabulka je rychlejší na vyhledávání pokud je dobře napsána hashovací funkce ve špatném případě lze dojít k O(n). Nevýhoda je, že nelze vyhledávat pokud máme jen částečný klíč nebo potřebujeme v nějakém intervalu. Další nevýhodou je složitost vytvoření hashovacích tabulek oproti stromu.
 
@@ -488,7 +553,7 @@ Hashovací tabulka je rychlejší na vyhledávání pokud je dobře napsána has
 
 
 
-\newpage
+\clearpage
 \section{Jednoduché a pokročilejší řadící techniky a jejich srovnání. Stabilita řadícího algoritmu. Bubble sort. Insertion sort. Selection sort. Shell sort. Merge sort. Heap sort. Quick sort.}
 
 \begin{Large}\vspace{0,5cm} \textbf{Typy řazení}
@@ -585,7 +650,8 @@ Video \url{https://www.youtube.com/watch?v=ZHVk2blR45Q}
 
 
 \newpage
-\section{Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šířky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
+\section{Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šířky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky).}
+
 
 \begin{Large}\vspace{0,5cm} \textbf{Graf/ teorie grafů}
 \end{Large}
@@ -639,6 +705,20 @@ Video \url{https://www.youtube.com/watch?v=oDqjPvD54Ss}
 Video \url{https://youtu.be/pcKY4hjDrxk?t=279}
 
 BFS vs DFS rozdíl je že DFS je méně paměťově náročné ale BFS je optimální.
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\section{Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
+\begin{Large}\vspace{0,5cm} \textbf{Pokračování slepého prohledávání}
+\end{Large}
 
 \textbf{DLS}\,--\,vychází z DFS ale je omezen na maximální hloubku.
 
@@ -743,3 +823,7 @@ Více druhů metod vytvoření fitness funkce (Hrubá, standardizovaná, přizp�
 \begin{center}
 \includegraphics[scale=0.7]{images/mutace.PNG}
 \end{center}
+
+
+
+\section{Parallel computing and architectures, processes, threads and their synchroization. Dead lock.}
