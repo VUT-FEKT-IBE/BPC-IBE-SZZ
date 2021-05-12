@@ -113,7 +113,11 @@ Kdy není vhodný OO přístup? Není vhodné ho použít jestliže na cílové 
 
 
 
-%TODO
+
+
+
+
+
 \newpage
 \section{Třídy složitosti paměťové a časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů.}
 \begin{Large}\vspace{0,5cm} \textbf{Teorie vyčíslitelnosti}
@@ -469,8 +473,9 @@ Vyvážený strom má hloubku levého a pravého podstromu rovnou vždy 0 nebo 1
 Vyvažuje se dvěma typy rotace, u kterých pak dále rozlišujeme stranu. Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/AVLtree.html}
 
 
-\includegraphics[scale=0.3]{BPC-TIN/images/Rotation1Type.JPG}
-\includegraphics[scale=0.3]{BPC-TIN/images/Rotation2Type.JPG}
+
+\includegraphics[scale=0.3]{images/Rotation1Type.JPG}
+\includegraphics[scale=0.3]{images/Rotation2Type.JPG}
 
 
 \vspace{0,5cm}
@@ -759,7 +764,7 @@ Obecný evoluční algoritmus funguje zjednodušeně, že prvně máme nějakou 
 
 Genetické algoritmy jsou založeny na Darwinově myšlence že přežije nejsilnější. Využívá metody křížení, mutace a selekce.
 
-TODO Kódování řetězci má také svou analogii v gentice, kdy v podstatě řetězce odpovídají chromozómům, jednotlivé pozice v řetězci jednotlivým genům a konkrétní hodnoty na těchto pozicích pak alelám.
+Kódování řetězci má také svou analogii v gentice, kdy v podstatě řetězce odpovídají chromozómům, jednotlivé pozice v řetězci jednotlivým genům a konkrétní hodnoty na těchto pozicích pak alelám.
 
 Genetické algoritmy pracují tak že prvně vyberou nějakou populaci přípustných řešení. Abychom s nimi mohly pracovat musíme je převést do řetězce/pole. Poté přichází na řadu výběr jedinců, kteří se budou podílet na nové generaci. Vetšinou to probíhá tak, že ohodnotíme každého jedince pomocí fitness funkce a na základě tohoto parametru vybereme nejvhodnější kandidáty (metod výběru je více). Tito vybraní jedinci se mezi sebou kříží. Nakonec každý kandidát mutuje. 
 
@@ -827,3 +832,155 @@ Více druhů metod vytvoření fitness funkce (Hrubá, standardizovaná, přizp�
 
 
 \section{Parallel computing and architectures, processes, threads and their synchroization. Dead lock.}
+\begin{Large}\vspace{0,5cm} \textbf{Sériové výpočty}
+\end{Large}
+
+Sériové výpočty běží na jediném CPU s použitím jednoho CPU, kde je problém rozdělen na posloupnost instrukcí. Každá instrukce se vykonává postupně, kdy v daném času může být spuštěna pouze jedna instrukce.
+
+\begin{center}
+\includegraphics[scale=0.7]{images/serialComputing.JPG}
+\end{center}
+
+\begin{Large}\vspace{0,5cm} \textbf{Paralelní výpočty}
+\end{Large}
+
+Na rozdíl od sériových běží na několika CPU. Zde jsou problémy rozděleny na části a až tyto části problému jsou rozděleny na posloupnost instrukcí. Instrukce každého problému jsou poté vykonávány souběžně na několika CPU.
+
+\begin{center}
+\includegraphics[scale=0.7]{images/parallelComputing.JPG}
+\end{center}
+
+Veškeré paralelní výpočty lze provádět sekvenčně ale ne všechny sekvenční algoritmy lze paralelizovat.
+\vspace{0,3cm}
+Příklady výpočetních zdrojů:
+\begin{itemize}
+    \item Počítač s několika procesory
+    \begin{itemize}
+        \item Multiprocesor se sdílenou pamětí (propojení více procesorů dohromady)
+        \item Multiprocesor obsahující několik procesorů (jader) na jednom čipu (obyčejné CPU).
+    \end{itemize}
+    \item Libovolný počet počítačů propojený počítačovou sítí (Cluster computer)
+    \item Spojení výše uvedeného do jednoho systému. 
+\end{itemize}
+
+\begin{Large}\vspace{0,5cm} \textbf{Sériové a paralelní modely (architektura)}
+\end{Large}
+
+Modely dělíme hlavně dle Flynnovy klasifikace, která je asi nejznámnější klasifikací paralelních systémů. Klasifikace dělí systému na z dvou hledisek\,--\,toku instrukcí a toku dat. Základně se dělí na tyto modely:
+\begin{itemize}
+    \item SISD (Single Instruction, Single Data)\,--\,sériový
+    \item SIMD (Single Instruction, Multiple Data)\,--\,paralelní
+    \item MISD (Multiple Instruction, Single Data)\,--\,paralelní
+    \item MIMD (Multiple Instruction, Multiple Data)\,--\,paralelní
+\end{itemize}
+
+\begin{large}\vspace{0,5cm} \textbf{SISD}
+\end{large}
+
+Nejjednodušší model lze si ho představit jako procesor (jednojádrový procesor). Vykonává pouze jednu instrukci na jedny uložená data v paměti.
+
+instrukce jsou posílány do řídící jednotky z paměti, následně jsou dekódovány a poslány procesní jednotky. Ta tyto data zpracuje a pošle je zpátky.
+
+Nejčastěji se vyskytuje v počítačích založených na von Neumann architektuře.
+
+
+\begin{large}\vspace{0,5cm} \textbf{SIMD}
+\end{large}
+
+Jsou to systémy, u kterých existuje celá řada zpracovaných datových toků na základě jediného seznamu instrukcí.
+
+V každém okamžiku veškeré procesory vykonávají stejnou instrukci, kdy každá výpočetní jednotka může pracovat s libovolnými daty.
+
+Je vhodná pro problémy, kde je charakteristická velká míra pravidelnosti (zpracovaní obrazu/videa, násobení matic). Existují dvě varianty v podobě procesorového pole a vektorové \uv{potrubí/pipeliny}. 
+
+
+Příklad sčítání dvou polí vektorů. Pole jsou rozděleny na bloky a každý procesor pracuje s daným blokem. Položky jsou poté vybírány na základě ID procesu/vlákna.
+
+\begin{center}
+\includegraphics[scale=0.7]{images/SIMD.JPG}
+\end{center}
+
+\begin{large}\vspace{0,5cm} \textbf{MISD}
+\end{large}
+
+Jeden datový proud je napojen na několik procesorů. Každý procesor pracuje se stejnými daty, ale můžou s nimi vykonávat jiné operace.
+
+Jsou vhodné pro vícenásobné frekvenční filtry pracující na jednom signálovém proudu nebo kryptografické algoritmy pokoušející se prolomit jednu zakódovanou zprávu.
+
+Lze je například použít ve vícenásobných vyhledávacích algoritmech, kde tyto algoritmy mohou pracovat se stejnými daty. Také mohou tyto algoritmy používat různou strategii a hledat různé vzory.
+
+\begin{large}\vspace{0,5cm} \textbf{MIMD}
+\end{large}
+
+Tento model umožňuje zpracovávat různé posloupnosti instrukcí a pracovat s různými daty. Spouštění může být synchronizované, asynchronizované, deterministické nebo nedeterministické.
+
+Jsou vhodné pro intenzivní paralelní výpočty. Tento model se využívá ve většině superpočítačů, výpočetních klusterech propojených přes síť.
+
+
+\begin{Large}\vspace{0,5cm} \textbf{Architektura paralelní počítačové paměti}
+\end{Large}
+
+\begin{itemize}
+    \item Sdílená paměť
+    \item Distribuovaná paměť
+    \item Hybridní distribuovaná paměť
+\end{itemize}
+
+\begin{large}\vspace{0,5cm} \textbf{Sdílená paměť}
+\end{large}
+
+Sdílená paměť umožňuje všem procesorům přístup ke všem pamětím jako globální adresový prostor. Procesory můžou pracovat nezávisle a sdílet stejné paměťové prostředky a zároveň při změně paměti je tato změna vidět pro všechny procesory. 
+
+\begin{large}\vspace{0,5cm} \textbf{Distribuovaná paměť}
+\end{large}
+
+Distribuované paměťové systémy vyžadují pro propojení meziprocesorové paměti komunikační síť. Každý procesor má vlastní lokální paměť takže neexistuje sdílená paměť jako v předchozím případě. Procesory pracují nezávisle a je většinou na programátorovi aby zajistil synchronizaci dat.
+
+Výhodou je škálovatelnost s počtem procesorů a rychlí přístup k paměti. Nevýhodou je zodpovědnost programátora za spousty detailů při synchronizaci procesů.
+
+\begin{large}\vspace{0,5cm} \textbf{Hybridní
+distribuovaná sdílení paměť}
+\end{large}
+
+Využívá se obvykle SMP (Symetrické MultiProcessory\,--\,HW architektura, kde více procesorů sdílí jeden paměťový prostor). Procesory na daném SMP mohou adresovat paměť tohoto procesoru jako globální. SMP znají pouze vlastní paměť a ne jiného SMP. Pro přesun dat se využívá sítová komunikace. 
+
+
+\begin{Large}\vspace{0,5cm} \textbf{Paralelní
+programovací modely}
+\end{Large}
+
+\begin{large}\vspace{0,5cm} \textbf{Sdílená paměť}
+\end{large}
+
+Úkolu sdílí společný adresní prostor, který čtou a zapisují asynchronně. Výhodou je že neexistuje pojem vlastnictví takže není výslovně potřebné specifikovat komunikaci dat mezi úkoly. Řídit přístup ke sdílené paměti lze pomocí zámků a semaforů.
+
+\begin{large}\vspace{0,5cm} \textbf{Vláknový model}
+\end{large}
+
+Jeden proces může mít více souběžných cest provádění. Vlákno lze popsat jako podprogram v rámci hlavního programu, kde každé vlákno má lokální data a mezi sebou komunikují pomocí globální paměti. Mezi vlákny musí být zajištěna synchronizace aby nedošlo k přístupu ke stejné globální adrese více jak jedním vláknem.
+
+
+\begin{Large}\vspace{0,5cm} \textbf{Proces vs vlákno}
+\end{Large}
+
+Vlákna jsou méně náročná na systémové prostředky, sdílí paměť, snadnější programování ale omezená škálovatelnost.
+
+Procesy jsou náročnější na vytvoření, komunikace probíhá předáváním zpráv (nesdílí data), jsou náročnější na programování ale dobře škálovatelné.
+
+\begin{Large}\vspace{0,5cm} \textbf{Synchronizace vláken}
+\end{Large}
+
+Při nezajištění synchronizace může dojít k souběhu nebo uváznutí (deadlock). Cíl synchronizace je zabránit konfliktům mezi vlákny při přístupu ke sdíleným prostředkům.
+
+\begin{Large}\vspace{0,5cm} \textbf{Souběh}
+\end{Large}
+
+K souběhu dojde přistupují-li ke sdíleným datům současně a za běhu vláknu to druhé vlákno přepíše data tomu prvnímu. Tím vzniká chyba za běhu programu.
+
+
+\begin{Large}\vspace{0,5cm} \textbf{Deadlock}
+\end{Large}
+
+Nastane v případě, když dvě vlákna/procesy na sebe čekají až se uvolní jimi uzamčené sdílené zdroje.
+
+Nastává při nesprávném použití synchronizačních mechanismů.
