@@ -67,7 +67,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Grafy, formální definice. Vyhledávání v grafech. Algoritmus BFS (prohledávání do šírky). Reprezentace BFS v paměti. Algoritmus DFS (prohledávání do hloubky). 
 - [x] Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*
 - [x] Evlouční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, krížení, chromozom. Princip evolučních algoritmů.
-- [] Parallel computing and architectures, processes, threads and their synchroization. Dead lock.
+- [x] Parallel computing and architectures, processes, threads and their synchroization. Dead lock.
 
 
 ## Informační bezpečnost v praxi: Informatika
