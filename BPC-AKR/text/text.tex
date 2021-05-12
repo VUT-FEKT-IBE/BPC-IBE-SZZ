@@ -134,12 +134,47 @@ x = (a_1 N_1 L_1 + a_2 N_2 L_2) \Mod M &= 3 \cdot 7 \cdot 1 + 2 \cdot 6 \cdot 6 
 \clearpage
 \section{Symetrická kryptografie -- proudové šifry, synchronní a asynchronní proudové šifry.}
 \label{question-4}
-% Promised by jedla97
-% Je možné tu u proudových šifrer nějak zmínit PRNG, případně to doplnit u otázky 9?
+
+Výhodou symetrické je velká rychlost a~malé šíření chyb, nevýhodou nízká úroveň difuze a~náchylnost k~úmyslným falzifikacím. Symetrické šifry jsou vhodné pro~šifrování velkých objemů dat. Klíč pro~šifrování a~dešifrování je stejný a~je nutné ho držet v~tajnosti (bývá často uložen v~hardware tokenech: čipová karta, SIM, TPM).
+
+V~proudových šifrách je symbol otevřeného textu ihned převáděn na~symbol šifrového textu, bez~znalosti kompletní zprávy. Základem je \emph{keystream generator}, který z~předsdíleného klíče generuje data pro~XOR operaci.
+
+Proudové šifry bývají rychlejší než~blokové a~mívají nižší hardwarové nároky, ale~jsou náchylné k~určitým typům útoků. Pro~žádné dvě šifrované zprávy nesmí být použit stejný \emph{seed}.
+
+Aby byla šifra bezpečná, musí operovat nad~velkým modulem a~z~výstupu musí být nemožné získat originální klíč nebo~vnitřní stav. Nemělo by být možné odlišit náhodný šum od~výsledného proudu šifrovaných dat, a to i~pokud útočník zná \emph{plaintext} či \emph{ciphertext} nebo ho může volit.
+
+\subsection{Synchronní proudové šifry}
+
+Proud pseudonáhodných čísel je generován nezávisle na~zprávě a~je s~ní slučován pomocí operace XOR. Poškození části zprávy má za~následek ztrátu synchronizace a~zpráva se stává nečitelnou -- proto se do~\emph{ciphertextu} můžou přidávat značky či~odsazení, aby šlo přečíst zbývající data. \emph{Bit flip} ale ovlivní pouze jeden znak šifrované zprávy, a~změna jednoho bitu šifrovaného textu se projeví změnou bitu textu dešifrovaného, aktivní útočník tak může změnit význam.
+
+\subsection{Asynchronní proudové šifry}
+
+K~vygenerování proudu se využívá $n$ předchozích znaků zašifrovaného textu, tyto šifry se také nazývají \emph{samosynchronizační}. Lépe lze detekovat ztrátu nebo~přidání bitu, chyba na~jednom bitu ovlivní $n$ znaků dešifrovaného textu. Na~tomto principu fungují například blokové šifry v~CFB módu.
+
+\subsection{Příklady}
+
+\textbf{RC4} (a~kvůli \enquote{obcházení} patentu také ARC4) generuje \emph{keystream} pomocí dvou ukazatelů $i, j$ a~permutační tabulky $S$ o~256 bajtech. RC4 je náchylná na~\emph{bit flipping} útoky a~při~špatném použití z~\emph{ciphertextu} můžou unikat informace o~klíči.
+
+\textbf{Salsa20} a~příbuzná \textbf{ChaCha20} jsou postaveny na~pseudonáhodné funkci ARX (\emph{add-rotate-XOR}); klíč má velikost 256b, nonce a~čítač 64b, a~mapují se na bloky o~velikosti 512b. Díky této konstrukci je možné začít číst z~jakékoliv pozice \emph{ciphertextu} v~konstatním čase. Využívá se~20 rund a~k~současné době je odolná vůči všem typům útoků. ChaCha je aktualizací Salsa20, využívá větší klíče a~nonce a~obsahuje rychlejší difuzi změn. ChaCha20 je využitá s~křivkou Poly1305 v~TLS a~OpenSSH; linuxový kernel 4.8+ ji využívá ke~generování dat v~\texttt{/dev/urandom}. Je rychlejší než AES (na~CPU, které nenabízí AES akceleraci, tedy například ARM).
 
 \clearpage
 \section{Blokové šifry -- Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.}
 % Promised by jedla97
+
+\textbf{Feistelova síť} je konstrukt iterativního míchání bloků: $$L_i = R_{i-1}, R_i = L_{i-1} \oplus f(R_{i-1}, k_i)$$ kde $k_i$ je podklíč použitý v~$i$-té rundě a $f$ je libovolná funkce. Tento princip využívá DES: 64b bloky, 56b klíč ($+$8b parita), 16 rund.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{p{1cm}|p{14cm}}
+ECB & každý blok je šifrován samostatně, $m = m' \Rightarrow c = c'$ \\
+CBC & $c_i = c_{i-1} \oplus k$ \\
+CFB & bloková šifra je zdroj hesla pro~proudovou šifru \\
+OPF & zpětná vazba z~výstupu generátoru, vlastnosti proudové šifry \\
+CTR & iniciační IV je lineárně inkrementován \\
+MAC & obdoba CBC, šifrování a~autentizace \\
+GCM & základem je inkrementace CTR$_0$, XORování se vstupem \\
+\end{tabular}
+\end{table}
 
 \clearpage
 \section{Asymetrické algoritmy -- RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.}
