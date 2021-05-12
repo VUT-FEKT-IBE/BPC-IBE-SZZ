@@ -20,7 +20,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [ ] Teorie čísel, algebraické struktury – popište účel a způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.
 - [x] Modulární aritmetika – popište algoritmus Square and Multiply a Čínskou větu o zbytcích.
 - [x] Symetrická kryptografie – proudové šifry, synchronní a asynchronní proudové šifry.
-- [ ] Blokové šifry - Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.
+- [x] Blokové šifry - Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.
 - [x] Asymetrické algoritmy - RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.
 - [x] Hašovací funkce - vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.
 - [ ] PKI - certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.
