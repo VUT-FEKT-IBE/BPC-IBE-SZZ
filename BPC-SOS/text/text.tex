@@ -9,7 +9,7 @@ Operační systém si lze zjednodušeně představit jako program skládající 
 
 \begin{enumerate}[noitemsep]
 	\item Systémové programy -- knihovny
-	\item Aplikační programy -- prohlížeč, textový editor, apod. 
+	\item Aplikační programy -- prohlížeč, textový editor, apod.
 \end{enumerate}
 
 \begin{figure}[ht]
@@ -47,7 +47,7 @@ I~když bylo řečeno, že monolitický systém vlastně žádnou strukturu nem�
 	\item Sada nástrojů, které pomáhají funkcím
 \end{itemize}
 
-Hlavní jádro spouští funkce potřebné pro~obsloužení systémových volání/přerušení (každé volání/přerušení obsluhuje jedna funkce). Pomocné nástroje pak provádí akce vyžádané funkcemi. 
+Hlavní jádro spouští funkce potřebné pro~obsloužení systémových volání/přerušení (každé volání/přerušení obsluhuje jedna funkce). Pomocné nástroje pak provádí akce vyžádané funkcemi.
 
 \subsubsection{Problémy monolitických jader a~jejich řešení}
 
@@ -100,7 +100,7 @@ Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dyna
 
 \begin{itemize}[noitemsep]
 	\item textová část (text segment) -- Programové instrukce a~přístup k~této části je pouze pro~čtení. Díky tomu může více procesů téhož programu sdílet stejnou textovou část.
-	\item datová část (data segment) -- Data, která proces potřebuje již od~svého startu, tedy globální proměnné, textové řetězce, datová pole atd. 
+	\item datová část (data segment) -- Data, která proces potřebuje již od~svého startu, tedy globální proměnné, textové řetězce, datová pole atd.
 	\item halda (\emph{heap}) -- Stromová struktura, kde se mohou dynamicky alokovat data za~běhu programu.
 	\item zásobník (\emph{stack}) -- Také dynamicky alokovaný, ale zde se ukládají parametry procesem volaných funkcí. Je obvyklé, že zásobník roste směrem k~nižším adresám (tj. vrchol jde dolů). Jedná se o~LIFO (Last-in First-out) zásobník%
 	\footnote{Mezera mezi haldou a~zásobníkem představuje volné místo, které dovoluje dynamickou změnu zásobníku a~haldy během procesu.}%
@@ -140,7 +140,7 @@ Jsou zde udržovány informace o~rozložení uživatelského kontextu a~další 
 
 \begin{itemize}[noitemsep]
 	\item Programový čítač -- obsahuje adresu následující instrukce procesu, která bude vykonána procesorem
-	\item Parametry spojené s~plánováním běhu procesů -- priorita procesu, čas aktivity v~CPU, ukazatel na~plánovací frontu atd. Tyto informace jsou použity při~plánování procesů, tj. rozhodování, který proces je na~řadě. 
+	\item Parametry spojené s~plánováním běhu procesů -- priorita procesu, čas aktivity v~CPU, ukazatel na~plánovací frontu atd. Tyto informace jsou použity při~plánování procesů, tj. rozhodování, který proces je na~řadě.
 	\item Seznam vstupů a~výstupů využívané procesem -- například se může jednat o~seznam otevřených souborů
 	\item Stav činnosti procesu
 \end{itemize}
@@ -170,7 +170,7 @@ Po~vytvoření procesu je ve~stavu \emph{připravený}. Poté, co je vybrán pl�
 
 Vlákna si lze představit jako stavební bloky procesů, které jsou jimi vykonávané. Proces může mít jedno či~více vláken. Pokud běží pouze na~jednom, může provádět pouze jeden úkol v~daném čase. S~více vlákny lze pracovat na~více úkolech najednou, případně vykonávat stejný úkol nad~různými daty (webserver). Aby tyto úkoly šlo vykonávat ve~stejném čase, musí být přítomno buď více procesorů, nebo více jader v~procesoru (jedno jádro resp. jeden procesor vykonává jedno vlákno). Každé vlákno má vlastní zásobník, ale sdílí zbytek uživatelského kontextu (tj. datový i~textový segment a~haldu)!
 
-Využitím sdíleného uživatelského kontextu programátor zajišťuje hladký průběh paralelizace: při~sdílení dat mezi vlákny může dojít ke~čtení nekonzistentních dat, tj. k~souběhu (viz \ref{sync}). 
+Využitím sdíleného uživatelského kontextu programátor zajišťuje hladký průběh paralelizace: při~sdílení dat mezi vlákny může dojít ke~čtení nekonzistentních dat, tj. k~souběhu (viz \ref{sync}).
 
 Z~pohledu správy lze vlákna rozdělit na~dva typy: \emph{vlákna jádra} (z~programu jádra) a~\emph{uživatelská vlákna} (z~programů mimo jádro). Mezi uživatelskými vlákny a~vlákny jádra existuje několik možných návazností/modelů:
 
@@ -206,7 +206,7 @@ Dříve vyjmenované stavy (obrázek \ref{proc_states} v~otázce \ref{procesy}) 
 	\item Proces je spící a~je uložen v~odkládací paměti
 	\item Vykonávání procesu je nuceně přerušeno
 	\item Proces je vytvořený a~je v~přechodovém stavu
-	\item Proces je ve~stavu \emph{zombie}, neexistuje, ale v~systému je o~něm záznam 
+	\item Proces je ve~stavu \emph{zombie}, neexistuje, ale v~systému je o~něm záznam
 \end{enumerate}
 
 \begin{figure}[ht]
@@ -220,11 +220,11 @@ Je důležité si všimnout, že se jedná o~rozšíření zkráceného modelu: 
 
 Stav \enquote{čekající} je zde rozšířen na~\enquote{spící a~uložen v~hlavní paměti} a~\enquote{spící a~uložen v~odkládací paměti}. Přechod mezi těmito dvěma stavy řídí plánovač II. úrovně, který vyměňuje procesy mezi hlavní (RAM) a~odkládací pamětí (swap na~disku). Změna stavu zde může být pouze do~odkládací paměti.
 
-\enquote{Připravený} je nahrazen stavy \enquote{připravený ke~zpracování a~uložen v~hlavní paměti} a~\enquote{připraven ke~zpracování a~uložen v~odkládací paměti}. Přechod je zde opět dán plánovačem II. úrovně. Tentokrát však dochází k~obousměrným přechodům. 
+\enquote{Připravený} je nahrazen stavy \enquote{připravený ke~zpracování a~uložen v~hlavní paměti} a~\enquote{připraven ke~zpracování a~uložen v~odkládací paměti}. Přechod je zde opět dán plánovačem II. úrovně. Tentokrát však dochází k~obousměrným přechodům.
 
 \enquote{Proces v~hlavní paměti} zahrnuje stavy \enquote{připraven ke~zpracování a~uložen v~hlavní paměti} a~\enquote{spící a~uložen v~hlavní paměti}. Přechod mezi těmito stavy je jednosměrný a~je způsoben probuzením procesu (dočkáním se na~událost kvůli které byl uspán).
 
-\enquote{Proces v~odkládací paměti} zahrnuje stavy \enquote{připraven ke~zpracování a~uložen v~odkládací paměti} a~\enquote{spící uložen v~odkládací paměti}. Přechod funguje stejně jako v~předešlém odstavci. 
+\enquote{Proces v~odkládací paměti} zahrnuje stavy \enquote{připraven ke~zpracování a~uložen v~odkládací paměti} a~\enquote{spící uložen v~odkládací paměti}. Přechod funguje stejně jako v~předešlém odstavci.
 
 \subsection{Více do~hloubky}
 
@@ -260,7 +260,7 @@ Po~dokončení operace je proces probuzen a~je připraven v~hlavní paměti. Zde
 
 Pokud je v~systému spuštěno tolik procesů, že se nevejdou do~hlavní paměti přichází na~řadu plánovač II. úrovně (tzv. vyměňovací proces), který vybírá procesy k~přesunutí z~hlavní paměti do~paměti odkládací (\enquote{připravený v~hlavní paměti} $\rightarrow$ \enquote{připravený, odložený}). Stejně tak může přesouvat spící procesy z~hlavní paměti do~odkládací paměti. Po~probuzení jej může plánovač opět přesunout zpět do~hlavní paměti.
 
-Je třeba mít na~vědomí, že plánovač II. úrovně vybírá procesy tak aby se všechny vystřídaly v~hlavní paměti. Tam pak čekají na~plánovač I. úrovně. 
+Je třeba mít na~vědomí, že plánovač II. úrovně vybírá procesy tak aby se všechny vystřídaly v~hlavní paměti. Tam pak čekají na~plánovač I. úrovně.
 
 \subsubsection{Ukončení procesu}
 
@@ -282,7 +282,7 @@ Okamžiky, kdy se plánovač musí rozhodnout který proces bude vykonáván jso
 
 Průběh při~výkonu dvou procesů lze jednoduše ukázat na~obrázku \ref{proc_changing}. Procesy se střídají podle toho, který zrovna čeká (např. na~I/O operaci). Při~takovém přerušení může dojít k~rozhodnutí o~přepnutí procesu. Toto přepnutí může být provedeno při~každém \emph{n}-tém přerušení.
 
-Je také třeba rozlišovat nepreemptivní (kooperativní) a~preemptivní systémy. V~prvním případě dochází k~přepínání pouze pokud proces dobrovolně uvolní procesor. Ve~druhém případě se přepíná na~základě nuceného přerušení od~hodin, kdy pak plánovač zvolí jiný proces k~vykonávání. 
+Je také třeba rozlišovat nepreemptivní (kooperativní) a~preemptivní systémy. V~prvním případě dochází k~přepínání pouze pokud proces dobrovolně uvolní procesor. Ve~druhém případě se přepíná na~základě nuceného přerušení od~hodin, kdy pak plánovač zvolí jiný proces k~vykonávání.
 
 \begin{figure}[ht]
 	\centering
@@ -314,15 +314,15 @@ Tyto systémy jsou typické pro~nákladná a~výkonná informační centra, kde 
 
 \subsubsection{Interaktivní systémy}
 
-Chod systému je ovlivňován uživatelem a~jeho požadavky by měly být vyřizovány přednostně. Uživatel předpokládá, že program který má právě v~popředí bude pracovat co nejrychleji a~stejně tak reagovat, interaktivní systémy se snaží tento předpoklad splnit. Plánovač sice nemůže ovlivnit složitost úlohy a~rychlost zpracování, může však přispět ke~splnění očekávání uživatele. Je zřejmé, že se upřednostňuje užívání preemptivního přepínání, aby nemohl žádný proces zabrat CPU na~příliš dlouhou dobu. 
+Chod systému je ovlivňován uživatelem a~jeho požadavky by měly být vyřizovány přednostně. Uživatel předpokládá, že program který má právě v~popředí bude pracovat co nejrychleji a~stejně tak reagovat, interaktivní systémy se snaží tento předpoklad splnit. Plánovač sice nemůže ovlivnit složitost úlohy a~rychlost zpracování, může však přispět ke~splnění očekávání uživatele. Je zřejmé, že se upřednostňuje užívání preemptivního přepínání, aby nemohl žádný proces zabrat CPU na~příliš dlouhou dobu.
 
 Sleduje se čas odezvy (od~vyslání příkazu po~obdržení výsledku) a~přeiměřenost (složitost úlohy k~době jejího zpracování).
 
-Jedná se o~klasické desktop systémy jako Windows, MacOS a~různé distribuce OS Linux. 
+Jedná se o~klasické desktop systémy jako Windows, MacOS a~různé distribuce OS Linux.
 
 \subsubsection{Real-Time systémy}
 
-Používají se pro~zpracování úloh které slouží jako vstup dalších navazujících činností. Tyto systémy musí splnit úlohu v~reálném čase (v~předem daném časovém úseku). Tyto systémy jsou používány v~automatizovaných procesech, robotice a~telekomunikacích. Používá se opět preemptivní plánování. 
+Používají se pro~zpracování úloh které slouží jako vstup dalších navazujících činností. Tyto systémy musí splnit úlohu v~reálném čase (v~předem daném časovém úseku). Tyto systémy jsou používány v~automatizovaných procesech, robotice a~telekomunikacích. Používá se opět preemptivní plánování.
 
 Podle toho jak moc se tlačí na~splnění požadavků v~daném času můžeme tyto systémy dělit na~\emph{soft} (časové zárky jsou pouze přibližné a~určité časové odchylky jsou povoleny) a~\emph{hard} (časové záruky jsou plně zajištěny).
 
@@ -341,7 +341,7 @@ Plánovač I. úrovně vybírá procesy, které jsou připravené v~hlavní pam�
 
 Plánovač prochází fronty od~nejnižších intervalů (nejvyšší priorita) dokud nenalezne obsazenou frontu. Poté vybere první proces z~dané fronty a~po vykonání je vložen na~konec místní fronty (\emph{round-robin}). Priorita každého procesu je počítána (pro začátek každého intervalu, např. každou sekundu) pomocí vzorce $P = V + N + B$.
 
-Podle této nové priority je proces přiřazen do~fronty. Fronta bývá zvolena na~základě dělení vypočtené priority zvolenou konstantou. 
+Podle této nové priority je proces přiřazen do~fronty. Fronta bývá zvolena na~základě dělení vypočtené priority zvolenou konstantou.
 
 $V$ je čítač představující využití procesoru. Tato hodnota se inkrementuje s~každým taktem procesorových hodin (pokud je proces vykonáván na~procesoru). Tímto způsobem se upřednostňují nové procesy, které ještě nezískaly procesorový čas. Zároveň lze procesy co zrovna využily procesor penalizovat pomocí navýšení původní hodnoty $V$ o~aktuální hodnotu z~daného intervalu a~výsledek je vydělen dvěma. Tímto způsobem jsou penalizovány nedávno vykonané procesy a~předchází se \emph{stárnutí procesů}.
 
@@ -386,14 +386,14 @@ Představme si aplikaci používající vlákna. Všechny vlákna musí dokonči
 
 \subsubsection{Vzájemné vyloučení pomocí kritické sekce}
 
-Souběhu lze zabránit výlučným přístupem ke~sdílenému prostředku, tedy že dokud jeden proces pracuje se sdíleným prostředkem, ostatní jsou zablokované a~čekají na~uvolnění prostředku. Tohoto lze docílit například pomocí určení části kódu, kterou označíme za~\emph{kritickou sekci}, ve~které se smí nacházet vždy nanejvýše jeden proces. 
+Souběhu lze zabránit výlučným přístupem ke~sdílenému prostředku, tedy že dokud jeden proces pracuje se sdíleným prostředkem, ostatní jsou zablokované a~čekají na~uvolnění prostředku. Tohoto lze docílit například pomocí určení části kódu, kterou označíme za~\emph{kritickou sekci}, ve~které se smí nacházet vždy nanejvýše jeden proces.
 
-Této myšlence se obecně říká \emph{zámek} (tj. \emph{mutex}): přístup ke~sdílené proměnné je uzamčen pro~ostatní procesy. Mezi často používané patří například semafory. Proces zkontroluje zámek, a~pokud je \emph{odemčený}, \emph{zamkne} jej a~přistoupí k~proměnné (vstoupí do~kritické sekce). Po~dokončení operací zámek \emph{odemkne} a~umožní přístup ostatním procesům. 
+Této myšlence se obecně říká \emph{zámek} (tj. \emph{mutex}): přístup ke~sdílené proměnné je uzamčen pro~ostatní procesy. Mezi často používané patří například semafory. Proces zkontroluje zámek, a~pokud je \emph{odemčený}, \emph{zamkne} jej a~přistoupí k~proměnné (vstoupí do~kritické sekce). Po~dokončení operací zámek \emph{odemkne} a~umožní přístup ostatním procesům.
 
 Krom vzájemné vyloučení je potřeba zajistit i~následující podmínky:
 
 \begin{enumerate}[noitemsep]
-	\item Blokování jiného procesu je pouze možné v~případě, že jiný proces je v~kritické sekci. Blokování procesem mimo KS je nepřijatelné. 
+	\item Blokování jiného procesu je pouze možné v~případě, že jiný proces je v~kritické sekci. Blokování procesem mimo KS je nepřijatelné.
 	\item Doba čekání na~vstup do~kritické sekce musí být konečná.
 \end{enumerate}
 
@@ -409,7 +409,7 @@ Krom vzájemné vyloučení je potřeba zajistit i~následující podmínky:
 
 Mějme sdílenou proměnnou \emph{lock}, která může nabývat stavů \emph{FALSE} a~\emph{TRUE}. \emph{FALSE} značí, že v~kritické sekci není žádný proces a~\emph{TRUE} značí obsazenou kritickou sekci. Proces tedy před vstupem do~KS zkontroluje proměnnou a~postupuje tak jak bylo popsáno dříve. Pokud je \emph{lock} uzamčený (\emph{TRUE}), proces čeká v~čekající smyčce%
 \footnote{Čekání ve~smyčce na~odemknutí zámku se nazývá aktivní čekání a~jedná se o~skvělý způsob jak plýtvat zdroji.}
-na~uvolnění prostředků. 
+na~uvolnění prostředků.
 
 Tento způsob je náchylný na~souběh. Může se stát, že proces A přistoupí k~zámku a~načte jeho hodnotu jako \emph{FALSE}, poté plánovač přepne kontext na~proces B, který vstoupí do~kritické sekce, a~nastaví \emph{lock} na~\emph{TRUE}. Plánovač opět přepne kontext a~proces A vstoupí do~kritické sekce, výsledkem jsou dva procesy v~kritické sekci najednou.
 
@@ -417,19 +417,19 @@ Tento způsob je náchylný na~souběh. Může se stát, že proces A přistoup�
 
 Opět může být docíleno pomocí sdílené dvoustavové proměnné, např. \emph{turn} nabývající hodnot 0 a~1 (0 = A, 1 = B). Pokud obsahuje hodnotu 0, tak proces A může vstoupit do~KS a~proces B je v~čekací smyčce. Po~dokončení práce procesu A, je \emph{turn} nastaven na~1.
 
-Problém nastává když jeden z~procesů vstupuje do~KS častěji jak druhý. Pak je například hodnota \emph{turn} nastavena na~1 a~proces A musí čekat na~proces B, který však zatím ani v~KS není. Tímto se porušilo pravidlo, že proces může být blokován pouze procesem v~kritické sekci. 
+Problém nastává když jeden z~procesů vstupuje do~KS častěji jak druhý. Pak je například hodnota \emph{turn} nastavena na~1 a~proces A musí čekat na~proces B, který však zatím ani v~KS není. Tímto se porušilo pravidlo, že proces může být blokován pouze procesem v~kritické sekci.
 
 \subsubsection{Vzájemné vyloučení pomocí hardwarových funkcí}
 
 \paragraph{Zákaz přerušení}
 
-Toto řešení platí pro~preemptivní systémy, kde se zákazem přerušení na~procesoru zajistí tím, že proces nelze přerušit dokud nevystoupí z~kritické sekce. Přerušení mohou obecně zakazovat uživatelské i~systémové programy, ovšem povolit zakazování přerušení pro~uživatelský program je ve~lmi riskantní. 
+Toto řešení platí pro~preemptivní systémy, kde se zákazem přerušení na~procesoru zajistí tím, že proces nelze přerušit dokud nevystoupí z~kritické sekce. Přerušení mohou obecně zakazovat uživatelské i~systémové programy, ovšem povolit zakazování přerušení pro~uživatelský program je velmi riskantní.
 
 Tento přístup však funguje pouze na~jednoprocesorových systémech. Pokud je procesorů více, tak na~jednom je přerušení sice zakázáno, ale tento zákaz neplatí pro~procesy na~ostatních procesorech. Zavedení zákazu přerušení na~všech procesorech by vyžadovalo zaslání zprávy všem procesorům, což je časově neefektivní operace.
 
 \paragraph{Atomické funkce}
 
-Jedná se o~instrukce, které umožní číst a~měnit hodnotu (nebo zaměnit obsah dvou proměnných) a~nelze je přerušit. Princip lze pochopit na~instrukci \emph{TestAndSet} (tj. \emph{TSL -- Test and Set Lock}). Tato instrukce testuje proměnnou, pokud je nastavena na~FALSE nastaví na~TRUE a~proces vstoupí do~KS. Ostatní procesy potom čekají v~aktivní smyčce (opakovaně volají \emph{TestAndSet} dokud není \emph{lock} opět FALSE). Poté co proces skončí v~KS nastaví proměnnou na~FALSE. 
+Jedná se o~instrukce, které umožní číst a~měnit hodnotu (nebo zaměnit obsah dvou proměnných) a~nelze je přerušit. Princip lze pochopit na~instrukci \emph{TestAndSet} (tj. \emph{TSL -- Test and Set Lock}). Tato instrukce testuje proměnnou, pokud je nastavena na~FALSE nastaví na~TRUE a~proces vstoupí do~KS. Ostatní procesy potom čekají v~aktivní smyčce (opakovaně volají \emph{TestAndSet} dokud není \emph{lock} opět FALSE). Poté co proces skončí v~KS nastaví proměnnou na~FALSE.
 
 Princip je podobný jako u~přístupu se sdílenou proměnnou, krom toho že instrukce je nepřerušitelná, tedy nemůže dojít k~přepnutí kontextu a~tím pádem k~souběhu.
 
@@ -443,7 +443,7 @@ Předešlé metody využívají aktivního čekání, které má následující 
 	\item Porušení základní podmínky, že čekání na~vstup do~kritické sekce musí být konečná.
 \end{itemize}
 
-Další problém se kterým se můžeme u~paralelizmu setkat, je \emph{problém opačné priority}. Pokud máme dva procesy, kde proces A má vyšší prioritu jak B a~proces B je v~kritické sekci. Plánovač zvolí k~vykonání proces A (s vyšší prioritou), který čeká na~přístup do~KS. Jelikož je však procesu A dávána přednost, tak proces B nikdy z~KS nevystoupí. 
+Další problém se kterým se můžeme u~paralelizmu setkat, je \emph{problém opačné priority}. Pokud máme dva procesy, kde proces A má vyšší prioritu jak B a~proces B je v~kritické sekci. Plánovač zvolí k~vykonání proces A (s vyšší prioritou), který čeká na~přístup do~KS. Jelikož je však procesu A dávána přednost, tak proces B nikdy z~KS nevystoupí.
 
 Procesy se mohou navzájem uspávat, v~tomto případě by tedy proces A uspal B a~zaslal by mu signál na~probuzení až po~výstupu z~KS. I~zde však může nastat souběh. Toto lze ilustrovat na~tzv. \emph{producer-consumer problem}, kde máme dva procesy, jednoho producenta a~spotřebitele. Procesy pracují se sdílenou pamětí o~omezené velikosti, producent paměť naplňuje a~jakmile je plná tak přejde do~režimu spánku, následně spotřebitel odebere položku z~paměti, čímž probudí producenta. Pokud chce spotřebitel odebrat z~paměti a~je prázdná tak se uspí. Ke sledování stavu v~paměti se může použít sdílené proměnné (\emph{counter}) a~komunikace probíhá pomocí sys. volání.
 
@@ -477,8 +477,8 @@ Důvody k~uvíznutí mohou být například stav, kdy první proces čeká na~pr
 Tato situace lze řešít předcházením uvíznutí, připuštěním že se systém do~stavu uvíznutí dostat může, umí tento stav detekovat a~obnovit činnost, nebo ignorováním tohoto problému. Detekce a~napravení deadlocku vyžaduje neustálé spouštění algoritmu se dvěma metodami obnovení činnosti:
 
 \begin{itemize}[noitemsep]
-	\item Procesy ve~stavu uvíznutí jsou násilně ukončeny: 
-	\begin{enumerate}
+	\item Procesy ve~stavu uvíznutí jsou násilně ukončeny:
+	\begin{enumerate}[noitemsep]
 		\item postupně -- pomalejší řešení, po~každém ukončeném procesu je potřeba znovu spustit detekční algoritmus, volba procesu může být například na~základě stáří
 		\item všechny najednou -- rychlejší řešení s~velkými náklady (například ztráta předešlých výpočtů a~dat)
 	\end{enumerate}
@@ -494,71 +494,56 @@ Tato situace lze řešít předcházením uvíznutí, připuštěním že se sys
 \section{Správa paměti -- vyměňování procesů, virtuální paměť pomocí stránkování a~segmentace}
 
 Paměť dělíme na~dvě části:
-\begin{itemize}
-	\item Fyzický Adresový Prostor (FAP; hlavní paměť, RAM) -- reálná kapacita fyzické paměti v~počítači která je dána nainstalovanou pamětí. Aby proces byl vykonáván musí být celý, nebo jeho vykonávaná část, v~RAM paměti. Hlavní důvod je rychlost přístupu do~této paměti. 
-	\item Logický Adresový Prosto (LAP; ve~dlejší paměť, virtuální paměť) -- jedná se o~paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť) tak \emph{odkládací prostor}.
+\begin{itemize}[noitemsep]
+	\item Fyzický Adresový Prostor (FAP; hlavní paměť, RAM) -- reálná kapacita fyzické paměti v~počítači která je dána nainstalovanou pamětí. Aby proces byl vykonáván musí být celý, nebo jeho vykonávaná část, v~RAM paměti. Hlavní důvod je rychlost přístupu do~této paměti.
+	\item Logický Adresový Prosto (LAP; vedlejší paměť, virtuální paměť) -- jedná se o~paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť) tak \emph{odkládací prostor}.
 \end{itemize}
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_lap.png}
-\label{mem:lap}
-\end{center}
+	\caption{Logický adresový prostor}
+	\label{mem_lap}
+\end{figure}
 
-Pokud počítač pracuje s~32bitovými adresami, může nabízet 4 GiB ($2^{32}$) LAP i~když fyzicky má pouze 256 MiB FAP. Virtuální paměť lze realizovat mnoha způsoby:
-\begin{itemize}
-	\item Vyměňováním celých procesů
-	\item Stránkováním
-	\item Segmentací
-\end{itemize}
+Pokud počítač pracuje s~32bitovými adresami, může nabízet 4 GiB ($2^{32}$) LAP i~když fyzicky má pouze 256 MiB FAP. Virtuální paměť lze realizovat vyměňováním procesů, stránkováním nebo segmentací.
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Vymeňování procesů}
-\end{Large}
+\subsection{Vyměňování procesů}
 
-Jak již bylo zmíněno dřív, paměť lze přidělovat celým procesům nebo jejich částem. Ty jsou poté vyměňovány mezi hlavní a~odkládací pamětí, tak aby se postupně vyměnili všechny procesy. Při~práci s~celými procesy se načte celý proces do~paměti a~po nějaké době je odložen do~odkládací paměti (\emph{připraven v~odkládací paměti}). Po~určité době je vybrán plánovačem II. úrovně k~přesunutí do~hlavní paměti kde bude opět vybrán plánovačem I. úrovně k~vykonání. 
+Paměť lze přidělovat celým procesům nebo jejich částem. Ty jsou poté vyměňovány mezi hlavní a~odkládací pamětí, tak aby se postupně vyměnily všechny procesy. Při~práci s~celými procesy se načte celý proces do~paměti a~po nějaké době je odložen do~stavu \enquote{připraven v~odkládací paměti}. Po~určité době je vybrán plánovačem II. úrovně k~přesunutí do~hlavní paměti kde bude opět vybrán plánovačem I. úrovně k~vykonání.
 
-\vspace{0,5cm}
+Velikost a~umístění využitých paměťových úseků se dynamicky mění podle procesu načteného do~paměti (jaká je aktuální velikost jejich paměťového prostoru). Toto však způsobuje tzv. \emph{externí fragmentaci paměti}, kdy v~paměti vznikají volné úseky, které však nejsou dostatečné velké pro~kterýkoliv proces (nedochází pak k~efektivnímu využívání paměti, viz obrázek \ref{mem_fragmentace}). Tento jev lze sice napravit tzv. \emph{defragmentací}, tedy spojením volných paměťových úseků a~vytvoření souvislého paměťového prostoru.
 
-Velikost a~umístění využitých paměťových úseků se dynamicky mění podle toho který proces je načten do~paměti (jaká je aktuální ve~likost jejich paměťového prostoru). Toto však způsobuje tzv. \emph{externí fragmentaci paměti} kdy vznikají v~paměti volné úseky paměti, které však nejsou dostatečné ve~lké pro~kterýkoliv proces (nedochází pak k~efektivnímu využívání paměti! viz obrázek níže s~procesy A,B,C). Tento jev lze sice napravit tzv. \emph{defragmentací}, tedy spojením volných paměťových úseků a~vytvoření souvislého paměťového prostoru.
+Aby se mohl tento úsek vytvořit je třeba přesunout všechny procesy do~jednoho souvislého bloku zabrané paměti. Tento proces je časově náročný (navíc by se musel dělat periodicky), proto se k~němu většinou nepřikračuje.
 
-\clearpage
-
-Aby se mohl tento úsek vytvořit je třeba přesunout všechny procesy do~jednoho souvislého bloku zabrané paměti, tento proces je časově náročný (navíc by se musel dělat periodicky), proto se k~němu většinou nepřikračuje. 
-
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_fragmentace.png}
-\end{center}
+	\caption{Externí fragmentace paměti}
+	\label{mem_fragmentace}
+\end{figure}
 
-Lze však proces rozdělit mezi hlavní a~odkládací paměť díky jeho rozdělení na~dílčí části (\emph{overlays}). Proces lze vykonávat pokud má v~paměti svou první část, po~dokončení se načte druhá apod. Nebo držet v~paměti více částí procesu najednou. (viz Obrázek \ref{mem:lap})
+Proces ale lze rozdělit mezi hlavní a~odkládací paměť díky jeho rozdělení na~dílčí části (\emph{overlays}). Lze ho vykonávat pokud má v~paměti svou první část, po~dokončení se načte druhá apod. Nebo je možné držet v~paměti více částí procesu najednou. (viz obrázek \ref{mem_lap}).
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Stránkování}
-\end{Large}
+\subsection{Stránkování}
 
-Paměťový prostor procesu je rozdělen na~stejně ve~lké části tzv. \emph{stránky} (\emph{pages}), které jsou v~případě potřeby přesouvány z~odkládací paměti do~stejně ve~lkých míst v~hlavní paměti tzv. \emph{rámců} (\emph{frames}). Přenesení stránek do~hlavní paměti je zavolání tzv. \emph{page fault} (\emph{výpadek stránky}), tedy že proces potřebuje pracovat se stránkou která právě v~paměti není. Proces sám však \emph{page fault} nevyvolá, procesor rozpozná, že chybí stránka a~zavolá \emph{výpadek}\footnote{Proces tuto výměnu ani nevidí, viditelný je pro~OS, který ve~de evidenci jednotlivých stránek.}. Umístění stránek je uloženo v~\emph{tabulce stránek} (page table).
+Paměťový prostor procesu je rozdělen na~stejně velké části, tzv. \emph{stránky} (\emph{pages}), které jsou v~případě potřeby přesouvány z~odkládací paměti do~stejně velkých míst v~hlavní paměti tzv. \emph{rámců} (\emph{frames}). Přenesení stránek do~hlavní paměti je zavolání tzv. \emph{page fault} (\emph{výpadek stránky}), tedy že proces potřebuje pracovat se stránkou která právě v~paměti není. Proces sám však \emph{page fault} nevyvolá, procesor rozpozná, že chybí stránka a~zavolá \emph{výpadek}\footnote{Proces tuto výměnu ani nevidí, viditelný je pro~OS, který vede evidenci jednotlivých stránek.}. Umístění stránek je uloženo v~\emph{tabulce stránek} (page table).
 
 \begin{center}
 	\includegraphics[scale=1]{images/mem_page_table.png}
 \end{center}
 
-Díky pevné ve~likosti stránek je lze efektivně umístit do~stejně ve~lkých rámců. Díky tomu nedochází k~\emph{externí fragmentaci} volného prostoru v~hlavní paměti. Nevýhodou je, že proces do~této struktury nevidí, tudíž neví, že části které patří k~sobě by se měli přesouvat do~paměti společně za~účelem zredukování množství \emph{page fault}.
+Díky pevné velikosti stránek je lze efektivně umístit do~stejně velkých rámců. Díky tomu nedochází k~\emph{externí fragmentaci} volného prostoru v~hlavní paměti. Nevýhodou je, že proces do~této struktury nevidí, tudíž neví, že části které patří k~sobě by se měly přesouvat do~paměti společně za~účelem zredukování množství \emph{page fault}.
 
-\vspace{0,5cm}
+Důležitým parametrem je volba velikosti stránky, jelikož se stránkováním nemůže docházet k~externí fragmentaci, ale k~interní ano. Pokud jsou stránky moc velké, poslední stránka nebude nikdy kompletně naplněna a~zůstane v~ní nevyužitý prostor. Zároveň pokud proces vyžaduje 4 KiB paměti, ale stránky jsou 32 KiB, je potřeba do~paměti načíst zbytečně 32 KiB. Zřejmě je asi výhodnější mít menší stránky. Na~druhou stranu to však znamená větší počet výpadků stránek a~větší tabulku stránek%
+\footnote{Čas přenesení stránky je tvořen převážně jejím vyhledáním, proto doba přenosu malých stránek trvá přibližně stejně jako velkých.}%
+.
 
-Důležitým parametrem je volba ve~likosti stránky. Jelikož se stránkováním nemůže docházet k~externí fragmentaci, ale k~interní ano. Pokud jsou stránky moc ve~lké, tak poslední stránka nebude nikdy kompletně naplněna a~zůstane v~ní nevyužitý prostor. Zároveň pokud proces vyžaduje 4 KiB paměti, ale stránky jsou 32 KiB, je potřeba do~paměti načíst zbytečně 32 KiB. Zřejmě je asi výhodnější mít menší stránky. Na~druhou stranu to však znamená větší počet výpadků stránek a~větší tabulku stránek\footnote{Čas přenesení stránky je tvořen převážně jejím vyhledáním, proto doba přenosu malých stránek trvá přibližně stejně jako ve~lkých.}. 
+\subsection{Segmentace}
 
-\clearpage
+Pomocí segmentace je paměťový prostor procesů dělen na~logicky související části různé velikosti nazývané \emph{segmenty}. Každý segment má svůj název a~velikost, které vytváří kompilátor podle zdrojového kódu programu. Obecné segmenty mohou být:
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Segmentace}
-\end{Large}
-
-Pomocí segmentace je paměťový prostor procesů dělen na~logicky související části různé ve~likosti nazývané \emph{segmenty}. Každý segment má svůj název a~velikost, které vytváří kompilátor podle zdrojového kódu programu. Obecné segmenty mohou být:
-
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item Textový -- instrukce programu.
 	\item Datový -- inicializované globální a~statické proměnné.
 	\item BSS (Block Started by Symbol) -- neinicializované globální a~statické proměnné, kde hodnota může být náhodná hodnota z~paměti nebo O (pro ukazatele \emph{null}).
@@ -566,109 +551,101 @@ Pomocí segmentace je paměťový prostor procesů dělen na~logicky souvisejíc
 	\item Zásobník
 \end{itemize}
 
-Blíže mohou být segmenty děleny například na:
+Blíže mohou být segmenty děleny například na~kódy jednotlivých funkcí, velké datové struktury, knihovny linkované s~programem nebo objekty.
 
-\begin{itemize}
-	\item Kódy jednotlivých funkcí
-	\item Velké datové struktury
-	\item Knihovny linkované s~programem 
-	\item Objekty
-\end{itemize}
+Na~rozdíl od~stránkování je segmentace mechanismus, který je procesu viditelný. Pokud proces potřebuje nějakou část segmentu v~hlavní paměti, tak je přenesen celý segment. Výhoda tohoto přístupu je, že jakmile je v~dalších krocích potřeba další část segmentu, nemusí být opět načten do~paměti. Tímto je redukován počet výpadků segmentů (\emph{segment fault}) oproti výpadkům stránek. A stejně tak jako se stránkami vede operační systém záznamy o~všech segmentech v~tabulce segmentů (\emph{segment table}).
 
-Na~rozdíl od~stránkování je segmentace mechanismus který je procesu viditelný. Pokud proces potřebuje nějakou část segmentu v~hlavní paměti, tak je přenesen celý segment. Výhoda tohoto přístupu je, že jakmile je v~dalších krocích potřeba další část segmentu nemusí být opět načten do~paměti. Tímto je redukován počet výpadků segmentů (\emph{segment fault}) oproti výpadkům stránek. A stejně tak jako se stránkami ve~de operační systém záznamy o~všech segmentech v~tabulce segmentů (\emph{segment table}). 
-
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_segment_table.png}
-\label{mem:segment-table}
-\end{center}
+	\caption{Segmentační tabulka}
+	\label{mem_segment_table}
+\end{figure}
 
-Nevýhodou oproti stránkování je právě dynamická ve~likost segmentů, což způsobuje externí fragmentaci paměti (viz Obrázek výše).
+Nevýhodou oproti stránkování je dynamická velikost segmentů, což způsobuje externí fragmentaci paměti.
 
 %%%%%%%%%%%%%%%%%%
-% VYUŽITÍ PAMĚTI~%
+% VYUŽITÍ PAMĚTI %
 %%%%%%%%%%%%%%%%%%
 
 \clearpage
 \section{Využití paměti -- přidělování paměti procesům, algoritmy přesunu stránek do~odkládacího prostoru}
 
 Existují tři základní způsoby přidělování hlavní paměti:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item rovnoměrně -- nerespektuje rozdílné paměťové nároky procesů a~ani jejich prioritu
-	\item podle ve~likosti procesu -- nerespektuje prioritu procesu
-	\item podle ve~likosti a~priority procesu
+	\item podle velikosti procesu -- nerespektuje prioritu procesu
+	\item podle velikosti a~priority procesu
 \end{itemize}
 
-Abychom mohli určit jaký počet rámců procesům přidělit, využíváme metodu na~vyhodnocování frekvence výpadků stránek. Účelem je vyhnout se stavu, kdy je proces zdržován ve~lkým množstvím výpadků stránek, tzv. \emph{trashing}. Proto se snažíme udržet frekvenci výpadků stránek na~přibližně stejné úrovni, zároveň pokud dochází k~příliš mnoha výpadkm značí to nedostatek rámců, a~naopak pokud je výpadků moc málu má proces příliš mnoho paměti. Jedná se o~tzv. algoritmus \emph{Page Fault Frequency Replacement}. 
+Aby bylo možné určit počet rámců pro~proces, využívá se metoda na~vyhodnocování frekvence výpadků stránek. Účelem je vyhnout se stavu, kdy je proces zdržován velkým množstvím výpadků stránek, tzv. \emph{trashing}. Ideálním stavem je držení frekvence na~přibližně stejné úrovni; mnoho výpadků značí nedostatek rámců a~málo příliš mnoho paměti. Jedná se o~algoritmus \emph{Page Fault Frequency Replacement}.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_freq_page.png}
-\end{center}
+	\caption{Graf využití paměti}
+	\label{mem_freq_page}
+\end{figure}
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Přesuny stránek}
-\end{Large}
+\subsection{Přesuny stránek}
 
-Jak již bylo zmíněno, virtuální paměť je založena na~odkládání stránek z~hlavní paměti do~odkládací (na disk). Když je zavolán výpadek stránky je třeba přesunout jednu stránku do~volného rámce. Operační Systém zajišťuje aby vždy byly dostupné volné rámce, proto periodicky přesunuje určitý počet stránek do~odkládací paměti. 
+Virtuální paměť je založena na~odkládání stránek z~hlavní paměti do~odkládací (na~disk). Když je zavolán výpadek stránky je třeba přesunout jednu stránku do~volného rámce. Operační systém zajišťuje že jsou volné rámce vždy dostupné, proto periodicky přesunuje určitý počet stránek do~odkládací paměti.
 
-\begin{large}
-	\vspace{0,5cm}
-	\textbf{Odkládací paměť}
-\end{large}
+\subsection{Odkládací paměť}
 
 Při~odložení z~hlavní paměti mohou nastat dvě situace podle dat ve~stránce:
 
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
 	\item Data jsou pouze pro~čtení/nebyly provedeny změny -- stránka je z~hlavní paměti smazána
 	\item Data byla změněna -- stránka musí být přesunuta do~virtuální paměti
 \end{enumerate}
 
-Stránky mohou být svázány s~určitým souborem v~sytému, takový soubor může obsahovat kód procesu (read-only data) nebo se jedná o~soubor připojený do~uživatelského kontextu procesu, tzv. \emph{paměťově mapovaný soubor}\footnote{Tyto soubory v~paměti mohou být jak v~režimu pouze pro~čtení tak i~pro~zápis.}. Takto lze jednoduše sdílet soubor mezi procesy. Pro~práci s~tímto souborem se používají paměťové funkce, což zvyšuje rychlost operací čtení a~zápisu. Nevýhodou může potencionální plýtvání paměti\footnote{Uvažujme stránky o~velikosti 4KiB a~soubor o~velikosti 6KiB, pak musíme využít dvě stránky ale z~toho jsou 2KiB nevyužity.}. 
+Stránky mohou být svázány s~určitým souborem v~sytému, takový soubor může obsahovat kód procesu (read-only data) nebo se jedná o~soubor připojený do~uživatelského kontextu procesu, tzv. \emph{paměťově mapovaný soubor}%
+\footnote{Tyto soubory v~paměti mohou být jak v~režimu pouze pro~čtení tak i~pro~zápis.}%
+. Takto lze jednoduše sdílet soubor mezi procesy. Pro~práci s~tímto souborem se používají paměťové funkce, což zvyšuje rychlost operací čtení a~zápisu. Nevýhodou může potencionální plýtvání paměti%
+\footnote{Uvažujme stránky o~velikosti 4KiB a~soubor o~velikosti 6KiB, pak musíme využít dvě stránky ale z~toho jsou 2KiB nevyužity.}%
+.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_page_file.png}
-\end{center}
+	\caption{Paměťově mapovaný soubor}
+	\label{mem_page_file}
+\end{figure}
 
 \emph{Anonymní stránky} jsou stránky co nejsou svázané se souborem a~jsou odkládány do~speciálního \emph{odkládacího souboru} (\emph{swap file}) na~\emph{odkládacím oddílu} (\emph{swap partition}) souborového systému. Jedná se o~data z~haldy a~zásobníku.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_page_anon.png}
-\end{center}
+	\caption{Anonymní stránky}
+	\label{mem_page}
+\end{figure}
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Algoritmus LRU (Least Recently Used)}
-\end{Large}
+\subsection{Algoritmus LRU: Least Recently Used}
 
-Funguje na~předpokladu, že nedávno používané stránky budou patrně použity znovu a~ty starší pravděpodobně ne. Z tohoto důvodu je třeba udržovat pořadový seznam všech stránek v~hlavní paměti podle jejich doby použití. Na~začátku je naposledy použitá stránka a~na konci nejdéle nepoužitá. Seznam se navíc aktualizuje při~každém použití stránky. Pro~rychlé provedení algoritmu se využívá hardware.
+Nedávno používané stránky budou patrně použity znovu a~ty starší pravděpodobně ne. Z~tohoto důvodu je třeba udržovat pořadový seznam všech stránek v~hlavní paměti podle jejich doby použití. Na~začátku je naposledy použitá stránka a~na konci nejdéle nepoužitá. Seznam se navíc aktualizuje při~každém použití stránky. Pro~rychlé provedení algoritmu se využívá hardware.
 
-\vspace{0,5cm}
-
-Jedna z~možností je použití hardware s~64 bitovým čítačem, který je inkrementován po~vykonání každé instrukce. Každá stránka má přiděleno jedno návěští kde je hodnota čítače. Po~použití stránky se do~návěští uloží aktuální hodnota čítače. Když je potřeba odstranit stránku je vybrána ta s~nejnižší hodnotou čítače, jelikož byla nižší hodnota čítače znamená, že již proběhlo mnoho instrukcí $\xrightarrow[]{}$ stará stránka. 
+Jedna z~možností je použití hardware s~64bitovým čítačem, který je inkrementován po~vykonání každé instrukce. Každá stránka má přiděleno jedno návěští kde je hodnota čítače. Po~použití stránky se do~návěští uloží aktuální hodnota čítače. Když je potřeba odstranit stránku je vybrána ta s~nejnižší hodnotou čítače, jelikož byla nižší hodnota čítače znamená, že již proběhlo mnoho instrukcí $\rightarrow$ stará stránka.
 
 \clearpage
 
-Druhá možnost spočívá ve~využití matic (opět v~hardwaru). Pro~\emph{n} možných stránek ve~FAP je použita matice $n \times n$ bitů. Při~každém použití stránky \emph{k} se nastaví bity řádku \emph{k} na~1 a~poté se vynuluje sloupec \emph{k}. Řádek s~nejnižší binární hodnotu patří stránce nejdéle nepoužité a~je tedy vybrán\footnote{Skripta na~straně 72 mají pěkný příklad}. 
+Druhá možnost spočívá ve~využití matic (opět v~hardware). Pro~$n$ možných stránek ve~FAP je použita matice $n \times n$ bitů. Při~každém použití stránky $k$ se nastaví bity řádku $k$ na~1 a~poté se vynuluje sloupec $k$. Řádek s~nejnižší binární hodnotu patří stránce nejdéle nepoužité a~je tedy vybrán%
+\footnote{Skripta na~straně 72 mají pěkný příklad.}%
+.
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Algoritmus NFU (Not Frequently Used)}
-\end{Large}
+\subsection{Algoritmus NFU: Not Frequently Used}
 
-NFU je naopak softwarové řešení, které také využívá čítače. Pro~každou stránku je udržován bit A (accessed), který je nastaven kdykoliv je daná stránka použita. Toto je monitorováno v~intervalech daných přerušením od~hodin, každý interval jsou všechny stránky prohledány a~hodnota bitu A je přidána k~čítači. 0 se přidává pokud ke~stránce nebylo přistoupeno, 1 pokud bylo. Algoritmus vybírá stránku s~nejnižší hodnotou čítače (stránka není často používaná). 
+NFU je softwarové řešení, které také využívá čítače. Pro~každou stránku je udržován bit A (accessed), který je nastaven kdykoliv je daná stránka použita. Toto je monitorováno v~intervalech daných přerušením od~hodin, každý interval jsou všechny stránky prohledány a~hodnota bitu A je přidána k~čítači. 0 se přidává pokud ke~stránce nebylo přistoupeno, 1 pokud bylo. Algoritmus vybírá stránku s~nejnižší hodnotou čítače (stránka není často používána).
 
-\vspace{0,5cm}
-
-Nevýhodou klasického NFU je, že nikdy nenuluje hodnoty, preferuje tedy dříve často využívané stránky. Modifikovaný algoritmus tento problém \emph{stárnutí stránek} řeší následovně. Před přičtením hodnoty bitu A k~čítači provede bitový posun o~1bit do~prava (prakticky dělení dvěma). Následně je bit A přičten k~bitu s~nejvyšší váhou MSB (\emph{Most Significant Bit})\footnote{Prakticky bit co nejvíce vlevo.}. U klasického NFU to byl LSB (\emph{Least Significant Bit}). 
-
-\vspace{0,5cm}
+Nevýhodou klasického NFU je fakt, že nikdy nenuluje hodnoty, preferuje tedy dříve často využívané stránky. Tento problém \emph{stárnutí stránek} modifikovaný algoritmus. Před přičtením hodnoty bitu A k~čítači provede bitový posun o~1bit do~prava (prakticky dělení dvěma). Následně je bit A přičten k~bitu s~nejvyšší váhou (MSB, \emph{Most Significant Bit}). U~klasického NFU to byl LSB (\emph{Least Significant Bit}).
 
 Nedostatky této modifikace:
 
-\begin{itemize}
-	\item Pokud má dojít k~rozhodnutí mezi dvěma stránkami, vždy se vybere ta stránka s~menší hodnotou čítače. Nemáme však záruku že se jedná o~nejdéle nepoužitou stránku. 
-	\item Čítače mají omezený počet bitů, po~určitém čase mohou být všechny bity vynulované, pak nelze říct jestli byla stránka využita před \emph{n+1} intervaly (kde n je počet bitů čítače) nebo před 100 intervaly. Stránky jsou pak vybrány náhodně. 
-\end{itemize} 
+\begin{itemize}[noitemsep]
+	\item Pokud má dojít k~rozhodnutí mezi dvěma stránkami, vždy se vybere ta stránka s~menší hodnotou čítače. Nemáme však záruku že se jedná o~nejdéle nepoužitou stránku.
+	\item Čítače mají omezený počet bitů, po~určitém čase mohou být všechny bity vynulované, pak nelze říct jestli byla stránka využita před $n+1$ intervaly (kde $n$ je počet bitů čítače) nebo před 100 intervaly. Stránky jsou pak vybrány náhodně.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%
 % SOUBOROVÉ SYSTÉMY %
@@ -677,92 +654,78 @@ Nedostatky této modifikace:
 \clearpage
 \section{Souborové systémy -- organizace dat na~paměťovém úložišti, metody ukládání datových bloků}
 
-Souborový systém definuje jak jsou organizovaná data uložena na~paměťovém médiu, a~to jak ve~stavěném tak externím. Data jsou organizována ve~formě souborů, které se potom sdružovány do~adresářů\footnote{Adresářová struktura bývá poskádána hierarchicky. Pro~jednouživatelské systémy se užívá \emph{plochý} systém, kde je jeden adresář a~v něm všechny soubory.}. 
-
-\vspace{0,5cm}
+Souborový systém definuje jak jsou organizovaná data uložena na~paměťovém médiu, a~to jak vestavěném, tak externím. Data jsou organizována ve~formě souborů, které se potom sdružovány do~adresářů%
+\footnote{Adresářová struktura bývá poskádána hierarchicky. Pro~jednouživatelské systémy se užívá \emph{plochý} systém, kde je jeden adresář a~v něm všechny soubory.}%
+.
 
 Souborové systémy udržují informace o~umístění dat jednotlivých souborů na~paměťovém médiu. Mimo to mohou poskytovat i~časové informace (vytvoření a~modifikace souboru). Ve víceuživatelských systémech se uchovávají i~informace o~\emph{vlastnících} a~\emph{přístupových právech} k~souboru. Informace o~souboru dělíme na~data a~metadata:
-\begin{itemize}
+
+\begin{itemize}[noitemsep]
 	\item data -- obsah souboru.
-	\item metadata -- data potřebná pro~práci se soubory jako informace o~umístění, časová informace nebo přístupová práva. 
+	\item metadata -- data potřebná pro~práci se soubory jako informace o~umístění, časová informace nebo přístupová práva.
 \end{itemize}
 
-Paměťová média se typicky rozdělují na~několik samostatných částí. První je \emph{MBR} (\emph{Master Boot Record}) obsahující zavaděč operačního systému, identifikátor disku a~tabulku oddílů (\emph{partition table}) a~může obsahovat i~další části. MBR zavaděč je spouštěn kódem v~BIOS (\emph{Basic Input-Output System}). Úkolem zavaděče je načíst zaváděcí sektor z~aktivního oddílu, ten obsahuje Operační Systém který se spustí\footnote{Zaváděcí sektor se liší podle OS}. 
+Paměťová média se typicky rozdělují na~několik samostatných částí. První je \emph{MBR} (\emph{Master Boot Record}) obsahující zavaděč operačního systému, identifikátor disku a~tabulku oddílů (\emph{partition table}) a~může obsahovat i~další části. MBR zavaděč je spouštěn kódem v~BIOS (\emph{Basic Input-Output System}). Úkolem zavaděče je načíst zaváděcí sektor z~aktivního oddílu, ten obsahuje operační systém který se spustí%
+\footnote{Zaváděcí sektor se liší podle OS}%
+.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_partitions.png}
-\end{center}
+	\caption{Oddíly disku}
+	\label{mem_partitions}
+\end{figure}
 
 V~tabulce oddílů jsou uloženy informace o~umístění jednotlivých oddílů, tedy kde začínají a~kde končí. Na~oddílech se mohou vyskytovat různé souborové systémy a~na těch pak OS.
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Datové bloky}
-\end{Large}
+\subsection{Datové bloky}
 
-Souborové systémy ukládají soubory do~tzv. \emph{datových bloků} (\emph{fragmentů}). Důležité je jak ve~lký jeden blok je, jelikož ve~lké bloky mohou podléhat \emph{interní fragmentaci} z~důvodu, že je soubor nenaplní a~\emph{datový blok} je nejmenší jednotka souborového systému. Naopak ve~lmi malé bloky zpomalují operace se soubory, jelikož každý blok vyžaduje vyhledání jeho umístění. 
+Souborové systémy ukládají soubory do~tzv. \emph{datových bloků} (\emph{fragmentů}). Důležité je jak velký jeden blok je, jelikož velké bloky mohou podléhat \emph{interní fragmentaci} z~důvodu, že je soubor nenaplní a~\emph{datový blok} je nejmenší jednotka souborového systému. Naopak velmi malé bloky zpomalují operace se soubory, jelikož každý blok vyžaduje vyhledání jeho umístění.
 
-\begin{large}
-	\vspace{0,5cm}
-	\textbf{Kontinuální ukládání bloků}
-\end{large}
+\subsubsection{Kontinuální ukládání bloků}
 
-Bloky jsou ukládány na~paměťovém médiu za~sebou, tento způsob je vhodný u~plotnových disků, jelikož minimalizuje přesun čtecích hlav (mimo přesun hlav mezi cylindry). Záznam adresářů udržuje jen počáteční adresu souboru a~počet bloků (tj. jeho ve~likost). Problém vzniká při~rozšiřování souborů nebo zmenšování souborů. 
+Bloky jsou ukládány na~paměťovém médiu za~sebou. Tento způsob je vhodný u~plotnových disků, jelikož minimalizuje přesun čtecích hlav (mimo přesun hlav mezi cylindry). Záznam adresářů udržuje jen počáteční adresu souboru a~počet bloků (tj. jeho velikost). Problém vzniká při~rozšiřování souborů nebo zmenšování souborů.
 
-\vspace{0,5cm}
+Navíc dochází k~\emph{externí fragmentaci} skrz změny ve~velikostech souborů vznikají volné oblasti mezi záznamy, které však nejsou dostatečně velké pro~jakýkoliv soubor.
 
-Navíc dochází k~\emph{externí fragmentaci} skrz změny ve~ve~likostech souborů vznikají volné oblasti mezi záznamy, 
-které však nejsou dostatečně ve~lké pro~jakýkoliv soubor. 
+Procesu odstranění tohoto problému se říká \emph{defragmentace}. Všechny využité bloky se přesunou na~jiný filesystem, původní data se smazána a~poté se přesunou zpět. Jde o~časově náročnou operaci, kterou je třeba provádět periodicky.
 
-\clearpage
+\subsubsection{Ukládání bloků nesouvisle s~ukazateli v~bloku}
 
-Procesu odstranění tohoto problému se říká \emph{defragmentace}, dělávalo se tak, že se přesunuly všechny využité bloky na~jiné file systém, původní data (na původním oddílu) byla smazána. Nakonec byla data překopírována zpět v~kontinuálním způsobu. Velmi časově náročné a~muselo se vykonávat periodicky! 
-
-\begin{large}
-	\vspace{0,5cm}
-	\textbf{Ukládání bloků nesouvisle s~ukazateli v~bloku}
-\end{large}
-
-Bloky nejsou na~médiu rozděleny souvisle, místo toho je část jejich prostoru obětován ukazateli na~další blok souboru. Při~vytvoření souboru je nalezen volný blok kdekoliv na~paměťovém médiu a~je použit pro~nová data\footnote{Pokud má soubor nulovou ve~likost je ukazatel nastaven jako neplatný.}. Takto prakticky funguje jako \emph{linked list} a~nenastává problém s~externí fragmentací. 
-
-\vspace{0,5cm}
+Bloky nejsou na~médiu rozděleny souvisle, místo toho je část jejich prostoru obětován ukazateli na~další blok souboru. Při~vytvoření souboru je nalezen volný blok kdekoliv na~paměťovém médiu a~je použit pro~nová data\footnote{Pokud má soubor nulovou velikost je ukazatel nastaven jako neplatný.}. Takto prakticky funguje jako \emph{linked list} a~nenastává problém s~externí fragmentací.
 
 Avšak přesně tento přístup je nevýhodou této možnosti. Při~čtení je potřeba nejprve načíst první blok a~postupně hledat bloky pomocí ukazatelů. Každé načtení je tedy z~jiného sektoru disku a~zpomaluje program. Další problém je, že ukazatel ubírá místo z~bloku. Řešením pro~tento problém je seskupit bloky a~zavést ukazatel na~ně, pointer pak zabírá menší procenty paměti a~urychluje se práce s~daty. Bohužel ale dochází k~\emph{interní fragmentaci}\footnote{Existuje i~možnost poškození ukazatele, pokud se jedná o~první ukazatel tak se přijde o~celý soubor.}.
 
-\begin{large}
-	\vspace{0,5cm}
-	\textbf{Ukládání bloků nesouvisle s~ukazateli v~indexačním bloku}
-\end{large}
+\subsubsection{Ukládání bloků nesouvisle s~ukazateli v~indexačním bloku}
 
-Funguje prakticky stejně jako předešlá implementace, akorát ukazatele nejsou obsaženy v~samotném bloku, nýbrž v~tabulce ukazatelů pro~daný soubor (udržováno ukazatelem v~adresáři kde se soubor vyskytuje). Při~vytvoření jsou všechny ukazatele neplatné, při~zápisu dat do~volných bloků se postupně aktualizují ukazatele. 
+Ukazatele nejsou obsaženy v~samotném bloku, ale v~tabulce ukazatelů pro~daný soubor, kterou udržuje ukazatel v~adresáři souboru. Při~vytvoření jsou všechny ukazatele neplatné, při~zápisu dat do~volných bloků se postupně aktualizují.
 
-\vspace{0,5cm}
-
-Nedochází sice k~externí fragmentaci, ale k~plýtvání paměti. Pokud se vytvoří malý soubor tak bude zabrán jeden celý blok navíc pro~udržování indexační tabulky, který se však nezaplní. Proto je třeba vhodně volit ve~likost tabulky.
-
-\vspace{0,5cm}
+Nedochází sice k~externí fragmentaci, ale k~plýtvání paměti. Pokud se vytvoří malý soubor tak bude zabrán jeden celý blok navíc pro~udržování indexační tabulky, který se však nezaplní. Proto je třeba vhodně volit velikost tabulky.
 
 Přístupy pro~práci s~indexačními bloky:
-\begin{itemize}
-	\item Přímé odkazy -- indexační blok obsahuje ukazatele na~datové bloky, v~případě ve~lkého souboru lze propojit více indexačních bloků, poslední ukazatel je tedy buď neplatný (pro malé soubory) nebo ukazuje na~začátek další tabulky.
-	\item Nepřímé odkazy -- indexační blok obsahuje odkazy na~další indexační bloky, které obsahují přímé odkazy na~datové bloky. Pro~přístup k~blokům se nejprve načte indexační blok přes nepřímý odkaz a~až poté se načte blok přes přímý odkaz. 
+\begin{itemize}[noitemsep]
+	\item Přímé odkazy -- indexační blok obsahuje ukazatele na~datové bloky, v~případě velkého souboru lze propojit více indexačních bloků, poslední ukazatel je tedy buď neplatný (pro malé soubory) nebo ukazuje na~začátek další tabulky.
+	\item Nepřímé odkazy -- indexační blok obsahuje odkazy na~další indexační bloky, které obsahují přímé odkazy na~datové bloky. Pro~přístup k~blokům se nejprve načte indexační blok přes nepřímý odkaz a~až poté se načte blok přes přímý odkaz.
 	\item Kombinace -- Indexační blok obsahuje přímé i~nepřímé a~dokonce i~zanořené nepřímé odkazy, tedy nepřímý odkaz na~nepřímý odkaz. Je vhodný pro~velké soubory (nepřímé odkazy s~několika úrovněmi) i~pro~malé soubory (přímé odkazy).
 \end{itemize}
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1.2]{images/mem_block_index.png}
-\end{center}
+	\caption{Indexační blok}
+	\label{mem_block_index}
+\end{figure}
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Ukládání dat a~metadat na~HDD}
-\end{Large}
+\subsection{Ukládání dat a~metadat na~HDD}
 
-Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá více hlav.} (které jsou uspořádány nad sebou), které jsou rozděleny na~stopy a~ty zase na~sektory. Sektor je nejmenší jednotka pro~ukládání dat na~pevném disku. Datové bloky souborových systémů, mohou zabírat jeden nebo více sektorů. Při~práci s~daty se nejprve načtou metadata o~souboru (přístupová práva a~o uložení dat), tedy hlavice musí přejít na~pozici metadat a~až poté na~pozici dat\footnote{Přilíž ve~lkému množství přesunů se zamezuje pomocí organizace do~tzv. \emph{cylindrů}, což je sada nad sebou umístěných stop. Tyto společně udržují data a~metadata.}. 
+Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá více hlav.} (které jsou uspořádány nad sebou), které jsou rozděleny na~stopy a~ty zase na~sektory. Sektor je nejmenší jednotka pro~ukládání dat na~pevném disku. Datové bloky souborových systémů, mohou zabírat jeden nebo více sektorů. Při~práci s~daty se nejprve načtou metadata o~souboru (přístupová práva a~o uložení dat), tedy hlavice musí přejít na~pozici metadat a~až poté na~pozici dat\footnote{Přilíž velkému množství přesunů se zamezuje pomocí organizace do~tzv. \emph{cylindrů}, což je sada nad sebou umístěných stop. Tyto společně udržují data a~metadata.}.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_hdd.png}
-\end{center}
+	\caption{Dělení paměťových bloků na~HDD}
+	\label{mem_hdd}
+\end{figure}
 
 %%%%%%%%%%%%%%%
 % KONZISTENCE %
@@ -773,71 +736,58 @@ Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá ví
 
 Když se v~souborovém systému pracuje s~daty (zapisování a~mazání), může dojít k~situaci kdy se data dostanou do~nekonzistentního stavu, z~důvodu pádu systému. Nekonzistentními situacemi mohou být:
 
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item Soubor nebyl smazán, i~když k~tomu byl zadá požadavek.
-	\item Část dat byla aktualizována zápisem, další část ne. 
+	\item Část dat byla aktualizována zápisem, další část ne.
 \end{itemize}
 
 Jak probíhá mazání souboru?
 
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
 	\item Odstranění záznamu o~souboru z~adresáře,
 	\item uložení čísla i-uzlu (viz dále) souboru do~seznamu volných i-uzlů,
 	\item uložení datových bloků souboru do~seznamu volných bloků k~použití.
 \end{enumerate}
 
-Pokud dojde k~pádu systému mezi kroky 1 a~2, tak zůstane i-uzel v~použitém stavu i~když tomu tak není. Tato skutečnost plýtvá pamětí, jelikož i-uzel nemůže být využit pro~jiná data. Podobná situace nastává při~pádu mezi kroky 2 a~3. Jako řešení tohoto problému byly navrhnuty žurnálovací systémy (také viz dále). 
+Pokud dojde k~pádu systému mezi kroky 1 a~2, tak zůstane i-uzel v~použitém stavu i~když tomu tak není. Tato skutečnost plýtvá pamětí, jelikož i-uzel nemůže být využit pro~jiná data. Podobná situace nastává při~pádu mezi kroky 2 a~3. Jako řešení tohoto problému byly navrhnuty žurnálovací systémy.
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Ukládání metadat}
-\end{Large}
+\subsection{Ukládání metadat}
 
-Metadata se ukládají ve~speciální struktuře, zvané \emph{i-uzel}\footnote{Detaily budou specifické pro~OS Linux} (tj. \emph{i-node}). Tyto struktury obsahují metadata o~souboru, jako typ souboru, vlastník, skupina vlastníka, přístupová práva, délka souboru, čas vytvoření, čas posledního přístupu a~čas modifikace. Dále i-uzel obsahuje ukazatele na~bloky souboru. 
+Metadata se ukládají ve~speciální struktuře, zvané \emph{i-uzel} (tj. \emph{i-node})%
+\footnote{Detaily budou specifické pro~OS Linux} %
+. Tyto struktury obsahují metadata o~souboru jako typ souboru, vlastník, skupina vlastníka, přístupová práva, délka souboru, čas vytvoření, čas posledního přístupu a~čas modifikace. Dále i-uzel obsahuje ukazatele na~bloky souboru.
 
-\vspace{0,5cm}
+V~adresářích se vyskytují položky obsahující jméno souboru a~číslo relevantního \emph{i-uzlu}. Tyto informace jsou důležité pro~nalezení souborů. Navíc může být v~různých adresářích více souborů se stejným jménem ukazující na~jeden soubor/\emph{i-uzel} (tj. \emph{pevné odkazy}/\emph{hard link})%
+\footnote{Při~smazání pevného odkazu je počet těchto odkazů snížen o~jedno. Pokud je počet roven 0 je soubor definitivně smazán.}%
+.
 
-V~adresářích se vyskytují položky obsahující jméno souboru a~číslo relevantního \emph{i-uzlu}, tyto informace jsou důležité pro~nalezení souborů. Navíc může být v~různých adresářích více souborů se stejným jménem ukazující na~jeden soubor/\emph{i-uzel} (tj. \emph{pevné odkazy}/\emph{hard link})\footnote{Při~smazání pevného odkazu je počet těchto odkazů snížen o~jedno. Pokud je počet roven 0 je soubor definitivně smazán.}.
+Dále existuje \emph{symbolický odkaz} (\emph{symlink}), kdy soubor odkazuje na~jiný. Při~smazání souboru, na~který \emph{symlink} odkazuje, nedochází ke~smazání souboru se symbolickým odkazem.
 
-\vspace{0,5cm}
+\subsection{Žurnálovací souborové systémy}
 
-Dále existuje \emph{symbolický odkaz} (\emph{symlink}), kdy soubor odkazuje na~jiný. Při~smazání souboru, na~který \emph{symlink} odkazuje, nedochází ke~smazání souboru se symbolickým odkazem. 
-
-\clearpage
-
-\begin{Large}
-	\textbf{Žurnálovací souborové systémy}
-\end{Large}
-
-Tyto systémy udržují ve~svém \enquote{žurnálu} záznamy o~plánovaných změnách před jejich provedením. Pokud dojde k~pádu systému, je schopen dostat data a~metadata do~konzistentního stavu pomocí předešle uložených plánů operací v~žurnálu. 
-Uložená operace je však proveditelná, pouze pokud je kompletně uložená. 
-
-\vspace{0,5cm}
+Ve~svém \enquote{žurnálu} udržují záznamy o~plánovaných změnách před jejich provedením. Pokud dojde k~pádu systému, je schopen dostat data a~metadata do~konzistentního stavu pomocí předešle uložených plánů operací v~žurnálu. Uložená operace je však proveditelná pouze pokud je kompletně uložená.
 
 Pokud není operace zapsána jako celek do~žurnálu před pádem systému, je ignorována. Kontrolu lze provádět pomocí kontrolního součtu, v~případě pádu systému před kompletním zápisem do~žurnálu nebude součet sedět a~zápis bude ignorován.
 
-\vspace{0,5cm}
+Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. První varianta je rychlejší ale s~možností ztráty konzistence, u~druh= možnosti je to naopak.
 
-Do žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. Je jasné, že první varianta je rychlejší ale s~možností ztráty konzistence, zatímco druhá možnost je pravý opak.
-
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item Při~ukládání pouze metadat může dojít k~inkonzistenci mezi metadaty. Např. při~přidání dat do~souboru:
-	\begin{enumerate}
+	\begin{enumerate}[noitemsep]
 		\item Změna záznamu o~velikosti souboru v~jeho i-uzlu (metadata).
 		\item Z volných datových bloků je vybrán prostor pro~nová data (metadata).
-		\item Do vybraných bloků jsou zapsány data (data). 
+		\item Do vybraných bloků jsou zapsány data (data).
 	\end{enumerate}
-	Pokud dojde k~pádu systému před třetím krokem, budou v~žurnálu zaznamenány datové bloky, ale v~těch bude náhodná změť paměti. 
-	
-	\item Při~ukládání s~daty souborů jsou do~žurnálu ukládány kopie všech datových bloků do~kterých se bude zapisovat. Pokud dojde k~pádu, je operace zápisu provedena znovu nad kopií datových bloků. Toto ,samo sebou, značně zpomaluje operaci zápisu. Využívá se pouze v~systémech, kde vyžadujeme naprostou ochranu dat. 
+	Pokud dojde k~pádu systému před třetím krokem, budou v~žurnálu zaznamenány datové bloky, ale v~těch bude náhodná změť paměti.
+	\item Při~ukládání s~daty souborů jsou do~žurnálu ukládány kopie všech datových bloků do~kterých se bude zapisovat. Pokud dojde k~pádu, je operace zápisu provedena znovu nad kopií datových bloků. To značně zpomaluje operaci zápisu. Využívá se pouze v~systémech, kde vyžadujeme naprostou ochranu dat.
 \end{itemize}
 
 Základní implementace:
 
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
 	\item Kopie žurnálu mohou být umístěny na~různých paměťových médiích za~účelem zálohování v~případě poruchy jiného média.
 	\item Plánované změny v~žurnálu mohou být dále ukládány v~jiném žurnálu z~důvodu zvýšení redundance.
-	\item Žurnál je ukládán na~stejném nebo jiném médiu, z~důvodu vyšší rychlosti. 
+	\item Žurnál je ukládán na~stejném nebo jiném médiu, z~důvodu vyšší rychlosti.
 \end{enumerate}
 
 %%%%%%%%%%%%%%
@@ -847,126 +797,84 @@ Základní implementace:
 \clearpage
 \section{Síťová část OS -- stavy soketů při~komunikaci, síťová systémová volání, serverové procesy}
 
-Co je to soket? Jedná se o~vstupně výstupní bod do~sítě zahrnující adresu síťové i~transportní vrstvy. Pomocí IP adresy specifikuje koncovou stanici a~pak s~portem v~kombinaci s~protokolem cílovou službu stanice. Sokety na~straně klienta a~serveru vytvoří komunikační kanál k~přenosu dat.
+Socket je vstupně výstupní bod do~sítě zahrnující adresu síťové i~transportní vrstvy. Pomocí IP adresy specifikuje koncovou stanici a~pak s~portem v~kombinaci s~protokolem cílovou službu stanice. Sokety na~straně klienta a~serveru vytvoří komunikační kanál k~přenosu dat.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/network_socket.png}
-\end{center}
+	\caption{Síťové sockety}
+	\label{network_socket}
+\end{figure}
 
-Při~realizaci síťové komunikace (v tomto případě spojově orientované -- TCP) procházejí sokety různými stavy:
-\begin{enumerate}
-	\item Čekání na~spojení
-	\item Sestavování spojení (příznaky SYN/ACK)
-	\item Přenos dat (příznaky PSH/ACK)
-	\item Ukončování spojení (příznaky FIN/ACK)
-\end{enumerate}
+Při~realizaci síťové komunikace (v tomto případě spojově orientované TCP) procházejí sokety různými stavy: čekání, sestavování (SYN, ACK), přenos (PSH, ACK) a~ukončování (FIN, ACK).
 
-Přechody mezi stavy soketů jsou řízeny příznaky v~záhlaví TCP segmentů:
-\begin{itemize}
-	\item ACK -- potvrzení přijatých dat
-	\item PSH -- přenos dat
-	\item SYN -- žádost o~sestavení spojení
-	\item FIN -- ukončení spojení
-\end{itemize}
+Přechody mezi stavy soketů jsou řízeny příznaky v~záhlaví TCP segment. Příznak ACK signalizuje potvrzení přijatých dat, PSH přenos dat, SYN žádost o~sestavení spojení, FIN ukončení spojení.
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Stavy soketů více do~hloubky}
-\end{Large}
+\subsection{Stavy soketů}
 
-\vspace{0,5cm}
-\textbf{Sestavení spojení}
+\paragraph{Sestavení spojení}
 
-První jednosměrné spojení se zahájí zasláním segmentu s~příznakem SYN, naslouchající soket na~straně serveru segment přijme a~potvrzuje žádost klienta zasláním segmentu s~příznakem ACK. Tento stejný segment zasílá žádost o~sestavení druhého jednosměrného spojení s~příznakem SYN. Třetí segment opět potvrzuje. 
+První jednosměrné spojení se zahájí zasláním segmentu s~příznakem SYN, naslouchající soket na~straně serveru segment přijme a~potvrzuje žádost klienta zasláním segmentu s~příznakem ACK. Tento stejný segment zasílá žádost o~sestavení druhého jednosměrného spojení s~příznakem SYN. Třetí segment opět potvrzuje.
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/network_three_handshake.png}
-\end{center}
+	\caption{Navázání TCP spojení}
+	\label{network_three_handshake}
+\end{figure}
 
-Soket na~straně serveru může při~sestavování být ve~stavu LISTEN (naslouchá/čeká na~spojení) nebo SYN\_RCVD (první SYN segment přijat). A naopak soket na~straně klienta může být ve~stavu SYN\_SENT (SYN segment zaslán). Po~navázání se přechází do~stavu ESTABLISHED.
+Soket na~straně serveru může při~sestavování být ve~stavu LISTEN (naslouchá/čeká na~spojení) nebo SYN\_RCVD (první SYN segment přijat). Soket na~straně klienta může být ve~stavu SYN\_SENT (SYN segment zaslán). Po~navázání se přechází do~stavu ESTABLISHED.
 
-\vspace{0,5cm}
-\textbf{Přenos dat}
+\paragraph{Přenos dat}
 
-Následuje přenos dat, při~kterém mají TCP segmenty příznak PSH. Jako odpověď se opět zasílají segmenty s~příznakem ACK pro~potvrzení přijetí dat. 
+TCP segmenty mají příznak PSH. Jako odpověď se opět zasílají segmenty s~příznakem ACK pro~potvrzení přijetí dat.
 
-\vspace{0,5cm}
-\textbf{Ukončení spojení}
+\paragraph{Ukončení spojení}
 
-Spojení může ukončit jakákoliv strana zasláním segmentu s~příznakem FIN\footnote{Opět se potvrzuje ACK.}, ovšem pouze svoje jednosměrné spojení. Druhé zůstává otevřené a~může stále zasílat data, dokud jej druhá strana neukončí. Při~ukončování spojení prochází sokety těmito stavy:
-\begin{itemize}
+Spojení může ukončit jakákoliv strana zasláním segmentu s~příznakem FIN, ovšem pouze svoje jednosměrné spojení. Druhé zůstává otevřené a~může stále zasílat data, dokud jej druhá strana neukončí. Při~ukončování spojení prochází sokety těmito stavy:
+\begin{itemize}[noitemsep]
 	\item FIN\_WAIT1 -- stav soketu stanice která jako první ukončila jednosměrné spojení (zasláním FIN).
-	\item CLOSE\_WAIT -- stanice přijala segment s~příznakem FIN a~potvrzení bylo vysláno. 
-	\item FIN\_WAIT2 -- stanice obdržela potvrzení o~ukončení spojení, tento stav setrvává dokud druhá stanice také nepošle FIN. 
+	\item CLOSE\_WAIT -- stanice přijala segment s~příznakem FIN a~potvrzení bylo vysláno.
+	\item FIN\_WAIT2 -- stanice obdržela potvrzení o~ukončení spojení, tento stav setrvává dokud druhá stanice také nepošle FIN.
 	\item LAST\_ACK -- druhá stanice ukončuje druhé jednosměrné spojení (zasláním FIN).
-	\item TIME\_WAIT -- stanice potvrzuje ukončení spojení, avšak typicky počká pár minut. Důvodem je fakt, že zaslané potvrzení se může ztratit, stanice si o~něj případně zažádá znovu. 
+	\item TIME\_WAIT -- stanice potvrzuje ukončení spojení, avšak typicky počká pár minut. Důvodem je fakt, že zaslané potvrzení se může ztratit, stanice si o~něj případně zažádá znovu.
 	\item CLOSED -- potvrzení přijato a~spojení ukončeno.
 \end{itemize}
 
-\begin{center}
+\begin{figure}
+	\centering
 	\includegraphics[scale=1]{images/network_tcp_close.png}
-\end{center}
+	\caption{Ukončení TCP spojení}
+	\label{network_tcp_close}
+\end{figure}
 
-\begin{Large}
-	\vspace{0,5cm}
-	\textbf{Síťová sys. volání}
-\end{Large}
+\subsection{Síťová systémová volání}
 
-Správa soketů v~OS Linux se provádí pomocí systémových volání:
+Správa soketů v~OS Linux se provádí pomocí systémových volání.
 
-\vspace{0,5cm}
-\textbf{socket}
-
-Sys. volání pro~založení nového soketu.
-
-\vspace{0,5cm}
-\textbf{connect}
-
-Sys. volání na~straně klienta pro~navázání spojení se soketem na~straně serveru. Navazování spojení probíhá pomocí three-way handshake (popsán výše).
-
-\vspace{0,5cm}
-\textbf{bind}
-
-Přiřadí soketu IP adresu a~port. Je použito na~straně serveru, pokud by se nezavolalo byl by soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP -- port 21, SSH -- port 22, HTTP -- 80, HTTPS -- 443, apod.). U klienta je port generován z~dynamického rozsahu $\xrightarrow[]{}$ sys. volání \textbf{bind} se nepoužívá. 
-
-\vspace{0,5cm}
-\textbf{listen}
-
-Převede soket na~straně serveru do~pasivního režimu kdy přijímá příchozí spojení (pomocí sys. volání \textbf{accept}). Vytvoří se vstupní fronta pro~příchozí spojení. 
-
-\vspace{0,5cm}
-\textbf{accept}
-Voláno na~straně severu k~vyzvednutí požadavku o~spojení ze~vstupní fronty. Volání vytvoří nový soket podle parametrů žádosti o~spojení. Pokud je \textbf{accept} zavolán v~době, kdy je vstupní fronta prázdná, tak je zablokováno do~doby než žádost přijde.
-
-\vspace{0,5cm}
-\textbf{close}
-
-Uzavírá soket. Ukončení spojení zmíněno dříve.
-
-\vspace{0,5cm}
-\textbf{write} a~\textbf{read}
-
-Sys. volání pro~přenos dat. Data jsou přenášena s~dříve zmíněnými příznaky segmentů PSH a~ACK.
-
-\clearpage
-
-\begin{Large} 
-	\textbf{Serverové procesy}
-\end{Large}
-
-Jedná se o~síťové služby, které jsou zprostředkovány programy (tj. \emph{servery}). Proces každého serveru má přiřazenou adresu -- port, ta rozlišuje jednotlivé servery v~rámci jedné stanice\footnote{Servery pracující na~pozadí označujeme jako \emph{démony} (\emph{daemon})}. Servery lze spouštět dvojím způsobem:
-\begin{itemize}
-	\item Stále -- spuštěn při~startu OS.
-	\item Na~požádání -- spuštěn pouze když je potřeba.
+\begin{itemize}[noitemsep]
+\item \textbf{socket}: Založení nového soketu.
+\item \textbf{connect}: Systémové volání na~straně klienta pro~navázání spojení se soketem na~straně serveru. Navazování spojení probíhá pomocí three-way handshake (viz obrázek \ref{network_three_handshake}).
+\item \textbf{bind}: Přiřadí soketu IP adresu a~port na~straně serveru. Bez~zavolání by byl soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U~serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP 21, SSH 22, HTTP 80, HTTPS 443, \dots). U~klienta je port generován z~dynamického rozsahu, toto volání se tedy nepoužívá.
+\item \textbf{listen}: Převede soket na~straně serveru do~pasivního režimu kdy přijímá příchozí spojení (pomocí systémového volání accept). Vytvoří se vstupní fronta pro~příchozí spojení.
+\item \textbf{accept}: Voláno na~straně severu k~vyzvednutí požadavku o~spojení ze~vstupní fronty. Volání vytvoří nový soket podle parametrů žádosti o~spojení. Pokud je accept zavolán v~době, kdy je vstupní fronta prázdná, spojení je zablokováno do~doby než žádost přijde.
+\item \textbf{close}: Uzavírá soket. Ukončení spojení zmíněno dříve.
+\item \textbf{write}, \textbf{read}: Systémová volání pro~přenos dat. Data jsou přenášena s~dříve zmíněnými příznaky segmentů PSH a~ACK.
 \end{itemize}
 
-Stále spuštěné servery typicky musí reagovat rychle a~obsluhují ve~lké množství žádostí. Naopak u~serverů na~vyžádání se předpokládá méně časté využití, proto je spouští tzv. \emph{superserver/superdémon} (jeden ze~stále běžísích serverů)\footnote{Je třeba se správně rozhodnout jak servery rozdělit. Stále běžící permanentně ubírají systémové prostředky, zatímco servery na~vyžádání budou reagovat se zpožděním při~zahájení komunikace.}.
+\subsection{Serverové procesy}
 
-\begin{center}
-	\vspace{0,5cm}
+Jedná se o~síťové služby, které jsou zprostředkovány programy (tj. \emph{servery}). Proces každého serveru má přiřazenou adresu -- port, ta rozlišuje jednotlivé servery v~rámci jedné stanice\footnote{Servery pracující na~pozadí označujeme jako \emph{démony} (\emph{daemon})}. Servery lze spouštět dvojím způsobem: stále (při~startu systému) nebo na~požádání (pouze když je potřeba).
+
+Stále spuštěné servery typicky musí reagovat rychle a~obsluhují velké množství žádostí. Naopak u~serverů na~vyžádání se předpokládá méně časté využití, proto je spouští tzv. \emph{superserver/superdémon} (jeden ze~stále běžících serverů)%
+\footnote{Je třeba se správně rozhodnout jak servery rozdělit. Stále běžící permanentně ubírají systémové prostředky, zatímco servery na~vyžádání budou reagovat se zpožděním při~zahájení komunikace.}%
+.
+
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/network_server_proc.png}
-\end{center}
+	\caption{Serverové procesy}
+	\label{network_server_proc}
+\end{figure}
 
-Příklad použití superserveru lze vidět na~obrázku výše. Superserver \textbf{inetd} běží stále a~naslouchá na~\textbf{FTP} a~\textbf{TELNET} portech (21 resp. 23). V~případě, že přijde požadavek na~jeden z~těchto prostů aktivuje superserver korespondující server. Servery \textbf{httpd} (HTTP) a~\textbf{sshd} (SSH) jsou svázány přímo s~portem a~běží stále.
-
-
+Příklad použití superserveru lze vidět na~obrázku \ref{network_server_proc}. Superserver \textbf{inetd} běží stále a~naslouchá na~\textbf{FTP} a~\textbf{TELNET} portech (21 resp. 23). V~případě, že přijde požadavek na~jeden z~těchto prostů aktivuje superserver korespondující server. Servery \textbf{httpd} (HTTP) a~\textbf{sshd} (SSH) jsou svázány přímo s~portem a~běží stále.
