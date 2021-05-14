@@ -11,6 +11,11 @@ on:
       - main
     paths:
       - "**/*.tex"
+  workflow_dispatch:
+    branches:
+      - main
+    paths:
+      - "**/*.tex"
 
 jobs:
   build:
