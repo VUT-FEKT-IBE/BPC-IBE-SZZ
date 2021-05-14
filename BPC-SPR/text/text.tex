@@ -91,7 +91,7 @@ Rozlišujeme dva~druhy AI -- silné a~slabé. Slabá AI -- nefunguje jako blackb
 
 AI jako objekt práva~nemá právní osobnost a~způsobilost. Momentálně chybí přesvědčivý argument. 
 
-Shrnutí: nejvíce relavantními jsou nároky tvůrců AI a~uživatelů -- něco jako spoluautorství. AI může být \uv{tvůrčí}, ale ne autor.
+Shrnutí: nejvíce relevantními jsou nároky tvůrců AI a~uživatelů -- něco jako spoluautorství. AI může být \uv{tvůrčí}, ale ne autor.
 
 
 
@@ -105,9 +105,53 @@ Shrnutí: nejvíce relavantními jsou nároky tvůrců AI a~uživatelů -- něco
 \newpage
 \section{Osobnostní a majetková práva autora software -- obsah, doba trvání, vyčerpání práv}
 
+Autorská právo má dvě hlavní složky. Těmi jsou výluční osobnostní a majetková práva. 
+
+\vspace{0,5cm}
+\begin{Large}
+\textbf{Osobnostní práva}
+\end{Large}
+
+Osobnostní právo chrání nemateriální zájmy autora a je popsáno v \href{https://www.zakonyprolidi.cz/cs/2000-121#p11}{autorském zákoně §11}. Osobnostních práv se nemůže autor vzdát ani je převést na jinou osobu. Toto právo zaniká smrtí autora. Po smrti autora si nikdo nesmí osobovat jeho autorství k dílu a dílo smí být užito jen způsobem nesnižující hodnotu díla. Ochrany se může domáhat i po zániku majetkových práv osoba autorovy blízká, právnická osoba sdružující autory nebo kolektivní správce. 
 
 
+Osobnostní práva autora:
+\begin{itemize}[noitemsep]
+    \item Právo rozhodnutí o zveřejnění díla.
+    \item Právo osobovat si autorství, včetně toho zda a jakým způsobem má být uvedeno jeho autorství.
+    \item Právo na nedotknutelnost díla. Nedotknutelnost díla zahrnuje právo udělit svolení k jakékoliv změně nebo jinému zásahu do svého díla. Skrze svolení autora lze zasáhnout do díla.
+    \item Jiná osoba nesmí dílo užívat způsobem, který snižuje hodnotu díla.
+    \item Právo na autorský dohled.
+\end{itemize}
 
+
+\vspace{0,5cm}
+\begin{Large}
+\textbf{Majetková práva}
+\end{Large}
+
+Majetková práva jsou popsána v \href{https://www.zakonyprolidi.cz/cs/2000-121#p12}{autorském zákoně §12}. Toto právo je nepřevoditelné a autor se ho nemůže vzdát, avšak je součástí dědického řízení.
+Majetková práva trvají po dobu autorova života a 70 let po jeho smrti (doba se počítá od prvního dne následujícího kalendářního roku). V případě spoluautorského díla se tato doba počítá od posledního úmrtí jednoho z autorů. Po uplynutí této doby se stávají dílem volným (lze ho volně využívat a už se na něj nevztahují majetková práva). 
+
+Majetková práva autora popsána v paragrafech 13-25:
+\begin{itemize}[noitemsep]
+    \item Právo dílo užít
+    \begin{itemize}[noitemsep]
+        \item Právo na rozmnožování díla. (i rozmnoženina nezbytná k zavedení a uložení do paměti)
+        \item Právo na rozšiřování originálu nebo rozmnoženiny.
+        \item Právo na pronájem originálu nebo rozmnoženiny (pokud není podstatným předmětem pronájmu).
+        \item Právo na půjčování originálu nebo rozmnoženiny (pokud není podstatným předmětem půjčování).
+        \item Právo na vystavování originálu nebo rozmnoženiny.
+        \item Právo na sdělování díla veřejnosti.
+    \end{itemize}
+    \item Jiná majetková práva (odměny za užívaní).
+\end{itemize}
+
+Z majetkových práv je při podhledu na software asi nejdůležitější právo dílo užívat, kdy se nejspíše nevyužije právo na vystavování a sdělován. Do sdělovaní spadá zejména rozhlas a televize.
+
+I když nelze majetková práva převést na jinou osobu, lze jí udělit oprávnění k výkonu majetkových práv pomocí licence/licenční smlouvy. Tato licence obsáhne jen majetková práva ale neumožňuje nabyvateli zásah do osobnostních práv. Pro zásah do osobnostních práv je třeba svolení autora, která však není součástí licence a ani pro svou povahu být nemůže.   
+
+\textbf{Vyčerpání majetkových práv} \href{https://www.zakonyprolidi.cz/cs/2000-121#p14-2}{(autorském zákoně §14 ods.\,2)} je na úrovni celé evropské unie. Stanovuje se že majetková práva se prvním prodejem zboží uskutečněným nositelem práv nebo s jeho souhlasem vyčerpávají. Tímto nositel práv ztrácí možnost ovlivňovat další nakládání se zbožím a tím tak omezovat vlastníka v nakládání s ním. Právo na pronájem a půjčování díla zůstává nedotčeno. Toto platí jenom na evropském trhu a ne mimo něj.
 
 
 
@@ -127,11 +171,11 @@ Reverzní inženýrství lze provádět buď na základě dekompilace nebo black
 
 \textbf{Oprávněný nabyvatel} -- může být ten, kdo si program zakoupil, pronajal, získal licenci přímo od držitele práv, a~i od původního oprávněného nabyvatele.
 
-\textbf{Oprávněný uživatel} -- problematické, oprávněný uživatel může být na základě smlouvy, nebo zákona~\href{https://www.zakonyprolidi.cz/cs/2000-121#p66-6}{§66} \uv{\emph{Oprávněným uživatelem je oprávněný nabyvatel rozmnoženiny, který k ní má vlastnické nebo jiné právo za~účelem využití}}. Tato definice je tautologická nebolí říká že oprávněným uživatelem je oprávněný uživatel. Řešil to nejvyšší soud i~soudní dvůr EU, který stanovil, že se může jednat i o jinou osobu než o tu se kterou byla~smlouva~uzavřena~(lze přeprodat licenci), ale původní uživatel musí odstranit SW ze svého PC a~nepoužívat jej. Nejvyšší soud se zabýval poslaným CD s licenčním klíčem na produkty Microsoftu, v kterém vzal v potaz i rozhodnutí soudního dvora EU.
+\textbf{Oprávněný uživatel} -- problematické, oprávněný uživatel může být na základě smlouvy, nebo zákona~\href{https://www.zakonyprolidi.cz/cs/2000-121#p66-6}{§66 ods.\,6} \uv{\emph{Oprávněným uživatelem je oprávněný nabyvatel rozmnoženiny, který k ní má vlastnické nebo jiné právo za~účelem využití}}. Tato definice je tautologická nebolí říká že oprávněným uživatelem je oprávněný uživatel. Řešil to nejvyšší soud i~soudní dvůr EU, který stanovil, že se může jednat i o jinou osobu než o tu se kterou byla~smlouva~uzavřena~(lze přeprodat licenci), ale původní uživatel musí odstranit SW ze svého PC a~nepoužívat jej. Nejvyšší soud se zabýval poslaným CD s licenčním klíčem na produkty Microsoftu, v kterém vzal v potaz i rozhodnutí soudního dvora EU.
 
 \textbf{Třístupňový test} -- hledání výjimky, platné jsou pouze výjimky stanovené v~zákoně, aplikace vyjímek je dovolena~jen, pokud to není v~rozporu s užitím díla~a~nejsou tím nepřiměřeně dotčeny oprávněné zájmy autora. I při dovoleném reverzním inženýrství musíme projít tímto testem.
 
-\textbf{Blackbox analýza} -- mohu zkoumat nebo studovat funkčnost programu za~účelem zjištění myšlenek a~principů na~nichž je založen jakýkoliv~prvek programu a činím-li tak při zavedení, uložení do paměti počítače nebo při jeho zobrazení, provozu či přenosu, ke kterému je uživatel oprávněn. Není zde omezení jak nakládat se získanými informacemi. Charakteristika je, že není přístup ke zdrojovému kódu.  (\href{https://www.zakonyprolidi.cz/cs/2000-121#p66}{Autorský zákon §66} písmeno d)
+\textbf{Blackbox analýza} -- mohu zkoumat nebo studovat funkčnost programu za~účelem zjištění myšlenek a~principů na~nichž je založen jakýkoliv~prvek programu a činím-li tak při zavedení, uložení do paměti počítače nebo při jeho zobrazení, provozu či přenosu, ke kterému je uživatel oprávněn. Není zde omezení jak nakládat se získanými informacemi. Charakteristika je, že není přístup ke zdrojovému kódu.  (\href{https://www.zakonyprolidi.cz/cs/2000-121#p66-1-d}{Autorský zákon §66 ods.\,1 písmena d})
 
 \textbf{Whitebox analýza} -- je charakteristický tím že je znám zdrojový kód a můžeme si tedy představit co očekávat na výstupu při určitém vstupu na rozdíl od blackboxu. Zde je to podobné jako u dekompilace takže je povoleno pouze k dosažení interoperability a musí se projít třístupňovým testem.
 
