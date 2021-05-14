@@ -177,7 +177,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Právní ochrana databází - pojem, způsoby ochrany, obsah a rozdíly
 - [x] Smlouvy a software - licenční smlouva, smlouva o dílo a SLA - pojem, strany, obsah, forma a proces uzavírání
 - [x] Veřejné licence a software, free a open source software
-- [ ] Autorskoprávní a trestněprávní prostředky ochrany software - účel, nároky, tresty a realizace
+- [x] Autorskoprávní a trestněprávní prostředky ochrany software - účel, nároky, tresty a realizace
 
 ### BPC-UP2A
 
