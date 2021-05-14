@@ -14,8 +14,8 @@
 \title{BPC-SOS}                     % Název dokumentu - Povinný
 \newcommand{\subtitle}{Otázky a odpovědi BPC-SOS (Síťové operační systémy)}     % Popis dokumentu - Nepovinný
 \author{xnomas}                           % Autor           - Nepovinný
-\newcommand{\grammar}{--}             % Korektura       - Nepovinný
-\newcommand{\formatting}{--}          % Formátování     - Nepovinný
+\newcommand{\grammar}{kamen-u-cesty}             % Korektura       - Nepovinný
+\newcommand{\formatting}{kamen-u-cesty}          % Formátování     - Nepovinný
 % ##################
 % # PŘIDANÉ BALÍKY #
 % ##################
@@ -40,6 +40,8 @@
     breaklinks=true,            % hypertextové odkazy mohou obsahovat zalomení řádku
     hypertexnames=false         % názvy hypertext. odkazů budou tvořeny nezávisle na názvech TeXu
 ]{hyperref}                     % balíček 'hyperref' pro sazbu hypertextových odkazů
+\usepackage{csquotes}           % automatické sázení uvozovek
+\usepackage[bottom]{footmisc}   % vynucení umístění footnotes vespod stránky
 
 \usepackage{caption}            % umožňuje podrobnější nastavení popisků obrázků a výpisů
 \usepackage{ifthen}             % if-then-else podmínky (v title)
@@ -72,7 +74,7 @@
                                         %(musí být odkomentované přidání balíčku minted)
 
 \newenvironment{code}{\captionsetup{type=listing}}{}
-\setlength\parindent{0pt}
+%\setlength\parindent{0pt}
 \usepackage{tabularx}
 \usepackage{graphicx}
 
@@ -86,6 +88,7 @@
 
 \include{title}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
 
 \include{text/text}
