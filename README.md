@@ -170,7 +170,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 - [x] Software jako předmět právní ochrany - srovnání ochrany autorskoprávní a patentové ochrany
 - [x] Autorství software - autor, spoluautor, kolektivní dílo, souborné dílo, odvozené dílo, otázka autorství umělé inteligence
-- [ ] Osobnostní a majetková práva autora software - obsah, doba trvání, vyčerpání práv
+- [x] Osobnostní a majetková práva autora software - obsah, doba trvání, vyčerpání práv
 - [x] Omezení rozsahu práv autora k software - dekompilace, reverzní inženýrství a další
 - [x] Ochrana neliterárních složek software - ochrana funkcionality; ochrana datových, grafických uživatelských a aplikačních programových rozhraní)
 - [x] Software jako zaměstnanecké dílo, školní dílo, kolektivní dílo a dílo na objednávku
