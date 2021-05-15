@@ -63,12 +63,14 @@ jobs:
           working_directory: BPC-KKR
           root_file: main.tex
 
-      - name: Build BPC-KOM
-        uses: xu-cheng/latex-action@v2
-        with:
-          latexmk_shell_escape: true
-          working_directory: BPC-KOM
-          root_file: main.tex
+      # BPC-KOM was created in Word, not LaTeX. It is well-formatted,
+      # so we're ignoring build for this subject.
+      # - name: Build BPC-KOM
+      #   uses: xu-cheng/latex-action@v2
+      #   with:
+      #     latexmk_shell_escape: true
+      #     working_directory: BPC-KOM
+      #     root_file: main.tex
 
       - name: Build BPC-MDS
         uses: xu-cheng/latex-action@v2
@@ -112,12 +114,14 @@ jobs:
           working_directory: BPC-UP2A
           root_file: main.tex
 
-      - name: Build BPC-ZSY
-        uses: xu-cheng/latex-action@v2
-        with:
-          latexmk_shell_escape: true
-          working_directory: BPC-ZSY
-          root_file: main.tex
+      # BPC-ZSY was created in Word, not LaTeX. It is well-formatted,
+      # so we're ignoring build for this subject.
+      # - name: Build BPC-ZSY
+      #   uses: xu-cheng/latex-action@v2
+      #   with:
+      #     latexmk_shell_escape: true
+      #     working_directory: BPC-ZSY
+      #     root_file: main.tex
 
       # Prepare tag name
       - name: Create tag
@@ -196,7 +200,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
-          asset_path: ./BPC-KOM/main.pdf
+          # We do have prepared PDF, use it instead of LaTeX build.
+          asset_path: ./BPC-KOM/word-export.pdf
           asset_name: BPC-KOM.pdf
           asset_content_type: application/pdf
 
@@ -266,7 +271,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_draft_release.outputs.upload_url }}
-          asset_path: ./BPC-ZSY/main.pdf
+          # We do have prepared PDF, use it instead of LaTeX build.
+          asset_path: ./BPC-ZSY/word-export.pdf
           asset_name: BPC-ZSY.pdf
           asset_content_type: application/pdf
 
