@@ -185,7 +185,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [ ] Elektronický podpis a elektronická pečeť – právní úprava a druhy
 - [ ] Datové schránky – právní úprava a praxe používání
 - [ ] Provozní a lokalizační údaje a jejich využití v trestním řízení
-- [ ] Právní úprava kybernetické bezpečnosti v CR - základní principy
+- [x] Právní úprava kybernetické bezpečnosti v CR - základní principy
 - [x] Ochrana osobních údajů – vymezení osob a základní principy zpracování osobních údajů
 - [x] Povinnosti správce a zpracovatele osobních údajů
 - [x] Práva subjektu údajů ve vztahu ke správci a zpracovateli
