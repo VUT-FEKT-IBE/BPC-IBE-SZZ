@@ -42,16 +42,16 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-KOM
 
-- [ ] Technika sítí a protokolů - komunikační modely, způsob přenosu informace, základní struktura sítí, typy sítí, architektura komunikace systémů.
-- [ ] Základní popis referenčního modelu ISO/OSI a srovnání s TCP/IP.
-- [ ] Základní popis síťového modelu TCP/IP a srovnání s ISO/OSI.
-- [ ] Principy komunikačních technik - vícenásobné využití cest, zajištění obousměrné komunikace.
-- [ ] Fyzická vrstva přenosových systémů - přenosová média, analogové a digitální modulace, klíčovací techniky, princip digitalizace řečového signálu.
-- [ ] Spojová vrstva přenosových systémů - podvrstvy, rámce spojové vrstvy, adresace, metody zajištění spolehlivého přenosu.
-- [ ] Síťová vrstva přenosových systémů - spínání paketů, služby síťové vrstvy, IPv4 adresy, techniky směrování, IPv4 datagram.
-- [ ] Síťová vrstva přenosových systémů - tunelování paketů, ARP, NAT, ICMPv4, IPv6.
-- [ ] Transportní vrstva přenosových systémů - služby transportní vrstvy, UDP protokol, TCP protokol.
-- [ ] Aplikační vrstva přenosových systémů - DHCP protokol, DNS systém, přenos souborů, webové protokoly, elektronická pošta.
+- [x] Technika sítí a protokolů - komunikační modely, způsob přenosu informace, základní struktura sítí, typy sítí, architektura komunikace systémů.
+- [x] Základní popis referenčního modelu ISO/OSI a srovnání s TCP/IP.
+- [x] Základní popis síťového modelu TCP/IP a srovnání s ISO/OSI.
+- [x] Principy komunikačních technik - vícenásobné využití cest, zajištění obousměrné komunikace.
+- [x] Fyzická vrstva přenosových systémů - přenosová média, analogové a digitální modulace, klíčovací techniky, princip digitalizace řečového signálu.
+- [x] Spojová vrstva přenosových systémů - podvrstvy, rámce spojové vrstvy, adresace, metody zajištění spolehlivého přenosu.
+- [x] Síťová vrstva přenosových systémů - spínání paketů, služby síťové vrstvy, IPv4 adresy, techniky směrování, IPv4 datagram.
+- [x] Síťová vrstva přenosových systémů - tunelování paketů, ARP, NAT, ICMPv4, IPv6.
+- [x] Transportní vrstva přenosových systémů - služby transportní vrstvy, UDP protokol, TCP protokol.
+- [x] Aplikační vrstva přenosových systémů - DHCP protokol, DNS systém, přenos souborů, webové protokoly, elektronická pošta.
 
 ### BPC-TIN
 
