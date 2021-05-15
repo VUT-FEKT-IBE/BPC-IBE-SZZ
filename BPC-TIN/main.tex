@@ -11,11 +11,12 @@
 % # DŮLEŽITÉ #
 % ############
 
-\title{BPC-TIN}                     % Název dokumentu - Povinný
-\newcommand{\subtitle}{Otázky a odpovědi BPC-TIN (Teoretická informatika)}     % Popis dokumentu - Nepovinný
-\author{jedla}                           % Autor           - Nepovinný
-\newcommand{\grammar}{--}             % Korektura       - Nepovinný
-\newcommand{\formatting}{--}          % Formátování     - Nepovinný
+\title{BPC-TIN}
+\newcommand{\subtitle}{Otázky a odpovědi BPC-TIN (Teoretická informatika)}
+\author{jedla}
+\newcommand{\grammar}{kamen-u-cesty}
+\newcommand{\formatting}{kamen-u-cesty}
+
 % ##################
 % # PŘIDANÉ BALÍKY #
 % ##################
@@ -40,6 +41,8 @@
 	breaklinks=true,		    % hypertextové odkazy mohou obsahovat zalomení řádku
 	hypertexnames=false         % názvy hypertext. odkazů budou tvořeny nezávisle na názvech TeXu
 ]{hyperref}                     % balíček 'hyperref' pro sazbu hypertextových odkazů
+\usepackage{csquotes}           % automatické sázení uvozovek
+\usepackage[bottom]{footmisc}   % vynucení umístění footnotes vespod stránky
 
 \usepackage{caption}            % umožňuje podrobnější nastavení popisků obrázků a výpisů
 \usepackage{ifthen}             % if-then-else podmínky (v title)
@@ -73,6 +76,9 @@
 \setlength\parindent{0pt}
 \usepackage{tabularx}
 \usepackage{graphicx}
+
+\captionsetup{justification=centering}
+
 % #########
 % # START #
 % #########
@@ -83,6 +89,7 @@
 
 \include{title}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
 
 \include{text/text}
