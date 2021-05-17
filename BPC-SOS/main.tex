@@ -1,82 +1,134 @@
 % Soubory musí být v kódování, které je nastaveno v příkazu \usepackage[...]{inputenc}
 
-\documentclass[             % Základní nastavení
-    12pt,                   % Velikost základního písma je 12 bodů
-    a4paper,                % Formát papíru je A4
-    oneside,                % Jednostranný tisk
-    unicode,                % Záložky a metainformace ve výsledném  PDF budou v kódování unicode
-]{article}                  % Dokument třídy 'zpráva', vhodná pro sazbu závěrečných prací s kapitolami
+\documentclass[
+    12pt,
+    a4paper,
+    oneside,
+    unicode,
+]{article}
 
 % ############
 % # DŮLEŽITÉ #
 % ############
 
-\title{BPC-SOS}                     % Název dokumentu - Povinný
-\newcommand{\subtitle}{Otázky a odpovědi BPC-SOS (Síťové operační systémy)}     % Popis dokumentu - Nepovinný
-\author{xnomas}                           % Autor           - Nepovinný
-\newcommand{\grammar}{kamen-u-cesty}             % Korektura       - Nepovinný
-\newcommand{\formatting}{kamen-u-cesty}          % Formátování     - Nepovinný
-% ##################
-% # PŘIDANÉ BALÍKY #
-% ##################
+\title{BPC-SOS}
+\newcommand{\subtitle}{Otázky a odpovědi BPC-SOS (Síťové operační systémy)}
+\author{xnomas}
+\newcommand{\grammar}{kamen-u-cesty}
+\newcommand{\formatting}{kamen-u-cesty}
 
-\usepackage[utf8]           % Kódování zdrojových souborů je UTF-8
-    {inputenc}              % Balíček pro nastavení kódování zdrojových souborů
+%%%%%%%%%%%%%%%%%%%%
+% OBECNÉ NASTAVENÍ %
+%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[T1]{fontenc}        % nastavení výstupního kódování
+% Kódování zdrojových souborů
+\usepackage[utf8]{inputenc}
+% Kódování výstupního souboru
+\usepackage[T1]{fontenc}
+% Podpora češtiny
+\usepackage[czech]{babel}
 
-\usepackage[                % Nastavení geometrie stránky
-    hmargin={25mm,25mm},    % Vnitřní a vnější okraj
-    vmargin={25mm,25mm},    % Horní a dolní okraj
-    footskip=17mm,          % Velikost zápatí
-    nohead,                 % Bez záhlaví
+% Geometrie stránky
+\usepackage[
+    % Vnitřní a vnější okraj
+    hmargin={25mm,25mm},
+    % Horní a dolní okraj
+    vmargin={25mm,25mm},
+    % Velikost zápatí
+    footskip=17mm,
+    % Vypnutí záhlaví
+    nohead,
 ]{geometry}
 
-\usepackage{graphicx}           % nutné pro vkládání obrázků
-\usepackage[czech]{babel}       % čeština pro LaTeX
-\usepackage{sectsty}            % pro nastavení stylu nadpisů
+% Zajištění kopírovatelnosti a prohledávanosti vytvořených PDF
+\usepackage{cmap}
+% Podmínky (pro použití v titulní straně)
+\usepackage{ifthen}
+
+%%%%%%%%%%%%%%%
+% FORMÁTOVÁNÍ %
+%%%%%%%%%%%%%%%
+
+% Nastavení stylu nadpisů
+\usepackage{sectsty}
+% Formátování obsahů
 \usepackage{tocloft}
+% Odstranění vertikálního prostoru v seznamech
+\usepackage{enumitem}
+\setlist{nosep}
+% Sázení správných uvozovek pomocí '\enquote{}'
+\usepackage{csquotes}
+% Vynucení umístění poznámek pod čarou vespod stránky
+\usepackage[bottom]{footmisc}
+
+% Bezpatkové sázení nadpisů
+\allsectionsfont{\sffamily}
+% Změna formátování nadpisu a podnadpisů v Obsahu
+\renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily}
+\renewcommand{\cftsubsecdotsep}{\cftdotsep}
+% Zrušení odsazení prvního řádku odstavce
+\setlength\parindent{0pt}
+% Zapnutí vertikálního oddělení odstavců
+\setlength\parskip{0.6em}
+
+%%%%%%%%%%
+% ODKAZY %
+%%%%%%%%%%
+
+% Tvorba hypertextových odkazů
 \usepackage[
-    breaklinks=true,            % hypertextové odkazy mohou obsahovat zalomení řádku
-    hypertexnames=false         % názvy hypertext. odkazů budou tvořeny nezávisle na názvech TeXu
-]{hyperref}                     % balíček 'hyperref' pro sazbu hypertextových odkazů
-\usepackage{csquotes}           % automatické sázení uvozovek
-\usepackage[bottom]{footmisc}   % vynucení umístění footnotes vespod stránky
-
-\usepackage{caption}            % umožňuje podrobnější nastavení popisků obrázků a výpisů
-\usepackage{ifthen}             % if-then-else podmínky (v title)
-\usepackage{amsmath}            % balíček pro sazbu náročnější matematiky
-\usepackage{enumitem}           % pro jednodušší odstranění mezer mezi prvky listu (v itemize)
-\usepackage[formats]{listings}  % Balíček pro sazbu zdrojových textů
-\usepackage{cmap}               % balíček cmap zajišťuje, že PDF vytvořené `pdflatexem' je
-                                                % plně "prohledávatelné" a "kopírovatelné"
-\usepackage{tikz}               % pro vykreslování orientovaných grafů
-\usepackage[newfloat]{minted}   % syntax highlighting kódu
-\usepackage{multicol}
-\usepackage[bottom]{footmisc}   % zajistí že footnotes budou vždy na konci stránky
-\usepackage{float}
-
-% ####################
-% # NASTAVENÍ BALÍKŮ #
-% ####################
-\allsectionsfont{\sffamily}                               % všechny nadpisy bezpatkové
-\renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily} % formát nadpisu v Obsahu
-\renewcommand{\cftsubsecdotsep}{\cftdotsep}               % podnadpisy mají tečkované oddělení v obsahu
-\hypersetup{                                              % nastavení odkazů
+    breaklinks=true,
+    hypertexnames=false,
+]{hyperref}
+% Nastavení barvení odkazů
+\hypersetup{
     colorlinks,
     citecolor=black,
     filecolor=black,
     linkcolor=black,
     urlcolor=blue
 }
-\usetikzlibrary{shapes,arrows}     % tikz rozšíření
-\usemintedstyle{pastie}            % nastavení vzhledu syntax highlightingu 
-                                        %(musí být odkomentované přidání balíčku minted)
 
-\newenvironment{code}{\captionsetup{type=listing}}{}
-%\setlength\parindent{0pt}
-\usepackage{tabularx}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OBRÁZKY, GRAFY, TABULKY %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Vkládání obrázků
 \usepackage{graphicx}
+% Nastavení popisů obrázků, výpisů a tabulek
+\usepackage{caption}
+\captionsetup{justification=centering}
+% Grafy a vektorové obrázky
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+%%%%%%%%%%%%%%
+% MATEMATIKA %
+%%%%%%%%%%%%%%
+
+% Sázení matematiky a matematických symbolů ('\mathbb{}')
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Náhrada za \mod a \pmod, které mají přehaně velký prostor před svou značkou
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+\newcommand{\Pmod}[1]{\ (\mathrm{mod}\ #1)}
+% Náhrada za \forall, které kolem sebe prostor nemá žádný
+\newcommand{\Forall}{\ \forall\ }
+
+%%%%%%%%%%%%%%%%%
+% ZDROJOVÉ KÓDY %
+%%%%%%%%%%%%%%%%%
+
+% Sazba zdrojových kódů
+\usepackage[formats]{listings}
+% Sazba zdrojových kódů
+\usepackage[newfloat]{minted}
+% Formátování 'minted' kódů
+\usemintedstyle{pastie}
+% Přepnutí prostředí 'code' do režimu výpisu kódu
+\newenvironment{code}{\captionsetup{type=listing}}{}
 
 % #########
 % # START #

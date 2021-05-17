@@ -5,9 +5,13 @@
 \section{Struktura OS -- systémové jádro, monolitický systém, architektura klient-server, virtuální stroje}
 \label{kernel}
 
-Operační systém si lze zjednodušeně představit jako program skládající se z~\emph{jádra} (\emph{kernel}) a~\emph{systémových programů}. Systémové programy jsou takové programy, které poskytují prostředí pro~spouštění a~běh \emph{aplikačních programů} (které nejsou součástí OS). Dále pak systémová volání fungují jako jakési API~pro~systémové programy, aby mohly volat funkce z~jádra. (toto např. umožňuje čtení ze~souborů \footnote{Čtení ze~souboru probíhá pomocí systémového volání \texttt{open}, kde můžeme nastavovat různé možnosti, jako \texttt{O\_APPEND}, \texttt{O\_CREAT}.} nebo jejich vytváření\footnote{Soubor lze vytvořit například pomocí systémového volání \emph{open} s~možností \texttt{O\_CREAT}, která soubor vytvoří pokud neexistuje.}).
+Operační systém si lze zjednodušeně představit jako program skládající se z~\emph{jádra} (\emph{kernel}) a~\emph{systémových programů}. Systémové programy jsou takové programy, které poskytují prostředí pro~spouštění a~běh \emph{aplikačních programů} (které nejsou součástí OS). Dále pak systémová volání fungují jako jakési API~pro~systémové programy, aby mohly volat funkce z~jádra (toto např. umožňuje čtení ze~souborů%
+\footnote{Čtení ze~souboru probíhá pomocí systémového volání \texttt{open}, kde můžeme nastavovat různé možnosti, jako \texttt{O\_APPEND}, \texttt{O\_CREAT}.}%
+ nebo jejich vytváření%
+ \footnote{Soubor lze vytvořit například pomocí systémového volání \emph{open} s~možností \texttt{O\_CREAT}, která soubor vytvoří pokud neexistuje.}%
+ ).
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Systémové programy -- knihovny
 	\item Aplikační programy -- prohlížeč, textový editor, apod.
 \end{enumerate}
@@ -19,9 +23,9 @@ Operační systém si lze zjednodušeně představit jako program skládající 
 	\label{OS_kernel_apps}
 \end{figure}
 
-V~Operačních Systémech zpravidla rozlišujeme dva základní režimy operací:
+V~operačních systémech zpravidla rozlišujeme dva základní režimy operací:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item režim jádra tj. privilegovaný/systémový režim
 	\item uživatelský režim tj. neprivilegovaný režim
 \end{enumerate}
@@ -39,15 +43,9 @@ Jak již napovídá samotný název, \emph{monolitický systém} je systém kter
 	\label{OS_mono_kernel}
 \end{figure}
 
-I~když bylo řečeno, že monolitický systém vlastně žádnou strukturu nemá, není to zcela pravda, jak lze vidět z~obrázku \ref{OS_mono_kernel}:
+I~když bylo řečeno, že monolitický systém vlastně žádnou strukturu nemá, není to zcela pravda, jak lze vidět z~obrázku \ref{OS_mono_kernel}: obsahuje hlavní program volající vyžádanou funkci, množinu funkcí (systémová volání) a sady nástrojů, které pomáhají funkcím.
 
-\begin{itemize}[noitemsep]
-	\item Hlavní program volající vyžádanou funkci
-	\item Množina funkcí obsluhující systémová volání
-	\item Sada nástrojů, které pomáhají funkcím
-\end{itemize}
-
-Hlavní jádro spouští funkce potřebné pro~obsloužení systémových volání/přerušení (každé volání/přerušení obsluhuje jedna funkce). Pomocné nástroje pak provádí akce vyžádané funkcemi.
+Hlavní jádro spouští funkce potřebné pro~obsloužení systémových volání/přerušení (každé volání/přerušení obsluhuje jedna funkce). Pomocné nástroje pak provádí akce vyžádané funkcemi. Příkladem monolitického jádra je Linux a~UNIX.
 
 \subsubsection{Problémy monolitických jader a~jejich řešení}
 
@@ -61,10 +59,9 @@ Moduly bývají ovladače zařízení a~souborových systémů. Chyba v~modulu m
 
 Kernel je zmenšen až na~tzv. \emph{mikrojádro}. V~něm zůstanou pouze nezbytné funkce jako správa paměti, multitasking, přerušení a~komunikace mezi procesy. Vše ostatní je přesunuto do~tzv. \emph{serverů}, což je software běžící v~uživatelském režimu. Žádost o~systémové volání tedy znamená, že klient (aplikace) zašle žádost serveru, a~jádro mezi nimi zprostředkovává komunikaci.
 
-Z tohoto vyplývá, že chyba serveru nebude fatální pro~celý systém. Navíc lze snadno implementovat v~distribuovaných systémech (kde jsou servery skutečnými síťovými servery, které vykonávají funkce jádra). Nevýhodou oproti modulárnímu jádru je menší rychlost.
+Z tohoto vyplývá že chyba serveru nebude fatální pro~celý systém. Navíc lze snadno implementovat v~distribuovaných systémech (kde jsou servery skutečnými síťovými servery, které vykonávají funkce jádra). Nevýhodou oproti modulárnímu jádru je menší rychlost. Zástupci jsou například GNU/Hurd, Plan9, BeOS nebo QNX.
 
-\vspace{0,5cm}
-Lze zavést i~tzv. \emph{hybridní jádro}, kde je mikrojádro rozšířeno o~dodatečné funkce (ale ne na~úrovni monolitického jádra) za~účelem vyšší rychlosti. Takto funguje např. \emph{Microsoft~Windows}.
+Lze zavést i~tzv. \emph{hybridní jádro}, kde je mikrojádro rozšířeno o~dodatečné funkce (ale ne na~úrovni monolitického jádra) za~účelem vyšší rychlosti. Takto funguje např. Microsoft~Windows.
 
 \subsection{Virtuální stroje}
 
@@ -89,25 +86,25 @@ Procesy se dělí na~\emph{systémové} a~\emph{uživatelské}. Systémové real
 \footnote{Přepnutí kontextu je něco jiného. Plánovač vybere k~vykonání jiný proces, jádro pak dále udržuje ve~svém kontextu stav původního procesu, aby se k~němu šlo vrátit.}%
 :
 
-\begin{itemize}[noitemsep]
-	\item uživatelský kontext -- informace které proces potřebuje pro~vlastní činnost (např. programový kód)
-	\item kontext jádra -- informace které OS potřebuje pro~správu (např. aktuální hodnota programového čítače)
+\begin{itemize}
+	\item uživatelský kontext -- informace které proces potřebuje pro~vlastní činnost (např. programový kód),
+	\item kontext jádra -- informace které OS potřebuje pro~správu (např. aktuální hodnota programového čítače).
 \end{itemize}
 
 \subsection{Uživatelský kontext}
 
-Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dynamické části (viz obrázky níže).
+Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dynamické části (viz obrázky \ref{proc_user_context} a~\ref{proc_data_segment}).
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item textová část (text segment) -- Programové instrukce a~přístup k~této části je pouze pro~čtení. Díky tomu může více procesů téhož programu sdílet stejnou textovou část.
 	\item datová část (data segment) -- Data, která proces potřebuje již od~svého startu, tedy globální proměnné, textové řetězce, datová pole atd.
 	\item halda (\emph{heap}) -- Stromová struktura, kde se mohou dynamicky alokovat data za~běhu programu.
-	\item zásobník (\emph{stack}) -- Také dynamicky alokovaný, ale zde se ukládají parametry procesem volaných funkcí. Je obvyklé, že zásobník roste směrem k~nižším adresám (tj. vrchol jde dolů). Jedná se o~LIFO (Last-in First-out) zásobník%
+	\item zásobník (\emph{stack}) -- Také dynamicky alokovaný, ale zde se ukládají parametry procesem volaných funkcí. Je obvyklé, že zásobník roste směrem k~nižším adresám (tj.~vrchol jde dolů). Jedná se o~LIFO (Last-in First-out) zásobník%
 	\footnote{Mezera mezi haldou a~zásobníkem představuje volné místo, které dovoluje dynamickou změnu zásobníku a~haldy během procesu.}%
 	.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[ht]
 	\centering
 	\begin{minipage}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{images/proc_user_context.png}
@@ -122,14 +119,14 @@ Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dyna
 	\end{minipage}
 \end{figure}
 
-Datový segment lze rozdělit:
+Datový segment lze rozdělit na:
 
-\begin{itemize}[noitemsep]
-	\item Inicializovaná data dostupná pouze pro~čtení -- datové prvky inicializované programem,
-	které nelze měnit.
-	\item Inicializovaná data dostupná pro~čtení i~zápis -- datové prvky inicializované programem,
-	ovšem jejich hodnoty mohou být za~běhu procesu měněny.
-	\item Neinicializovaná data -- datové prvky, které program neinicializoval. Neinicializovaná data lze měnit za~běhu procesu.
+\begin{itemize}
+	\item inicializovaná data dostupná pouze pro~čtení -- datové prvky inicializované programem,
+	které nelze měnit,
+	\item inicializovaná data dostupná pro~čtení i~zápis -- datové prvky inicializované programem,
+	ovšem jejich hodnoty mohou být za~běhu procesu měněny,
+	\item neinicializovaná data -- datové prvky, které program neinicializoval. Neinicializovaná data lze měnit za~běhu procesu.
 \end{itemize}
 
 \subsection{Kontext jádra}
@@ -138,11 +135,11 @@ V~tabulce PCB (Řídící tabulka procesů, \emph{Process Control Block}) jsou o
 
 Jsou zde udržovány informace o~rozložení uživatelského kontextu a~další data k~jeho správě:
 
-\begin{itemize}[noitemsep]
-	\item Programový čítač -- obsahuje adresu následující instrukce procesu, která bude vykonána procesorem
+\begin{itemize}
+	\item Programový čítač -- obsahuje adresu následující instrukce procesu, která bude vykonána procesorem.
 	\item Parametry spojené s~plánováním běhu procesů -- priorita procesu, čas aktivity v~CPU, ukazatel na~plánovací frontu atd. Tyto informace jsou použity při~plánování procesů, tj. rozhodování, který proces je na~řadě.
-	\item Seznam vstupů a~výstupů využívané procesem -- například se může jednat o~seznam otevřených souborů
-	\item Stav činnosti procesu
+	\item Seznam vstupů a~výstupů využívané procesem -- například se může jednat o~seznam otevřených souborů.
+	\item Stav činnosti procesu.
 \end{itemize}
 
 \begin{table}[ht]
@@ -170,7 +167,7 @@ Po~vytvoření procesu je ve~stavu \emph{připravený}. Poté, co je vybrán pl�
 
 Vlákna si lze představit jako stavební bloky procesů, které jsou jimi vykonávané. Proces může mít jedno či~více vláken. Pokud běží pouze na~jednom, může provádět pouze jeden úkol v~daném čase. S~více vlákny lze pracovat na~více úkolech najednou, případně vykonávat stejný úkol nad~různými daty (webserver). Aby tyto úkoly šlo vykonávat ve~stejném čase, musí být přítomno buď více procesorů, nebo více jader v~procesoru (jedno jádro resp. jeden procesor vykonává jedno vlákno). Každé vlákno má vlastní zásobník, ale sdílí zbytek uživatelského kontextu (tj. datový i~textový segment a~haldu)!
 
-Využitím sdíleného uživatelského kontextu programátor zajišťuje hladký průběh paralelizace: při~sdílení dat mezi vlákny může dojít ke~čtení nekonzistentních dat, tj. k~souběhu (viz \ref{sync}).
+Využitím sdíleného uživatelského kontextu programátor zajišťuje hladký průběh paralelizace: při~sdílení dat mezi vlákny může dojít ke~čtení nekonzistentních dat, tj. k~souběhu (viz otázku~\ref{sync}).
 
 Z~pohledu správy lze vlákna rozdělit na~dva typy: \emph{vlákna jádra} (z~programu jádra) a~\emph{uživatelská vlákna} (z~programů mimo jádro). Mezi uživatelskými vlákny a~vlákny jádra existuje několik možných návazností/modelů:
 
@@ -181,7 +178,7 @@ Z~pohledu správy lze vlákna rozdělit na~dva typy: \emph{vlákna jádra} (z~pr
 	\label{thread_models}
 \end{figure}
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Mnoho k~jednomu -- Jednomu procesu jádra patří více uživatelských vláken. Použití vláken není závislé na~jejich podpoře v~OS a~jejich správa je zajištěna často v~podobě \emph{vláknových knihoven} (v~uživatelském režimu). Tyto knihovny vytváří a~plánují běh, přepínají a~ruší vlákna. Nevýhodou je fakt, že zavolání blokujícího systémového volání jedním z~vláken zablokuje celý proces (tedy všechna vlákna), jelikož jádro s~vlákny nepracuje.
 	\item Jeden k~jednomu -- Každé uživatelské jádro má korespondující vlákno v~jádře a~tedy má i~na~starosti jejich správu. Výhodou je, že blokující systémové volání neblokuje všechna ostatní vlákna. Dále je umožněn běh paralelně na~více procesorech. Nevýhodou je značná režie, skrz vysoké množství vláken.
 	\item Mnoho k~mnoha -- Kombinace předešlých, přiřazuje vláknům stejný nebo menší počet vláken v~jádru. Počet těchto vláken může být omezen vzhledem k~aplikaci nebo druhu zařízení (např. jednoprocesorové vs. víceprocesorové).
@@ -197,7 +194,7 @@ Z~pohledu správy lze vlákna rozdělit na~dva typy: \emph{vlákna jádra} (z~pr
 
 Dříve vyjmenované stavy (obrázek \ref{proc_states} v~otázce \ref{procesy}) nejsou kompletní výčet. Skutečný stavový model má devět položek, kterými jsou:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Proces je vykonáván v~uživatelském režimu
 	\item Proces je vykonáván v~režimu jádra
 	\item Proces je připraven ke~zpracování a~je uložen v~hlavní paměti
@@ -234,7 +231,7 @@ Proces vzniká pomocí systémového volání \emph{fork}, kde se z~původního 
 \footnote{Všechny procesy jsou následovníkem procesu \emph{init}.}%
 .
 
-Systémové volání \emph{fork} je voláno rodičem jednou a~vráceno dvakrát. Vrací se PID rodiče a~PID 0 pro~potomka (zjednodušuje rozlišení potomka a~rodiče při~programování), potomek následně volá systémové volání \emph{execve}, kterým spustí programový kód nového procesu. \emph{Fork} vytvoří kopii rodičovského procesu, existují pak tedy dva stejné procesy.
+Systémové volání \emph{fork} je voláno rodičem jednou, ale vrací se dvakrát: do~procesu rodiče (s~PID nového procesu) a~do~procesu potomka (s~PID $= 0$). To zjednodušuje rozlišení potomka a~rodiče při~programování; potomek následně volá systémové volání \emph{execve}, kterým spustí programový kód nového procesu. \emph{Fork} vytvoří kopii rodičovského procesu, existují pak tedy dva stejné procesy.
 
 \emph{Fork} je vykonáván v~režimu jádra. Vyhledá se volná pozice v~tabulce procesů a~obsadí se záznamem potomka (jeho kontext jádra, viz otázku \ref{procesy}) a~poté se alokuje paměť pro~uživatelský kontext potomka (taktéž v~kapitole \ref{procesy}), který se naplní kopií uživatelského kontextu rodiče%
 \footnote{Textová část může být buď kopírována nebo sdílena.}%
@@ -304,7 +301,7 @@ Příklady jsou systémy od~IBM a~GCOS (General Comprehensive Operating System) 
 
 Tyto systémy jsou typické pro~nákladná a~výkonná informační centra, kde je prioritou co nejlépe využít drahý hardware. Sledují se především tyto parametry:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Výkonnost -- počet úloh zpracovaných za~jednotku času%
 	\footnote{Plánovač zvyšující výkonnost nemusí nutně zvyšovat rychlost obsluhy. Za~účelem zvýšení výkonnosti může upřednostňovat kratší úlohy, na~které se však musí déle čekat. Výkonnost stoupá, ale rychlost obsluhy klesá.}%
 	.
@@ -392,7 +389,7 @@ Této myšlence se obecně říká \emph{zámek} (tj. \emph{mutex}): přístup k
 
 Krom vzájemné vyloučení je potřeba zajistit i~následující podmínky:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Blokování jiného procesu je pouze možné v~případě, že jiný proces je v~kritické sekci. Blokování procesem mimo KS je nepřijatelné.
 	\item Doba čekání na~vstup do~kritické sekce musí být konečná.
 \end{enumerate}
@@ -400,7 +397,7 @@ Krom vzájemné vyloučení je potřeba zajistit i~následující podmínky:
 \subsubsection{Vzájemné vyloučení pomocí proměnných}
 
 % TODO Co to tu přesně znamená? Nebylo by lepší to napsat větou?
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Sdílená dvouhodnotová proměnná
 	\item Striktní střídání procesů
 \end{itemize}
@@ -437,7 +434,7 @@ Princip je podobný jako u~přístupu se sdílenou proměnnou, krom toho že ins
 
 Předešlé metody využívají aktivního čekání, které má následující nevýhody:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Plýtvání časem CPU%
 	\footnote{Za~předpokladu, že se nebude čekat moc dlouho, jde využít aktivního čekání.}.
 	\item Porušení základní podmínky, že čekání na~vstup do~kritické sekce musí být konečná.
@@ -459,7 +456,7 @@ Skupina procesů je ve~stavu uvíznutí, pokud každý z~nich čeká na~událost
 
 Využití sdíleného prostředku se skládá ze~tří částí:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Žádost -- Proces žádá o~využití prostředku a~aktivně čeká pokud je využitý
 	\item Používání -- Proces využívá prostředek
 	\item Uvolnění -- Proces ukončil práci a~předal o~tom zprávu
@@ -476,14 +473,14 @@ Důvody k~uvíznutí mohou být například stav, kdy první proces čeká na~pr
 
 Tato situace lze řešít předcházením uvíznutí, připuštěním že se systém do~stavu uvíznutí dostat může, umí tento stav detekovat a~obnovit činnost, nebo ignorováním tohoto problému. Detekce a~napravení deadlocku vyžaduje neustálé spouštění algoritmu se dvěma metodami obnovení činnosti:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Procesy ve~stavu uvíznutí jsou násilně ukončeny:
-	\begin{enumerate}[noitemsep]
+	\begin{enumerate}
 		\item postupně -- pomalejší řešení, po~každém ukončeném procesu je potřeba znovu spustit detekční algoritmus, volba procesu může být například na~základě stáří
 		\item všechny najednou -- rychlejší řešení s~velkými náklady (například ztráta předešlých výpočtů a~dat)
 	\end{enumerate}
 	
-	\item Procesům jsou násilně odebrány všechny prostředky a~předávány jiným procesům ve~stavu uvíznutí- Po~každém odebrání je opět potřeba spustit detekční algoritmus, aby se zjistilo zda bylo uvíznutí vyřešeno.
+	\item Procesům jsou násilně odebrány všechny prostředky a~předávány jiným procesům ve~stavu uvíznutí. Po~každém odebrání je opět potřeba spustit detekční algoritmus, aby se zjistilo zda bylo uvíznutí vyřešeno.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%
@@ -494,9 +491,9 @@ Tato situace lze řešít předcházením uvíznutí, připuštěním že se sys
 \section{Správa paměti -- vyměňování procesů, virtuální paměť pomocí stránkování a~segmentace}
 
 Paměť dělíme na~dvě části:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Fyzický Adresový Prostor (FAP; hlavní paměť, RAM) -- reálná kapacita fyzické paměti v~počítači která je dána nainstalovanou pamětí. Aby proces byl vykonáván musí být celý, nebo jeho vykonávaná část, v~RAM paměti. Hlavní důvod je rychlost přístupu do~této paměti.
-	\item Logický Adresový Prosto (LAP; vedlejší paměť, virtuální paměť) -- jedná se o~paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť) tak \emph{odkládací prostor}.
+	\item Logický Adresový Prosto (LAP; vedlejší paměť, virtuální paměť) -- jedná se o~paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť), tak \emph{odkládací prostor}.
 \end{itemize}
 
 \begin{figure}[ht]
@@ -506,7 +503,7 @@ Paměť dělíme na~dvě části:
 	\label{mem_lap}
 \end{figure}
 
-Pokud počítač pracuje s~32bitovými adresami, může nabízet 4 GiB ($2^{32}$) LAP i~když fyzicky má pouze 256 MiB FAP. Virtuální paměť lze realizovat vyměňováním procesů, stránkováním nebo segmentací.
+Pokud počítač pracuje s~32bitovými adresami, může nabízet 4 GiB ($2^{32}$) LAP, i~když má fyzicky pouze 256 MiB FAP. Virtuální paměť lze realizovat vyměňováním procesů, stránkováním nebo segmentací.
 
 \subsection{Vyměňování procesů}
 
@@ -543,7 +540,7 @@ Důležitým parametrem je volba velikosti stránky, jelikož se stránkováním
 
 Pomocí segmentace je paměťový prostor procesů dělen na~logicky související části různé velikosti nazývané \emph{segmenty}. Každý segment má svůj název a~velikost, které vytváří kompilátor podle zdrojového kódu programu. Obecné segmenty mohou být:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Textový -- instrukce programu.
 	\item Datový -- inicializované globální a~statické proměnné.
 	\item BSS (Block Started by Symbol) -- neinicializované globální a~statické proměnné, kde hodnota může být náhodná hodnota z~paměti nebo O (pro ukazatele \emph{null}).
@@ -572,7 +569,7 @@ Nevýhodou oproti stránkování je dynamická velikost segmentů, což způsobu
 \section{Využití paměti -- přidělování paměti procesům, algoritmy přesunu stránek do~odkládacího prostoru}
 
 Existují tři základní způsoby přidělování hlavní paměti:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item rovnoměrně -- nerespektuje rozdílné paměťové nároky procesů a~ani jejich prioritu
 	\item podle velikosti procesu -- nerespektuje prioritu procesu
 	\item podle velikosti a~priority procesu
@@ -595,7 +592,7 @@ Virtuální paměť je založena na~odkládání stránek z~hlavní paměti do~o
 
 Při~odložení z~hlavní paměti mohou nastat dvě situace podle dat ve~stránce:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Data jsou pouze pro~čtení/nebyly provedeny změny -- stránka je z~hlavní paměti smazána
 	\item Data byla změněna -- stránka musí být přesunuta do~virtuální paměti
 \end{enumerate}
@@ -642,7 +639,7 @@ Nevýhodou klasického NFU je fakt, že nikdy nenuluje hodnoty, preferuje tedy d
 
 Nedostatky této modifikace:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Pokud má dojít k~rozhodnutí mezi dvěma stránkami, vždy se vybere ta stránka s~menší hodnotou čítače. Nemáme však záruku že se jedná o~nejdéle nepoužitou stránku.
 	\item Čítače mají omezený počet bitů, po~určitém čase mohou být všechny bity vynulované, pak nelze říct jestli byla stránka využita před $n+1$ intervaly (kde $n$ je počet bitů čítače) nebo před 100 intervaly. Stránky jsou pak vybrány náhodně.
 \end{itemize}
@@ -660,7 +657,7 @@ Souborový systém definuje jak jsou organizovaná data uložena na~paměťovém
 
 Souborové systémy udržují informace o~umístění dat jednotlivých souborů na~paměťovém médiu. Mimo to mohou poskytovat i~časové informace (vytvoření a~modifikace souboru). Ve víceuživatelských systémech se uchovávají i~informace o~\emph{vlastnících} a~\emph{přístupových právech} k~souboru. Informace o~souboru dělíme na~data a~metadata:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item data -- obsah souboru.
 	\item metadata -- data potřebná pro~práci se soubory jako informace o~umístění, časová informace nebo přístupová práva.
 \end{itemize}
@@ -703,7 +700,7 @@ Ukazatele nejsou obsaženy v~samotném bloku, ale v~tabulce ukazatelů pro~daný
 Nedochází sice k~externí fragmentaci, ale k~plýtvání paměti. Pokud se vytvoří malý soubor tak bude zabrán jeden celý blok navíc pro~udržování indexační tabulky, který se však nezaplní. Proto je třeba vhodně volit velikost tabulky.
 
 Přístupy pro~práci s~indexačními bloky:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Přímé odkazy -- indexační blok obsahuje ukazatele na~datové bloky, v~případě velkého souboru lze propojit více indexačních bloků, poslední ukazatel je tedy buď neplatný (pro malé soubory) nebo ukazuje na~začátek další tabulky.
 	\item Nepřímé odkazy -- indexační blok obsahuje odkazy na~další indexační bloky, které obsahují přímé odkazy na~datové bloky. Pro~přístup k~blokům se nejprve načte indexační blok přes nepřímý odkaz a~až poté se načte blok přes přímý odkaz.
 	\item Kombinace -- Indexační blok obsahuje přímé i~nepřímé a~dokonce i~zanořené nepřímé odkazy, tedy nepřímý odkaz na~nepřímý odkaz. Je vhodný pro~velké soubory (nepřímé odkazy s~několika úrovněmi) i~pro~malé soubory (přímé odkazy).
@@ -736,14 +733,14 @@ Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá ví
 
 Když se v~souborovém systému pracuje s~daty (zapisování a~mazání), může dojít k~situaci kdy se data dostanou do~nekonzistentního stavu, z~důvodu pádu systému. Nekonzistentními situacemi mohou být:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Soubor nebyl smazán, i~když k~tomu byl zadá požadavek.
 	\item Část dat byla aktualizována zápisem, další část ne.
 \end{itemize}
 
 Jak probíhá mazání souboru?
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Odstranění záznamu o~souboru z~adresáře,
 	\item uložení čísla i-uzlu (viz dále) souboru do~seznamu volných i-uzlů,
 	\item uložení datových bloků souboru do~seznamu volných bloků k~použití.
@@ -769,11 +766,11 @@ Ve~svém \enquote{žurnálu} udržují záznamy o~plánovaných změnách před 
 
 Pokud není operace zapsána jako celek do~žurnálu před pádem systému, je ignorována. Kontrolu lze provádět pomocí kontrolního součtu, v~případě pádu systému před kompletním zápisem do~žurnálu nebude součet sedět a~zápis bude ignorován.
 
-Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. První varianta je rychlejší ale s~možností ztráty konzistence, u~druh= možnosti je to naopak.
+Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. První varianta je rychlejší ale s~možností ztráty konzistence, u~druhé možnosti je to naopak.
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Při~ukládání pouze metadat může dojít k~inkonzistenci mezi metadaty. Např. při~přidání dat do~souboru:
-	\begin{enumerate}[noitemsep]
+	\begin{enumerate}
 		\item Změna záznamu o~velikosti souboru v~jeho i-uzlu (metadata).
 		\item Z volných datových bloků je vybrán prostor pro~nová data (metadata).
 		\item Do vybraných bloků jsou zapsány data (data).
@@ -784,7 +781,7 @@ Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. 
 
 Základní implementace:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Kopie žurnálu mohou být umístěny na~různých paměťových médiích za~účelem zálohování v~případě poruchy jiného média.
 	\item Plánované změny v~žurnálu mohou být dále ukládány v~jiném žurnálu z~důvodu zvýšení redundance.
 	\item Žurnál je ukládán na~stejném nebo jiném médiu, z~důvodu vyšší rychlosti.
@@ -832,7 +829,7 @@ TCP segmenty mají příznak PSH. Jako odpověď se opět zasílají segmenty s~
 \paragraph{Ukončení spojení}
 
 Spojení může ukončit jakákoliv strana zasláním segmentu s~příznakem FIN, ovšem pouze svoje jednosměrné spojení. Druhé zůstává otevřené a~může stále zasílat data, dokud jej druhá strana neukončí. Při~ukončování spojení prochází sokety těmito stavy:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item FIN\_WAIT1 -- stav soketu stanice která jako první ukončila jednosměrné spojení (zasláním FIN).
 	\item CLOSE\_WAIT -- stanice přijala segment s~příznakem FIN a~potvrzení bylo vysláno.
 	\item FIN\_WAIT2 -- stanice obdržela potvrzení o~ukončení spojení, tento stav setrvává dokud druhá stanice také nepošle FIN.
@@ -852,7 +849,7 @@ Spojení může ukončit jakákoliv strana zasláním segmentu s~příznakem FIN
 
 Správa soketů v~OS Linux se provádí pomocí systémových volání.
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 \item \textbf{socket}: Založení nového soketu.
 \item \textbf{connect}: Systémové volání na~straně klienta pro~navázání spojení se soketem na~straně serveru. Navazování spojení probíhá pomocí three-way handshake (viz obrázek \ref{network_three_handshake}).
 \item \textbf{bind}: Přiřadí soketu IP adresu a~port na~straně serveru. Bez~zavolání by byl soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U~serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP 21, SSH 22, HTTP 80, HTTPS 443, \dots). U~klienta je port generován z~dynamického rozsahu, toto volání se tedy nepoužívá.
