@@ -182,7 +182,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 ### BPC-UP2A
 
 - [x] Veřejnoprávní ochrana autorského práva
-- [ ] Elektronický podpis a elektronická pečeť – právní úprava a druhy
+- [x] Elektronický podpis a elektronická pečeť – právní úprava a druhy
 - [ ] Datové schránky – právní úprava a praxe používání
 - [ ] Provozní a lokalizační údaje a jejich využití v trestním řízení
 - [x] Právní úprava kybernetické bezpečnosti v CR - základní principy
