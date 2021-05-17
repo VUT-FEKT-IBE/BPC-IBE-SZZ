@@ -46,8 +46,94 @@ Zjednodušeně padělek se snaží vydávat za originál zatímco nedovolená na
 
 
 
+
+
+
 \clearpage
 \section[Elektronický podpis a~elektronická pečeť -- právní úprava a~druhy]{Elektronický podpis a~elektronická pečeť -- \newline právní úprava a druhy}
+
+\vspace{-0,4cm}
+\subsection{eIDAS}
+\vspace{-0,4cm}
+
+Cílem \href{https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX\%3A32014R0910}{nařízení Evropského parlamentu a~Rady č.\,910/2014} eIDAS (\textbf{e}lectronic \textbf{id}entification \textbf{a}nd \textbf{s}ervices) je vytvoření jednotného rámce pro elektronickou identifikaci jednotlivých subjektů. Dalším důležitým cílem je zvýšení důvěrnosti elektronických transakcí na vnitřním trhu. V~České republice toto nařízení je adaptováno v podobě \href{https://www.zakonyprolidi.cz/cs/2016-297}{zákona č.\,297/2016}.
+
+\textbf{Identifikace}\,--\,postup používaní osobních údajů, které jedinečně identifikují určitou osobu.
+
+\textbf{Autentizace}\,--\,postup, který umožňuje potvrdit identifikaci nebo původ a~integritu dat v~elektronické podobě.
+
+\vspace{-0,4cm}
+\subsection{Elektronický podpis}
+\vspace{-0,4cm}
+
+Elektronický podpis dle eIDAS jsou data v~elektronické podobě, která jsou připojena k jiným datům v~elektronické podobě nebo jsou s~nimi logicky spojena a~která podepisující osoba používá k podepsání. Zaručený elektronický podpis umožňuje jednoznačnou identifikaci podepisující osoby. 
+
+Elektronickému podpisu nesmějí být upírány právní účinky a~nesmí být odmítám v~soudním sporu z~důvodu, že má elektronickou podobu nebo že nesplňuje požadavky na kvalifikovaný elektronický podpis.
+
+Elektronické podpisy se dělí na:
+\begin{itemize}[noitemsep]
+    \item Elektronický podpis (prostý)
+    \item Zaručený elektronický podpis
+    \item Uznávaný elektronický podpis
+    \item Kvalifikovaný elektronický podpis
+\end{itemize}
+
+\textbf{Elektronický podpis (prostý)} je základní a~nejjednodušší typ elektronického podpisu. Sem se řadí napsání jména a~příjmení na konci dokumentu nebo emailu, vzor podpisu vytvořený elektronickou tužkou (to co bývá v bankách) a~další. Nejčastěji se využije mezi dvěma soukromoprávními subjekty, kdy nahrazuje obyčejný podpis.
+
+\textbf{Zaručený elektronický podpis} má dle nařízení eIDAS splňovat:
+\begin{itemize}[noitemsep]
+    \item Je jednoznačně spojen s podepisující osobou.
+    \item Umožňuje identifikaci podepisující osoby.
+    \item Je vytvořen pomocí dat pro vytváření elektronických podpisů, která podepisující osoba může s~vysokou úrovní důvěry použít pod svou výhradní kontrolou.
+    \item Je k~datům, která jsou tímto podpisem podepsaná připojen takovým způsobem, že je možné zjistit jakoukoliv následnou změnu dat.
+\end{itemize}
+
+Nevýhodou tohoto podpisu, i~když se zdá být bezpečný, je že podepisující osoba může vytvořit podpis jakékoliv osoby. Tento typ podpisu nezaručuje, kdo je autorem podpisu. 
+
+\textbf{Uznávaný elektronický podpis} není zmíněn v~nařízení eIDAS, ale vychází z~české adaptace nařízení. Jedná se o~elektronický podpis založený na kvalifikovaném cerfitikátu pro elektronický podpis nebo o~kvalifikovaný elektronický podpis. Na rozdíl od zaručeného elektronického podpisu musí být potvrzen certifikační autoritou. Toto zaručuje spojitost s~osobou již byl vystaven. Pro komunikaci s~veřejnoprávním subjektem elektronicky je nutné použít tento typ elektronického podpisu nebo vyšší typ. Pokud má osoba zřízenou datovou schránku tak, elektronického podpisu nemusí využívat.
+
+\textbf{Kvalifikovaný elektronický podpis} je dle nařízení eIDAS nejvyšší formou elektronického podpisu. V~nařízení je definován jako zaručený elektronický podpis, který je vytvořen kvalifikovaným prostředkem pro vytváření elektronických podpisů a~který je založen na kvalifikovaném certifikátu pro elektronické podpisy. Na rozdíl od uznávaného elektronického je při vytváření nutné použít kvalifikovaný prostředek pro vytváření elektronických podpisů, který je na samostatném nosiči a~je nepřenositelný na jiný nosič (USB token, čipová karta eID). Toto má výhodu, že nelze odcizit identitu bez toho aniž by byl odcizen nosič samotný.
+
+\vspace{-0,4cm}
+\subsubsection{Poskytovatelé služeb vytvářející důvěru}
+\vspace{-0,4cm}
+
+\textbf{Poskytovatel služeb vytvářejících důvěru} je FO nebo PO, která poskytuje jednu či více služeb vytvářejících důvěru buď jako kvalifikovaný, nebo jako nekvalifikovaný poskytovatel služeb vytvářejících důvěru.
+
+\textbf{Kvalifikovaný poskytovatel služeb vytvářejících důvěru} je poskytovatel služeb vytvářejících důvěru, který poskytuje jednu či více kvalifikovaných služeb vytvářejících důvěru a~kterému orgán dohledu udělil status kvalifikovaného poskytovatele.
+
+V České republice vydávají kvalifikované elektronické podpisy společnosti:
+\begin{itemize}[noitemsep]
+    \item První certifikační autorita
+    \item Česká pošta
+    \item eIdentity
+\end{itemize}
+
+\vspace{-0,4cm}
+\subsection{Elektronická pečeť}
+\vspace{-0,4cm}
+
+Jde o~data v elektronické podobě, připojená k~jiným datům, která chceme zapečetit, v~elektronické podobě s~cílem zaručit jejich pravost a~neměnnost.
+
+Existují 4 druhy elektronických pečetí:
+\begin{itemize}[noitemsep]
+    \item Prostá elektronická pečeť.
+    \item Zaručená elektronická pečeť.
+    \item Zaručená elektronická pečeť s certifikátem.
+    \item Kvalifikovaná elektronická pečeť.
+\end{itemize}
+
+Z~těchto typů pečetí je pouze v~EU povinně uznávána kvalifikovaná elektronická pečeť a~je vytvářena podobně jako kvalifikovaný elektronický podpis. Elektronická pečeť by měla sloužit že elektronický dokument byl vydán určitou právnickou osobou. Pečeť tímto není spojená s~určitou osobou na rozdíl od elektronického podpisu (rozdíl PO a~FO).
+Elektronickou pečeť lze krom podepisovaní dokumentů také využít k~podpisu elektronického časového razítka.
+
+\vspace{-0,4cm}
+\subsection{Elektronická časové razítko} Dle nařízení eIDAS to jsou data v~elektronické podobě, která spojují jiná data v~elektronické podobě s~určitým okamžikem a~prokazují, že tato jiná data existovala v~daném okamžiku.
+
+
+
+
+
+
 
 \clearpage
 \section{Datové schránky -- právní úprava a~praxe používání}
