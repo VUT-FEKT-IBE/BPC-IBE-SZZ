@@ -2,35 +2,34 @@
 
 \subsection{Komunikační modely}
 
-Základním účelem komunikace je vzájemná výměna informací mezi dvěma uživateli (zdrojem a
-spotřebičem). Lze ji rozdělit na dva typy komunikací: \textbf{komunikace uvnitř sítí} včetně dohledu nad touto komunikací, tj. určitá servisní část komunikace a~\textbf{komunikace mezi koncovými uživateli}, tj. komunikace nad sítěmi.
+Komunikaci mezi dvěma stranami lze rozlišit na~dva typy: \textbf{komunikaci uvnitř sítí} a~\textbf{komunikaci mezi koncovými uživateli} (nad~sítěmi).
 
-\subsubsection{Základní pojmy}
-
-\textbf{Data} jsou reprezentace faktů, pojmů nebo instrukcí ve formalizované podobě vhodné pro
-komunikaci, interpretace (výklad) informace pro strojové zpracování. \textbf{Informace} je význam, který mají data přiřazena, typicky pro uživatele.
-
-Na obrázku \ref{q01_simplified_scheme_network} je mezi dvěma uživateli vyměňována informace nazvaná $m$. Informace $m$ je pomocí vstupního zařízení reprezentována jako data $g(t)$, ve formě časově proměnlivého signálu. V tomto okamžiku ještě není signál vhodný pro vysílání a musí být \enquote{přeložen} do podoby vhodné pro přenosové médium, tj. signálu $s(t)$, což je úkol vysílače. Tento signál je již přenášen médiem a na jeho druhé straně se objeví jako signál $r(t)$, který může být odlišný od původního signálu $s(t)$ následkem rušení či šumů v médiu. Signál $r(t)$ je konvertován v přijímači zpět do tvaru výstupních dat $g'(t)$, které mohou odpovídat vstupním datům přesně nebo přibližně. Nakonec je přes výstupní zařízení předána informace uživateli v podobě $m'$. Komunikací uvnitř sítě se rozumí část od vstupního k výstupnímu přenosovému zařízení, zatímco pro uživatele by se tato část měla jevit jako zcela transparentní.
+\textbf{Data} jsou reprezentace faktů, pojmů nebo instrukcí ve~formální podobě vhodná pro~komunikaci a~interpretaci pro~strojové zpracování. \textbf{Informace} je význam dat, důležitý typicky pro~uživatele.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{images/q01_simplified_scheme_network}
-	\caption{Zjednodušené blokové schéma datovké komunikace}
+	\caption
+		[Zjednodušené blokové schéma datovké komunikace]
+		{Zjednodušené blokové schéma datovké komunikace. \\
+		Informace $m$ je pomocí vstupního zařízení reprentována jako data $g(t)$ ve~formě proměnlivého časového signálu, který musí být přeložen do~podoby vhodné pro~přenosové médium, tj. do~signálu $s(t)$, vysílačem. Na~druhé straně se objeví jako signál $r(t)$, který se od~odeslaného může odlišovat (šum, rušení). Je konvertován zpět do~tvaru výstupních dat $g'(t)$ a~výstupnímu zařízení jsou předána data $m'$.}
 	\label{q01_simplified_scheme_network}
 \end{figure}
 
-Komunikační sítě slouží vždy k tomu, aby pomocí nich mohli spolu komunikovat koncoví uživatelé, v
-případě použití počítačů pak vzájemně komunikují odpovídající si (partnerské) procesy, které běží
-každý na jednom z komunikujících počítačů (uvažujeme-li pouze komunikaci bod-bod). Základním
-předpokladem pro komunikaci uživatelů je definice rozhraní mezi uživatelem a sítí. Rozhraní musí
-definovat strukturu a formát předávaných uživatelských a řídicích dat.
+Pomocí komunikačních sítí spolu komunikují koncoví uživatelé, v~případě počítačů partnerské procesy na~komunikujících počítačích. Základním předpokladem pro~komunikaci uživatelů je definice rozhraní mezi~uživatelem a~sítí; musí konkretizovat strukturu a~formát předávaných uživatelských a~řídících dat.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=\textwidth]{images/q01_simplified_scheme_processes}
-	\caption{Zjednodušené blokové schéma komunikace mezi procesy pracujícími na~samostatných počítačích propojených obecnou sítí}
+	\includegraphics[width=0.5\textwidth]{images/q01_simplified_scheme_processes}
+	\caption{Zjednodušené blokové schéma komunikace mezi procesy pracujícími na~samostatných počítačích propojených obecnou sítí.}
 	\label{q01_simplified_scheme_processes}
 \end{figure}
+
+Základní úkoly pro~přenos informace spočívají ve~vlastním \textbf{přenosu} informace (kódování dat a~jejich přizpůsobení pro~telekomunikační kanál), vyhledání cesty spojení dvou uživatelů v~síti (\textbf{směrování}) a~použití vhodného způsobu komunikace a~řízení (\textbf{protokoly}).
+
+Komunikační řetězec zejména stará o~řízení výměny informací (způsob organizace přenosu dat mezi zdrojem a~cílem informace), definice rozhraní (včetně tvaru a~velikosti signálu), synchronizaci (časové sjednocení), formátování zpráv (unifikace způsobu sestavení obsahu zprávy) a~adresování a~směrování (jednoznačný způsob určení cíle a~nalezení cesty k~němu).
+
+Komunikační řetězec zpravidla umožňuje vícenásobné využití přenosových systémů (sdílení více uživateli/procesy), řízení systému (konfigurace, dohled, reakce na~chyby a~přetížení), detekci a~korelaci chyb, zotavení se ze~ztrát v~komunikačním systému, řízení přenosu (aby nedocházelo k~zahlcení systému nadměrným množstvím dat) a~ochranu zpráv (zaslaná data může přijímat pouze příjemce).
 
 \clearpage
 \section{Základní popis referenčního modelu ISO/OSI a srovnání s TCP/IP.}
