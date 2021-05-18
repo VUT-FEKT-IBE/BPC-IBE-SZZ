@@ -184,7 +184,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Veřejnoprávní ochrana autorského práva
 - [x] Elektronický podpis a elektronická pečeť – právní úprava a druhy
 - [x] Datové schránky – právní úprava a praxe používání
-- [ ] Provozní a lokalizační údaje a jejich využití v trestním řízení
+- [x] Provozní a lokalizační údaje a jejich využití v trestním řízení
 - [x] Právní úprava kybernetické bezpečnosti v CR - základní principy
 - [x] Ochrana osobních údajů – vymezení osob a základní principy zpracování osobních údajů
 - [x] Povinnosti správce a zpracovatele osobních údajů
