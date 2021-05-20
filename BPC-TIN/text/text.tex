@@ -1,30 +1,31 @@
 \section{Správa paměti, statické přidělování paměti, dynamické přidělování paměti, garbage collector, reprezentace informace v~paměti.}
 
-Každá paměť, která je přiřazena procesu se~dělí na~4 základní bloky:
-
 \begin{multicols}{2}
-	\begin{itemize}[noitemsep]
-		\item Segment instrukcí(Code)/Kódová oblast
-		\item Datový segment(Data)/Datová oblast
-		\item Halda/hromada(Heap)
-		\item Zásobník(Stack)
-		\vfill
+	Každá paměť, která je přiřazena procesu, se~dělí na~4 základní bloky:
+
+	\begin{itemize}
+		\item Segment instrukcí (\emph{Code})
+		\item Datový segment (\emph{Data})
+		\item Halda/hromada (\emph{Heap})
+		\item Zásobník (\emph{Stack})
 	\end{itemize}
-	\includegraphics[scale=0.3]{images/pamet.png}
+
+	\centering
+	\includegraphics[scale=0.6]{images/pamet.png}
 \end{multicols}
 
-\textbf{Code} je množina strojových instrukcí, které naprosto jednoznačně provádí program. Dle těchto instrukcí PC postupuje ve~výpočtu.
+\emph{\textbf{Code}} je množina strojových instrukcí, které naprosto jednoznačně provádí program. Dle těchto instrukcí počítač postupuje ve~výpočtu.
 
-V~části \textbf{Data} můžou být uložena data, která jsou známa při~překladu programu (hodnoty polí, konstant, proměnných, některé textové řetězce).
+V~části \emph{\textbf{Data}} můžou být uložena data, která jsou známa při~překladu programu (hodnoty polí, konstant, proměnných, některé textové řetězce).
 
-Bloky Code a~Data jsou známy v~době překladu a~jejich velikost se~v~průběhu nemění.
+Bloky \emph{Code} a~\emph{Data} jsou známy v~době překladu a~jejich velikost se~v~průběhu nemění.
 
-\textbf{Heap} slouží k~alokaci dynamické paměti. Je založena na~stromové datové struktuře. Obsahuje objekty a~instance proměnných (atributy třídy).
+\emph{\textbf{Heap}} slouží k~alokaci dynamické paměti. Je založena na~stromové datové struktuře. Obsahuje objekty a~instance proměnných (atributy třídy).
 
-\textbf{Stack} je důležitý pro~volaní správných funkcí. Funguje na~principu LIFO. S~uložením funkce na~stack se~posunuje ukazatel na~pozici v~registru (\emph{stack pointer}). Po~dokončení té funkce je odstraněna ze~zásobníku a~ukazatel změněn na~předchozí funkci. Obsahuje metody/funkce, lokální proměnné a~reference na~proměnné%
+\emph{\textbf{Stack}} funguje na~principu LIFO a~je důležitý pro~volaní správných funkcí. S~uložením funkce na~stack se~posunuje ukazatel na~pozici v~registru (\emph{stack pointer}). Po~dokončení té funkce je odstraněna ze~zásobníku a~ukazatel změněn na~předchozí funkci. Obsahuje metody/funkce, lokální proměnné a~reference na~proměnné%
 \footnote{Video k~vysvětlení stacku: \url{https://www.youtube.com/watch?v=uwV0hotRrLw}}.
 
-Bloky Heap a~Stack jsou dynamické a~jejich velikost roste/zmenšuje se~u~každého jiným směrem v~průběhu programu.
+Bloky \emph{Heap} a~\emph{Stack} jsou dynamické a~jejich velikost roste/zmenšuje se~u~každého jiným směrem v~průběhu programu.
 
 \subsection{Statické přidělování paměti}
 
@@ -38,20 +39,20 @@ Dynamicky se~paměť přiděluje na~základě požadavku při~průběhu programu
 
 Regenerace paměti je její pročištění od~nepoužívaných částí paměti.
 
-Dynamické přidělovaní paměti bez~regenerace přiděluje požadované úseky postupně tak jak Jsou za~sebou umístěny až do~vyčerpaní vyhrazené paměti. Využívá pracovního ukazatele, který ukazuje na~první adresu volné paměti. Nejčastěji pomocí operace "new" zapíše do~paměti a~změní ukazatel na~novou hodnotu, která ukazuje na~novou adresu volné části a~v indikátoru paměti hodnotu obsazení označí \emph{true}. Operace \enquote{free/delete} okamžitě neuvolní paměť, ale přepíše indikátor paměti na~\emph{false}; regenerace probíhá později po~větších částech.
+Dynamické přidělovaní paměti bez~regenerace přiděluje požadované úseky postupně tak jak Jsou za~sebou umístěny až do~vyčerpaní vyhrazené paměti. Využívá pracovního ukazatele, který ukazuje na~první adresu volné paměti. Nejčastěji pomocí operace \emph{new} zapíše do~paměti a~změní ukazatel na~novou hodnotu, která ukazuje na~novou adresu volné části a~v indikátoru paměti hodnotu obsazení označí \emph{true}. Operace \emph{free/delete} okamžitě neuvolní paměť, ale přepíše indikátor paměti na~\emph{false}; regenerace probíhá později po~větších částech.
 
 \subsubsection{Dynamické přidělování paměti s~regenerací}
 
-Na~rozdíl od~dynamického přidělovaní bez~regenerací se~zde regeneruje pro~každé operaci \enquote{free/delete}. S~tím přichází problém s~fragmentací paměti. Po~uvolnění paměti by tyto části mohly vytvářet sekvence malých, oddělených a~přitom sousedních prvků. Často je defragmentace těchto volných bloků spojena s~operací \enquote{free/delete}. Snaží se~slučovat volné úseky se~sousedními volnými úseky.
+Na~rozdíl od~dynamického přidělovaní bez~regenerací se~zde regeneruje pro~každé operaci \emph{free/delete}. S~tím přichází problém s~fragmentací paměti. Po~uvolnění paměti by tyto části mohly vytvářet sekvence malých, oddělených a~přitom sousedních prvků. Často je defragmentace těchto volných bloků spojena s~operací \emph{free/delete}. Snaží se~slučovat volné úseky se~sousedními volnými úseky.
 
 \subsection{Garbage collector}
 
 Je nejpokročilejším způsobem dynamického přidělovaní paměti. Oproti předchozím způsobům je méně efektivní. Skládá se~ze~tří fází:
 
-\begin{itemize}[noitemsep]
-	\item \textbf{Allocation} přiděluje po~sobě jdoucí úseky stejně jako metoda bez~regenerace až do~vyčerpání celého vyhrazeného prostoru.
-	\item \textbf{Marking} nastává pouze pokud je vyčerpán celý prostor. Prochází prostorem a~vyhledává a~označuje úseky, které nejsou aktivní a~jejich návrat do~společné paměti způsobí regeneraci.
-	\item \textbf{Garbage collecting}: provádí se defragmentace přesunem všech uvolněných úseků do~jednoho souvislého úseku. Tím se~vytvoří nový souvislý úsek pro~alokaci.
+\begin{itemize}
+	\item \emph{\textbf{Allocation}} přiděluje po~sobě jdoucí úseky stejně jako metoda bez~regenerace až do~vyčerpání celého vyhrazeného prostoru.
+	\item \emph{\textbf{Marking}} nastává pouze pokud je vyčerpán celý prostor. Prochází prostorem a~vyhledává a~označuje úseky, které nejsou aktivní a~jejich návrat do~společné paměti způsobí regeneraci.
+	\item \emph{\textbf{Garbage collecting}}: provádí se defragmentace přesunem všech uvolněných úseků do~jednoho souvislého úseku. Tím se~vytvoří nový souvislý úsek pro~alokaci.
 \end{itemize}
 
 Tyto tři fáze se~opakují dokola, dokud nedojde k~situaci, že nový úsek není dostačující pro~fázi alokace. Z~tohoto důvodu dojde k~ukončení programu.
@@ -65,23 +66,23 @@ Tyto tři fáze se~opakují dokola, dokud nedojde k~situaci, že nový úsek nen
 
 \textbf{Jazyk UML} je grafický jazyk pro~popis programových systémů. Slouží pro~vizualizaci, specifikaci, návrh a~dokumentaci systémů. K~zobrazení se~využívají diagramy, kde nejčastěji používané jsou:
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 	\item Strukturální
-	\begin{enumerate}[noitemsep]
+	\begin{enumerate}
 		 \item Diagram tříd
 		 \item Diagram případů užití
 		 \item Diagram komponent
 		 \item Diagram nasazení
 	\end{enumerate}
 	\item Behaviorální
-	\begin{enumerate}[noitemsep]
+	\begin{enumerate}
 		 \item Diagram aktivit
 		 \item Diagram sekvencí
 		 \item Diagram stavů
 	\end{enumerate}
 \end{enumerate}
 
-Nejpoužívanější jsou diagramy tříd a~případů užití. Diagram tříd popisuje strukturu systému, znázorňuje datové struktury a~operace u~objektů a~souvislosti mezi nimi. Skládá se~z~tříd, rozhraní, abstraktních tříd. Tyto tři prvky se~dále skládají z~názvu třídy/rozhraní, atributů (rozhraní neobsahuje atributy), a~operace (metody/funkce) Diagram případů užití se~nejčastěji používá při~komunikaci se~zákazníkem a~méně technicky znalou stranou. Skládá se~z~herců (\emph{actor}) a~případů užití a~systém. Tyto strany jsou propojeny jak mezi sebou, tak i~sami se~sebou pomocí těchto propojení\,--\,asociace, generalizace, rozšíření vztahu, vztah zahrnuje.
+Nejpoužívanější jsou diagramy tříd a~případů užití. Diagram tříd popisuje strukturu systému, znázorňuje datové struktury a~operace u~objektů a~souvislosti mezi nimi. Skládá se~z~tříd, rozhraní, abstraktních tříd. Tyto tři prvky se~dále skládají z~názvu třídy/rozhraní, atributů (rozhraní neobsahuje atributy), a~operace (metody/funkce). Diagram případů užití se~nejčastěji používá při~komunikaci se~zákazníkem a~méně technicky znalou stranou. Skládá se~z~herců (\emph{actor}) a~případů užití. Tyto strany jsou propojeny mezi sebou i~samy se~sebou pomocí těchto propojení: asociace, generalizace, rozšíření vztahu, vztah zahrnuje.
 
 \textbf{Objektově orientovaný návrh} je jeden ze~způsobů jak reprezentovat informaci. Vychází z~principů reálného světa, neboli je jednoduše srozumitelný pro~člověka. Není spojen s~žádným programovacím jazykem, ale jazyk, který bude použit pro~implementaci, musí splňovat objektově orientované principy. Výhodou OON může být, že při~návrhu lze určit co jaká část programu komunikuje z~jakou a~co každá dělá, takže se~sníží počet chyb v~kódu a~tím i~náklady. OON se~nezabývá konkrétní implementací, ale pouze vazbami mezi objekty.
 
@@ -89,56 +90,57 @@ OON přístup není vhodné využívat pokud na~cílové platformě neexistuje p
 
 \subsection{Vztahy mezi třídami}
 
-\textbf{Závislost} je dynamický a~zároveň nejslabší vztah. Ukazuje jak co na~sobě závisí. \\
-\includegraphics[scale=1]{images/zavislost.PNG}
+\textbf{Závislost} je dynamický a~zároveň nejslabší vztah. Ukazuje jak co na~sobě závisí.
 
-\textbf{Asociace} je pevný vztah. Určuje vztah mezi dvěma prvky, které mohou existovat nezávisle na~sobě. Asociace může mít směr od~jednoho prvku k~druhému nebo obousměrně. Objekt ve~směru šipky může nalézt odkaz na~následujíc objekty. \\
-\includegraphics[scale=1]{images/asociace.PNG}
+\textbf{Asociace} je pevný vztah. Určuje vztah mezi dvěma prvky, které mohou existovat nezávisle na~sobě. Asociace může mít směr od~jednoho prvku k~druhému nebo obousměrně. Objekt ve~směru šipky může nalézt odkaz na~následující objekty.
 
-\textbf{Násobnost asociací} určuje kolik vazeb může mít danný objekt. Například $1:n$ může být 1 objekt a~ten mít reference na~$n$ objektů ke~kterým má asociaci (faktura$:n \cdot$ položka).
+\textbf{Agregace} je typ asociace. Reprezentuje vztah typu celek--část. Zde je u~celku umístěn kosočtverec. Celek je entita, která drží kolekci prvků. Část může existovat bez~celku nebo být součástí jiných kolekcí.
 
-\textbf{Agregace} je typ asociace. Reprezentuje vztah typu celek--část. Zde je u~celku umístěn kosočtverec. Celek je entita, která drží kolekci prvků. Část může existovat bez~celku nebo být součástí jiných kolekcí. \\
-\includegraphics[scale=1]{images/agregace.PNG}
+\textbf{Kompozice} je typ asociace. Je to nejsilnější vztah a~je podobná agregaci, s~rozdílem v~tom, že část nemá bez~celku smysl. Pokud zanikne celek, zaniknou i~části. U~celku je násobnost vždy 1.
 
-\textbf{Kompozice} je typ asociace. Je to nejsilnější vztah a~je podobná agregaci, s~rozdílem v~tom, že část nemá bez~celku smysl. Pokud zanikne celek, zaniknou i~části. U~celku je násobnost vždy 1. \\
-\includegraphics[scale=1]{images/kompozice.PNG}
+\textbf{Dědičnost/generalizace} se využívá při~popisu vztahu tříd. Šipka směřuje k~rodiči (\enquote{B~dědí z~A}). Jde o~vztah na~úrovni třídy a~ne~instance, s~asociací nijak nesouvisí.
 
-\textbf{Dědičnost/generalizace} se využívá jestliže mají některé třídy společné vlastnosti. Tím například nemusíme vytvářet duplicitní kód. Směr šipky udává od~koho třída dědí (obrázek B dědí z~A). Díky tomuto lze jednodušeji rozšířit třídu o~atributy a~operace. Neplést si z~asociací, se~kterou jinak nesouvisí. \\
-\includegraphics[scale=1]{images/dedicnost.PNG}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.8]{images/vztahy-trid}
+	\caption{Vztahy instancí a~tříd}
+\end{figure}
+
+Násobnost vztahů určuje počet vazeb objektu. \enquote{$1:n$} popisuje jeden objekt s~$n$ referencemi se~kterými je ve~vztahu (faktura $:n$ položek).
 
 \clearpage
 \section{Třídy složitosti paměťové a~časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů.}
 
 \subsection{Teorie vyčíslitelnosti}
 
-Zkoumá otázku algoritmické řešitelnosti problému, ne z~pohledu času ale jestli jdou vůbec řešit. Vyčíslitelnost je zkoumána pomocí teoretických výpočetních modelů\,--\,deterministický a~nedeterministický konečný automat, zásobníkový automat, Turingův stroj a~další.
+Zkoumá otázku algoritmické řešitelnosti problému z~pohledu řešitelnosti, ne časové náročnosti. Vyčíslitelnost je zkoumána pomocí teoretických výpočetních modelů\,--\,deterministický a~nedeterministický konečný automat, zásobníkový automat, Turingův stroj a~další.
 
-Složitost je vztah algoritmu k~prostředkům (čas a~velikost paměti). Paměťová složitost je závislost paměťových nároků na~vstupních datech, zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na~základě délky vstupních dat. Měli by se~brát v~potaz oba dva typy složitosti, jelikož může nastat že máme dva algoritmy na~řešení daného problému a~jeden má menší časovou složitost a~druhý zase paměťovou. Zde výběr z~těchto složitostí závisí hlavně na~tom kde bude daný algoritmus implementován.
+Složitost je vztah algoritmu k~prostředkům (čas a~velikost paměti). Paměťová složitost je závislost paměťových nároků na~vstupních datech, zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na~základě délky vstupních dat. V~potaz by se měly oba dva typy složitosti, jelikož může nastat situace, kdy lze problém řešit dvěma algoritmy: jedním s~malou časovou složitostí a~druhým s~malou paměťovou. Výběr z~těchto složitostí závisí na~hardware a~situaci použití.
 
 \subsection{Asymptotická složitost}
 
-Jelikož vždy nelze určit přesnou složitost algoritmu, byla vyvinuta asymptotická složitost. Tato složitost aproximuje chovaní funkce ze~tří pohledu:
+Jelikož vždy nelze určit přesnou složitost algoritmu, byla definována asymptotická složitost, která chování funkce aproximuje ze~tří pohledů:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Nejlepší případ $\Omega$ (Omega) značí spodní hranici trvání algoritmu.
 	\item Průměrný případ $\Theta$ (Theta) odhaduje nejpravděpodobnější dobu trvání algoritmu.
-	\item Nejhorší případ notace O (Omicron, big-O) značí horní hranici trvání algoritmu. Je nejčastěji používaná.
+	\item Nejhorší případ O (Omicron, big-O) značí horní hranici trvání algoritmu. Je nejčastěji používaná.
 \end{itemize}
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{|c|c|X|}\hline
-		Konstantní & O(1) & Nezávisí na~velikosti vstupních dat \\\hline
-		Logaritmická & O($\log{n}$) & Počet operací odpovídá logaritmu např. vstup 1\,000\,000\,000 $==$ 30 operací \\\hline
-		Lineární & O($n$)& počet operací je závislý na~velikosti vstupních dat \\\hline
-		Kvazilineární& O($n\log{n}$)& Zástupce quicksort \\\hline
-		Kvadratická& O($n^2$)& Např 500 vstupů $==$ 250\,000 operací \\\hline
-		Kubická & O($n^3$)& Např. 200 vstupů $==$ 8\,000\,000 operací \\\hline
-		Exponenciální&O($2^n$)& Exponenciální růst počtu operací \\\hline
-		Faktoriální&O($n!$)& Faktoriální růst počtu operací \\\hline
+		Konstantní    & O(1)          & Nezávisí na~velikosti vstupních dat \\\hline
+		Logaritmická  & O($\log{n}$)  & Náročnost s~velikostí logaritmicky klesáě $10^9 \rightarrow 30$. \\\hline
+		Lineární      & O($n$)        & Počet operací je závislý na~velikosti vstupních dat. \\\hline
+		Kvazilineární & O($n\log{n}$) & Poslední produkčně použitelná náročnost, např. quicksort. \\\hline
+		Kvadratická   & O($n^2$)      & 500 prvků $\rightarrow 250\,000$ operací. \\\hline
+		Kubická       & O($n^3$)      & 200 prvků $\rightarrow 8\,000\,000$ operací. \\\hline
+		Exponenciální & O($2^n$)      & Exponenciální růst počtu operací. \\\hline
+		Faktoriální   & O($n!$)       & Faktoriální růst počtu operací. \\\hline
 	\end{tabularx}
 \end{table}
 
-\textbf{Polynomiální algoritmy} jsou takové algoritmy jejichž notace v~big-O je ohraničena polynomiální funkcí shora. Spadají zde například $\log{n}$, $k*n$, $3n^3 + 4n$, $2*n\log{n}$ a~podobné. Nepatří sem exponenciální, faktoriální a~jim podobné. Abychom algoritmus označili jako efektivní, jeho vykonání by mělo být možné v~polynomiálním čase, jinak ho lze označit jako neefektivní. Při~vysokých hodnotách v~kryptografii by nepolynomiální algoritmy byly nepoužitelné.
+\textbf{Polynomiální algoritmy} jsou takové algoritmy jejichž notace v~big-O je ohraničena polynomiální funkcí shora. Spadají zde například $\log{n}$, $kn$, $3n^3 + 4n$, $2n\log{n}$, naopak sem nepatří exponenciální, faktoriální a~jim podobné. Abychom algoritmus označili jako efektivní, jeho vykonání by mělo být možné v~polynomiálním čase, jinak ho lze označit jako neefektivní. Při~vysokých hodnotách by nepolynomiální algoritmy byly v~kryptografii nepoužitelné.
 
 \subsection{Posouzení složitosti algoritmů}
 
@@ -146,7 +148,7 @@ Vybrané algoritmy a~jejich složitost jsou popsány v~dalších otázkách. Zde
 
 \subsubsection{Algoritmy řazení}
 
-Třídění pomocí algoritmů Bubble Sort, Insert Sort a~Select Sort má složitost O($n^2$). Algoritmus Quick Sort má složitost $\theta$($n\log{n}$), kdy v~nejhorším případě může nabývat až O($n^2$). Algoritmus Merge Sort má složitost O($n\log{n}$).
+Třídění pomocí algoritmů Bubble Sort, Insert Sort a~Select Sort má složitost O($n^2$). Algoritmus Quick Sort má složitost $\Theta$($n\log{n}$)/O($n^2$). Algoritmus Merge Sort má složitost O($n\log{n}$).
 
 \subsubsection{Algoritmy hledaní}
 
@@ -156,20 +158,20 @@ Binární vyhledávání má složitost O($\log{n}$) a~lineární/sekvenční m�
 
 Vyjadřuje jak náročný je výpočet je nezbytný k~vyřešení problému. \\
 Rozdělení:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Třída P\,--\,schůdné algoritmy. Jsou proveditelné v~polynomiálním čase na~deterministickém turingově stroji.
-	\item Třída NP\,--\,neschůdné algoritmy. Je možné je provést v~polynomiálním čase na~\textbf{nedeterministickém} TS (nebyl doposud sestaven). Spadají pod ně i~všechny algoritmy z~třídy P
+	\item Třída NP\,--\,neschůdné algoritmy. Je možné je provést v~polynomiálním čase na~\textbf{nedeterministickém} TS (nebyl doposud sestaven). Spadají pod ně i~všechny algoritmy z~třídy P.
 	\item Třída NP-těžké\,--\,přinejmenším tak těžké, jako nejtěžší z~NP. Nemusí být vykonatelné pomocí TS.
 \end{itemize}
 
 \subsection{Turingův stroj}
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Turingův stroj\,--\,nelze měnit program.
-	\item Univerzální Turingův stroj\,--\,lze přepsat program, dnešní pc, mobil atd.
+	\item Univerzální Turingův stroj\,--\,program lze přepsat; dnešní PC, mobily, atd.
 	\item Nedeterministický Turingův stroj\,--\,doposud nesestaven, sestrojení by znamenalo konec asymetrické kryptografie, neví se~jestli ho lze vůbec sestrojit (P vs PN).
-	\item Paralelní Turingův stroj\,-\,z pohledu vyčíslitelnosti je ekvivalentní s~běžným jen přináší více výkonu.
-	\item Kavantový Turingův stroj\,--\,založen na~superpozicích stavů, dokáže řešit \uv{exponenciální explozi} a~převést ji na~problém se~složitostí v~polynomiálním čase.
+	\item Paralelní Turingův stroj\,-\,z pohledu vyčíslitelnosti je ekvivalentní s~běžným, jen přináší více výkonu.
+	\item Kavantový Turingův stroj\,--\,založen na~superpozicích stavů, dokáže řešit \enquote{exponenciální explozi} a~převést ji na~problém se~složitostí v~polynomiálním čase.
 \end{itemize}
 
 \clearpage
@@ -181,15 +183,15 @@ Dva základní algoritmy pro~hledání jsou \textit{Binary search}%
 \footnote{Binární vyhledávání funguje na~principu půlení seřazeného seznamu. Pokud je hledaná hodnota menší než střední hodnota, vyhledává se v~první polovině, pokud je větší tak v~druhé. Takto se iteruje dokud není číslo nalezeno. Více např. \url{https://en.wikipedia.org/wiki/Binary_search_algorithm}.} %
 a~\textit{Linear search}%
 \footnote{Lineární vyhledávání je naprosto jednoduchý lineární průchod seznamem, kde se~postupně hledá požadovaná hodnota. Alternativa je \emph{Linear Sentinel search}, která přidá hledanou hodnotu na~konec seznamu. Více např. \url{https://www.geeksforgeeks.org/linear-search/} nebo \url{https://algorithmoftheweek.blog/2020/06/10/sentinel-linear-search/}.}%
-. \textit{Binary} funguje lépe než \textit{Linear} ale pouze pro~větší seznamy, zároveň je třeba předem seznam seřadit.
+. Binární funguje lépe než lineární, ale pouze pro~větší a~seřazené seznamy.
 
 \begin{table}[h]
 	\centering
 	\caption{Big-O složitosti vyhledávacích algoritmů}
-	\begin{tabular}{|c|c|c|}\hline
-		Algoritmus & Časová & Paměťová\\\hline
-		Linear Search & O($n$) & O($1$)\\\hline
-		Binary Search & O($\log n$) & O($1$)\\\hline
+	\begin{tabular}{|c||c|c|}\hline
+		algoritmus           & časová náročnost      & paměťová náročnost \\\hline\hline
+		lineární vyhledávání & O($n$)                & O($1$) \\\hline
+		binární vyhledávání  & O($\log n$)           & O($1$) \\\hline
 	\end{tabular}
 \end{table}
 
@@ -200,13 +202,13 @@ a~\textit{Linear search}%
 \begin{table}[h]
 	\centering
 	\caption{Složitost akcí v~lineárních strukturách}
-	\begin{tabular}{|c|c|c|c|c|}\hline
-		Struktura & Přidat & Vyhledat & Smazat & Výběr dle indexu\\\hline
-		Pole & O($n$) & O($n$) & O($n$) & O($1$) \\\hline
-		Seznam & O($1$) & O($n$) & O($n$) & O($n$)\\\hline
-		Pole proměnlivé délky & O($1$) & O($n$) & O($n$) & O($1$) \\\hline
-		Zásobník & O($1$) & -- & O($1$) & -- \\\hline
-		Fronta & O($1$) & -- & O($1$) & -- \\\hline
+	\begin{tabular}{|l||c|c|c|c|}\hline
+		struktura             & přidání & vyhledávání & mazání & výběr dle indexu \\\hline\hline
+		pole                  & O($n$)  & O($n$)      & O($n$) & O($1$) \\\hline
+		pole proměnlivé délky & O($1$)  & O($n$)      & O($n$) & O($1$) \\\hline
+		seznam                & O($1$)  & O($n$)      & O($n$) & O($n$) \\\hline
+		zásobník              & O($1$)  & --          & O($1$) & --     \\\hline
+		fronta                & O($1$)  & --          & O($1$) & --     \\\hline
 	\end{tabular}
 \end{table}
 
@@ -222,21 +224,19 @@ Abstraktní datový typ je množina druhů dat (hodnot) a~příslušných operac
 
 ADT dělíme podle počtu datových položek na~statický a~dynamický datový typ. Statický datový typ má neměnnou velikost a~dynamický mění velikost dle provedené operace. Dále se~dělí dle jednoznačného bezprostředního následníka na~lineární a~nelineární. Lineární mají následníka a~u nelineárních neexistuje přímý jednoznačný následník.
 
-\textbf{Dělení ADT:}
-\begin{itemize}[noitemsep]
-	\item Lineární
-	\begin{itemize}[noitemsep]
-		 \item Pole\,--\,statický
-		 \item Seznam\,--\,dynamický
-		 \item Zásobník\,--\,dynamický
-		 \item Fronta\,--\,dynamický
-	\end{itemize}
-	\item Nelineární
-	\begin{itemize}[noitemsep]
-		 \item Strom\,--\,dynamický
-		 \item Množina (Set)\,--\,dynamický
-	\end{itemize}
-\end{itemize}
+\begin{table}[ht]
+	\centering
+	\caption{Dělení abstraktních datových typů}
+	\begin{tabular}{|c||c|c|}\hline
+	datový typ & bezprostřední následník & velikost  \\\hline\hline
+	pole       & lineární                & statická  \\\hline
+	seznam     & lineární                & dynamická \\\hline
+	zásobník   & lineární                & dynamická \\\hline
+	fronta     & lineární                & dynamická \\\hline
+	strom      & nelineární              & dynamická \\\hline
+	množina    & nelineární              & dynamická \\\hline
+	\end{tabular}
+\end{table}
 
 \subsection{Lineární seznam}
 
@@ -248,7 +248,7 @@ ADT lineární seznam je seznam, kde každý uzel má unikátního následníka.
 \end{figure}
 
 Možné operace s~ADT seznamem:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Nalezení délky N seznamu
 	\item Výpis všech prvků seznamu
 	\item Vytvoření prázdného seznamu
@@ -259,21 +259,18 @@ Možné operace s~ADT seznamem:
 	\item Nalezení předchozího prvku před aktuálním v~seznamu
 \end{itemize}
 
-\paragraph{Cyklický lineární seznam} Je stejný jako lineární ale poslední prvek nemá ukazatel null ale odkaz na~první prvek seznamu.
+\paragraph{Cyklický lineární seznam} Je stejný jako lineární ale poslední prvek nemá ukazatel \emph{null} ale odkaz na~první prvek seznamu.
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.5]{images/cycsez.PNG}
-\end{figure}
-
-\paragraph{Obousměrně vázaný lineární seznam} Nemá pouze ukazatel na~další prvek ale i~na~předchozí. Umožňuje procházení v~obou směrech.
+\paragraph{Obousměrně vázaný lineární seznam} Nemá pouze ukazatel na~další prvek, ale i~na~předchozí. Umožňuje procházení v~obou směrech.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.5]{images/obousez.PNG}
 \end{figure}
 
-\paragraph{Vkládaní do~lineárního seznamu} Vložení prvku na~určitou pozici funguje tak, že se~najde pozice k~kde se~zde vloží prvek který bude odkazovat na~prvek, který byl předtím na~pozici k~a~v prvku k-1 se~přepíše ukazatel na~nový prvek. Operace fungují stejně jen jsou vázány na~obě strany.
+\paragraph{Vkládaní do~lineárního seznamu} Vložení prvku na~určitou pozici funguje tak, že se~najde pozice $k$~kde se~zde vloží prvek který bude odkazovat na~prvek, který byl předtím na~pozici $k$~a~v prvku $k-1$ se~přepíše ukazatel na~nový prvek. Operace fungují stejně, jen jsou vázány na~obě strany.
+
+\paragraph{Mazaní v~lineárním seznamu} Prvek $k-1$ přepíše ukazatel na~prvek $k+1$. U~prvního prvku se~přepíše pouze ukazatel na~další prvek.
 
 \begin{figure}[ht]
 	\centering
@@ -285,15 +282,11 @@ Možné operace s~ADT seznamem:
 
 	\includegraphics[scale=0.5]{images/sezinsempty.PNG}
 	\caption{Vkládání do~prázdného lineárního seznamu.}
-\end{figure}
 
-\paragraph{Mazaní v~lineárním seznamu} Prvek $k-1$ přepíše ukazatel na~prvek $k+1$. U~prvního prvku se~přepíše pouze ukazatel na~další prvek.
-
-\begin{figure}[ht]
-	\centering
 	\includegraphics[scale=0.5]{images/sezdel.PNG}
 	\caption{Mazání v~lineárním seznamu}
 \end{figure}
+
 
 \paragraph{Vyhledávaní v~lineárním seznamu} Vyhledávat se dá podle prvku nebo podle dat. Pomalu iteruje seznamem dokud nenarazí na~ten prvek nebo konec seznamu. U~obousměrného se~dá hledat od~začátku a~od konce.
 
@@ -308,27 +301,31 @@ Dynamická datová struktura, kde se~odebírají prvky v~tom pořadí v~jakém b
 \clearpage
 \section{Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranění, smazání uzlu stromu). Průchody stromy in-order, pre-order, post-order.}
 
-\textbf{ADS typu strom} je nelineární dynamická abstraktní datová struktura. Každý uzel stromu může mít $n$ potomků a~zároveň má pouze jednoho předka. Nejčastější zástupci jsou obecný strom nebo $n$-ární strom. $n$-ární má maximální počet potomků rovný $n$, obecný strom není počtem potomků omezen. Skládá se~z~uzlů, které se~pojmenovávají:
+\textbf{ADT typu strom} je nelineární dynamická abstraktní datová struktura. Každý uzel stromu může mít $n$ potomků a~zároveň má pouze jednoho předka. Nejčastější zástupci jsou obecný strom nebo $n$-ární strom. $n$-ární má maximální počet potomků rovný $n$, obecný strom není počtem potomků omezen. Skládá se~z~uzlů, které se~pojmenovávají:
 
-\begin{itemize}[noitemsep]
-	\item Kořen, který existuje pouze jeden. Je to uzel bez~předchůdce.
-	\item Listy jsou to uzly, které nemají následníka
-	\item Vnitřní uzly jsou ty, které nejsou kořenem ani listem stromu.
+\begin{itemize}
+	\item kořen, který existuje pouze jeden (pouze ve~vrcholu),
+	\item listy (uzly bez~následníků),
+	\item vnitřní uzly (nejsou kořenem ani listem stromu).
 \end{itemize}
 
 \begin{figure}[ht]
 	\centering
 	\begin{tikzpicture}[
-		sibling distance=10em,
-		every node/.style = {shape=circle,
-		draw, align=center,
-		top color=white, bottom color=white}
+		sibling distance=6em,
+		every node/.style = {
+			draw,
+			shape=circle,
+			align=center,
+			top color=white,
+			bottom color=white
+		}
 	]
-	\node {Kořen}
-		child { node {List} }
-		child { node {Vnitřní\\uzel}
-			child { node {List}}
-			child { node {List}}};
+	\node {kořen}
+		child { node {list} }
+		child { node {uzel}
+			child { node {list}}
+			child { node {list}}};
 	\end{tikzpicture}
 	\caption{Binární strom}
 \end{figure}
@@ -375,7 +372,7 @@ U~těchto stromů musí platit, že levá část potomků musí být vždy menš
 
 U~nevyvážené stromu na~obrázku \ref{noneven_binary_tree} lze vidět, že by se~jednalo spíše o~seznam. U~vyvážených binárních stromů by rozdíl hloubky levé a~pravé části měl být 0 nebo 1.
 
-\paragraph{Vyhledávaní v~binárních vyvážených stromech} Postupuje se~od~kořene směrem dolů, kde se~porovnává jestli prvek bude v~levém nebo pravém uzlu, pokud to už není hledaný prvek. Tak se~postupuje vždy na~každém navštíveném uzlu dokud není nalezena hledaná hodnotu nebo konec uzlu. Při~hledání min/max se~algoritmus vydává doleva/doprava dokud nenarazí na~uzel, který má svůj levý/pravý uzel roven \emph{null}.
+\paragraph{Vyhledávaní v~binárních vyvážených stromech} Postupuje se od~kořene dolů. Při~každém sestupu se porovná hledaná hodnota s~hodnotou listu: pokud je shodná, byl prvek nalezen. Pokud není, algoritmus sestoupí do~levého uzlu (pokud je~hledaná hodnota menší než~aktuání uzel) nebo~do~pravého uzlu (pokud je~hledaná hodnota větší). Pokud je sestoupeno až k~listu a~hodnota neodpovídá, hledaný prvek ve~stromu není.
 
 \paragraph{Vložení do~binárních stromů} Postup je stejný jako při~vyhledávání. Vkládá se pokud je nalezena hodnota \emph{null} nebo položka se~stejnou hodnotou (v~tom případě ji implementace může a~nemusí přepsat).
 
@@ -398,7 +395,7 @@ Pro~pravý prvek (PL) nalezneme uzel, který je nejvíc napravo v~levém stromu 
 
 Strom a~výsledky procházení jsou na~obrázku \ref{tree}.
 
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 \item \textbf{Pre-order}. Nejprve se zpracuje kořen, poté levý podstrom a~nakonec pravý podstrom. Využívá se k~vytváření kopií stromů.
 \item \textbf{In-order}. Nejprve se zpracuje levý podstrom, poté kořen a~nakonec pravý podstrom. Výsledkem je seřazený seznam.
 \item \textbf{Post-order}. Nejprve je zpracován levý podstrom, poté pravý a~nakonec kořen. Využívá se k~mazání stromu od~listů ke~kořenu.
@@ -420,13 +417,11 @@ Strom a~výsledky procházení jsou na~obrázku \ref{tree}.
 \section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy]{Problematika nevyvážených stromů. Vyvažování stro-mů AVL -- rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy.
 }
 
-Nevyvážený strom je problematický v~tom, že jeho složitost může klesnout až na~O($n$) z~O($\log{n}$). Z~tohoto důvodu má smysl stromy vyvažovat.
-
-Vyvážený strom má hloubku levého a~pravého podstromu rovnou vždy 0 nebo 1. Pokud má hloubku větší tak se~označuje za~nevyvážený a~z pohledu problematiky by se~měl vyvážit například metodou AVL nebo Red-Black stromy.
+Složitost u~nevyváženého stromu může klesnout z~O($\log{n}$) až na~O($n$), a~proto se stromy vyvažují. Vyvážený strom má rozdíl hloubky levého a~pravého podstromu rovnou vždy 0 nebo 1. Pokud má hloubku větší, označuje se za~nevyvážený a~z~pohledu problematiky by se~měl vyvážit například metodou AVL nebo Red-Black stromů.
 
 \subsection{AVL stromy}
 
-Jsou dobře vyvážené ale hrozí zde problém mnohonásobné rotace, takže vkládání může být méně efektivní. Mají velice efektivní vyhledávání.
+Jsou dobře vyvážené, ale hrozí zde problém mnohonásobné rotace, takže vkládání může být méně efektivní. Mají velice efektivní vyhledávání.
 
 Vyvažuje se~dvěma typy rotace, u~kterých pak dále rozlišujeme stranu%
 \footnote{Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/AVLtree.html}.}.
@@ -448,7 +443,7 @@ Vyvažuje se~dvěma typy rotace, u~kterých pak dále rozlišujeme stranu%
 Nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rotace. Efektivní vkládání, ale méně efektivní vyhledávání%
 \footnote{Vizualizace \url{https://www.cs.usfca.edu/~galles/visualization/RedBlack.html}.}%
 . Při vyvažování platí pravidla:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Každý uzel je červený nebo černý.
 	\item Kořen je vždy černý.
 	\item Všechny listy jsou černé.
@@ -460,7 +455,7 @@ Nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rota
 
 \subsection{Hashovací tabulka}
 
-Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočítán z~obsahu položky tak, aby byl klíč co nejjednoznačnější a~nedocházelo ke~kolizím; vše vychází z~pravděpodobnosti o~hashovacích funkcích. Využívají se~nejčastěji v~databázích nebo k~rychlému vyhledávaní v~polích. Paměťová složitost je O($n$).
+Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočítán z~obsahu položky tak, aby byl co nejjednoznačnější a~nedocházelo ke~kolizím; vše vychází z~pravděpodobnosti o~hashovacích funkcích. Využívají se~nejčastěji v~databázích nebo k~rychlému vyhledávaní v~polích. Paměťová složitost je O($n$).
 
 \paragraph{Vkládání} Z~vkládaného prvku se udělá hash. Tento hash se~přiřadí do~pole, na~místo, které mu odpovídá. Jestliže je místo obsazeno přiřadíme mu další volné místo dle algoritmu.
 
@@ -469,12 +464,11 @@ Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočí
 \begin{table}[ht]
 	\centering
 	\caption{Časová složitost v~dobře a~špatně optimalizovaných tabulkách}
-	\begin{tabular}{|c|c|c|}
-	\hline
-		Operace   & Průměrná & Nejhorší \\\hline
-		Vkládání  & O(1)     & O($n$)   \\\hline
-		Mazání    & O(1)     & O($n$)   \\\hline
-		Vyhledání & O(1)     & O($n$)   \\\hline
+	\begin{tabular}{|c||c|c|}\hline
+		operace   & průměrná & nejhorší \\\hline\hline
+		vkládání  & O(1)     & O($n$)   \\\hline
+		mazání    & O(1)     & O($n$)   \\\hline
+		vyhledání & O(1)     & O($n$)   \\\hline
 	\end{tabular}
 \end{table}
 
@@ -490,12 +484,11 @@ Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočí
 
 \begin{table}[ht]
 	\caption{Porovnání hashovací tabulky a~binárního stromu}
-	\begin{tabularx}{\textwidth}{|l|X|X|}
-	\hline
-		  ADT & Výhody & Nevýhody \\\hline
-		  Binární strom & Rychlé vkládání, mazaní a~hledání pokud je vyvažován & Algoritmus mazání je časově náročný. \\\hline
-		  AVL a~Red-black stromy & Stejné jako binární stromy jen jsou vždy vyvážené takže optimální. & Jsou složité. \\\hline
-		  Hashovací tabulka & Rychlé vkládání, při~existenci klíče rychlé vyhledávání. & Pomalý přístup pokud klíč není nalezen. Neefektivní využití paměti.\\\hline
+	\begin{tabularx}{\textwidth}{|l||X|X|}\hline
+		ADT & Výhody & Nevýhody \\\hline\hline
+		binární strom & Rychlé vkládání, mazaní a~hledání (pokud je vyvažován) & Algoritmus mazání je časově náročný. \\\hline
+		AVL a~Red-black stromy & Stejné jako binární stromy, vyvažovány jsou vždy. & Jsou složité. \\\hline
+		hashovací tabulka & Rychlé vkládání, při~existenci klíče rychlé vyhledávání. & Pomalý přístup pokud klíč není nalezen. Neefektivní využití paměti. \\\hline
 	\end{tabularx}
 \end{table}
 
@@ -520,7 +513,9 @@ Třídění pomocí algoritmů Bubble Sort, Insert Sort a~Select Sort má složi
 
 \subsection{Stabilita řízení}
 
-Dělíme na~stabilní a~nestabilní. Vstupní data můžou obsahovat několik prvků se~stejnou hodnotou. Podle vzájemné polohy těchto prvků před a~po seřazení se~rozlišují tyto druhy. Stabilní algoritmus zachovává vzájemné pořadí položek se~stejnou hodnotou a~u nestabilního jejich zachování není zaručeno. Stabilní je vhodné využívat pokud řadíme podle dvou parametrů například jméno příjmení. Př. jestli řadíme osoby podle křestního jména a~poté podle příjmení tak Stabilní algoritmus by měl odpovídat očekávání. (První Karel Novák a~následoval by Václav Novák). Pokud bychom na~toto použili nestabilní algoritmus tak by druhé řazení mohlo zpřeházet výsledky prvního. (První by mohl být Václav a~až za~ním Karel.)
+Dělíme na~stabilní a~nestabilní. Vstupní data můžou obsahovat několik prvků se~stejnou hodnotou. Stabilní algoritmus při~řazení zachovává vzájemné pořadí položek se~stejnou hodnotou a~u nestabilního jejich zachování není zaručeno. Stabilní je vhodné využívat při~řazení dle dvou parametrů.
+
+Když je řazen seznam osob dle křestního jména a~poté příjmení, stabilní algoritmus vrátí výsledky v~očekávaném pořadí (Adam Novák, Karel Novák, Václav Novák). Nestabilní může výsledky prvního řazení přeházet (Václav Novák, Adam Novák, Karel Novák).
 
 \subsection{Bubble sort}
 
@@ -531,44 +526,44 @@ Porovnávají se~dva sousední prvky, pokud je nižší číslo nalevo od~vyšš
 
 \subsection{Insertion sort}
 
-Je jednoduchý stabilní řadící algoritmus se~složitostí O($n^2$).
-
-Máme jeden prvek a~ten vložíme do~už seřazené množiny, která je prázdná. Vezmeme následující prvek a~ten umístíme na~správné místo v~již seřazení množině. A takto pokračujeme dokud nedorazíme nakonec.%
+Je jednoduchý stabilní řadící algoritmus se~složitostí O($n^2$). Množina prvků je rozdělena na~seřazenou (na~počátku prázdnou) a~neseřazenou část. Prvky se jeden po~druhém přesouvají z~neseřazené části a~jsou umísťovány do~seřazené na~správné místo.%
 \footnote{Animace Insertion sort: \url{https://www.algoritmy.net/article/8/Insertion-sort}.}
 
 \subsection{Selection sort}
 
-Je jednoduchý nestabilní řadící algoritmus se~složitostí O($n^2$).
-
-Funguje na~principu výběru největšího prvku, který pak dá na~začátek. Pak vezme druhý největší a~ten dá nakonec seřazené části.%
+Je jednoduchý nestabilní řadící algoritmus se~složitostí O($n^2$). Množina prvků je rozdělena na~seřazenou (na~počátku prázdnou) a~seřazenou část. V~neseřazené části je nalezen prvek s~nejvyšší hodnotou a~je umístěn do~seřazené části. Poté je nalezen druhý největší prvek a~je umístěn do~seřazené.%
 \footnote{Animace Selection sort: \url{https://www.algoritmy.net/article/4/Selection-sort}.}
 
 \subsection{Shell sort}
 
-Je nestabilní kvadratický řadící algoritmus se~složitostí O($n^2$).
-
-Funguje na~principu insertion sort. Rozdíl je v~tom že z~počátku neřadí prvky které jsou vedle sebe ale prvky které mají určitou mezeru mezi sebou. Tato mezera se~poté každou iteraci snižuje. Jak dojde na~mezeru 1 tak probíhá už pouze insertion sort.%
+Je nestabilní kvadratický řadící algoritmus se~složitostí O($n^2$). Funguje na~principu insertion sort. Nejprve seřadí prvky, mezi kterými je určitá mezera (první a~pátý, pátý a~devátý, druhý a~šestý) a~v~každém kroku je~tato mezera zmenšena; když je snížena na~1, dojde k~degradaci na~bežný insertion sort.%
 \footnote{Animace Shell sort: \url{https://www.algoritmy.net/article/154/Shell-sort}.}
 
 \subsection{Merge sort}
 
 Je stabilní složitý řadící algoritmus se~složitostí O($n\log{n}$).
 
-Dělíme pole neustále na~poloviny dokud nemáme pole o~jednom prvku. Jakmile mám rozděleno na~jednotlivé prvky tak porovnám prvky vzájemně dva vedlejší prvky. Takže vzniknou pole o~dvou prvcích, které jsou už seřazené. Takto postupuji až k~začátku dělení. Jakmile má pole více elementů tak porovnám první prvek prvního pole s~prvním prvkem druhého pole a~seřadím je pokud je větší porovnám s~druhým prvkem prvního pole. Pokud je zase vetší tak je seřazeno. Pokud je menší tak ho přiřadím před druhý prvek prvního pole a~pokračuji s~druhým prvkem druhého pole. Ten už porovnávám pouze s~prvkem který byl vyšší než první prvek druhého pole. Tento proces opakuji dokud nedojdu k~seřazenému poli.%
+Nesetříděné pole je děleno na~poloviny, dokud nová pole nemají velikost 1. Poté se skládají dohromady: porovná se první prvek z~pole A s~prvním prvkem pole~B a~seřadí se, porovná se druhý prvek z~pole A s~druhým prvkem pole B, seřadí se a~umístí za~první prvky. Tento proces je~opakován dokud nejspou spojeny všechny prvky původního pole.%
 \footnote{Video Merge sort: \url{https://www.youtube.com/watch?v=qdv3i6X0PiQ}.}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.47\textwidth]{images/merge-sort}
+	\caption{Merge sort}
+\end{figure}
 
 \subsection{Heap sort}
 
 Je nestabilní složitý řadící algoritmus se~složitostí O($n\log{n}$). Je jeden z~nejefektivnějších řadících algoritmů.
 
-Funguje na~principu prioritní fronty (stromová struktura). Prvně vytvoříme úplný binární strom (řazení vždy zleva doprava). Přetvoříme tento strom na~binární haldu/heap. nový heap vytvoříme tak že probubláváme prvky stromu od~nejnižších podstromů dle toho, jestli použijeme min/max heap při~min haldě bude kořenem vždy nejmenší číslo a~při max to bude naopak. Z~vytvořeného binárního stromu vezmeme kořen a~dáme ho do~množiny seřazených prvků a~v stromu přepíšeme kořen na~poslední element stromu. Tento strom zase řadíme dokud klidně opakovaně dokud nemáme na~každém kořenu min/max hodnotu. Tak pokračujeme dokud nezůstane žádný prvek.%
+Funguje na~principu prioritní fronty (stromová struktura). Nejprve je~prvky naplněn binární strom. Z~tohoto stromu je~vytvořena binární halda průchodem BFS. Z~binárního stromu je kořen umístěn do~množiny seřazených prvků; kořen stromu je~umístěn do~seřazené části, na~jeho místo je umístěn nejnižší list a~strom je znovu seřazen. Nový kořen stromu je~znovu umístěn do~seřazené části a~takto se algoritmus opakuje dokud ve~stromu zbývají uzly.%
 \footnote{Video Heap sort: \url{https://www.youtube.com/watch?v=LbB357_RwlY}.}
 
 \subsection{Quick sort}
 
 Je nestabilní složitý řadící algoritmus se~složitostí O($n^2$), resp. $\Theta$($n\log{n}$).
 
-Prvně vybereme pivot (se špatně vybraným pivotem se~může zhoršit složitost). Dále všechny menší prvky než pivot přesuneme na~jednu stranu a~všechny vetší na~druhou. Dále vybereme nový pivot z~prvků na~levé straně a~provedeme stejný postup co ze~základním polem. To stejné uděláme s~pravou stranou. Pivot vždy zůstává na~místě a~nic se~s~nedělá, jelikož je považován za~setříděný. Tak postupuje dokud nám na~každé straně nezůstane jen jeden prvek.%
+Je vybrán pivot (špatným výběrem lze složitost zhoršit; často bývá vybrán střed). Všechny prvky menší než~pivot se přesunou nalevo a~větší napravo. V~obou polovinách je vybrán nový pivot v~jejich středu a~algoritmus se rekurzivně opakuje. Pivot vždy zůstává na~místě a~je považován za~setříděný.%
 \footnote{Video Quick sort: \url{https://www.youtube.com/watch?v=ZHVk2blR45Q}.}
 
 \clearpage
@@ -582,7 +577,7 @@ Graf je definován jako uspořádaná dvojice množiny vrcholů $V$~a~množin hr
 
 \textbf{Vrchol} je prvek, který chceme spojit s~druhým vrcholem pomocí hrany tak, aby nám vznikl graf (ne vždy tyto prvky musí být spojené). Vrchol lze ohodnotit; stupeň grafu je označení pro~počet připojených hran. Stupeň grafu je nejvyšší hodnota ze~všech stupňů jeho vrcholů. Grafy lze \textbf{dělit dle hran} na:
 
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Neorientované grafy obsahují pouze neorientované hrany. Hrana je obousměrná.
 	\item Orientované grafy obsahují pouze orientované hrany. Hrana je pouze jednosměrná.
 	\item Smíšené grafy obsahují oba typy hran.
@@ -591,7 +586,7 @@ Graf je definován jako uspořádaná dvojice množiny vrcholů $V$~a~množin hr
 \subsection{Vyhledávaní v~grafu}
 
 \textbf{Druhy prohledávaní:}
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Slepé prohledávání: prohledávají náhodně bez~přemýšlení.
 	\item Informované metody: snaží se~odhadnout, kudy pokračovat ve~vyhledávání aby byly co nejdříve v~cíli.
 \end{itemize}
@@ -696,7 +691,7 @@ Hledá samotnou funkci a~ne její parametry. Oproti GA se~liší v~reprezentaci 
 	\caption{\textbf{n-bodové křížení} dělí genotyp v~$n$ bodech.}
 
 	\includegraphics[scale=0.7]{images/uniform.PNG}
-	\caption{\textbf{Uniformní křížení} rozvrací kód chromozomu a~je dobré pro~vnáščení diverzity.}
+	\caption{\textbf{Uniformní křížení} rozvrací kód chromozomu a~je dobré pro~vnášení diverzity.}
 
 	\includegraphics[scale=0.7]{images/mutace.PNG}
 	\caption{\textbf{Mutace} se aplikuje s~malou pravděpodobností a~je důležitá především pro~malé počty jedinců.}
@@ -718,9 +713,9 @@ Sériové výpočty běží na~jediném CPU s~použitím jednoho vlánka, kde je
 \end{figure}
 
 Veškeré paralelní výpočty lze provádět sekvenčně, ale ne všechny sekvenční algoritmy lze paralelizovat. Příklady výpočetních zdrojů:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 	\item Počítač s~několika procesory
-	\begin{itemize}[noitemsep]
+	\begin{itemize}
 		\item Multiprocesor se~sdílenou pamětí (propojení více procesorů dohromady)
 		\item Multiprocesor obsahující několik procesorů (jader) na~jednom čipu (obyčejné CPU).
 	\end{itemize}
