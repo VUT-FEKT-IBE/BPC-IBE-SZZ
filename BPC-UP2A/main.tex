@@ -11,11 +11,12 @@
 % # DŮLEŽITÉ #
 % ############
 
-\title{BPC-UP2A}                     % Název dokumentu - Povinný
-\newcommand{\subtitle}{Otázky a odpovědi BPC-UP2A (Úvod do práva ICT2)}     % Popis dokumentu - Nepovinný
-\author{kámen u~cesty, jedla}                           % Autor           - Nepovinný
-\newcommand{\grammar}{--}             % Korektura       - Nepovinný
-\newcommand{\formatting}{--}          % Formátování     - Nepovinný
+\title{BPC-UP2A}
+\newcommand{\subtitle}{Otázky a odpovědi BPC-UP2A (Úvod do práva ICT2)}
+\author{kámen u~cesty, jedla}
+\newcommand{\grammar}{--}
+\newcommand{\formatting}{--}
+
 %%%%%%%%%%%%%%%%%%%%
 % OBECNÉ NASTAVENÍ %
 %%%%%%%%%%%%%%%%%%%%
@@ -50,13 +51,17 @@
 
 % Nastavení stylu nadpisů
 \usepackage{sectsty}
+% Zmenšení prostoru kolem nadpisů
+\usepackage{titlesec}
+\titlespacing\subsection{0pt}{4pt plus 2pt minus 2pt}{0pt plus 2pt minus 0pt}
+\titlespacing\subsubsection{0pt}{4pt plus 2pt minus 2pt}{-2pt plus 2pt minus 0pt}
 % Formátování obsahů
 \usepackage{tocloft}
 % V obsahu ukazovat pouze nadpisy prvního řádu
 \setcounter{tocdepth}{1}
 % Odstranění vertikálního prostoru v seznamech
 \usepackage{enumitem}
-\setlist{nosep}
+\setlist{noitemsep, topsep=-0.5em, after=\vspace*{0.5em}}
 % Sázení správných uvozovek pomocí '\enquote{}'
 \usepackage{csquotes}
 % Vynucení umístění poznámek pod čarou vespod stránky
