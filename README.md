@@ -187,7 +187,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Provozní a lokalizační údaje a jejich využití v trestním řízení
 - [x] Právní úprava kybernetické bezpečnosti v CR - základní principy
 - [x] Ochrana osobních údajů – vymezení osob a základní principy zpracování osobních údajů
-- [x] Povinnosti správce a zpracovatele osobních údajů
+- [ ] Povinnosti správce a zpracovatele osobních údajů
 - [x] Práva subjektu údajů ve vztahu ke správci a zpracovateli
 - [ ] Informace veřejného sektoru – pojem, česká a evropská právní úprava
 - [x] Otevřená data – pojem a právní úprava
