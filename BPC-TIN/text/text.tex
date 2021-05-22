@@ -22,10 +22,10 @@ Bloky \emph{Code} a~\emph{Data} jsou známy v~době překladu a~jejich velikost 
 
 \emph{\textbf{Heap}} slouží k~alokaci dynamické paměti. Je založena na~stromové datové struktuře. Obsahuje objekty a~instance proměnných (atributy třídy).
 
-\emph{\textbf{Stack}} funguje na~principu LIFO a~je důležitý pro~volaní správných funkcí. S~uložením funkce na~stack se~posunuje ukazatel na~pozici v~registru (\emph{stack pointer}). Po~dokončení té funkce je odstraněna ze~zásobníku a~ukazatel změněn na~předchozí funkci. Obsahuje metody/funkce, lokální proměnné a~reference na~proměnné%
-\footnote{Video k~vysvětlení stacku: \url{https://www.youtube.com/watch?v=uwV0hotRrLw}}.
+\emph{\textbf{Stack}} funguje na~principu LIFO a~je důležitý pro~volaní správných funkcí. S~uložením funkce na~stack se~posunuje ukazatel na~pozici v~registru (\emph{stack pointer}). Po~dokončení té funkce je odstraněna ze~zásobníku a~ukazatel změněn na~předchozí funkci. Obsahuje metody/funkce, lokální proměnné a~reference na~proměnné.
 
-Bloky \emph{Heap} a~\emph{Stack} jsou dynamické a~jejich velikost roste/zmenšuje se~u~každého jiným směrem v~průběhu programu.
+Bloky \emph{Heap} a~\emph{Stack} jsou dynamické a~jejich velikost roste/zmenšuje se~u~každého jiným směrem v~průběhu programu%
+\footnote{Fungování haldy a~zásobníku: \url{https://courses.physics.illinois.edu/cs225/fa2020/resources/stack-heap/}}.
 
 \subsection{Statické přidělování paměti}
 
@@ -55,7 +55,7 @@ Je nejpokročilejším způsobem dynamického přidělovaní paměti. Oproti př
 	\item \emph{\textbf{Garbage collecting}}: provádí se defragmentace přesunem všech uvolněných úseků do~jednoho souvislého úseku. Tím se~vytvoří nový souvislý úsek pro~alokaci.
 \end{itemize}
 
-Tyto tři fáze se~opakují dokola, dokud nedojde k~situaci, že nový úsek není dostačující pro~fázi alokace. Z~tohoto důvodu dojde k~ukončení programu.
+Tyto tři fáze se~opakují dokola, pokud nedojde k~situaci, že nový úsek není dostačující pro~fázi alokace: v~tom případě dojde k~ukončení programu.
 
 \paragraph{Reprezentace informace v~paměti} Pokud je datový typ primitivní, je uložen na~přímo v~paměti a~u objektů je reprezentován pouze ukazatelem na~místo v~paměti%
 \footnote{Zatímco jeden \textit{integer} v~paměti zabere 32bitů, \textit{objekt} (v~C si lze představit jako \textit{struct}) obsahující dva integery bude v~paměti reprezentován jako \textit{odkaz} (pointer) na~část paměti kde začíná první integer. Nedá se~úplně s~jistotou říct, že zabere 64bitů, jelikož se~zpravidla dodá padding pro~metadata).}%
@@ -245,19 +245,9 @@ ADT lineární seznam je seznam, kde každý uzel má unikátního následníka.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.5]{images/linsez.PNG}
+	\caption{Lineární seznam}
+	\label{linsez}
 \end{figure}
-
-Možné operace s~ADT seznamem:
-\begin{itemize}
-	\item Nalezení délky N seznamu
-	\item Výpis všech prvků seznamu
-	\item Vytvoření prázdného seznamu
-	\item Získaní k-tého prvku ze~seznamu
-	\item Vložení novéhé prvku za~k-tý prvek seznamu
-	\item Smazaní prvku ze~seznamu
-	\item Nalezení následujícího prvku za~aktuálním v~seznamu
-	\item Nalezení předchozího prvku před aktuálním v~seznamu
-\end{itemize}
 
 \paragraph{Cyklický lineární seznam} Je stejný jako lineární ale poslední prvek nemá ukazatel \emph{null} ale odkaz na~první prvek seznamu.
 
@@ -266,16 +256,25 @@ Možné operace s~ADT seznamem:
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.5]{images/obousez.PNG}
+	\caption{Obousměrně vázaný lineární seznam}
+	\label{obousez}
 \end{figure}
 
-\paragraph{Vkládaní do~lineárního seznamu} Vložení prvku na~určitou pozici funguje tak, že se~najde pozice $k$~kde se~zde vloží prvek který bude odkazovat na~prvek, který byl předtím na~pozici $k$~a~v prvku $k-1$ se~přepíše ukazatel na~nový prvek. Operace fungují stejně, jen jsou vázány na~obě strany.
+\subsubsection{Operace s~ADT seznamem}
 
-\paragraph{Mazaní v~lineárním seznamu} Prvek $k-1$ přepíše ukazatel na~prvek $k+1$. U~prvního prvku se~přepíše pouze ukazatel na~další prvek.
+Nalezení délky, výpis všech prvků, získání $n$-tého prvku, vložení nového prvku za $k$-tý prvek, smazání prvku, nalezení předcházejícího a~následujícího prvku.
+
+Pro~\textbf{vložení} prvku je nejprve nalezena pozice mezi prvky existujícími: $k$. Ukazatel $k-1$ prvku je přepsán na $k$-tý a~ukazatel nového ($k$-tého) prvku je přepsán na~$k+1$, na~který původně ukazoval $k-1$. Operace fungují stejně, jen jsou vázány na~obě strany (viz obrázek~\ref{sezins}).
+
+Pro~\textbf{smazání} prvku je ukazatel $k-1$ prvku přepsán na~prvek $k+1$. Pokud je mazán první prvek, změní se ukazatel na~seznam.
+
+\textbf{Vyhledávat} lze dle indexu nebo podle dat. Seznam se postupně prochází dokud není nalezen prvek nebo konec seznamu.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.5]{images/sezins.PNG}
 	\caption{Vkládání do~lineárního seznamu.}
+	\label{sezins}
 	
 	\includegraphics[scale=0.5]{images/sezinsfirst.PNG}
 	\caption{Vkládání do~lineárního seznamu na~první pozici. Ukazatel pole se~přepisuje na~první prvek a~ve vkládaném prvku se~přidá ukazatel na~předchozí první prvek.}
@@ -286,9 +285,6 @@ Možné operace s~ADT seznamem:
 	\includegraphics[scale=0.5]{images/sezdel.PNG}
 	\caption{Mazání v~lineárním seznamu}
 \end{figure}
-
-
-\paragraph{Vyhledávaní v~lineárním seznamu} Vyhledávat se dá podle prvku nebo podle dat. Pomalu iteruje seznamem dokud nenarazí na~ten prvek nebo konec seznamu. U~obousměrného se~dá hledat od~začátku a~od konce.
 
 \subsection{Zásobník}
 
@@ -455,9 +451,10 @@ Nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rota
 
 \subsection{Hashovací tabulka}
 
-Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočítán z~obsahu položky tak, aby byl co nejjednoznačnější a~nedocházelo ke~kolizím; vše vychází z~pravděpodobnosti o~hashovacích funkcích. Využívají se~nejčastěji v~databázích nebo k~rychlému vyhledávaní v~polích. Paměťová složitost je O($n$).
+Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočítán z~obsahu položky tak, aby byl co nejjednoznačnější a~nedocházelo ke~kolizím; vše vychází z~pravděpodobnosti o~hashovacích funkcích. Využívají se~nejčastěji v~databázích nebo k~rychlému vyhledávaní v~polích. Paměťová složitost je O($n$).%
+\footnote{\url{https://courses.physics.illinois.edu/cs225/fa2020/resources/hashtable/}.}
 
-\paragraph{Vkládání} Z~vkládaného prvku se udělá hash. Tento hash se~přiřadí do~pole, na~místo, které mu odpovídá. Jestliže je místo obsazeno přiřadíme mu další volné místo dle algoritmu.
+Při~\textbf{vkládání} se z~vkládaného prvku udělá hash. Tento hash se~přiřadí do~pole, na~místo, které mu odpovídá. Jestliže je místo obsazeno přiřadíme mu další volné místo dle algoritmu.
 
 \textbf{Vyhledávání} Využijeme klíče, který nám vrátí index položky. Jestliže na~odpovídajícím indexu se~nenachází daná položka, pomocí algoritmu vypočteme, kde je další místo, kde se~položka může nacházet.
 
@@ -474,9 +471,9 @@ Hashovací tabulka spojuje klíč s~odpovídající hodnotou. Klíč je vypočí
 
 \subsubsection{Řešení kolizí}
 
-\textbf{Řetězení tabulek}: Prvek je vložendo~lineárního seznamu.
+\textbf{Řetězení tabulek}: Prvek je vložen do~lineárního seznamu.
 
-\textbf{Otevřené adresování linear probing}: Prvek je vložen na další~vhodné místo. Zde si musíme hlídat, aby se~tabulka celá nenaplnila.
+\textbf{Otevřené adresování linear probing}: Prvek je vložen na~další vhodné místo.
 
 \textbf{Otevřené adresování double hashing}: Prvek je zhashován znovu.
 
@@ -609,14 +606,18 @@ Graf je definován jako uspořádaná dvojice množiny vrcholů $V$~a~množin hr
 \subsection{Slepé prohledávání}
 
 \textbf{BFS} využívá frontu do~které nejprve vloží vstupní vrchol. Z~tohoto vrcholu se~vezmou všichni sousedé a~vloží se~do~fronty, z~které se~bere postupně a~jejich sousedé se~přidávají do~fronty. Při~tomto se~každá už navštívený vrchol ukládá do~nějakého pole/seznamu navštívených abychom ho nenavštěvovali znovu.%
-\footnote{Video BFS: \url{https://www.youtube.com/watch?v=oDqjPvD54Ss}}
+\footnote{Video BFS: \url{https://www.youtube.com/watch?v=oDqjPvD54Ss}.}
 
 \textbf{DFS}\,--\,pracuje na~principu, že prozkoumává prvně vrchol na~jednu stranu a~v ní pokračuje dokud nedojde na~konec nebo nedorazí do~už navštíveného vrcholu. Využívá zásobník.%
 \footnote{Video DFS: \url{https://www.youtube.com/watch?v=pcKY4hjDrxk?t=279}.}
 
-\vspace*{1em}
-
 DFS je méně paměťově náročné, BFS je optimální.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/bfs-dfs.png}
+	\caption{Vyhledávání BFS a~DFS}
+\end{figure}
 
 \clearpage
 \section{Omezené prohledávání do~hloubky (DLS). Iterativní prohledávání do~šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
@@ -741,7 +742,7 @@ Modely dělíme hlavně dle Flynnovy klasifikace z~dvou hledisek: toku instrukc�
 
 \paragraph{SISD}
 
-Nejjednodušší model, který si lze představit jako (jednojádrový) procesor. Vykonává pouze jednu instrukci nad~jedinými daty uloženými v~paměti. Instrukce jsou posílány do~řídící jednotky z~paměti, následně jsou dekódovány a~poslány procesní jednotky. Ta tyto data zpracuje a~pošle je zpátky.
+Nejjednodušší model, který si lze představit jako (jednojádrový) procesor. Vykonává pouze jednu instrukci nad~jedinými daty uloženými v~paměti. Instrukce jsou posílány do~řídící jednotky z~paměti, následně jsou dekódovány a~poslány procesní jednotky. Ta~data zpracuje a~pošle je zpátky.
 
 Nejčastěji se~vyskytuje v~počítačích založených na~von Neumann architektuře.
 
