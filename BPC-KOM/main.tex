@@ -51,6 +51,15 @@
 % Podmínky (pro použití v titulní straně)
 \usepackage{ifthen}
 
+% Obrázky a tabulky na samostatných stranách jsou umisťovány nahoře
+\makeatletter
+\setlength{\@fptop}{0pt plus 10pt minus 0pt}
+\makeatother
+
+% Úprava vertikálního místa u popisů obrázků a tabulek
+\setlength{\abovecaptionskip}{10pt}
+\setlength{\belowcaptionskip}{5pt plus 2pt minus 2pt}
+
 %%%%%%%%%%%%%%%
 % FORMÁTOVÁNÍ %
 %%%%%%%%%%%%%%%
@@ -129,6 +138,17 @@
 \usemintedstyle{pastie}
 % Přepnutí prostředí 'code' do režimu výpisu kódu
 \newenvironment{code}{\captionsetup{type=listing}}{}
+
+%%%%%%%%
+% TEXT %
+%%%%%%%%
+
+% Dělení slov
+\hyphenation{Blue-tooth}
+
+% Fyzikální jednotky
+% Vyžaduje APT balík "texlive-science"
+\usepackage{siunitx}
 
 % #########
 % # START #
