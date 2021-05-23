@@ -45,6 +45,15 @@
 % Podmínky (pro použití v titulní straně)
 \usepackage{ifthen}
 
+% Obrázky a tabulky na samostatných stranách jsou umisťovány nahoře
+\makeatletter
+\setlength{\@fptop}{0pt plus 10pt minus 0pt}
+\makeatother
+
+% Úprava vertikálního místa u popisů obrázků a tabulek
+\setlength{\abovecaptionskip}{10pt}
+\setlength{\belowcaptionskip}{20pt}
+
 %%%%%%%%%%%%%%%
 % FORMÁTOVÁNÍ %
 %%%%%%%%%%%%%%%

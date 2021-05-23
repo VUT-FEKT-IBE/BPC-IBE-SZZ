@@ -447,6 +447,7 @@ Nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rota
 	\item Každá cesta z~libovolného uzlu do~jeho podřízených listů obsahuje stejný počet černých uzlů.
 \end{itemize}
 
+\clearpage
 \section{Posouzení z~pohledu časové a~paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a~hashovacích tabulek.}
 
 \subsection{Hashovací tabulka}
@@ -682,22 +683,29 @@ Hledá samotnou funkci a~ne její parametry. Oproti GA se~liší v~reprezentaci 
 
 \subsection{Metody křížení}
 
+Napodobují genetickou evoluci a~pomáhají ve~vývoji. Čtyři základní metody jsou ukázány na~straně \pageref{elita} na~obrázcích \ref{elita} až~\ref{mutace}.
+
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.7]{images/elita.PNG}
 	\caption{\textbf{Elitářství} zaručuje monotonní hodnotu fitness nejlepšího jedince a~předchází ztrátě nejlepšího řešení.}
+	\label{elita}
 
 	\includegraphics[scale=0.55]{images/1bod.PNG}
 	\includegraphics[scale=0.55]{images/2bod.PNG}
 	\caption{\textbf{n-bodové křížení} dělí genotyp v~$n$ bodech.}
+	\label{1bod2bod}
 
 	\includegraphics[scale=0.7]{images/uniform.PNG}
 	\caption{\textbf{Uniformní křížení} rozvrací kód chromozomu a~je dobré pro~vnášení diverzity.}
+	\label{uniform}
 
 	\includegraphics[scale=0.7]{images/mutace.PNG}
 	\caption{\textbf{Mutace} se aplikuje s~malou pravděpodobností a~je důležitá především pro~malé počty jedinců.}
+	\label{mutace}
 \end{figure}
 
+\clearpage
 \section{Paralelní výpočty a~architektury, procesy, vlákna a~jejich synchronizace, Deadlock.}
 
 Sériové výpočty běží na~jediném CPU s~použitím jednoho vlánka, kde je problém rozdělen na~posloupnost instrukcí. Každá instrukce se~vykonává postupně, kdy v~daném času může být spuštěna pouze jedna instrukce.
