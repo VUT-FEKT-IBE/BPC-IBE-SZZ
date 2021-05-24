@@ -197,7 +197,45 @@ Transformace kódování, šifrování, komprese.
 Příklady jsou například přenos souborů, elektronická pošta nebo vzdálený přístup, které jsou dnes využívány pouze nad TCP/IP.
 
 \clearpage
-\section{Základní popis síťového modelu TCP/IP a srovnání s ISO/OSI.}
+\section{Základní popis síťového modelu TCP/IP a~srovnání s~ISO/OSI.}
+
+Navzdory názvu TCP/IP označuje celou sadu protokolů a~náhledů na~stavění a~fungování datových sítí. Na~rozdíl od ISO/OSI je praktická pro~reálnou implementaci.
+
+Při~vytváření RM OSI měly hlavní slovo organizace kladoucí důraz na~vlastnosti sítě (na~jejich spojovaný a~spolehlivý charakter) s~tím, že připojované hostitelské počítače nebudou muset provádět tolik práce. Vyšší vrstvy ale nemohly spoléhat na~opravy vrstev vyšších a~spolehlivost si musely zajišťovat samy, a~ve výsledku se tím zabývala každá vrstva.
+
+Tvůrci TCP/IP naopak vycházeli z~předpokladu, že zajištění spolehlivosti je problémem koncových zákazníků a~mělo by být řešeno až na~úrovni transportní vrstvy a~výše. Komunikační síť nemusí ztrácet část přenosové kapacity kontrolou a~opakovaným vysíláním paketů a~je tak plně využita vlastními datovými přenosy. V~síti může dojít ke~ztrátě či zahození paketu bez varování a~snahy o~nápravu, pakety by však neměly být zahazovány bezdůvodně (naopak by se o~doručení měly snažit: \emph{best effort}). \textbf{TCP/IP předpokládá jednoduchou a~rychlou podsíť ke~které se připojují inteligentní počítače}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{images/q03_osi_tcp}
+	%\caption{Srovnání modelu ISO/OSI a~TCP/IP}
+\end{figure}
+
+\subsection{Vrstvy modelu TCP/IP}
+
+\paragraph{Vrstva síťového rozhraní} Ovládání konkrétní přenosové cesty mezi dvěma síťovými prvky. Není blíže specifikována protože je závislá na~přenosové technologii.
+
+\paragraph{Internetová vrstva} Realizace protokolem IP (v4, v6). Funkčně odpovídá síťové vrstvě ISO/OSI modelu a~bývá tak i~označována. Předává pakety mezi odesílatelem a~příjemcem přes mezilehá zařízení (směrovače). Jde o~nespojovanou datagramovou službu, která se musí vyrovnávat s~odlištnostmi částí cesty (odlišné adresy, různá maximální velikost paketů).
+
+\paragraph{Transportní vrstva} Zajištění přenosu mezi dvěma koncovými účastníky (aplikačními programy). Podle nároků reguluje tok dat oběma směry, zajišťuje spolehlivost přenosu a~mění nespojovaný charakter internetové vrstvy na~spojovaný. Bývá realizována spolehlivým protokolem TCP (\emph{Transmission Control Protocol}), nespolehlivým UDP (\emph{User Datagram Protocol}) nebo i~jinými.
+
+\paragraph{Aplikační vrstva} Případné prezentační a~relační služby (šifrování, komprese) si musí aplikace realizovat samy (a~pokud je aplikace nevyžaduje, nevzniká zbytečná režie). Mezi hlavní protokoly patří DNS, DHCP, HTTP, SSH, FTP, \dots
+
+\subsection{Propojování sítí}
+
+TCP/IP usiluje o~co nejuniverzálnější propojení sítí všech typů: od~lokálních typu Ethernet přes~veřejné datové sítě až po~internet. Cílem je umožnit každému uzlu komunikovat s~kterýmkoliv jiným uzlem bez ohledu na~to, jestli mezi nimi existuje přímé spojení, nebo jsou odděleny několika sítěmi.
+
+Z~pohledu uživatele by vnitřní struktura soustavy měla být transparentní a~\emph{internetworking} by se jim měl jevit jako jedna velká síť, ke~které jsou připojeny jednotlivé počítače (\emph{hosts}). Ve~skutečnosti je to ale spousta dílčích sítí vzájemně propojených na~úrovni síťové vrstvy pomocí směrovačů (\emph{router}).
+
+Výhodou IP je existence jednotého formátu adres, adresování a~dat na~úrovni síťové vrstvy.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{images/q03_internet}
+	%\caption{Ukázka propojení sítí v~rámci internetu}
+\end{figure}
+
+Každé zařízení má fyzickou adresu spjatou s~konkrétním hardware. Pomocí MAC nelze komunikovat mezi různými sítěmi, proto jsou definovány globálně platné IP adresy.
 
 \clearpage
 \section{Principy komunikačních technik -- vícenásobné využití cest, zajištění obousměrné komunikace.}
