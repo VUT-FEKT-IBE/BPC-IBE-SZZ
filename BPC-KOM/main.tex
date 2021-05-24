@@ -70,6 +70,7 @@
 \usepackage{tocloft}
 % Možnost odstranění mezer mezi řádky v seznamech (pomocí '[noitemsep]')
 \usepackage{enumitem}
+\setlist{noitemsep, topsep=-0.5em, after=\vspace*{0.5em}}
 % Sázení správných uvozovek pomocí '\enquote{}'
 \usepackage{csquotes}
 % Vynucení umístění poznámek pod čarou vespod stránky
@@ -80,6 +81,11 @@
 % Změna formátování nadpisu a podnadpisů v Obsahu
 \renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily}
 \renewcommand{\cftsubsecdotsep}{\cftdotsep}
+
+% Zrušení odsazení prvního řádku odstavce
+\setlength\parindent{0pt}
+% Zapnutí vertikálního oddělení odstavců
+\setlength\parskip{0.6em}
 
 %%%%%%%%%%
 % ODKAZY %

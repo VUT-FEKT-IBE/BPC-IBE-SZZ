@@ -118,6 +118,84 @@ Přenos mezi stranami vždy probíhá dle dohodnutých pravidel (\textbf{protoko
 \clearpage
 \section{Základní popis referenčního modelu ISO/OSI a srovnání s TCP/IP.}
 
+Na~počátku mezipočítačové komunikace vznikaly různé vzájemně nekompatibilní systémy a~uzavřené architektury. Postupem času rostl tlak na~vznik otevřeného standardu, který byl standartizován jako ISO/OSI RM%
+\footnote{International Organization for Standartization Open System Interconnection Reference Model.}%
+, který podchycuje všechny nezbytné aspekty komunikace. Stal se výchozím modelem pro~počítačově řízenou výměnu dat a~položil teoretický a~vědecký základ pro~realizaci datových sítí.
+
+Zařízení vykonávající zpracování a~přenos informace jsou označovány jako \textbf{reálné systémy}, prvky zpracovávající informace jsou \textbf{aplikační procesy}.
+
+ISO/OSI RM nespecifikuje přesnou podobu sítě, ale uvádí všeobecné principy sedmivrstvé síťové architektury. Jsou to:
+
+\begin{enumerate}
+	\item fyzická (\emph{physical}) vrstva,
+	\item spojová (\emph{data link}) vrstva ,
+	\item síťová (\emph{network}) vrstva,
+	\item transportní (\emph{transport}) vrstva,
+	\item relační (\emph{session}) vrstva,
+	\item prezentační (\emph{presentation}) vrstva,
+	\item aplikační (\emph{application}) vrstva.
+\end{enumerate}
+
+Nejnižší dvě vrstvy bývají \textbf{hardwarové}, ostatní bývají implementovány \textbf{softwarově}.
+
+První čtyři vrstvy lze označit jako \textbf{poskytovatele} transportní služby, třetí až~sedmou jako jejího \textbf{uživatele}.
+
+První tři vrstvy jsou \textbf{lokální}, protože zajišťují komunikaci na~lokální síťové infrastruktuře, čtyři vrchní jsou \textbf{koncové} a~umožňují propojení komunikujících aplikací.
+
+Datové jednotky se označují jako PDU (\emph{Protocol Data Unit}) a~každá vrstva má své označení: TPDU (\emph{Transport PDU}), SPDU (\emph{Session PDU}), PPDU (\emph{Presentation PDU}), APDU (\emph{Application PDU})).
+
+Partnerská komunikace vrstev je pouze iluze, data prochází všemi nižšími vrstvami. V~mezilehém prvku dochází k~průchodu do~síťové vrstvy, kde je rozhodnuto o~dalším směrování a~následně data \enquote{sestoupí} k~fyzické vrstvě.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{images/q02_iso_osi}
+	%\caption{Architektura sítě založené na~modelu ISO/OSI}
+\end{figure}
+
+Sestupem do~nižší vrstvy se zvyšuje datová jednotka o~záhlaví jednotlivých vrstev (tzv. \textbf{zapouzdřování}). V~cílovém systému se v~jednotlivých vrstvách zprávy rozbalují.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/q02_iso_osi_pdu}
+	%\caption{Tvorba PDU v~jednotlivých vrstvách}
+\end{figure}
+
+\subsection{Vrstvy modelu ISO/OSI}
+
+Aplikační procesy rozptýlené po~síti mezi sebou komunikují. Logické prostředí sítě je pro~uživatele transparentní.
+
+\paragraph{Fyzická vrstva} Jde o~prostý tok bitů přenosovým médiem (tj. přenos elektrického signálu s~měnícími se napěťovými úrovněmi). Úkolem první vrstvy je příprava funkčních, procedurálních, mechanických a~elektrických prostředků pro~vytvoření, udržení a~ukončení datových okruhů mezi prvky sítě. Kvalita je popisována \textbf{chybovostí}.
+
+Reprezentace bitů, přenosová rychlost, synchronizace vysílače s~přijímačem, přizpůsobení se kanálu a~topologii, oboustranný přenos.
+
+\paragraph{Spojová vrstva} Přenášení rámců. Druhá vrstva připravuje prostředky pro~vytvoření, udržení a~rušení datových spojů mezi dvěma prvky sítě, mezi kterými může být jedno či~více spojení, které vznikají a~zanikají dynamicky. Krom práce s~datovými spoji tato vrstva formátuje rámce, identifikuje koncové body, řadí přenášené rámce, detekuje a~opravuje chyby a~oznamuje chyby které nezvládá opravit.
+
+Podvrstva řízení logického spoje (LLC, \emph{Logical Link Control}) poskytuje rozhraní mezi přenosovým prvkem a~síťovou vrstvou, podvrstva řízení přístupu k~médiu (MAC, \emph{Media Access Control}) poskytuje služby specifické pro~daný přenosový prostředek.
+
+Vytváření rámců, adresování v~síti, řízení toku dat, řízení chybových stavů.
+
+\paragraph{Síťová vrstva} Směrování toku dat organizovaných do~paketů. Třetí vrstva poskytuje prostředky pro~transportní jednotky. Je zodpovědná za~komunikaci na~základě logických adres, směrování a~přenos datových jednotek (datagram) k~přijímači. Zajišťuje hlavně nezávislost transportní vrstvy na~směrování a~propojování, dále také síťovou adresaci, management síťových spojů, prioritizaci přenosu nebo řazení datagramů.
+
+Může být \textbf{se~spojením} nebo \textbf{bez~spojení}. Směrování je vyhledání optimální cesty k~cíli. Síťová vrstva také musí mít mechanismus mapování logických adres na~fyzické.
+
+Logické adresování, směrování mezi sítěmi.
+
+\paragraph{Transportní vrstva} Zvýšení kvality spojů na~požadovanou úroveň: vyšší vrstvy nemusí určovat optimální cestu, kontrolovat tok dat nebo řešit problémy s~přetížením či~chybami. Prototoly čtvrté a~vyšší vrstvy pracují v~koncových systémech. Koncové body transportního přenosu jsou odlišeny pomocí \textbf{portů}. \textbf{Kvalita služeb} závisí na~přenášených datech.
+
+Adresace konkrétní služby, segmentace a~skládání, řízení spojení, toku dat a~chybových stavů.
+
+\paragraph{Relační vrstva} Informace pro~řízení a~synchronizaci dialogu. Pátá vrstva organizuje a~synchronizuje dialog aplikačních procesů. V~rámci jedné relace může vzniknout více transportních spojení, více transportních spojení může reprezentovat jednu relaci.
+
+Řízení dialogu aplikačních protokolů, synchronizace.
+
+\paragraph{Prezentační vrstva} Koordinace kódování a~syntaxe vyměňovaných dat. Šestá vrstva transformuje data aplikační vrstvy do~společného formátu: převod kódů a~abeced či uspořádání dat. V~ISO/OSI modelu je jedinou vrstvou která může zasahovat do~samotných přenášených dat. Data může také komprimovat či~šifrovat.
+
+Transformace kódování, šifrování, komprese.
+
+\paragraph{Aplikační vrstva} Informačním systémům zpřístupňuje prostředí OSI. Sedmá vrstva se dá nazvat jako síťové rozšíření operačního systému. Zajišťuje přenos zpráv, identifikaci partnerů, zjišťování připravenosti partnera, určení kvality služeb, zajištění synchronizace zpráv, dohodu syntaxe apod.
+
+Příklady jsou například přenos souborů, elektronická pošta nebo vzdálený přístup, které jsou dnes využívány pouze nad TCP/IP.
+
 \clearpage
 \section{Základní popis síťového modelu TCP/IP a srovnání s ISO/OSI.}
 
