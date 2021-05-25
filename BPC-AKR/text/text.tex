@@ -47,6 +47,63 @@ $u_0 = 4$, $u_{n+1} = (u_n^2 - 2) \Mod n$, \dots, $u_{s-2} \stackrel{?}{=} 0$.
 \clearpage
 \section{Teorie čísel, algebraické struktury -- popište účel a~způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.}
 
+Teorie čísel je ta část matematiky, jejímž základním objektem zkoumání jsou vlastnosti zejména celých čísel. Prvočíslo je $\geq 2$, které nemá jiné dělitele než triviální. Každé celé číslo $\geq 2$ je buď prvočíslo nebo se dá zapsat jako součin prvočísel. Pokud číslo není prvočíslo nazýváme ho číslem složeným.
+
+V kryptografii se nejčastěji setkáme s dělitelností (zbytek a modulo), největším společným dělitelem (GCD, výpočet jako násobek společných prvočinitelů s jejich nejmenší mocninou), nejmenším společným násobkem (LCM, výpočet jako násobek všech prvočinitelů s největší mocninou). Jestliže jsou výsledek GCD roven 1, jedná se číslo nesoudělné a bude se nejspíše jednat o prvočíslo.
+
+\textbf{Eulerova funkce} $\phi(n)$ je často používaná v kryptografii. Udává počet celých čísel, která jsou nesoudělná s $n$.
+
+Výpočet:
+\begin{itemize}[noitemsep]
+    \item Pro prvočísla je to $\phi(n) = n - 1$
+    \item Ostatní čísla se rozloží tak aby byli nesoudělná a $\phi(n) = \phi(x * y) = \phi(x) * \phi(y)$
+    \item Pokud je mocninou prvočísla $\phi(n) = \phi(p^k) = (p-1)* p^{k-1}$
+\end{itemize}
+
+Algebraické struktury představují množiny prvků s operacemi a různými vlastnostmi. V kryptografii jsou nejpoužívanější grupy, tělesa a konečná tělesa.
+
+\textbf{Grupou} (G,◦) nazýváme množinu G spolu s binární operací ◦ (operace se dvěma prvky a,b kterým přiřazuje prvek c stejné grupy) na množině G, která splňuje:
+\begin{itemize}[noitemsep]
+    \item uzavřenost (pro všechny prvky $a, b$ v G je i $a$ ◦ $b$ prvkem G)
+    \item asociativita $(a$ ◦ $b)$ ◦ $c = a$ ◦ $(b$ ◦ $c)$
+    \item existence neutrálního prvku (existuje prvek e v G takový že pro všechna a v G platí $a$ ◦ $e = e$ ◦ $a = a$)
+    \item existence inverzního prvku (pro každý prvek $a$ existuje prvek $b$ takový že $a$ ◦ $b = b$ ◦ $a = e$, tj. že jejich složení je rovno neutrálnímu prvku. Prvku $b$ se říká inverzní)
+\end{itemize}
+
+Grupa (G,◦) je \textbf{cyklická}, jestliže existuje prvek $a$ v G takový, že pro každé $b$ v G existuje celé číslo $i$ takové že $b = a^i$. Takový prvek se nazývá generátor grupy. 
+
+Řád prvku $a$ je definován jako nejmenší kladné celé číslo $t$ takové že $a^t = 1$ pokud takové $t$ existuje. 
+
+Řád generátoru grupy se rovná řádu grupy. Počet generátorů lze zjistit jako $\phi(\phi(n))$.
+
+Příklady praktických grup pro kryptografii:
+\begin{itemize}[noitemsep]
+    \item Množina celých čísel $\mathbb{Z}$ spolu s operací sčítání (+) tvoří abelovskou grupu.
+    \item Množina $\mathbb{Z}_n$ s operací sčítání modulo $n$ tvoří grupu řádu $n$.
+    \item Množina $\mathbb{Z}_n$ s operací násobení modulo $n (\mathbb{Z}_n^*)$ netvoří grupu, protože inverzní prvek neexistuje ke všem prvkům ze $\mathbb{Z}_n$.
+    \item Množina $\mathbb{Z}_p$ s operací násobení modulo prvočíslo $p$ tvoří grupu, protože inverzní prvek existuje ke všem prvkům ze $\mathbb{Z}_p$. 
+\end{itemize}
+
+\vspace{2cm}
+Příklad pro $\mathbb{Z}^*_{17}$:
+\begin{itemize}[noitemsep]
+    \item Grupa obsahuje prvky 1-16 celkem $\phi(17) = 16$.
+    \item Neutrální prvek $e$ je 1.
+    \item Každý prvek $a$ má inverzní prvek $a^{-1}$ protože pro každé $a$ platí GCD(a,17) = 1.
+    \item Generátorem grupy jsou čísla 3,5,6,7,10,11,12,14 a celkem je jich $\phi(16) = 8$
+\end{itemize}
+
+Nalezení generátoru:
+\begin{itemize}[noitemsep]
+    \item Zvolení náhodného prvku $g$ z $\mathbb{Z}_n^*$.
+    \item Výpočet $\phi(n)$.
+    \item Nalezení všech prvočíselných dělitelů $\phi(n)$ označených jako $p_i$.
+    \item Pro každého prvočíselného dělitele se vypočte $g^{\phi(n)/p_i} \equiv 1 \mod n$.
+    \item Pokud předchozí rovnice neplatí pro žádné $p_i$ jedná se generátor.
+\end{itemize}
+
+
+
 \clearpage
 \section{Modulární aritmetika -- popište algoritmus Square and Multiply a Čínskou větu o zbytcích.}
 
