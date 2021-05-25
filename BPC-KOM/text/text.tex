@@ -240,6 +240,46 @@ Každé zařízení má fyzickou adresu spjatou s~konkrétním hardware. Pomocí
 \clearpage
 \section{Principy komunikačních technik -- vícenásobné využití cest, zajištění obousměrné komunikace.}
 
+Nejlepšího ekonomického zhodnocení přenosových cest se dosáhne jejich vícenásobným využitím. Pro~to se využívají techniky multiplexování, kdy je přes jedno médium přenášeno více signálů z~více zdrojů do~více cílů. Techniky multiplexování se často kombinují.
+
+\paragraph{Prostorové dělení} \emph{Space-Division Mutliplex} je např. více paralelních vedení v~rámci jednoho kabelu; toto však není pravé multiplexování.
+
+\paragraph{Kmitočtové dělení} \emph{Frequency-Division Multiplex} pro~různé přenosy využívá různé kmitočty, resp. pásma kmitočtů. Typickým příkladem je FM rádio nebo GSM. Z~FDM vychází OFDM (\emph{Orthogonal FDM}), které využívá například xDSL%
+\footnote{xDSL: Digital Subscriber Line.}%
+. Kmitočtové dělení může být také použito k~odlišení směrů komunikace (jedno pásmo tam, druhé zpět).
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/q04_frequency}
+	%\caption{Kmitočtové dělení do~kanálů a~ochranných pásem}
+\end{figure}
+
+\paragraph{Vlnové dělení} \emph{Wavelength-Division Multiplex} se využívá v~optice: v~jednom optickém vlákně je více signálů odlišených vlnovou délkou (barvou).
+
+\paragraph{Časové dělení} \emph{Time-Division Multiplex} se využívá především v~digitálním přenosu, kdy se vysílací strany střídají.
+
+V~\textbf{synchronním} módu je každému zařízení vyhrazeno $\frac{1}{n}$ celkové kapacity: když stanice nevysílá, blokuje svou alokovanou část a~přenos se stává neefektivním, všechny stanice také musí odesílaná data fragmentovat na~přesně dané a~stejně velké jednotky.
+v~\textbf{asynchronním} módu jsou stanoveny časové intervaly s~přesně danou velikostí, ale nejsou nikým rezervované a~použity jsou pouze v~případě potřeby.
+V~\textbf{paketovém} módu je možné vysílat různě velké zprávy v~libovolném čase. Každá zpráva musí obsahovat záhlaví s~identifikátorem vysílací stanice. Systém však nezaručuje žádnou vysílací kapacitu.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/q04_time_synchronous}
+	%\caption{Synchronní přenosový mód}
+	\includegraphics[width=0.7\textwidth]{images/q04_time_asynchronous}
+	%\caption{Asynchronní přenosový mód}
+	\includegraphics[width=0.7\textwidth]{images/q04_time_packet}
+	%\caption{Paketový přenosový mód}
+\end{figure}
+
+\paragraph{Kódové dělení} \emph{Code-Division Multiplex} jednotlivé přenosy odlišuje speciální kódovou sekvencí.
+
+\subsection{Metody zajištění obousměrné komunikace}
+
+\textbf{Simplexní spojení} umožňuje obousměrnou komunikaci, ale ne v~jednom okamžiku zároveň; protistrany se o~přenosovou kapacitu musí dělit. Jsou to například vysílačky, kde si komunikující musí slovně předávat signál že dohovořili.
+
+\textbf{Duplexní spojení} umožňuje současnou komunikaci oběma směry. V~nejjednodušším případě existuje mezi oběma stanicemi dvojice kanálů, u~rádiových přenosů se \emph{full-duplex} emuluje časovým nebo frekvenčním dělením.
+
 \clearpage
 \section{Fyzická vrstva přenosových systémů -- přenosová média, analogové a digitální modulace, klíčovací techniky, princip digitalizace řečového signálu.}
 
