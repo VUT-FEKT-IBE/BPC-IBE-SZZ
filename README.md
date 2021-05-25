@@ -189,5 +189,5 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Ochrana osobních údajů – vymezení osob a základní principy zpracování osobních údajů
 - [ ] Povinnosti správce a zpracovatele osobních údajů
 - [x] Práva subjektu údajů ve vztahu ke správci a zpracovateli
-- [ ] Informace veřejného sektoru – pojem, česká a evropská právní úprava
+- [x] Informace veřejného sektoru – pojem, česká a evropská právní úprava
 - [x] Otevřená data – pojem a právní úprava
