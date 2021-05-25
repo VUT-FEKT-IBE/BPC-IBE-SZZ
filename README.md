@@ -17,7 +17,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 ### BPC-AKR
 
 - [x] Prvočísla – popište způsob generování a uveďte příklad pravděpodobnostního testu a skutečného testu.
-- [ ] Teorie čísel, algebraické struktury – popište účel a způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.
+- [x] Teorie čísel, algebraické struktury – popište účel a způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.
 - [x] Modulární aritmetika – popište algoritmus Square and Multiply a Čínskou větu o zbytcích.
 - [x] Symetrická kryptografie – proudové šifry, synchronní a asynchronní proudové šifry.
 - [x] Blokové šifry - Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.
