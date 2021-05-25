@@ -1,4 +1,5 @@
 \section{Technika sítí a protokolů - komunikační modely, způsob přenosu informace, základní struktura sítí, typy sítí, architektura komunikace systémů.}
+\label{q01}
 
 \subsection{Komunikační modely}
 
@@ -275,6 +276,7 @@ V~\textbf{paketovém} módu je možné vysílat různě velké zprávy v~libovol
 \paragraph{Kódové dělení} \emph{Code-Division Multiplex} jednotlivé přenosy odlišuje speciální kódovou sekvencí.
 
 \subsection{Metody zajištění obousměrné komunikace}
+\label{q07}
 
 \textbf{Simplexní spojení} umožňuje obousměrnou komunikaci, ale ne v~jednom okamžiku zároveň; protistrany se o~přenosovou kapacitu musí dělit. Jsou to například vysílačky, kde si komunikující musí slovně předávat signál že dohovořili.
 
@@ -288,6 +290,73 @@ V~\textbf{paketovém} módu je možné vysílat různě velké zprávy v~libovol
 
 \clearpage
 \section{Síťová vrstva přenosových systémů -- spínání paketů, služby síťové vrstvy, IPv4 adresy, techniky směrování, IPv4 datagram.}
+
+\subsection{Přepojování paketů}
+
+Síťová vrstva hledá optimální cestu mezilehých uzlů mezi dvěma účastíky komunikace. I~když je více způsobů komutace (viz otázku \ref{q01}), využívá se komutace paketů s~typickou maximální délkou 1.0--1.5~kB.
+
+\paragraph{Služba se spojením} \emph{Connection-Oriented Network Services} před~přenosem navazuje spojení: během přenosu je zřejmé odkud kam pakety putují a~proto nemusí obsahovat informaci o~příjemci, mají však \textbf{identifikátor toku}. Jde o~tzv. virtuální okruhy, kdy síťová vrstva poskytuje dokonalý bezchybný kanál dodržující pořadí datových jednotek při~přenosu. Dočasný virtuální okruh (SVC, \emph{Switched Virtual Connection}) spojení připravuje před~každým přenosem, pevný virtuální okruh (PVC, \emph{Permanent Virtual Connection}) je definovaný v~komunikačních uzlech, sestavuje se při~zapnutí a~není využitelný dalšími uživateli.
+
+\paragraph{Služby bez~spojení} Také datagramové služby. \emph{Connectionless Network Services} vyžaduje cílovou adresu v~každém paketu. Při~přenosu paketu může dojít ke~změně pořadí nebo ztrátě paketu.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/q07_connectionless}
+	%\caption{Ukázka nespojovaného přepojování paketů v~síti}
+\end{figure}
+
+% NOTE Původně tu byl bod "Vliv velikosti paketů na přepojování", ale nic moc se v něm neříkalo.
+
+\subsection{Služby síťové vrstvy}
+
+\subsubsection{Služby síťové vrstvy na~zdrojové stanici}
+
+Základní službou je \textbf{vytváření paketů}: zapouzdření jednotky vyšší vrstvy, přidání záhlaví (adresy, informace). \textbf{Vyhledání logické adresy} dalšího uzlu: vyhledání cíle pro~první skok s~využitím směrovací tabulky. \textbf{Vyhledání linkové adresy} dalšího uzlu: překlad logické adresy pro~přenos po~fyzickém médiu. \textbf{Rozdělení datagramu} na~menší jednotky v~případě potřeby (pokud je vytvořený paket větší než maximální povolená velikost).
+
+\subsubsection{Služby sítové vrstvy na~směrovači}
+
+\textbf{Kontrola bezchybnosti} přenosu paketu, vyhledání logické a~linkové adresy dalšího prvku, rozdělení datagramu, je-li to v~mezilehých uzlech povoleno.
+
+\subsubsection{Služby síťové vrstvy z~pohledu cílové stanice}
+
+\textbf{Kontrola bezchybnosti} přenosu paketu, \textbf{defragmentace} rozdělených částí a~\textbf{předání vyšší vrstvě}.
+
+\subsection{Další služby síťové vrstvy}
+
+I~když \textbf{řízení chybových stavů} řeší až~transportní vrstva, síťová vrstva obsahuje protokol ICMP/ICMPv6, který řízení chybových stavů částečně poskytuje, např. může zasílat \emph{choke packet} signalizující požadavek o~zpomalení.
+
+\textbf{Kvalita služeb} (\emph{Quality of~Services}) spočívá ve~vyhrazení dostatečné kapacity pro~aplikace, které ji vyžadují (videohovory a~další aplikace běžící v~reálném čase). \textbf{Směrování} umožŇuje dynamicky zjišťovat informace o~vzdálených sítích pro~účely směrování. \textbf{Bezpečnost} nebyla původně vůbec řešena, využívá se IPSec.
+
+\subsection{Služby síťové vrstvy poskytované transportní vrstvě}
+
+\textbf{Přenos datových jednotek} je prováděn z~pohledu transportní vrstvy transparentně. \textbf{Výběr kvality služby} určuje chybovost, dostupnost, spolehlivost, propustnost, zpoždění při~přenosu či řízení. \textbf{Výběr typu}: se~spojením či bez~něj. \textbf{Oznamování chyb} neopravených síťovou vrstvou. \textbf{Dodržení pořadí} datových jednotek, \textbf{řízení toku dat}.
+
+\subsection{IPv4}
+
+IPv4 adresa má délku 32 bitů. Počet všech adres je označován jako \textbf{adresní prostor} s~velikostí $2^{32}$, tj. zhruba čtyři miliardy adres. IPv4 adresy se zapisují jako čtyři čísla v~rozsahu $[0, 255]$ oddělena tečkou, např. \texttt{147.229.71.29}.
+
+\textbf{Maska sítě} rozděluje IP adresu na~adresu sítě a~stanice. Jde o~nepřerušenou řadu bitů zleva, která je reprezentována číslem $[1, 32]$ reprezentujícím počet bitů masky. Adresa \texttt{147.229.71.29/24} znamená síť \texttt{147.229.71.0}, adresu \texttt{0.0.0.29} a~masku \texttt{255.255.255.0}: \texttt{11111111 11111111 11111111 00000000}. Číslo za~lomítkem se označuje jako délka prefixu: prefix \texttt{/18} odpovídá masce \texttt{255.255.192.0}.
+
+V~síti je první adresa rezervovaná pro~síť samotnou a~poslední adresa pro~všesměrové vysílání (pakety jsou doručovány všem v~síti); ostatní adresy mohou být přiřazeny stanicím.
+
+Historicky se adresní prostor IPv4 rozděloval pomocí tříd. V~devadesátých letech se přešlo k~beztřídnímu adresování, což umožnilo prostor rozdělit efektivněji.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/q07_ip_classes}
+\end{figure}
+
+\subsubsection{IPv4 datagram}
+
+Při~přenosu je zabalen do~paketu vyšší vrstvy (Ethernet, ATM, \dots). Zabalený datagram zůstává neměnný, s~výjimkou proměnných polí jako hodnota čítače životnosti paketu.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/q07_ip_packet}
+	\caption*{Verze: \texttt{4}. Délka záhlaví: \texttt{20} až~\texttt{60} v~bajtech. Typ služby: hodnota QoS. }
+\end{figure}
+
+\subsection{Směrování}
 
 \clearpage
 \section{Síťová vrstva přenosových systémů -- tunelování paketů, ARP, NAT, ICMPv4, IPv6.}
