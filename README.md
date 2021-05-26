@@ -23,7 +23,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Blokové šifry - Product Ciphers, konstrukce, Feistelova síť, DES, AES, základní módy blokových šifer.
 - [x] Asymetrické algoritmy - RSA, Diffie-Hellman, ECDH systém a jejich využití pro digitální podpis.
 - [x] Hašovací funkce - vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.
-- [ ] PKI - certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.
+- [x] PKI - certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.
 - [x] Generování náhodných čísel - kryptografické generátory, požadavky, použití, princip, testování generátorů.
 - [ ] Bezpečnostní architektura RM OSI - služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách. 
 
