@@ -383,6 +383,98 @@ Tomuto útoku se říká \href{https://en.wikipedia.org/wiki/Birthday_attack}{na
 \clearpage
 \section{PKI -- certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.}
 
+\subsection{Public key infrastructure}
+PKI neboli public key infrastructure je souhrn technických a organizačních prostředků spojených s vydáváním, správou používáním a odvoláváním platnosti kryptografických klíčů a certifikátů. Zabraňuje použití falešné identity. Veřejný klíč je platný pouze v případě potvrzení důvěryhodnou stranou (certifikační autoritou).
+
+
+\subsection{X.509}
+Struktura:
+\begin{itemize}[noitemsep]
+    \item Verze (0\dots x.509 verze 1, 1\dots x.509 verze 2, 2\dots x.509 verze 3)
+    \item Sériové číslo
+    \item Algoritmus použitý pro podpis
+    \item Vydal (identifikace certifikační autority dle x.500)
+    \item Platnost od-do
+    \item Jméno a adresa (identifikace vlastníka)
+    \item Veřejný klíč
+    \item Rozšíření certifikátu
+    \item Digitální podpis certifikátu
+\end{itemize}
+
+Formy ukládání x.509 certifikátů jsou ve formě PEM (privacy enhanced mail, je v ASCII formátu, k certifikátu přidána hlavička, kodóvání base64), DER/BER (Distinguished Encoding Rules, Basic Encoding Rules, je v binárním formátu, překódováním do base64 a přidáním hlavičky vznikne PEM) a ASN.1 (Věnuje se popisu dat, je dobře čitelný pro lidi).
+
+\subsection{Certifikační autorita CA}
+Základními částmi jsou třída 1, 2, 3.
+
+Ve \textbf{třídě 1} ručí CA pouze za jednoznačnost certifikátu. Registrační autoritu takové CA je možné zjednodušit na program neboli žadatel vyplní formulář serveru a protokolem HHTPS jej odešle (stačí autentizace serveru a klient je tedy anonymní).
+
+\textbf{Třída 2} zahrnuje to třída 1 a navíc se kontroluje totožnost uživatele. Je vybudovaná síť registračních autorit (RA) a zde osobně dochází žadatelé. RA ověří totožnost uživatele a odešle žádost CA. CA třídy 2 uchovává svůj soukromý klíč v bezpečném hardwaru.
+
+\textbf{Třída 3} zahrnuje vše co třída 2, ale certifikáty jsou určené pro konkrétní aplikaci a pro nic jiného se nepoužívají. Takže například certifikát lze použít k přihlášení do nějaké aplikace ale email s ním nejde podepsat. Zde se soukromý klíč také uchovává v bezpečném hardwaru.
+
+\vspace{0,3cm}
+\noindent Další části CA jsou registrační autority (RA), online RA, IVR nebo telefonní záznamník, adresářové služby, DVCS server, timestamp server a zúčtovací systém.
+
+\textbf{Registrační autorita} má na starosti žádost o certifikát. Ověří totožnost uživatele, verifikuje žádost o certifikát a předá ho certifikační autoritě. CA ověří údaje z žádosti uživatele a údaje doplněné RA a vydá nebo nevydá příslušný certifikát.
+ 
+\textbf{Online RA} přijímá žádosti online cestou a lze zažádat o:
+\begin{itemize}[noitemsep]
+    \item Obnovení certifikátu v době platnosti starého.
+    \item Vydání nového certifikátu na základě jednorázového hesla pro vydání certifikátu.
+    \item Další certifikáty, žádost se podepisuje platným certifikátem.
+    \item Soukromý šifrovací klíč, který je archivován na CA.
+    \item Odvolání certifikátu.
+    \item CRL (cerificate revication list, seznam odvolaných certifikátů) nebo jiný certifikát vydaný CA.
+\end{itemize}
+
+\textbf{IVR nebo telefonní záznamník} slouží k odvolání certifikátu telefonem (jinou cestou). Pro odvolání musí proběhnout autentizace jednorázovým heslem.
+
+\textbf{Adresářové služby} nabízejí informace o uživatelích, které si uživatelé o sobě přejí publikovat (vydané certifikáty).
+
+\textbf{DVCS server} poskytuje informace o platnosti certifikátu, listin a dále může poskytovat časová razítka protokolem DVCSP.
+
+\textbf{Timestamp server} je speciální server poskytující pouze časová razítka a nemusí mít přístup do archívu CA.
+
+\textbf{Zúčtovací systém} má za cíl vystavit fakturu za poskytnuté služby uživateli.
+
+\vspace{0,3cm}
+\noindent \textbf{Důležitá aktiva CA}, která se musí maximálně chránit jsou Soukromý klíč CA, databázi uživatelů CA (CA nesmí vydat 2 uživatelům stejný certifikát a obsahuje osobní údaje), archiv soukromých šifrovacích klíčů uživatelů (pokud CA poskytuje), archiv listin uložených na CA a archiv vydaných certifikátů a CRL.
+\begin{center}
+\includegraphics[scale=0.5]{images/CA.jpg}
+\end{center}
+
+
+\subsection{Časová razítka (time stamp)}
+
+Časová razítka jsou elektronický ekvivalent časového určení a místa vlastního podpisu na listině. Řeší možné problémy vzniklé problémy odvoláním certifikátu. Zajišťuje především důkaz o existenci dokumentu v daném čase. Využívá se k poskytovaní elektronických notářských služeb a zajištění dlouhodobé archivace elektronicky podepsaných dokumentů. Časové razítko svazuje hash dokumentu s časem.
+
+\noindent Struktura obsahuje:
+\begin{itemize}[noitemsep]
+    \item Jméno vydavatele (jméno autority pro vydávání časových razítek (TSA)).
+    \item Jedinečné sériové číslo razítka.
+    \item Hash dokumentu a čas.
+\end{itemize}
+
+\subsection{Autorita časových razítek (TSA)}
+
+TSA musí podepisovat každé časové razítko privátnín klíčem vyhrazeným pouze k tomuto účelu. TSA musí být napojena bezpečným způsobem a v pravydelných časových intervalech synchronizována proti nejlépe třem na sobě nezávislým zdrojům. TSA využívají mezinárodní standard coordinated universal time UTC.
+
+\noindent Požadavkům na zdroj času lze dosáhnout využitím PKI, zajišťující důvěrnost, integritu, neodmítnutelnost a autenticitu při časové synchronizaci. Požadavky na zdroj času jsou:
+
+\begin{itemize}[noitemsep]
+    \item Musí pocházet z oficiálního důvěryhodného zdroje.
+    \item Čas nesmí být možné cestou změnit.
+    \item Vždy musí být možné zpětně dohledat zdroj času (celou hierarchii časových serverů)
+\end{itemize}
+
+\subsection{Vydání časového razítka}
+
+Uživatel zažádá pomocí klientské aplikace. Klient vytvoří a odešle žádost o časoví razítko ve standardizovaném formátu. Žádost je datová struktura obsahující hash dokumentu. TSA v případě kladné odpovědi odesílá odpověď obsahující časové razítko.
+
+\begin{center}
+\includegraphics[scale=0.7]{images/Timestamp.jpg}
+\end{center}
+
 \clearpage
 \section{Generování náhodných čísel -- kryptografické generátory, požadavky, použití, princip, testování generátorů.}
 
