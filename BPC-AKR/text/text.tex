@@ -515,5 +515,74 @@ K~ověření vlastností PRNG se využívají statistické testy. Odhalí nekval
 
 \textbf{Frekvenční test}: Obsahuje testovaná posloupnost bitů přibližně stejný počet nul a~jedniček? \textbf{Runs test}: Je počet a~délka řetězců po~sobě jdoucích stejných bitů na~úrovni náhodné posloupnosti? \textbf{Test hodností matic}, \textbf{spektrální test}.
 
+
 \clearpage
 \section{Bezpečnostní architektura RM OSI -- služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách.}
+
+\subsection{Architektura bezpečnosti v RM OSI}
+
+K zabezpečení se používá doporučení ITU-T X.800, ISO 7498-2 ISO/OSI Security Architecture. Obsahuje mechanismy bezpečnosti (security mechanism), útoky na bezpečnost (security attacks) a službu bezpečnosti (security services), kde jsou definované postupy pro zabezpečení informačních systémů.
+
+\subsection{Implementace bezpečnostních funkcí ve vrstvách RM OSI}
+
+Pro implementaci jsou nejvhodnější vrstvy 7. (aplikační protokoly), 4. (transport dat) a 3. (směrovaní). Bezpečnostní mechanismy jsou zabudovány do aplikačních programů a operačních systémů (7. a 4. vrstva)  a propojovacích zařízení (3. vrstva) ale existují i způsoby zabezpečení, které využívají další vrstvy.
+
+\subsection{Služby bezpečnosti}
+
+Služba bezpečnosti je realizovaná protokolem příslušné vrstvy. Existuje 5 kategorií služeb, kterými jsou autentizace (authentication), řízení přístupu (access control), zabezpečení důvěrnosti dat (data confidentiality), zabezpečení integrity dat (data integrity) a ochrana proti odmítnutí původní zprávy (non-repudiation).
+
+\textbf{Autentizace} je proces ověřovaní identity uživatele (entity). Existuje autentizace uživatelů (peer entity authentication), které nezabraňují útoky zopakováním zpráv. Dále existuje autentizace zdroje dat (data origin authentication), která provádí autentizaci všech dat a zabraňuje útokům zopakováním zpráv.
+
+\textbf{Řízení přístupu} sem spadá kontrola přístupu (možnost povolit nebo odepřít použití určitého zdroje určitému subjektu, řízení přístupu k materiálním, logickým, nebo digitálním zdrojům \textbf{neplést si s autorizací}). Umožňuje přístup  do systému k službám a dalším. Chrání před neautorizovaným přístupem, kde se nejčastěji nachází v aplikaci nebo OS.
+
+\textbf{Zabezpečení důvěrnosti dat} je ochrana obsahu dat, ochrana toku dat při přenosu proti analýze (zjištění odesílatele, adresáta, \dots). 
+
+\noindent Obsahuje služby pro:
+\begin{itemize}[noitemsep]
+    \item Důvěrnost přenosu zprávy.
+    \item Důvěrnost spojení (ochrana důvěrnosti v rámci navázaného spojení).
+    \item Důvěrnost toku dat (chrání informace na zálkadě atributů toku dat).
+    \item Selektivní důvěrnosti (ochrana pouze určených částí informace).
+\end{itemize}
+
+\textbf{Zabezpečení integrity dat} se zabývá zabezpečením proti neautorizované modifikaci (autorizace je přiřazení oprávnění pro práci v systému, specifikují se činnosti). Spadají sem služby integrity přenosu zpráv (ochrana integrity všech přenášených zpráv), služba integrity spojení (ochrana přenosů v rámci určitého navázaného spojení) a služby selektivní integrity spojení a selektivní integrity zpráv.
+Integritu rozdělujeme na slabou a silnou.
+
+\noindent \textbf{Slabá integrita} slouží pro objevování útoků (modifikace zprávy šumem, náhodná změna pořadí paketů, náhodná duplicita \dots) pomocí aplikací kontrolních součtů, CRC, pořadová čísla paketů atd.
+
+\noindent \textbf{Silná integrita} zabezpečuje proti úmyslným, aktivním útokům (subjektivní útoky) jako jsou podvržení zprávy, úmyslné pozměnění zprávy. Celkově silnou integritu tvoří prostředky slabé integrity a kryptografické prostředky
+
+
+\textbf{Ochrana proti odmítnutí původu zprávy} zajišťuje důkaz o původnosti dat, prokazuje původ (příjemce, odesílatel) a prokazuje doručení (odesílaní, přijetí).
+
+\vspace{0,5cm}
+Celkově by měla být zajištěna autentizace (vím s kým komunikuji) a nepopiratelnost (vím s kým komunikuji a lze mu to dokázat).
+
+\subsection{Mechanizmy bezpečnosti}
+
+Mechanizmy bezpečnosti jsou šifrování, digitální podpis, řízení přístupu, integrita dat, výměna autentizační informace, padding (výplň), řízení směrovaní a ověření třetím subjektem.
+
+\subsection{Útoky na bezpečnost -- model hrozeb}
+\begin{multicols}{2}
+\noindent \textbf{Destruction} (útok na dostupnost) zničení dat či síťových zdrojů.
+
+\noindent \textbf{Corruption} (útok na integritu) neautorizovaná modifikace aktiv nebo dat.
+
+\noindent \textbf{Removal} (útok na dostupnost) krádež, odebrání či ztráta informací nebo jiných zdrojů.
+
+\noindent \textbf{Disclosure} (útok na důvěrnost) neautorizovaný přístup k aktivům nebo datům.
+
+\noindent \textbf{Interruption} (útok na dostupnost) přerušení služeb, spojení začně být nepoužitelné.
+
+\begin{center}
+    \includegraphics[scale = 0.6]{images/threatModel.JPG}
+\end{center}
+\end{multicols}
+
+\subsection{Příklady implementace}
+
+Na síťové vrstvě se o bezpečnost stará hlavně IPsec. Zajišťuje důvěrnost a integritu přenášených dat. O integritu se stará autentizační hlavička IP datagramu. Důvěrnost se zajišťuje pomocí mechanismu zapouzdření.
+
+Na transportní vrstvě je bezpečnost zajištěna pomocí TLS (SSL bylo znehodnoceno v 2015) protokolu pro protokoly na aplikační vrstvě. Zajišťuje autentizaci mezi serverem a klientem, šifruje se spojení. Tímto zajišťuje autentizaci a důvěrnost.
+
+Na aplikační vrstvě několik protokolů jako HTTPS, SSH a další. HTTPS zajišťuje důvěrnost, autentizaci a integritu. SSH zajišťuje autentizaci, integritu a důvěrnost přenášených dat.
