@@ -25,7 +25,7 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 - [x] Hašovací funkce - vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.
 - [x] PKI - certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.
 - [x] Generování náhodných čísel - kryptografické generátory, požadavky, použití, princip, testování generátorů.
-- [ ] Bezpečnostní architektura RM OSI - služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách. 
+- [x] Bezpečnostní architektura RM OSI - služby bezpečnosti, mechanizmy bezpečnosti, útoky na bezpečnost, příklady implementace bezpečnostních mechanizmů v jednotlivých vrstvách. 
 
 ### BPC-IC2
 
