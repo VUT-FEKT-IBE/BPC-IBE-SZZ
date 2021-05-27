@@ -47,36 +47,40 @@ $u_0 = 4$, $u_{n+1} = (u_n^2 - 2) \Mod n$, \dots, $u_{s-2} \stackrel{?}{=} 0$.
 \clearpage
 \section{Teorie čísel, algebraické struktury -- popište účel a~způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.}
 
-Teorie čísel je ta část matematiky, jejímž základním objektem zkoumání jsou vlastnosti zejména celých čísel. Prvočíslo je $\geq 2$, které nemá jiné dělitele než triviální. Každé celé číslo $\geq 2$ je buď prvočíslo nebo se dá zapsat jako součin prvočísel. Pokud číslo není prvočíslo nazýváme ho číslem složeným.
+Teorie čísel je část matematiky zkoumající vlastnosti (zejména) celých čísel. Prvočíslo je $p \geq 2$, které nemá jiné dělitele než triviální. Každé celé číslo $\geq 2$ je buď prvočíslo nebo se dá zapsat jako součin prvočísel. Pokud číslo není prvočíslo, nazýváme ho číslem složeným.
 
-V kryptografii se nejčastěji setkáme s dělitelností (zbytek a modulo), největším společným dělitelem (GCD, výpočet jako násobek společných prvočinitelů s jejich nejmenší mocninou), nejmenším společným násobkem (LCM, výpočet jako násobek všech prvočinitelů s největší mocninou). Jestliže jsou výsledek GCD roven 1, jedná se číslo nesoudělné a bude se nejspíše jednat o prvočíslo.
+V kryptografii se nejčastěji setkáme s dělitelností (zbytek a~modulo), největším společným dělitelem (GCD, výpočet jako násobek společných prvočinitelů s~jejich nejmenší mocninou), nejmenším společným násobkem (LCM, výpočet jako násobek všech prvočinitelů s~největší mocninou). Jestliže jsou výsledek GCD roven 1, jedná se číslo nesoudělné a~bude se nejspíše jednat o~prvočíslo.
 
-\textbf{Eulerova funkce} $\phi(n)$ je často používaná v kryptografii. Udává počet celých čísel, která jsou nesoudělná s $n$.
+\textbf{Eulerova funkce} $\phi(n)$ je často používaná v~kryptografii. Udává počet celých čísel, která jsou nesoudělná s~$n$.
 
-Výpočet:
+\begin{table}[ht]
+    \centering
+    \caption{Výpočet Eulerovy funkce $\phi$}
+    \begin{tabular}{l|l}
+        prvočísla & $\phi(n) = n-1$ \\
+        mocniny prvočísel & $\phi(p^k) = (p-1) p^{k-1}$ \\
+        složená čísla & $\phi(a \cdot b) = \phi(a) \cdot \phi(b)$ \\
+    \end{tabular}
+\end{table}
+
+Algebraické struktury představují množiny prvků s~operacemi a~různými vlastnostmi. V~kryptografii jsou nejpoužívanější grupy, tělesa a~konečná tělesa.
+
+\textbf{Grupou} (G, $\circ$) nazýváme množinu G spolu s binární operací $\circ$ (operace se dvěma prvky $a, b$ kterým přiřazuje prvek $c$ stejné grupy) na~množině G, která splňuje:
+
 \begin{itemize}[noitemsep]
-    \item Pro prvočísla je to $\phi(n) = n - 1$
-    \item Ostatní čísla se rozloží tak aby byli nesoudělná a $\phi(n) = \phi(x * y) = \phi(x) * \phi(y)$
-    \item Pokud je mocninou prvočísla $\phi(n) = \phi(p^k) = (p-1)* p^{k-1}$
+    \item uzavřenost (pro všechny prvky $a, b$ v~G je i~$a \circ b$ prvkem G)
+    \item asociativita $(a \circ b) \circ c = a \circ (b \circ c)$
+    \item existence neutrálního prvku (existuje prvek e v G takový že pro všechna $a$ v~G platí $a \circ e = e \circ a = a$)
+    \item existence inverzního prvku (pro každý prvek $a$ existuje prvek $b$ takový že $a \circ b = b \circ a = e$, tj. že jejich složení je rovno neutrálnímu prvku. Prvku $b$ se říká inverzní)
 \end{itemize}
 
-Algebraické struktury představují množiny prvků s operacemi a různými vlastnostmi. V kryptografii jsou nejpoužívanější grupy, tělesa a konečná tělesa.
-
-\textbf{Grupou} (G,◦) nazýváme množinu G spolu s binární operací ◦ (operace se dvěma prvky a,b kterým přiřazuje prvek c stejné grupy) na množině G, která splňuje:
-\begin{itemize}[noitemsep]
-    \item uzavřenost (pro všechny prvky $a, b$ v G je i $a$ ◦ $b$ prvkem G)
-    \item asociativita $(a$ ◦ $b)$ ◦ $c = a$ ◦ $(b$ ◦ $c)$
-    \item existence neutrálního prvku (existuje prvek e v G takový že pro všechna a v G platí $a$ ◦ $e = e$ ◦ $a = a$)
-    \item existence inverzního prvku (pro každý prvek $a$ existuje prvek $b$ takový že $a$ ◦ $b = b$ ◦ $a = e$, tj. že jejich složení je rovno neutrálnímu prvku. Prvku $b$ se říká inverzní)
-\end{itemize}
-
-Grupa (G,◦) je \textbf{cyklická}, jestliže existuje prvek $a$ v G takový, že pro každé $b$ v G existuje celé číslo $i$ takové že $b = a^i$. Takový prvek se nazývá generátor grupy. 
+Grupa (G, $\circ$) je \textbf{cyklická}, jestliže existuje prvek $a$ v~G takový, že pro každé $b$ v~G existuje celé číslo $i$ takové, že $b = a^i$. Takový prvek se nazývá generátor grupy. 
 
 Řád prvku $a$ je definován jako nejmenší kladné celé číslo $t$ takové že $a^t = 1$ pokud takové $t$ existuje. 
 
 Řád generátoru grupy se rovná řádu grupy. Počet generátorů lze zjistit jako $\phi(\phi(n))$.
 
-Příklady praktických grup pro kryptografii:
+Příklady praktických grup pro~kryptografii:
 \begin{itemize}[noitemsep]
     \item Množina celých čísel $\mathbb{Z}$ spolu s operací sčítání (+) tvoří abelovskou grupu.
     \item Množina $\mathbb{Z}_n$ s operací sčítání modulo $n$ tvoří grupu řádu $n$.
@@ -84,13 +88,12 @@ Příklady praktických grup pro kryptografii:
     \item Množina $\mathbb{Z}_p$ s operací násobení modulo prvočíslo $p$ tvoří grupu, protože inverzní prvek existuje ke všem prvkům ze $\mathbb{Z}_p$. 
 \end{itemize}
 
-\vspace{2cm}
 Příklad pro $\mathbb{Z}^*_{17}$:
 \begin{itemize}[noitemsep]
-    \item Grupa obsahuje prvky 1-16 celkem $\phi(17) = 16$.
-    \item Neutrální prvek $e$ je 1.
-    \item Každý prvek $a$ má inverzní prvek $a^{-1}$ protože pro každé $a$ platí GCD(a,17) = 1.
-    \item Generátorem grupy jsou čísla 3,5,6,7,10,11,12,14 a celkem je jich $\phi(16) = 8$
+    \item Grupa obsahuje prvky 1--16 celkem $\phi(17) = 16$.
+    \item Neutrální prvek je $e = 1$.
+    \item Každý prvek $a$ má inverzní prvek $a^{-1}$, protože pro~každé $a$ platí GCD($a$,17) = 1.
+    \item Generátorem grupy jsou čísla $3,5,6,7,10,11,12,14$ a celkem je jich $\phi(16) = 8$
 \end{itemize}
 
 Nalezení generátoru:
@@ -101,8 +104,6 @@ Nalezení generátoru:
     \item Pro každého prvočíselného dělitele se vypočte $g^{\phi(n)/p_i} \equiv 1 \mod n$.
     \item Pokud předchozí rovnice neplatí pro žádné $p_i$ jedná se generátor.
 \end{itemize}
-
-
 
 \clearpage
 \section{Modulární aritmetika -- popište algoritmus Square and Multiply a Čínskou větu o zbytcích.}
@@ -384,65 +385,63 @@ Tomuto útoku se říká \href{https://en.wikipedia.org/wiki/Birthday_attack}{na
 \section{PKI -- certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.}
 
 \subsection{Public key infrastructure}
-PKI neboli public key infrastructure je souhrn technických a organizačních prostředků spojených s vydáváním, správou používáním a odvoláváním platnosti kryptografických klíčů a certifikátů. Zabraňuje použití falešné identity. Veřejný klíč je platný pouze v případě potvrzení důvěryhodnou stranou (certifikační autoritou).
 
+PKI neboli public key infrastructure je souhrn technických a~organizačních prostředků spojených s~vydáváním, správou, používáním a~odvoláváním platnosti kryptografických klíčů a~certifikátů. Zabraňuje použití falešné identity. Veřejný klíč je platný pouze v~případě potvrzení důvěryhodnou stranou (certifikační autoritou).
 
 \subsection{X.509}
 Struktura:
 \begin{itemize}[noitemsep]
-    \item Verze (0\dots x.509 verze 1, 1\dots x.509 verze 2, 2\dots x.509 verze 3)
-    \item Sériové číslo
-    \item Algoritmus použitý pro podpis
-    \item Vydal (identifikace certifikační autority dle x.500)
-    \item Platnost od-do
-    \item Jméno a adresa (identifikace vlastníka)
-    \item Veřejný klíč
-    \item Rozšíření certifikátu
-    \item Digitální podpis certifikátu
+    \item verze (\texttt{0}: x.509 verze 1, \texttt{1}: x.509 verze 2, \texttt{2}: x.509 verze 3),
+    \item sériové číslo,
+    \item algoritmus použitý pro~podpis,
+    \item vydavatel (identifikace certifikační autority dle x.500),
+    \item platnost od--do,
+    \item jméno a~adresa vlastníka,
+    \item veřejný klíč,
+    \item rozšíření certifikátu,
+    \item digitální podpis certifikátu.
 \end{itemize}
 
-Formy ukládání x.509 certifikátů jsou ve formě PEM (privacy enhanced mail, je v ASCII formátu, k certifikátu přidána hlavička, kodóvání base64), DER/BER (Distinguished Encoding Rules, Basic Encoding Rules, je v binárním formátu, překódováním do base64 a přidáním hlavičky vznikne PEM) a ASN.1 (Věnuje se popisu dat, je dobře čitelný pro lidi).
+Certifikáty x.509 se ukládají ve~formátu PEM (\emph{Privacy Enhanced Mail}; hlavička a~ASCII formát v~base64), DER/BER (\emph{Distinguished Encoding Rules}, \emph{Basic Encoding Rules}; binární formát, při~jehož konverzi a~přidání hlavičky vznikne PEM) a ASN.1 (popis dat dobře čitelný lidmi).
 
 \subsection{Certifikační autorita CA}
+
 Základními částmi jsou třída 1, 2, 3.
 
-Ve \textbf{třídě 1} ručí CA pouze za jednoznačnost certifikátu. Registrační autoritu takové CA je možné zjednodušit na program neboli žadatel vyplní formulář serveru a protokolem HHTPS jej odešle (stačí autentizace serveru a klient je tedy anonymní).
+V~\textbf{třídě 1} ručí CA pouze za~jednoznačnost certifikátu. Registrační autoritu takové CA je možné zjednodušit na~program neboli žadatel vyplní formulář serveru a~protokolem HTTPS jej odešle (stačí autentizace serveru a~klient je tedy anonymní).
 
-\textbf{Třída 2} zahrnuje to třída 1 a navíc se kontroluje totožnost uživatele. Je vybudovaná síť registračních autorit (RA) a zde osobně dochází žadatelé. RA ověří totožnost uživatele a odešle žádost CA. CA třídy 2 uchovává svůj soukromý klíč v bezpečném hardwaru.
+\textbf{Třída 2} zahrnuje vše z~třídy 1 a~navíc kontroluje totožnost uživatele: k~zástupci registrační autority osobně dochází žadatelé. RA ověří totožnost uživatele a~odešle žádost CA. CA třídy 2 uchovává svůj soukromý klíč v~bezpečném hardwaru.
 
-\textbf{Třída 3} zahrnuje vše co třída 2, ale certifikáty jsou určené pro konkrétní aplikaci a pro nic jiného se nepoužívají. Takže například certifikát lze použít k přihlášení do nějaké aplikace ale email s ním nejde podepsat. Zde se soukromý klíč také uchovává v bezpečném hardwaru.
+\textbf{Třída 3} zahrnuje vše co třída 2, ale certifikáty jsou určené pro~konkrétní aplikaci a~pro~nic jiného se nepoužívají. Př.: certifikát lze použít k přihlášení do nějaké aplikace ale email s ním nejde podepsat. Zde se soukromý klíč také uchovává v bezpečném hardwaru.
 
-\vspace{0,3cm}
-\noindent Další části CA jsou registrační autority (RA), online RA, IVR nebo telefonní záznamník, adresářové služby, DVCS server, timestamp server a zúčtovací systém.
+Další části CA jsou registrační autority (RA), online RA, IVR nebo telefonní záznamník, adresářové služby, DVCS server, timestamp server a~zúčtovací systém.
 
-\textbf{Registrační autorita} má na starosti žádost o certifikát. Ověří totožnost uživatele, verifikuje žádost o certifikát a předá ho certifikační autoritě. CA ověří údaje z žádosti uživatele a údaje doplněné RA a vydá nebo nevydá příslušný certifikát.
+\textbf{Registrační autorita} má na~starosti žádosti o~certifikáty. Ověří totožnost uživatele, verifikuje žádost o~certifikát a~předá ho certifikační autoritě. CA ověří údaje z~žádosti uživatele a~údaje doplněné RA a~vydá nebo nevydá příslušný certifikát.
  
-\textbf{Online RA} přijímá žádosti online cestou a lze zažádat o:
-\begin{itemize}[noitemsep]
-    \item Obnovení certifikátu v době platnosti starého.
-    \item Vydání nového certifikátu na základě jednorázového hesla pro vydání certifikátu.
-    \item Další certifikáty, žádost se podepisuje platným certifikátem.
-    \item Soukromý šifrovací klíč, který je archivován na CA.
-    \item Odvolání certifikátu.
-    \item CRL (cerificate revication list, seznam odvolaných certifikátů) nebo jiný certifikát vydaný CA.
+\textbf{Online RA} přijímá žádosti online cestou a~lze zažádat o:
+\begin{itemize}
+    \item obnovení certifikátu v~době platnosti starého,
+    \item vydání nového certifikátu na~základě jednorázového hesla pro vydání~ certifikátu,
+    \item další certifikáty, žádost se podepisuje platným certifikátem,
+    \item soukromý šifrovací klíč, který je archivován na~CA,
+    \item odvolání certifikátu,
+    \item CRL (\emph{Cerificate Revication List}, seznam odvolaných certifikátů) nebo jiný certifikát vydaný CA.
 \end{itemize}
 
-\textbf{IVR nebo telefonní záznamník} slouží k odvolání certifikátu telefonem (jinou cestou). Pro odvolání musí proběhnout autentizace jednorázovým heslem.
+\textbf{IVR nebo telefonní záznamník} slouží k~odvolání certifikátu telefonem (jinou cestou). Pro~odvolání musí proběhnout autentizace jednorázovým heslem.
 
-\textbf{Adresářové služby} nabízejí informace o uživatelích, které si uživatelé o sobě přejí publikovat (vydané certifikáty).
+\textbf{Adresářové služby} nabízejí informace o~uživatelích, které si uživatelé o~sobě přejí publikovat (vydané certifikáty).
 
-\textbf{DVCS server} poskytuje informace o platnosti certifikátu, listin a dále může poskytovat časová razítka protokolem DVCSP.
+\textbf{DVCS server} poskytuje informace o~platnosti certifikátu, listin a~dále může poskytovat časová razítka protokolem DVCSP.
 
-\textbf{Timestamp server} je speciální server poskytující pouze časová razítka a nemusí mít přístup do archívu CA.
+\textbf{Timestamp server} je speciální server poskytující pouze časová razítka a~nemusí mít přístup do~archívu CA.
 
-\textbf{Zúčtovací systém} má za cíl vystavit fakturu za poskytnuté služby uživateli.
+\textbf{Zúčtovací systém} má za~cíl vystavit fakturu za~poskytnuté služby uživateli.
 
-\vspace{0,3cm}
-\noindent \textbf{Důležitá aktiva CA}, která se musí maximálně chránit jsou Soukromý klíč CA, databázi uživatelů CA (CA nesmí vydat 2 uživatelům stejný certifikát a obsahuje osobní údaje), archiv soukromých šifrovacích klíčů uživatelů (pokud CA poskytuje), archiv listin uložených na CA a archiv vydaných certifikátů a CRL.
+\textbf{Důležitá aktiva CA}, která se musí maximálně chránit jsou soukromý klíč CA, databázi uživatelů CA (CA nesmí vydat dvěma uživatelům stejný certifikát a~obsahuje osobní údaje), archiv soukromých šifrovacích klíčů uživatelů (pokud CA poskytuje), archiv listin uložených na~CA a~archiv vydaných certifikátů a~CRL.
 \begin{center}
 \includegraphics[scale=0.5]{images/CA.jpg}
 \end{center}
-
 
 \subsection{Časová razítka (time stamp)}
 
