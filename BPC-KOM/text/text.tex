@@ -365,4 +365,51 @@ Při~přenosu je zabalen do~paketu vyšší vrstvy (Ethernet, ATM, \dots). Zabal
 \section{Transportní vrstva přenosových systémů -- služby transportní vrstvy, UDP protokol, TCP protokol.}
 
 \clearpage
-\section{Aplikační vrstva přenosových systémů -- DHCP protokol, DNS systém, přenos souborů, webové protokoly, elektronická pošta.}
+\section{Aplikační vrstva přenosových systémů\,--\,DHCP protokol, DNS systém, přenos souborů, webové protokoly, elektronická pošta.}
+
+\subsection{DHCP Dynamic host configuration protocol}
+
+DHCP je protokol aplikační vrstvy, který má na starost dynamické nastavování parametrů sítě. Nastavuje IP adresu, masku sítě, výchozí bránu, DNS a případně další. Funguje na principu klient-server. DHCP server vždy zapůjčí IP adresu na určitou dobu po které bude klient zbaven přístupu k této IP, pokud si zapůjčení neprodlouží. Využívá UDP porty 68 pro komunikaci a server 67 pro naslouchání. Existuje DHCP relay agent, který přeposílá broadcast zprávy do jiných sítí pokud se tam nachází DHCP server.
+
+\begin{center}
+\includegraphics[scale = 0.8]{images/dhcp.png}
+\end{center}
+
+\subsection{DNS domain name system}
+
+Překládá těžko zapamatovatelné IP adresy na jednodušeji zapamatovatelná jména v podobě řetězce znaků. Pokud by DNS neexistovalo a tak při změně IP adresy by si lidé museli znovu zapamatovávat IP adresu. Při existenci DNS se přepíše záznam jen na DNS serveru a tento problém se nemusí řešit. Ke komunikaci využívá porty UDP 53 a TCP 53. Funguje na principu klient-server, kdy jedinou IP adresou, kterou musíme znát je adresa DNS serveru. Vazba mezi je IP adresou a doménovým jménem je uložena v celosvětově distribuované DNS databázi. Základní jednotkou systému je DNS server (name server, jmenný server, rekurzivní resolver). DNS servery jsou primární (poskytuje autoritativní odpovědi) a sekundární (záloha primárního) a pomocný (pracuje jako vyrovnávací paměť). Server nejdřív hledá v pomocném serveru jestli záznam není uložen v paměti (cache) a~musí mít vlastní DNS server, kterého se může zeptat.
+
+Je vytvářena hierarchie domén, která začíná od kořene a jde postupně níže. Prvně se jde od domény nejvyššího řádu k nižším řádům domény. Domény nejvyššího řádu se dělí na generické (.edu, .com) a národní domény (.cz). Doménové jméno může mít maximální délku 255 znaků, kdy jeden řád (úroveň) může mít maximálně 63 znaků. Maximální počet řádů může být 127. 
+
+Postup dotazu na fekt.vutbr.cz. Klient se zeptá lokálního DNS serveru na IP pro tuto doménu. Jelikož ten to často neví tak se zeptá kořenových DNS serverů. Jelikož často kořenový neví, ale ví adresu další DNs serveru pro doménu nejvyššího řádu, tak mu odešle IP na ten server. Tak se postupuje stejným způsobem dokud se nenajde server, který danou IP adresu zná. Tuto IP adresu poté lokální DNS server zašle klientovy\footnote{\url{https://cs.wikipedia.org/wiki/Domain_Name_System\#/media/Soubor:Dns-wikipedia.png}}. 
+
+\subsection{FTP file transfer protokol}
+
+FTP je protokol na aplikační vrstvě sloužící pro přenos souborů mezi dvěma stanicemi. Využívá TCP porty 20 a 21, kdy 20 slouží k přenosu dat a na 21 naslouchá na příchozí spojení. Funguje na principu klient-server, kdy spojení navazuje pouze klient. Datová spojení jsou jednorázová a přenos je zabezpečený na rozdíl od telnetu. 
+
+Přihlásit se lze buď anonymně, že server nepožaduje žádnou autentizaci uživatele nebo zadáním konkrétního přihlašovacího jména a hesla (při přenosu nejsou šifrovány).
+
+Po navázání spojení klient posílá řídící příkazy (interpretace pomocí NVT protokolu) a server na tyto příkazy odpovídá (rozlišují se pomocí tří číselného kódu).
+
+Pracovní režim rozdělujeme na aktivní a pasivní. V aktivní režimu klient otevře náhodný port $> 1023$ a pošle serveru vybrané číslo portu. Následně klient na portu naslouchá a čeká na navázání datového spojení. Můžou nastat problémy pokud síť využívá filtrování nevyžádaného provozu, je za NATem nebo další. V pasivním režimu probíhá spojení naopak. Server otevírá port $> 1023$ a vyzve klienta k navázání spojení. Pasivní režim je výhodný pokud je klient uvnitř privátní sítě s vlastní adresou a server se nemůže na jeho port připojit.
+
+\subsection{Webové protokoly}
+
+Technologie WWW v základu využívá HTML, protokolu HTTP a URL.
+
+\textbf{URL} (Uniform Resource Locator) představuje jednoznačné síťové umístění nějakého zdroje nebo dokumentu. Tvar protokol://uživatel:heslo@počítač:port/cesta/\#část\_stránky. Protokol je povinný, uživatel nepovinný, heslo nepovinné, počítač ve tvaru IP nebo DNS jména, port je nepovinný, cesta v rámci serveru nebo počítače (nepovinná), část stránky je část dokumentu (nepovinná).
+
+\textbf{HTTP} (Hyper Text Trasfer Protocol) slouží pro přenos HTML dokumentů mezi klientem (prohlížeč) a www serverem. Využívá TCP port 80 a jeho zabezpečená verze HTTPS využívá TCP 443. Pomocí rozšíření MIME se může pomocí HTTP přenášet jakékoliv soubory. Funguje na způsobu dotaz--odpověď. Protokol HTTP do verze 1.1 je bezstavový, takže jeden dotaz na server je jeden klient. Pro každé spojení vytváří samostatné TCP spojení. Od verze 1.1 už lze podat více dotazů v jedné relaci, takže se nemusí vytvářet pokaždé nové TCP spojení a po určité době je spojení ukončeno. Nejčastějšími dotazy (request methods) jsou GET (požadavek na uvedený objekt se zasláním případných dat), HEAD (podobný GET jen nepředává data), POST (odesílání dat na server), PUT (nahrává data na server) a DELETE (smaže uvedená data ze serveru).
+
+\subsection{Elektronická pošta}
+
+Je založena na modelu klient-server. Klient posílá zprávu (email) pomocí MUA (mail user agent, poštovní klient) přes protokol SMTP na svůj poštovní server MSA (mail/message submission agent). MSA předává email na svůj MTA (mail transfer agent, přenos zpráv mezi servery). Často je MSA spojen do jednoho s MTA. MTA (server) vyhodnotí adresáta a určí na jaký další server to předat. Jak je zpráva na posledním MTA (serveru) předá se MDA (mail delivery agent, lokální doručování v rámci jednoho serveru). Jakmile je zpráva uložena na lokálním serveru MUA příjemce si vyzvedne zprávu pomocí POP3/IMAP. Komunikace až na vyzvednutí zprávy probíhá přes SMTP.
+
+Elektronická pošta obsahuje záhlaví (header, obsahují informace pro přenos, standardizovaný formát) a tělo zprávy (body, vlastní text).
+
+\textbf{SMTP} (Simple Mail Transfer Protocol) je primární standard pro přenos emailů od klienta na server a mezi servery. Využívá TCP port 25. Je založený na komunikaci klient-server (poštovní server musí být klient i server). Klient zadává čtyřznakové příkazy a~server odpovídá stavovými kódy. Nejčastěji se používá ESMTP (extended SMTP), které umožňuje přenos potvrzení o doručení zprávy.
+
+
+\begin{center}
+    \includegraphics[scale = 0.2]{images/emailcom.png}
+\end{center}
