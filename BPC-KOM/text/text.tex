@@ -364,6 +364,92 @@ Při~přenosu je zabalen do~paketu vyšší vrstvy (Ethernet, ATM, \dots). Zabal
 \clearpage
 \section{Transportní vrstva přenosových systémů -- služby transportní vrstvy, UDP protokol, TCP protokol.}
 
+\subsection{Služby transportní vrstvy}
+
+Transportní vrstva poskytuje komunikační prostředky pro komunikaci procesů v TCP/IP. Slouží pro rozlišení a doručení konkrétnímu procesu na zařízení.
+
+Pro adresaci na transportní vrstvě je třeba rozlišit 4 adresy, kterými jsou lokální host (stanice), lokální proces (aplikace), vzdálený host (stanice), vzdálený proces (aplikace). Komunikuje jako klient-server. Adresaci stanic má na starosti síťová vrstva a o adresy procesu se stará transportní vrstva. Protokoly UDP a TCP adresují na základě portů.
+
+\textbf{Port} má velikost 16 bitů (čísla 0 - 65535). Porty 0\,--\,1023 slouží pro známé aplikace (FTP, HTTP atd), 1024\,--\,49151 slouží pro méně používané aplikace, které jsou registrovány u~IANA nebo volné přístupné uživatelské porty, 49152\,--\,65535 jsou soukromé a dynamické porty přiřazované na straně klientské aplikace.
+
+\textbf{Socket} je označení pro kombinaci IP adresy a portu sloužící k identifikaci koncového bodu komunikace. Kombinace zdrojového a cílového socketu je vždy jedinečná (neexistují dvě probíhající komunikace se všemi 4 stejnými hodnotami). 
+
+Segmentace je je dělení velkého množství dat na části, kdy ke každé části je přidána záhlaví. Operace přidání záhlaví se nazývá zapouzdření a je prováděna u odesílatele. Opačný proces se nazývá odpouzdření a je prováděna až konečným příjemcem. Segment se záhlavím je předán síťové vrstvě a zapouzdřen IP záhlavím a odeslán jako paket. Příjemce segment předá transportní vrstvě zbavený záhlaví a na základě portu předá konkrétní aplikaci. TCP do záhlaví přidává pořadové číslo odesílaného bajtu, UDP toto neumožňuje. 
+
+K multiplexování dochází jestliže se v jednom bodě střetávají požadavky z různých zdrojů a mají být nějakým způsobem obslouženy. Jsou postupně zařazeny do fronty a vyřizovány. Demultiplexování je opačný postup multiplexovaní. 
+
+Řízení toku na transportní vrstvě zajišťují mechanismy:
+\begin{itemize}[noitemsep]
+    \item Řízení toku dat (flow control) spočívá ve způsobu organizace komunikace mezi koncovými body, realizace front a vyrovnávacích pamětí.
+    \item Řízení chybových stavů (error control) spočívá v číslovaní  přenášených dat a potvrzování úspěšného přenosu. Řízení chybových stavů a toku dat je kombinováno v~rámci techniky posuvného okna.
+    \item Předcházení zahlcení (congestion control) je řešeno pomocí techniky posuvného okna a následného nastavení dalších parametrů (pravidla pro opakovaný přenos, potvrzovaní přenosu\dots).
+\end{itemize}
+
+Řízení toku  na transportní vrstvě řeší celý přenosový řetězec dohromady, což je klíčové pro komunikaci.
+
+
+\subsection{UDP user datagram protocol}
+
+UDP je jednoduchý transportní protokol, který umožnuje nespojovaný a nespolehlivý přenos dat (best effort). Přenášeným jednotkám se říká datagramy. Nepotvrzuje doručení musí být řešeno na aplikační vrstvě. Oproti síťové umí UDP provádět přenos mezi konkrétními procesy. Má minimální režii přenosu a zpoždění. Je vhodný na přenos krátkých zpráv u kterých není potřeba bezztrátovost. 
+
+\begin{center}
+\includegraphics[scale = 0.5]{images/-050.png}
+\end{center}
+
+Zdrojový port určuje port na straně odesílatele, cílový port na straně příjemce, celková délka určuje velikost datagramu v bytech a kontrolní součet slouží k základní detekci chyb.
+
+Služby UDP:
+\begin{itemize}[noitemsep]
+    \item Komunikace proces--proces (komunikace socketových adres).
+    \item Přenos dat bez spojení, každý datagram je přenášen samostatně (před komunikací není navozováno spojení).
+    \item Žádné řízení toku dat, řízení proti zahlcení či řízení chybových stavů.
+    \item Zapouzdřování a odpouzdřování dat (pokud není detekována chyba).
+    \item Frontování, multiplxování a demultiplexování (fronty jsou vytvářeny dle portů) a na těchto frontách lze provádět multiplexování a demultiplexování.
+\end{itemize}
+
+Využití na službách dotaz-odpověď (DNS) nebo na VoIP službách
+
+\subsection{TCP Transmission Control Protocol}
+
+TCP umožňuje spojovaný a spolehlivý přenos dat. Přenášeným jednotkám se říká segmenty. Tyto segmenty jsou číslované. Číslovaní odesílaných a potvrzovaných bytů (odeslané byty jedné strany, odeslané byty druhé strany, byty potvrzované jednou stanou a~byty potvrzované druhou stranou). Umožňuje řízení toku dat, chybových stavů a stavů zahlcení. Má velkou režii přenosu.
+
+
+\begin{center}
+\includegraphics[scale = 0.5]{images/-051.png}
+\end{center}
+
+Pořadové číslo odesílaného bytu (SEQ, pořadové číslo prvního z odeslaných bytů segmentu), pořadové číslo potvrzovacího bytu (ACK) hodnota dalšího očekávaného bytu, délka záhlaví (musí být uvedeno kvůli volitelným položkám záhlaví, které mají 0-40 bytů), příznakové bity (když jsou nastaveny na 1 jsou aktivní), délka okna (maximální počet odeslaných bytů aniž by bylo potřeba potvrzení přijímače), kontrolní součet (podobný UDP), ukazatel naléhavých dat (jen pokud URG je 1) a volitelné položky záhlaví (nejsou povinná).
+
+Příznakové bity:
+\begin{itemize}[noitemsep]
+    \item URG urgentní data
+    \item ACK indikuje platnost pole potvrzovacího bytu
+    \item PSH data mají být předána po přijetí hned aplikaci (push)
+    \item RST odmítnutí spojení
+    \item SYN navazování spojení
+    \item FIN ukončení spojení
+\end{itemize}
+
+Služby TCP:
+\begin{itemize}[noitemsep]
+    \item Komunikace proces--proces (komunikace socketových adres).
+    \item Přenos toku dat (vytváří dojem propojení komunikujících procesů okruhem).
+    \item Plně duplexní přenos dat (komunikace oběma směry zároveň).
+    \item Multiplexování a demultiplexování (stejné jako UDP).
+    \item Spojovaně orientovaná služba (musí být prvně navázáno spojení a na konci ukončeno).
+    \item Spolehlivý přenos dat (využití potvrzovacích mechanizmů).
+\end{itemize}
+
+\begin{center}
+\includegraphics[scale = 0.5]{images/-052.png}
+\end{center}
+
+Navázání probíhá pomocí 3-cestného handshaku a ukončení pomocí 4-cestného handshaku (existuje 3-cestná varianta na obrázku kde ACK a FIN jsou sloučeny do jedné zprávy). 
+
+Záhlaví TCP obsahuje délku okna sloužící k nastavení přenosu maxima bytů bez potvrzení. Jelikož je spojení plně duplexní tak jsou okna vždy dvě a nemusí mít stejnou velikost. Tento mechanismus se nazývá technika posuvného okna. 
+
+Využití na službách HTTP, FTP, SMTP a v dalších službách kde je potřeba spolehlivého přenosu.
+
 \clearpage
 \section{Aplikační vrstva přenosových systémů\,--\,DHCP protokol, DNS systém, přenos souborů, webové protokoly, elektronická pošta.}
 
