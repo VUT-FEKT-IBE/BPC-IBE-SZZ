@@ -377,6 +377,90 @@ Nejznámější distribuované protokoly jsou RIP (nejmenší počet skoků, obn
 \clearpage
 \section{Síťová vrstva přenosových systémů -- tunelování paketů, ARP, NAT, ICMPv4, IPv6.}
 
+\subsection{Tunelování paketů}
+
+Princip tunelování je zapouzdření původního paketu a přidání nového záhlaví. Záhlaví se liší tím, že má jinou cílovou a zdrojovou IP adresu.
+
+Typy tunelování:
+\begin{itemize}[noitemsep]
+    \item Tunelovaní spolu s IPsec protokolem (celý packet je šifrován pomocí IPsec a k tomuto zašifrovanému paketu se přidá nové IP záhlaví).
+    \item IP tunelování je vhodné pokud se přechází mezi verzemi IP protokolu (IPv4 a IPv6). Při přechodu mezi verzemi se přidá nové záhlaví před to původní.
+\end{itemize}
+
+\subsection{ARP Address Resolution Protoco}
+
+ARP slouží k nalezní odpovídající MAC (fyzické) adresy k IPv4 adrese. Jedná se o dynamicky distribuovaný protokol, schopný reagovat na změny v síti. Slouží hlavně k nalezení neznáme MAC adresy v lokální síti, když známe IP adresu. Informace se ukládají do arp tabulky v podobě <IP:MAC:type>. Pracuje mezi spojovou a sítovou vrstvou, kde používá rámce spojové. Stanice pro zjištění vysílá broadcast požadavek a jen stanice, která má požadovanou adresu odpoví.
+
+\begin{center}
+	\includegraphics[scale=0.5]{images/-038.png}
+\end{center}
+    
+\subsection{NAT Network Address Translation}
+
+Nat neboli překlad síťových adres umožňuje směrovači změnu IP adresy v záhlaví paketu. Umožňuje oddělit interní sít od internetu. Na cestě může být provedena několikrát a lze provádět mezi verzemi IP protokolu. Provádí se tak, že z více privátních IP adres udělá jednu veřejnou (takže v domácí síti na veřejné síti všichni vystupují pod 1 adresou).
+
+Základní druhy NAT:
+\begin{itemize}
+    \item SNAT (source NAT) prvně je prováděn překlad zdrojové IP adresy a případné transportní adresy. Komunikace pouze z vnitřní sítě.
+    \item DNAT prvně je prováděn překlad cílové IP adresy a případné transportní adresy. Používá se ke zveřejnění služby z interní sítě na veřejně přístupnou IP adresu.
+\end{itemize}
+
+\subsection{ICMPv4}
+
+Protokol ICMP je servisní protokol (nepřenáší žádná uživatelská data). Slouží k testování konektivity, umožňuje signalizaci mimořádných událostí. 
+
+ICMP zprávy se dělí na dvě kategorie:
+\begin{itemize}[noitemsep]
+    \item Hlášení chyb (nestandardní stav při doručování).
+    \begin{itemize}[noitemsep]
+        \item Typ 3 nedoručitelný IP datagram.
+        \item Typ 4 snížení rychlosti odesílání.
+        \item Typ 5 přesměrování.
+        \item Typ 11 vypršení doby života.
+        \item Typ 12 problém s parametry
+    \end{itemize}
+    \item Dotazování (určení dotazování, tetování konektivity)
+    \begin{itemize}[noitemsep]
+        \item Typ 0 odpověď na žádost o odezvu.
+        \item Typ 8 žádost na odpověď.
+        \item Typ 13 požadavek na časové razítko.
+        \item Typ 14 odpověď na časové razítko.
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+	\includegraphics[scale=0.5]{images/-044.png}
+\end{center}
+
+\subsection{IPv6}
+
+IPv6 je nekompatibilní s IPv4, hlavním rozdílem je změna zápisu adres (fe80:abcd::0/64) a rozšíření velikosti adresního prostoru z 32 bitů na 128 bitů. Pro přechodné zajištění kompatibility se využívá technik jako souběh protokolů (SW a HW podporuje oba dva druhy), tunelování (většinou zapouzdření IPv6 do IPv4 paketu) a překlad adres (podobné nat jen s rozdílem že se zaměňují přímo adresy obou verzí, nazývá se to NAT-PT [protocol translator]).
+
+\begin{center}
+	\includegraphics[scale=0.5]{images/-046.png}
+\end{center}
+
+Třída provozu nastavuje prioritu paketu, identifikace toku dat umožňuje zjednodušení směrování, celková délka přenášených dat je velikost bez záhlaví, další záhlaví určuje informace o vnořeném záhlaví.
+
+Existují 3 druhy adresování:
+\begin{itemize}[noitemsep]
+    \item Unicast (individuální) jsou adresy identifikující jednotlivá síťová rozhraní.
+    \begin{itemize}[noitemsep]
+        \item Globální unikátní (2000::/3)
+        \item Linkové unikátní (FE80::/10)
+        \item Lokální smyčka (::1/128)
+        \item Nespecifikovaná adresa (::/128)
+        \item lokální unikátní (FC00::/7)
+        \item IPv4 kompatibilní (::/80)
+    \end{itemize}
+    \item Multicast (skupinové) pro skupiny a pakety jsou doručeny všem ve skupině. Patří sem i broadcast adresy.
+    \begin{itemize}[noitemsep]
+        \item Přiřazená adresa (FF00::/8)
+        \item Vyzývaný uzel (FF02::1:ff00:0/104)
+    \end{itemize}
+    \item Anycast (výběrové) také skupina ale paket je do doručen pouze jedinému členovy (nejčastěji nejbližší).
+\end{itemize}
+
 \clearpage
 \section{Transportní vrstva přenosových systémů -- služby transportní vrstvy, UDP protokol, TCP protokol.}
 
