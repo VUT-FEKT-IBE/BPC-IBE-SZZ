@@ -285,6 +285,81 @@ V~\textbf{paketovém} módu je možné vysílat různě velké zprávy v~libovol
 \clearpage
 \section{Fyzická vrstva přenosových systémů -- přenosová média, analogové a digitální modulace, klíčovací techniky, princip digitalizace řečového signálu.}
 
+\subsection{Přenosová media}
+
+Přenosové medium představuje fyzické medium, kterým je přenášen signál od zdroje k cíli. Můžou to být elektrické vodiče (symetrický (UTP, STP) a koaxiální kabel), optická vlákna (jednovidová, vícevidová), volný prostor.
+Základními charakteristikami, které se sledují jsou:
+\begin{itemize}[noitemsep]
+    \item Šířka pásma určuje jaké množství dat se dá přenést na daném mediu. Vyjadřuje se v Hz nebo b/s. 
+    \item Útlum určuje postupnou ztrátu amplitudy (velikosti) signálu na mediu. Závisí na vzdálenosti a udává se v dB (decibel). Existují 3 typy útlumu (napětí, proudu a výkonu).
+    \item Odolnost proti vnějšímu elektromagnetickému rušení určuje odolnost proti energii ostatních signálů. Může způsobit zkreslení přenášeného signálu. 
+    \item Impedance představuje velikost odporu vůči střídavému elektrickému proudu. Udává se v $\Omega$ (Ohm) a dělíme ji na vstupní, výstupní a charakteristickou. 
+    \item Přeslech mezi vodiči představuje rušení signálem sousedních kanálů, okruhů nebo vodičů. Udává se v dB.
+    \item Cena hlavně z ekonomického hlediska.
+\end{itemize}
+
+
+\subsection{Analogová a digitální modulace}
+Typy signálu:
+\begin{itemize}[noitemsep]
+    \item Analogový signál je spojitý a vyskytuje se běžně v přírodě (struna atd.). Určuje se amplituda a frekvence.
+    \item Digitální signál je nespojitý v čase a amplitudě. Vyjadřuje se v podobě 0 a 1 a je vytvořen člověkem.
+\end{itemize}
+
+\subsubsection{Analogová modulace}
+
+U analogových modulací se skládá vstupní analogový signál se signálem nosné frekvence spojitě v čase. Výsledek je modulovaný analogový signál přenesený na jiném kmitočtu a s jinými vlastnostmi.
+
+Typy modulace:
+\begin{itemize}[noitemsep]
+    \item Amplitudová modulace (AM) v závislosti na změně modulačního signálu se mění amplituda nosného signálu a ostatní parametry se nemění. Využívá se v rádiovém vysílání (dlouhé vlny).
+    \item Kmitočtová modulace (FM) v závislosti na změně modulačního signálu se mění kmitočet nosné vlny a amplituda se nemění. Využívá se v rádiovém vysílání (krátké vlny).
+    \item Fázová modulace (PM) u této modulace dochází na základě modulačního signálu ke změně okamžité fáze nosného signálu. Složitá demodulace. 
+\end{itemize}
+
+\includegraphics[scale=0.62]{images/-016.png}
+\includegraphics[scale=0.62]{images/-017.png}
+\includegraphics[scale=0.62]{images/-018.png}
+Amplitudová modulace \hspace{1.5cm} Kmitočtová modulace \hspace{1.5cm} Fázová modulace
+
+\subsubsection{Digitální modulace}
+
+Přenos digitálního signálu v přenesením pásmu probíhá pomocí klíčování (modulace). Rozdílem oproti analogovým modulacím je že modulační signál je diskrétní. Digitální klíčovací techniky se často využívají v bezdrátových přenosových signálech nebo i u ADSL.
+
+Jelikož je modulační signál diskrétní dochází u nosného signálu (harmonický) ke skokovým změnám. 
+
+Typy klíčovaní:
+
+\begin{itemize}[noitemsep]
+    \item Amplitudové klíčovaní (ASK) spočívá, že modulační signál střídavě spíná a vypíná podle toho jestli je právě modulována 1 nebo 0. Používá se spíše v kombinaci s dalšími typy. 
+    \item U Frekvenční klíčování (FSK) se v závislosti na modulačním signálu skokově mění frekvence nosného signálu. Potřebuje minimálně dvě frekvence, které se přepínají zda je přenášena 0 nebo 1.
+    \item Fázové klíčování (PSK) spočívá v ovlivňování počáteční fáze v daném intervalu. Základně platí že 0 je jedna hodnota počáteční fáze a hodnota 1 je fází opačnou (posunutá/otočená o 180°)
+\end{itemize}
+
+\includegraphics[scale=0.75]{images/-019.png}
+\includegraphics[scale=0.75]{images/-020.png}
+\includegraphics[scale=0.75]{images/-021.png}
+Amplitudové klíčovaní \hspace{2cm} Frekvenční klíčování \hspace{2cm} Fázové klíčování
+
+
+\textbf{Vícestavové klíčovaní}. Jelikož jsou předchozí dvoustavové a v moderních přenosech málo efektivní využívá se vícestavové klíčovaní. Jestliže chceme vyjádřit jedním stavem signálového prvku $n$ bitů je potřeba $2^n$ stavů (4 stavovým se přenáší 2 bity). Čím víc stavů tím efektivnější přenos ale zvyšuje se i složitost na straně vysílače i příjemce. Také se snižuje odolnost přenosu vůči chybám, rušení atd. Nejčastěji se využívá fázových modulací.
+
+
+\textbf{Kombinované fázové a amplitudové klíčování}. Pro dosáhnutí co největšího počtu stavů je vhodné kombinovat více druhů klíčování (nejčastěji fázové a amplitudové klíčování). Při kombinování je modulačním signálem ovlivňována fáze tak amplituda nosného signálu často nazývaná jako QAM (kvadraturní amplitudová modulace). Často je 8QAM, 16QAM atd. kde číslo značí počet stavů nosného signálu.
+
+\subsection{Digitalizace řečového signálu}
+
+Digitalizace řečového signálu je převod mluveného slova na digitální signál. Provádí se ve třech po sobě navazujících krocích:
+\begin{itemize}[noitemsep]
+    \item \textbf{Vzorkování} má za úkol ze spojitého signálu snímat aktuální hodnoty vhodnou rychlostí (určitou frekvencí, nazývá se vzorkovací kmitočet). Ze signálu se spojitým časem získáme signál, kde se vyskytují vzorky pouze v diskrétní hodnoty času.
+    \item Při \textbf{Kvantování} se signál stává diskrétním, kdy se z neomezeného množství hladin vytvoří pouze určitý počet (16,256) hodnot. Zde se zaokrouhlují navzorkované hodnoty na nejbližší kvantovací úroveň. Dochází zde ke zkreslení signálu, který při dostatečném počtu kvantovacích úrovní nemusí být znatelný. 
+    \item Při \textbf{kódování} je stanovení hladině přiřazena určitá posloupnost, která danou hodnotu reprezentuje v použitém kódu (kódovací techniky k digitalizaci řeči lišící se v požadavcích na šířku pásma a dosahované kvalitě původního signálu).  
+\end{itemize}
+
+\begin{center}
+    \includegraphics[scale=0.75]{images/-022.jpg}
+\end{center}
+
 \clearpage
 \section{Spojová vrstva přenosových systémů -- podvrstvy, rámce spojové vrstvy, adresace, metody zajištění spolehlivého přenosu.}
 
