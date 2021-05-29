@@ -180,27 +180,37 @@ V~\textbf{jednovrstvé} architektuře je IPS/IDS tvořen jedinou komponentou, kt
 \end{figure}
 
 \clearpage
-\section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěreční report).}
 
-Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~testovaného systému. Nutností je mít souhlas majitele systému.
+\section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěrečný report).}
+
+Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~testovaného systému. Umožňuje komplexní prozkoušení nově nasazených aplikací, bezpečnostních systémů, firewallů, IPS/IDS apod. Nutností je mít souhlas majitele systému.\footnote{\textit{Pozor!} Posouzení zranitelnosti není to stejné jako penetrační test. \textit{Penetrační test} je komplexní činností, kde se hledají, identifikují a~následně zneužívají (v~omezeném rozsahu) zranitelnosti. Oproti tomu \textit{Posouzení zranitelností} je především automatizovanou činností, která zranitelnosti hledá, ale nedemonstruje jejich zneužití.}
 
 \subsection{Dělení penetračních testů}
 
-\subsubsection*{Dle znalosti}
+\subsubsection*{Dle znalosti:}
 
-\textbf{Black Box}: útočník zná jen vstupy a~potenciální výstupy systému, neví nic o~vnitřním uspořádání, tj. je v~pozici běžného uživatele. \textbf{White Box}: k~dispozici má topologii sítě, přístupové údaje, dokumentaci, tj. je v~pozici vývojáře/technika. \textbf{Grey Box}: kombinace dvou předchozích, k~dispozici jsou pouze základní znalosti o~systému.
+\begin{itemize}
+    \item \textbf{Black Box}: tester zná jen vstupy a~potenciální výstupy systému, neví nic o~vnitřním uspořádání, tj. je v~pozici běžného uživatele. U~tohoto typu testování se vyžaduje především dobrá znalost skenovacích technik a~mapování sítě/systému. \textit{Nevýhodou} může být, že pokud nedojde k proniknutí do sítě, nebude otestována interní bezpečnost.  
+    
+    \item \textbf{White Box}: k~dispozici má topologii sítě, přístupové údaje, dokumentaci, tj. je v~pozici vývojáře/technika. Dopadem tohoto velkého množství informací je fakt, že testeři stráví hodně času studií a~pochopením systému, oproti samotnému testování. Často se využívají techniky jak statické, tak dynamické analýzy kódu. \textit{Nevýhodou} může být, že testeři nepřemýšlejí jako skutečný útočník.
+    
+    \item \textbf{Grey Box}: kombinace dvou předchozích, k~dispozici jsou pouze základní znalosti o~systému. \textit{Výhodou} je, že testeři se mohou soustředit na testování zranitelné části systému, namísto prohledávání systému od nuly. 
+\end{itemize}
+ 
+\subsubsection*{Dle realizace:}
 
-\subsubsection*{Dle realizace}
+\begin{itemize}
+    \item \textbf{Automatizované testy} využívají specializovaných nástrojů schopných detekce vlastností a~chyb zkoumaného systému. Výhodou je rychlost či~velké pokrytí \emph{attack surface}, tester však musí znát limitace aplikace a~možnosti jejího nastavení.
+    
+    \item \textbf{Manuální testy} se provádí ručně a~jsou tedy časově mnohem náročnější a~od~testera vyžadují hlubokou znalost oblasti, umožní však testování na~míru a~pokrytí detailů, které automatizované testy nepokryjí. Tyto dvě formy se v~praxi kombinují.
+\end{itemize}
+\subsubsection*{Dle cíle:}
 
-\textbf{Automatizované testy} využívají specializovaných nástrojů schopných detekce vlastností a~chyb zkoumaného systému. Výhodou je rychlost či~velké pokrytí \emph{attack surface}, tester však musí znát limitace aplikace a~možnosti jejího nastavení. \textbf{Manuální testy} se provádí ručně a~jsou tedy časově mnohem náročnější a~od~testera vyžadují hlubokou znalost oblasti, umožní však testování na~míru a~pokrytí detailů, které automatizované testy nepokryjí. Tyto dvě formy se v~praxi kombinují.
-
-\subsubsection*{Dle cíle}
-
-Síťová infrastruktura. Webové aplikace. Programy. Telefonní aplikace.
+Síťová infrastruktura. Webové aplikace. Programy. Telefonní aplikace. IoT zařízení. Fyzický pentest.\footnote{Penetrační testy lze dále rozdělit na externí a interní. Záleží na počáteční pozici testera, tj. mimo/uvnitř sítě.} 
 
 \subsection{Metodologie}
 
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \begin{tabular}{p{3cm}|p{12cm}}
 plánování      & určují se~detailní cíle a~časový plán, vymezují se priority \\
@@ -213,13 +223,50 @@ report         & předání výsledků, které povedou ke~zvýšení bezpečnost
 
 \subsection{Testování webových aplikací}
 
-\textbf{OWASP} je nezisková organizace zaměřená na~zlepšování bezpečnosti software. Jejím cílem je neomezený přístup jednotlivců i~organizací k~informacím o~bezpečnostních hrozbách.
+\textbf{OWASP} (Open Web Application Security Project) je nezisková organizace zaměřená na~zlepšování bezpečnosti software. Jejím cílem je neomezený přístup jednotlivců i~organizací k~informacím o~bezpečnostních hrozbách. Mezi jejich neznámější publikace patří: OWASP top 10, ASVS (Application Security Verification Standard), OWASP Web Security Testing Guide
 
-% TODO Další informace -- xnomas?
+\subsubsection{OWASP Top 10}
 
-\begin{center}
-{\huge \dots} zde je třeba doplnit zbytek {\huge \dots}
-\end{center}
+Publikace shrnující aktuálních deset nejhorších zranitelností. Vychází z~domluvy firem z~odvětví a~OWASP, nemusí tedy nutně znamenat, že se vyskytují nejčastěji. Postupně se jedná o zranitelnosti (2017):
+\begin{enumerate}
+    \item Injekce (SQL injection, Code injection)
+    \item Nekorektní funkce autentizace (Obecné chyby autentizačních mechanismů)
+    \item Odhalení citlivých dat (Např. Nezabezpečená komunikace aplikace jako HTTP, FTP. Výpis errorů na stránce, apod.)
+    \item XML externí entity tj. XXE (Umožňuje code execution přes chybu v parseru XML.\footnote{\url{https://www.youtube.com/watch?v=gjm6VHZa_8s}})
+    \item Chybná kontrola přístupu (Chyba v ACL)
+    \item Špatná konfigurace bezpečnostních politik (Např. nenastavení lockout mechanismu po určitém počtu neúspěšných přihlášení)
+    \item Cross Site Scripting tj. XSS (Umožňuje vykonávání JavaScriptu na straně uživatele.\footnote{\url{https://www.youtube.com/watch?v=EoaDgUgS6QA}})
+    \item Nebezpečná deserializace (Serializace - převedení dat do strojově interpretovatelného formátu; Deserializace - převedení zpět na původní string. Chyba? Může dojít k vykonání kódu při deserializaci.\footnote{\url{https://www.youtube.com/watch?v=HaW15aMzBUM}})
+    \item Užívání komponent se známou zranitelností
+    \item Nedostatek loggingu a monitoringu
+\end{enumerate}
+
+\clearpage
+
+\subsubsection{OWASP Testing Guide}
+
+Rozděluje penetrační test na dvě fáze: \textbf{Pasivní fáze} a \textbf{Aktivní fáze}.
+\\
+
+V pasivní fázi dochází k tzv. \textit{fingerprintingu} (tj. k průzkumu prostředí). Na konci této fáze by útočník měl mít základní znalosti o prostředí webu, jako přístupové body, funkcionality a obsah. Jedna ze základních metod je využití veřejně dostupných informací z vyhledávačů jako Google, DuckDuckGo apod. (tzv. Google Dorking) Dále lze využívat HTTP proxy (jako BurpSuite) pro prozkoumání zaslaných HTTP žádostí za účelem identifikace OS serveru nebo typu serveru (Apache, Microsoft, Apache Tomcat, ...). 
+\\
+
+V aktivní fázi už dochází k interpetaci dat získaných z fingerprintingu a pokusy o exploitaci. Všechny zranitelnosti, payloady a~nevydařené útoky by měly být řádně zapsány. To umožní později sepsat koherentní a~komplexní report. 
+
+\subsubsection{Report}
+
+V \textbf{OWASP Web Security Testing Guide} je uvedeno že dobrý report je základ penetračního testu. Bez něj nelze prezentovat výsledky a zajistit, že chyby budou opraveny. Rozděluje report na čtyři části:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{3cm}|p{12cm}}
+Úvod      &  prostor pro obsah, jména členů týmu, limity testování, časové rozmezí testu\\
+Shrnutí   &  cíl testu, shrnutí dopadů z ekonomického a compliance hlediska, návrhy pro budoucí zlepšení \\
+Nálezy    &  výpis všech nalezených zranitelností, všechny zranitelnosti by měly obsahovat co nejvíce detailní informace\footnote{více: \url{https://owasp.org/www-project-web-security-testing-guide/v42/5-Reporting/README.html}} \\
+Dodatky   & použité metody, nástroje, vysvětlení závažnosti, relevantní výstupy nástrojů, apod. \\
+\end{tabular}
+\end{table}
+
 
 \clearpage
 \section{(D)DoS útoky (princip, rozdělení, popis základních útoků: SYN Flood, HTTP Flood, DNS reflection, Ping of Death, Slow-Loris). Zátěžové testování (typy testů, nejznámější nástroje).}
@@ -234,12 +281,13 @@ report         & předání výsledků, které povedou ke~zvýšení bezpečnost
 
 \textbf{ARP flood}: ARP dotazy \\
 \textbf{RST flood}: pakety obsahují falešné IP adresy s~parametrem RST, který resetuje spojení \\
-\textbf{SYN flood}: otevření spojení bez~následného potvrzení \\
+\textbf{SYN flood}: otevření spojení bez~následného potvrzení\footnote{\url{https://www.cloudflare.com/learning/ddos/syn-flood-ddos-attack/}} \\
 \textbf{HTTP flood}: legitimní, ale náročné GET a~POST dotazy \\
 \textbf{UDP flood}: legitimní UDP datagramy \\
-\textbf{PingSweep}: zprávy od~uzlů požadují odpovědi od~cílového systému \\
+\textbf{PingSweep}: zprávy od~uzlů požadují odpovědi od~cílového systému\footnote{\url{https://www.netscout.com/what-is-ddos/icmp-flood}} \\
 \textbf{Smurf}: ICMP pakety se \emph{spoofovanou} adresou oběti jsou posílány na~broadcast adresu \\
-\textbf{Reflection attack}: malý dotaz se~zdrojovou adresou oběti: DNS/NTP amplifikace
+\textbf{Reflection attack}: malý dotaz se~zdrojovou adresou oběti: DNS/NTP amplifikace\footnote{\url{https://www.cloudflare.com/learning/ddos/dns-amplification-ddos-attack/}}
+ 
 
 \subsubsection{Logické útoky}
 
@@ -254,6 +302,8 @@ report         & předání výsledků, které povedou ke~zvýšení bezpečnost
 \textbf{RandomUnreachableHost}, \textbf{UnreachableHost}: neautorizované přerušení spojení \\
 \textbf{XMasTree}: TCP paket má v~hlavičce nastaveny příznaky FIN, URG, PST \\
 \textbf{Slow-Loris}: nekompletní pomalý GET dotaz
+
+\clearpage
 
 \subsection{Detekce a~mitigace}
 
