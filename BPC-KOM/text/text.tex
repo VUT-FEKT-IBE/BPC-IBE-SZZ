@@ -341,14 +341,17 @@ V~síti je první adresa rezervovaná pro~síť samotnou a~poslední adresa pro~
 
 Historicky se adresní prostor IPv4 rozděloval pomocí tříd. V~devadesátých letech se přešlo k~beztřídnímu adresování, což umožnilo prostor rozdělit efektivněji.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{images/q07_ip_classes}
-\end{figure}
+
 
 \subsubsection{IPv4 datagram}
 
 Při~přenosu je zabalen do~paketu vyšší vrstvy (Ethernet, ATM, \dots). Zabalený datagram zůstává neměnný, s~výjimkou proměnných polí jako hodnota čítače životnosti paketu.
+
+\clearpage
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/q07_ip_classes}
+\end{figure}
 
 \begin{figure}
 	\centering
@@ -357,6 +360,19 @@ Při~přenosu je zabalen do~paketu vyšší vrstvy (Ethernet, ATM, \dots). Zabal
 \end{figure}
 
 \subsection{Směrování}
+
+Existují dva typy směrovaní statické a dynamické. Statické není často využíváno jelikož se používají pevné a jakákoliv změna v síti by pak znemožnila komunikaci (použití až v koncových sítích). 
+
+Dynamické směrovaní řeší problém statického jelikož průběžně reaguje na změny a upravuje tak svoji směrovací tabulku. Nejčastějšími typy dynamického směrovají jsou:
+
+\begin{itemize}[noitemsep]
+    \item Centralizované směrovače posílají informace o okolních sítích do jednoho řídícího centra a to pak rozesílá směrovací tabulky zpět směrovačům.
+    \item Distribuované informace o změnách se předávají mezi sousedními směrovači. 
+    \item Hierarchické sítě se rozdělují do několika oblastí, kde koncové prvky těchto oblastí předávají informace mezi sebou. Každá oblast si provádí vlastní směrovaní.
+    \item Izolované směrovače si nevyměňují informace ale rozhodují se samy.
+\end{itemize}
+
+Nejznámější distribuované protokoly jsou RIP (nejmenší počet skoků, obnova informací každých 30 sekund), OSPF, kdy OSPF (hledání nejkratší cesty, obnova informací až při změně v síti) nabízí taky možnost hierarchického směrování. Většina dynamických směrovacích protokolů využívá nějakého algoritmu na nalezení nejkratší cesty. Základní požadavky na protokoly jsou minimalizace velikosti směrovacích tabulek (rychlost vyhledávání), minimalizace počtu přenášených zpráv (menší zátěž), robustnost (aby nedošlo k zacyklení paketu) a využití optimálních tras (nemusí být vždy nejrychlejší nebo nejkratší).
 
 \clearpage
 \section{Síťová vrstva přenosových systémů -- tunelování paketů, ARP, NAT, ICMPv4, IPv6.}
