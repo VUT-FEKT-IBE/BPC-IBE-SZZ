@@ -183,7 +183,7 @@ V~\textbf{jednovrstvé} architektuře je IPS/IDS tvořen jedinou komponentou, kt
 
 \section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěrečný report).}
 
-Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~testovaného systému. Umožňuje komplexní prozkoušení nově nasazených aplikací, bezpečnostních systémů, firewallů, IPS/IDS apod. Nutností je mít souhlas majitele systému.\footnote{\textit{Pozor!} Posouzení zranitelnosti není to stejné jako penetrační test. \textit{Penetrační test} je komplexní činností, kde se hledají, identifikují a~následně zneužívají (v~omezeném rozsahu) zranitelnosti. Oproti tomu \textit{Posouzení zranitelností} je především automatizovanou činností, která zranitelnosti hledá, ale nedemonstruje jejich zneužití.}
+Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~testovaného systému. Umožňuje komplexní prozkoušení nově nasazených aplikací, bezpečnostních systémů, firewallů, IPS/IDS apod. Nutností je mít souhlas majitele systému.\footnote{\textit{Pozor!} Posouzení zranitelnosti není to stejné jako penetrační test. \textit{Penetrační test} je komplexní činností, kde se hledají, identifikují a~následně zneužívají (v~omezeném rozsahu) zranitelnosti. Oproti tomu \textit{posouzení zranitelností} je především automatizovanou činností, která zranitelnosti hledá, ale nedemonstruje jejich zneužití.}
 
 \subsection{Dělení penetračních testů}
 
@@ -228,17 +228,18 @@ report         & předání výsledků, které povedou ke~zvýšení bezpečnost
 \subsubsection{OWASP Top 10}
 
 Publikace shrnující aktuálních deset nejhorších zranitelností. Vychází z~domluvy firem z~odvětví a~OWASP, nemusí tedy nutně znamenat, že se vyskytují nejčastěji. Postupně se jedná o zranitelnosti (2017):
-\begin{enumerate}
+
+\begin{enumerate}[noitemsep]
     \item Injekce (SQL injection, Code injection)
-    \item Nekorektní funkce autentizace (Obecné chyby autentizačních mechanismů)
-    \item Odhalení citlivých dat (Např. Nezabezpečená komunikace aplikace jako HTTP, FTP. Výpis errorů na stránce, apod.)
-    \item XML externí entity tj. XXE (Umožňuje code execution přes chybu v parseru XML.\footnote{\url{https://www.youtube.com/watch?v=gjm6VHZa_8s}})
-    \item Chybná kontrola přístupu (Chyba v ACL)
-    \item Špatná konfigurace bezpečnostních politik (Např. nenastavení lockout mechanismu po určitém počtu neúspěšných přihlášení)
-    \item Cross Site Scripting tj. XSS (Umožňuje vykonávání JavaScriptu na straně uživatele.\footnote{\url{https://www.youtube.com/watch?v=EoaDgUgS6QA}})
-    \item Nebezpečná deserializace (Serializace - převedení dat do strojově interpretovatelného formátu; Deserializace - převedení zpět na původní string. Chyba? Může dojít k vykonání kódu při deserializaci.\footnote{\url{https://www.youtube.com/watch?v=HaW15aMzBUM}})
+    \item Nekorektní funkce autentizace (obecné chyby autentizačních mechanismů)
+    \item Odhalení citlivých dat (např. nezabezpečená komunikace aplikace jako HTTP/FTP, výpis chyb na~stránce, \dots)
+    \item XML externí entity tj. XXE (code execution přes~chybu v~parseru XML\footnote{XXE: \url{https://www.youtube.com/watch?v=gjm6VHZa_8s}.})
+    \item Chybná kontrola přístupu (chyba v~ACL)
+    \item Špatná konfigurace bezpečnostních politik (nenastavení lockout mechanismu po~určitém počtu neúspěšných přihlášení)
+    \item Cross Site Scripting tj. XSS (vykonávání JavaScriptu na~straně uživatele\footnote{XSS: \url{https://www.youtube.com/watch?v=EoaDgUgS6QA}.})
+    \item Nebezpečná deserializace (při~převodu binárních dat na~interní reprezentaci v~programu může dojít k~vykonání kódu\footnote{Deserializace: \url{https://www.youtube.com/watch?v=HaW15aMzBUM}.})
     \item Užívání komponent se známou zranitelností
-    \item Nedostatek loggingu a monitoringu
+    \item Nedostatek loggingu a~monitoringu
 \end{enumerate}
 
 \clearpage
@@ -257,15 +258,17 @@ V aktivní fázi už dochází k interpetaci dat získaných z fingerprintingu a
 
 V \textbf{OWASP Web Security Testing Guide} je uvedeno že dobrý report je základ penetračního testu. Bez něj nelze prezentovat výsledky a zajistit, že chyby budou opraveny. Rozděluje report na čtyři části:
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
-\begin{tabular}{p{3cm}|p{12cm}}
+\begin{tabular}{p{1.5cm}|p{13.5cm}}
 Úvod      &  prostor pro obsah, jména členů týmu, limity testování, časové rozmezí testu\\
-Shrnutí   &  cíl testu, shrnutí dopadů z ekonomického a compliance hlediska, návrhy pro budoucí zlepšení \\
-Nálezy    &  výpis všech nalezených zranitelností, všechny zranitelnosti by měly obsahovat co nejvíce detailní informace\footnote{více: \url{https://owasp.org/www-project-web-security-testing-guide/v42/5-Reporting/README.html}} \\
-Dodatky   & použité metody, nástroje, vysvětlení závažnosti, relevantní výstupy nástrojů, apod. \\
+Shrnutí   &  cíl testu, shrnutí dopadů z ekonomického a compliance hlediska, návrhy pro~budoucí zlepšení \\
+Nálezy    &  výpis všech nalezených zranitelností, všechny zranitelnosti by měly obsahovat co nejvíce detailní informace \\
+Dodatky   & použité metody, nástroje, vysvětlení závažnosti, relevantní výstupy nástrojů, \dots \\
 \end{tabular}
 \end{table}
+
+Více např. \url{https://owasp.org/www-project-web-security-testing-guide/v42/5-Reporting/README.html}.
 
 
 \clearpage
