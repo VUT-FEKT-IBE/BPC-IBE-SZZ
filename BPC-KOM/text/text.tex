@@ -363,6 +363,95 @@ Digitalizace řečového signálu je převod mluveného slova na digitální sig
 \clearpage
 \section{Spojová vrstva přenosových systémů -- podvrstvy, rámce spojové vrstvy, adresace, metody zajištění spolehlivého přenosu.}
 
+\subsection{Podvrstvy}
+
+\textbf{LLC} (logical link control) poskytuje rozhraní mezi konkrétním přenosovým prostředkem a síťovou vrstvou. Stará se o multiplexování požadavků síťové vrstvy, které přicházejí od IP, IPX nebo appletalk protokolu a umožňuje jim koexistovat v jedné infrastruktuře. Může se také starat o kontrolu toku dat a řízení chybových stavů mezi uzly (u TCP/IP se stará transportní vrstva).
+
+\textbf{MAC} (media access control) poskytuje specifické služby pro daný přenosový prostředek (kódování, přenosové schéma, adresování nebo práce s rámci). V případě sítí s mnohonásobným přístupem pak řeší problematiku přístupu k mediu s ohledem na ostatní uzly sítě (sdlení kapacity, řešení kolizí).
+
+\subsection{Rámec spojové vrstvy}
+
+Rámec je základní jednotka, se kterou pracuje spojová vrstva. Protokoly potřebují tyto řídící informace\,--\,které uzly spolu komunikují, kdy komunikace začíná a končí, zda došlo při přenosu k chybám, kdo bude komunikovat jako další.
+
+Rámec se obvykle skládá ze tří částí:
+\begin{itemize}[noitemsep]
+    \item Záhlaví (header) obsahuje řídící informace. 
+    \begin{itemize}[noitemsep]
+        \item Začátek rámce neboli preambule/flag sloužící k identifikaci začátku rámce předem daná sekvence 1 a 0.
+        \item Zdrojovou a cílovou adresu k identifikaci komunikujících uzlů.
+    \end{itemize}
+    \item Datová část obsahuje nejčastěji paket.
+    \item Zápatí (trailer) obsahuje řídící informace, k zjištění chyb.
+    \begin{itemize}[noitemsep]
+        \item Kontrolní sekvence rámce (FCS) detekce chyb přenosu.
+        \item Vlastní zápatí slouží k identifikaci konce celého rámce, předem daná sekvence 1 a 0.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Rámec standardu ethernet}
+
+Existuje víc typů rámců ethernet. Nejpoužívanější jsou Ethernet II a IEEE 802.3. Rozdíl je v hodnotě délka respektive typ. Pokud je v poli dekadická hodnota menší jak 1500 jedná se o délku udávající datovou délku rámce. Pokud je větší jak 1500 určuje typ protokolu v datové části. 
+
+\begin{center}
+    \includegraphics[scale= 0.53]{images/-023.png}
+    \includegraphics[scale= 0.53]{images/-024.png}
+\end{center}
+
+Dalšími typy rámců můžou být rámce protokolů BiSync, PPP a HDLC nebo rámce technologií ATM a Frame Relay.
+
+\subsection{Adresace}
+
+Adresy jsou označovány jako fyzické adresy (MAC), kdy při komunikaci jsou uloženy v záhlaví rámce a specifikují cíl na lokální síti (pro odpověď se uvádí i MAC odesílatele). MAC adresy jsou používány jen pro lokální adresování, při změně sítě se vytváří nový rámec. Vytváří se tak, že do nového rámce je zapouzdřena datová část původního rámce.
+
+Každý uzel sítě má unikátní MAC, která je uložena v paměti uzlu. Adresa je přednastavena výrobcem a je celosvětově unikátní. Délka je 48 bitů a tvar jako \texttt{\textcolor{red}{FE:DC:BA}:\textcolor{blue}{98:76:54}}. První polovina značí \textcolor{red}{výrobce} a druhá polovina značí \textcolor{blue}{kód konkrétní karty}.
+
+\subsection{Techniky detekce chyb}
+
+\subsubsection{Základní přístupy k detekci chyb}
+
+Možné řešení přenést rámec dvakrát (nevýhodné jelikož je tam zátěž na síť a při stejné chybě by se jevil rámec jako správný). Existují dva přístupy opravy rámce. Prvním je požadavek o opakované poslání rámce a zahození špatného. Druhým je možnost opravit chybu na straně příjemce automaticky. Základní myšlenka detekce i opravy chyb je přidání určité redundantní informace do rámce.
+
+\subsubsection{Metody zabezpečení proti chybám}
+
+\textbf{Paritní bit} je nejjednodušší způsob zabezpečení. Funguje tak že se vezme 7 bitů zprávy a z nich se spočítá počet jedniček. K těmto 7 bitům je poté doplněn paritní bit, který se odvyjí jestli je použita sudá nebo lichá parita (doplňuje se vždy 1 nebo 0, aby byl výsledný počet 1 rovný typu parity). Nedetekuje pokud dojde k sudému počtu chyb.
+
+\textbf{Kontrolní součty} provádí součet celého rámce a výsledek ukládají jako kontrolní hodnotu za rámec. Není odolný proti záměně pořadí bitů.
+
+\textbf{Cyklické redundantní kontroly (CRC)} jsou používaný všemi spojovými protokoly. Fungují na principu dělení polynomu polynomem a do pole FCS je ukládán zbytek po dělení. Vyžaduje malou redundanci a pravděpodobnost detekce chyby je vysoká. Funguje tak že odesílatel i příjemce znají používaný algoritmus. Odesílatel před odesláním spočítá kontrolní sekvenci a přidá ji do FCS. Příjemce také spočítá kontrolní sekvenci a pokud se FCS rovná je považován za neporušený.
+
+\subsection{Spolehlivý přenos}
+
+U spolehlivosti přenos se rozlišuje jestli došlo k chybě uvnitř rámce (poškození rámce) nebo rámec není vůbec detekován nebo ho nelze rozpoznat (ztráta celého rámce).
+
+Pokud byl rámec ztracen tak se neví, že měl přijít a proto musí existovat nějaký nadřazený mechanizmus pro opakované vysílání. Mechanizmy často souvisí s regulací toku a často jsou až na transportní vrstvě. Všechny spojové protokoly neposkytují spolehlivý přenos a detekci nechávají na vyšších vrstvách.
+
+Základní předpoklady pro řízení chybových stavů a toku dat:
+\begin{itemize}[noitemsep]
+    \item Velikost vyrovnávací paměti příjemce není neomezená.
+    \item Delší rámec = větší pravděpodobnost výskytu chyb.
+    \item Kratší rámec = rychlejší detekce chyb.
+    \item Stanice nemůže blokovat medium na neomezeně dlouhou dobu.
+    \item Snaha dosáhnutí co nejmenší chybovosti (aspoň $10^{-9}$).
+\end{itemize}
+
+Systémy detekce ztracených rámců jsou:
+\begin{itemize}[noitemsep]
+    \item Kladná potvrzení je zaslaní kladných potvrzení pro bezchybně přijaté rámce. Ty co nejsou potvrzeny tak jsou znovu odeslány. Je potřeba vyšší přenosová kapacita.
+    \item Záporná potvrzení je zaslání záporných potvrzení doplněných o žádost o opakované vysílání. Vysílač je kontaktován v případě problému. Nevýhodou je že pokud přijímač nereaguje nemusí to značit bezchybný stav.
+    \item Dále se využívají techniky ARQ (automatic repeat request).
+\end{itemize}
+
+\textbf{Stop-and-wait ARQ} je nejjednodušší metoda. Vysílač i přijímač pracují sekvenčně. Vysílač odešle rámec a čeká na potvrzení od přijímače. Pokud není chyba slouží potvrzení jako signál k přenosu dalšího rámce. Při chybě se pokusí doručit znovu. Přijímač si krokuje posílání rámců. Je neefektivní. Detekce chyb probíhá pomocí CRC a vysílač používá ještě časovač k zamezení ztrátě rámce.
+
+\textbf{Technika klouzavého okna} kvůli efektivitě nečeká na potvrzení rámce před posláním nového ale odesílá je po sobě a průběžně pak čeká i na potvrzení (při full-duplexu). Vysílač vysílá určitý počet rámců před potvrzením (velikost okna). Pro výpočet minimální velikosti okna se použije \(\frac{\texttt{násobek přenosové rychlosti}*\texttt{zpoždění}}{\texttt{velikost rámce}}\). Rámce musí být číslovány.
+
+\textbf{Go-back-N ARQ} využívá mechanismus klouzavého okna, kdy při chybě vrací do určitého stavu. Funguje na principu, že je pravděpodobné že vysílač vyslal další rámce tak příjemce po nalezení chyby všechny další přijaté rámce zahazuje (nutné informovat vysílač o chybě). Zahazuje tak dlouho dokud nedostane opravený špatný rámec. Je jednoduchý a výhodný pokud při přenosu nastává málo chyb. Přijímač používá 2 druhy zpráv\,--\,kladné potvrzení (ohlášení dalšího očekávaného rámce, receive ready (RR) nebo acknowlegement (ACK)) nebo negativní potvrzení (ohlášení čísla dalšího očekávaného rámce s chybou, reject (REJ) nebo negative acknowlegement (NACK)).
+
+\textbf{Selective repeat ARQ} je podobný Go-back-N ale dochází zde pouze k opětovnému posílání jen špatného rámce. Takže pokud nastane chyba tak se mezi odesílané rámce vloží opakovaně posílaný rámec (složitější na straně vysílače). Komplikace na straně příjemce jsou, že se musí ukládat všechny rámce, které byli přijaty po rámci s chybou. Po úspěšném opakovaném přijetí předává rámce vyšší vrstvě. Výhodou je úspora přenosové kapacity. Při chybě se odešle zpráva selective reject (SREJ).
+
+\textbf{Technika klouzavého okna a řízení toku} slouží k zajištění spolehlivého přenosu rámců přes kanály s chybami. Má také další dvě funkce\,--\,zajištění správného pořadí rámců a řízení toku. Zajištění správného pořadí rámců řeší číslováním rámců. Řízení toku umožňuje přijímači poskytnout zpětnou vazbu, že stíhá nebo nestíhá přijímat (může nastat zahlcení).
+
+
 \clearpage
 \section{Síťová vrstva přenosových systémů -- spínání paketů, služby síťové vrstvy, IPv4 adresy, techniky směrování, IPv4 datagram.}
 
