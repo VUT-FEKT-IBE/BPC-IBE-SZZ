@@ -8,7 +8,7 @@ Prvočísel je nekonečně mnoho, počet $\pi(n)$ menší než $n$ lze pro~velk�
 
 \textbf{Mersennova prvočísla}: $M_p = 2^n - 1$ (např. 31). \\
 \textbf{Sophie-Germain prvočísla}: $p$ pokud $2p + 1$ je také prvočíslo (např. 11). \\
-\textbf{Bezpečná prvočísla}: $B_p = 2p + 1$ (např. 23).
+\textbf{Bezpečná prvočísla}: $B_p = 2p + 1$ (např. 23). Jsou generována SG prvočísly.
 
 \subsection{Generování}
 
@@ -272,7 +272,7 @@ Také Triple DES, TDES. Využívá DES třikrát za~sebou za~účelem zvýšení
 
 Ke~konci 90. let bylo třeba vyměnit nedostatečně silné DES/3DES, Rijndael%
 \footnote{Rijndael, holandská výslovnost [\textipa{"rEinda:l}]}
-je výtězný kandidát pro~šifru AES, je rychlý na~hardware i~sofware. AES využívá klíče o~délce 128b/192b/256b a~128b bloky.
+je vítězný kandidát pro~šifru AES, je rychlý na~hardware i~sofware. AES využívá klíče o~délce 128b/192b/256b a~128b bloky.
 
 \textbf{Rundovní operace} (na~bloku 4x4B): \underline{substituce} (S-box): šestnáct bijektivních operací, v~software řešeno překladovou tabulkou, \underline{\emph{row shift}} (bajtová permutace): rotace $i$-tého řádku o~$i-1$ pozic doleva, \underline{\emph{column mix}} (lineární transformace): vynásobení matic, \underline{\emph{key addition}}: XOR s~rundovním klíčem. V~první rundě se provádí pouze přidání klíče, v~poslední pouze substituce, \emph{row shift} a~přidání klíče.
 
@@ -425,7 +425,7 @@ Další části CA jsou registrační autority (RA), online RA, IVR nebo telefon
     \item další certifikáty, žádost se podepisuje platným certifikátem,
     \item soukromý šifrovací klíč, který je archivován na~CA,
     \item odvolání certifikátu,
-    \item CRL (\emph{Cerificate Revication List}, seznam odvolaných certifikátů) nebo jiný certifikát vydaný CA.
+    \item CRL (\emph{Certificate revocation list}, seznam odvolaných certifikátů) nebo jiný certifikát vydaný CA.
 \end{itemize}
 
 \textbf{IVR nebo telefonní záznamník} slouží k~odvolání certifikátu telefonem (jinou cestou). Pro~odvolání musí proběhnout autentizace jednorázovým heslem.
@@ -456,7 +456,7 @@ Další části CA jsou registrační autority (RA), online RA, IVR nebo telefon
 
 \subsection{Autorita časových razítek (TSA)}
 
-TSA musí podepisovat každé časové razítko privátnín klíčem vyhrazeným pouze k tomuto účelu. TSA musí být napojena bezpečným způsobem a v pravydelných časových intervalech synchronizována proti nejlépe třem na sobě nezávislým zdrojům. TSA využívají mezinárodní standard coordinated universal time UTC.
+TSA musí podepisovat každé časové razítko privátnín klíčem vyhrazeným pouze k tomuto účelu. TSA musí být napojena bezpečným způsobem a v pravidelných časových intervalech synchronizována proti nejlépe třem na sobě nezávislým zdrojům. TSA využívají mezinárodní standard coordinated universal time UTC.
 
 \noindent Požadavkům na zdroj času lze dosáhnout využitím PKI, zajišťující důvěrnost, integritu, neodmítnutelnost a autenticitu při časové synchronizaci. Požadavky na zdroj času jsou:
 
@@ -489,7 +489,7 @@ Teoreticky jsou nedeterministické, nejsou ale známy přesné parametry, který
 
 \subsubsection*{Algoritmické generátory (PRNG)}
 
-Posloupnost náhodná není, pokud útočníkovi nejsou známy některé parametry generátoru. Výhodami je rychlost, nízká odchylka od~poměru 1:1 nebo snadná realizace. Nevýhodami jsou bezpečnost či~periodicita. Příklady: čas, teplota HW komponent, šum na~\emph{low-level} sběrnicích (USB, pohyb myši), pohyb HDD.
+Posloupnost náhodná není, pokud útočníkovi jsou známy některé parametry generátoru. Výhodami je rychlost, nízká odchylka od~poměru 1:1 nebo snadná realizace. Nevýhodami jsou bezpečnost či~periodicita. Příklady: čas, teplota HW komponent, šum na~\emph{low-level} sběrnicích (USB, pohyb myši), pohyb HDD.
 
 \subsubsection*{Smíšené generátory}
 
