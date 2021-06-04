@@ -84,7 +84,7 @@ Příklady praktických grup pro~kryptografii:
 \begin{itemize}[noitemsep]
     \item Množina celých čísel $\mathbb{Z}$ spolu s operací sčítání (+) tvoří abelovskou grupu.
     \item Množina $\mathbb{Z}_n$ s operací sčítání modulo $n$ tvoří grupu řádu $n$.
-    \item Množina $\mathbb{Z}_n$ s operací násobení modulo $n (\mathbb{Z}_n^*)$ netvoří grupu, protože inverzní prvek neexistuje ke všem prvkům ze $\mathbb{Z}_n$.
+    \item Množina $\mathbb{Z}_n$ s operací násobení modulo $n$ ($\mathbb{Z}_n^*$) netvoří grupu, protože inverzní prvek neexistuje ke všem prvkům ze $\mathbb{Z}_n$.
     \item Množina $\mathbb{Z}_p$ s operací násobení modulo prvočíslo $p$ tvoří grupu, protože inverzní prvek existuje ke všem prvkům ze $\mathbb{Z}_p$. 
 \end{itemize}
 
@@ -122,7 +122,7 @@ $a^p \equiv a \Pmod p$ (také \enquote{$a^p - a$ je dělitelné $p$}).
 $a^{-1} = a^{\phi(n) - 1} \Mod n$. Obecně platí $a^{\phi(n)} = 1 \Mod n$
 
 \vspace*{1em} \noindent
-\textbf{Rozšířený Euklidův algoritmus} umožňuje získat inverzní prvek (zde $5^{-1} \Mod 13$):
+\textbf{Rozšířený Euklidův algoritmus} umožňuje získat inverzní prvek (zde $5^{-1} \Mod 12$):
 
 \begin{table}[ht]
 	\centering
@@ -138,7 +138,7 @@ $a^{-1} = a^{\phi(n) - 1} \Mod n$. Obecně platí $a^{\phi(n)} = 1 \Mod n$
 \end{table}
 
 \noindent
-Počítání probíhá nejprve v~prvních dvou sloupcích, poté zespoda nahoru ve~třetím. Po~získání výsledku je~nutné zkontrolovat znaménko (tj. je možné, že bude nutné výsledku přidat mínus a~přičíst $n$.)
+Počítání probíhá nejprve v~prvních dvou sloupcích, poté zespoda nahoru ve~třetím. Po~získání výsledku je~nutné zkontrolovat znaménko (tj. je možné, že bude nutné výsledku přidat mínus a~přičíst $n$).
 
 \subsection{Square \& Multiply}
 
@@ -160,7 +160,7 @@ $k_i$      & $A$                                                & $b = {\color{m
 \clearpage
 \subsection{Čínská věta o~zbytcích}
 
-Používá se pro~modulární mocnění. $m_1, \dots, m_k$ jsou nesoudělná čísla. $a_1, \dots, a_k \in \mathbb{Z}$. Systém
+Používá se pro~řešení soustav rovnic v~modulární aritmetice. $m_1, \dots, m_k$ jsou nesoudělná čísla. $a_1, \dots, a_k \in \mathbb{Z}$. Systém
 
 \begin{align*}
 x &\equiv a_1 \,(\mathrm{mod}\, m_1) \\
@@ -193,7 +193,7 @@ x = (a_1 N_1 L_1 + a_2 N_2 L_2) \Mod M &= 3 \cdot 7 \cdot 1 + 2 \cdot 6 \cdot 6 
 \section{Symetrická kryptografie -- proudové šifry, synchronní a asynchronní proudové šifry.}
 \label{question-4}
 
-Výhodou symetrické je velká rychlost a~malé šíření chyb, nevýhodou nízká úroveň difuze a~náchylnost k~úmyslným falzifikacím. Symetrické šifry jsou vhodné pro~šifrování velkých objemů dat. Klíč pro~šifrování a~dešifrování je stejný a~je nutné ho držet v~tajnosti (bývá často uložen v~hardware tokenech: čipová karta, SIM, TPM).
+Výhodou symetrické kryptografie je velká rychlost a~malé šíření chyb, nevýhodou nízká úroveň difuze a~náchylnost k~úmyslným falzifikacím. Symetrické šifry jsou vhodné pro~šifrování velkých objemů dat. Klíč pro~šifrování a~dešifrování je stejný a~je nutné ho držet v~tajnosti (bývá často uložen v~hardware tokenech: čipová karta, SIM, TPM).
 
 V~proudových šifrách je symbol otevřeného textu ihned převáděn na~symbol šifrového textu, bez~znalosti kompletní zprávy. Základem je \emph{keystream generator}, který z~předsdíleného klíče generuje data pro~XOR operaci.
 
@@ -223,6 +223,8 @@ Na~rozdíl od~proudových šifer operují na~blocích dat o~dané velikosti pomo
 \textbf{Produktová šifra} kombinuje více transformací vstupu za~účelem ztížení kryptoanalýzy. Využívá transformace jako substituce (S-box), permutace (P-box) a~modulární artitmetiku. Výraz \textbf{SPN} (\emph{Substitution-permutation network}) se využívá k~popsání série S- a~P-boxů v~blokových šifrách. S-box zajišťuje konfuzi (vazbu \emph{ciphertextu} na~více částí klíče), P-box difuzi (změna jednoho bitu \emph{plaintextu} změní polovinu \emph{ciphertextu}, tzv.~lavinový efekt).
 
 \textbf{\href{https://en.wikipedia.org/wiki/Feistel_network}{Feistelova síť}} je konstrukt iterativního míchání bloků: $$L_i = R_{i-1}, R_i = L_{i-1} \oplus f(R_{i-1}, k_i)$$ kde $k_i$ je podklíč použitý v~$i$-té rundě (tj. rundovní klíč) a $f$ je libovolná funkce. Altenativou je \href{https://en.wikipedia.org/wiki/Lai-Massey_scheme}{Lai-Massey schéma}, které se konstruktem velmi Feistelově síti podobá, ale rundovní funkce $f$ nemusí být invertovatelná.
+
+% TODO Možná přidat obrázek?
 
 Blokové šifry velmi často využívají algoritmus ARX (\emph{modular addition}, \emph{byte rotation}, XOR), konfuzi a~difuzi (DES, AES) nebo modulární násobení (IDEA).
 
@@ -274,7 +276,8 @@ Ke~konci 90. let bylo třeba vyměnit nedostatečně silné DES/3DES, Rijndael%
 \footnote{Rijndael, holandská výslovnost [\textipa{"rEinda:l}]}
 je vítězný kandidát pro~šifru AES, je rychlý na~hardware i~sofware. AES využívá klíče o~délce 128b/192b/256b a~128b bloky.
 
-\textbf{Rundovní operace} (na~bloku 4x4B): \underline{substituce} (S-box): šestnáct bijektivních operací, v~software řešeno překladovou tabulkou, \underline{\emph{row shift}} (bajtová permutace): rotace $i$-tého řádku o~$i-1$ pozic doleva, \underline{\emph{column mix}} (lineární transformace): vynásobení matic, \underline{\emph{key addition}}: XOR s~rundovním klíčem. V~první rundě se provádí pouze přidání klíče, v~poslední pouze substituce, \emph{row shift} a~přidání klíče.
+% Je tu ošklivé rozdělení "key addition" protože \underline neumí dělit řádky; bylo by nutné použít \uline z balíčku ulem
+\textbf{Rundovní operace} (na~bloku 4x4B): \underline{substituce} (S-box): šestnáct bijektivních operací, v~software řešeno překladovou tabulkou, \underline{\emph{row shift}} (bajtová permutace): rotace \mbox{$i$-tého} řádku o~$i-1$ pozic doleva, \underline{\emph{column mix}} (lineární transformace): vynásobení matic, \underline{\emph{key}} \underline{\emph{addition}}: XOR s~rundovním klíčem. V~první rundě se provádí pouze přidání klíče, v~poslední pouze substituce, \emph{row shift} a~přidání klíče.
 
 I~když existují útoky na~oslabené verze AES (nižší počet rund a~menší velikost klíčů), jde o~bezpečný protokol který je využitý v~TLS, OpenSSH a~většině ostatních současných protokolů.
 
@@ -293,7 +296,7 @@ Jde o~relativně pomalý algoritmus, proto se s~ním nešifrují přenášená d
 \begin{tabular}{ll}
 Vygenerování privátních prvočísel & $p, q$ \\
 Vypočítání privátního čísla & $\phi(n) = (p-1)(q-1)$ \\
-Vypočítání veřejného čísla & $n = r \cdot s$ \\
+Vypočítání veřejného čísla & $n = p \cdot q$ \\
 Vypočítání veřejného klíče & $k_{\mathrm{pub}} \in [1, n], \mathrm{GCD}(k_{\mathrm{pub}}, \phi(n)) = 1$ \\
 Vypočítání privátního klíče & $k_{\mathrm{priv}} = k_{\mathrm{pub}}^{-1} \Mod \phi(n)$ \\
 \end{tabular}
@@ -369,7 +372,7 @@ Jedním ze~způsobů je rozdělení na~$n$-bitové bloky, které jsou zpracován
 
 Na~běžné současné hashovací funkce neexistují způsoby, jakými by šla původní data získat. Proto je nutné použít útok hrubou silou a~zkoušet jeden vstup za~druhým. % TODO Rainbow tables
 
-Pro~kolizi prvního řádu (nalezení vzoru) je složitost $O(2^n)$, kde $n$ je délka původní zprávy. Pro~kolizi druhého řádu (nalezení kolizního souboru) je složitost $(O^{n/2})$, což vyplývá z~tzv.~narozeninového paradoxu\footnote{
+Pro~kolizi prvního řádu (nalezení vzoru) je složitost $O(2^n)$, kde $n$ je délka původní zprávy. Pro~kolizi druhého řádu (nalezení kolizního souboru) je složitost $O(2^{n/2})$, což vyplývá z~tzv.~narozeninového paradoxu\footnote{
 Stačí 23 náhodně vybraných lidí k~tomu, aby se s~pravděpodobností 50~\% našla dvojice, která má narozeniny ve~stejný den, u~skupiny třiceti lidí je pravděpodobnost 70~\%. Pravděpodobnost, že nikdo shodný datum narozenin mít nebude, je $\bar{p}(n) = \frac{365!}{365^n(365 - n)!}$. Obrácené tvrzení $p(n) = 1 - \bar{p}(n)$ překračuje hranici 0.5 pro~$n=23$.
 Tomuto útoku se říká \href{https://en.wikipedia.org/wiki/Birthday_attack}{narozeninový útok} a narozeninovou hranici lze spočítat právě jako $2^{n/2}$.
 }.
@@ -386,7 +389,7 @@ Tomuto útoku se říká \href{https://en.wikipedia.org/wiki/Birthday_attack}{na
 
 \subsection{Public key infrastructure}
 
-PKI neboli public key infrastructure je souhrn technických a~organizačních prostředků spojených s~vydáváním, správou, používáním a~odvoláváním platnosti kryptografických klíčů a~certifikátů. Zabraňuje použití falešné identity. Veřejný klíč je platný pouze v~případě potvrzení důvěryhodnou stranou (certifikační autoritou).
+PKI neboli \emph{Public Key Infrastructure} je souhrn technických a~organizačních prostředků spojených s~vydáváním, správou, používáním a~odvoláváním platnosti kryptografických klíčů a~certifikátů. Zabraňuje použití falešné identity. Veřejný klíč je platný pouze v~případě potvrzení důvěryhodnou stranou (certifikační autoritou).
 
 \subsection{X.509}
 Struktura:
@@ -511,7 +514,7 @@ TRNG z~fyzikálního generátoru se~spojí s~PRNG výstupem pomocí XOR.
 
 \subsection{Testování}
 
-K~ověření vlastností PRNG se využívají statistické testy. Odhalí nekvalitní PRNG, ale neprokážou kvalitní PRNG. Testy vrací $p$-hodnotu, která vyjadřuje sílu důkazů proti nulové hypotéze (\enquote{Testovaná posloupnost je nádhodná.}). Pokdu $p$-hodnota překročí určitou mez, nulovou hypotézu považujeme za~neplatnou.
+K~ověření vlastností PRNG se využívají statistické testy. Odhalí nekvalitní PRNG, ale neprokážou kvalitní PRNG. Testy vrací $p$-hodnotu, která vyjadřuje sílu důkazů proti nulové hypotéze (\enquote{Testovaná posloupnost je náhodná.}). Pokud $p$-hodnota překročí určitou mez, nulovou hypotézu považujeme za~neplatnou.
 
 \textbf{Frekvenční test}: Obsahuje testovaná posloupnost bitů přibližně stejný počet nul a~jedniček? \textbf{Runs test}: Je počet a~délka řetězců po~sobě jdoucích stejných bitů na~úrovni náhodné posloupnosti? \textbf{Test hodností matic}, \textbf{spektrální test}.
 
@@ -533,7 +536,7 @@ Služba bezpečnosti je realizovaná protokolem příslušné vrstvy. Existuje 5
 
 \textbf{Autentizace} je proces ověřovaní identity uživatele (entity). Existuje autentizace uživatelů (peer entity authentication), které nezabraňují útoky zopakováním zpráv. Dále existuje autentizace zdroje dat (data origin authentication), která provádí autentizaci všech dat a zabraňuje útokům zopakováním zpráv.
 
-\textbf{Řízení přístupu} sem spadá kontrola přístupu (možnost povolit nebo odepřít použití určitého zdroje určitému subjektu, řízení přístupu k materiálním, logickým, nebo digitálním zdrojům \textbf{neplést si s autorizací}). Umožňuje přístup  do systému k službám a dalším. Chrání před neautorizovaným přístupem, kde se nejčastěji nachází v aplikaci nebo OS.
+\textbf{Řízení přístupu}: kontrola přístupu (možnost povolit nebo odepřít použití určitého zdroje určitému subjektu, řízení přístupu k materiálním, logickým, nebo digitálním zdrojům \textbf{neplést si s autorizací}). Umožňuje přístup  do systému k službám a dalším. Chrání před neautorizovaným přístupem, kde se nejčastěji nachází v aplikaci nebo OS.
 
 \textbf{Zabezpečení důvěrnosti dat} je ochrana obsahu dat, ochrana toku dat při přenosu proti analýze (zjištění odesílatele, adresáta, \dots). 
 
@@ -556,7 +559,7 @@ Integritu rozdělujeme na slabou a silnou.
 \textbf{Ochrana proti odmítnutí původu zprávy} zajišťuje důkaz o původnosti dat, prokazuje původ (příjemce, odesílatel) a prokazuje doručení (odesílaní, přijetí).
 
 \vspace{0,5cm}
-Celkově by měla být zajištěna autentizace (vím s kým komunikuji) a nepopiratelnost (vím s kým komunikuji a lze mu to dokázat).
+Celkově by měla být zajištěna autentizace (vím s kým komunikuji) a nepopiratelnost (vím s kým komunikuji a lze to dokázat).
 
 \subsection{Mechanizmy bezpečnosti}
 
