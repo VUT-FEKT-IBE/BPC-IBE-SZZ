@@ -82,7 +82,7 @@ Tyto tři fáze se~opakují dokola, pokud nedojde k~situaci, že nový úsek nen
 	\end{enumerate}
 \end{enumerate}
 
-Nejpoužívanější jsou diagramy tříd a~případů užití. Diagram tříd popisuje strukturu systému, znázorňuje datové struktury a~operace u~objektů a~souvislosti mezi nimi. Skládá se~z~tříd, rozhraní, abstraktních tříd. Tyto tři prvky se~dále skládají z~názvu třídy/rozhraní, atributů (rozhraní neobsahuje atributy), a~operace (metody/funkce). Diagram případů užití se~nejčastěji používá při~komunikaci se~zákazníkem a~méně technicky znalou stranou. Skládá se~z~herců (\emph{actor}) a~případů užití. Tyto strany jsou propojeny mezi sebou i~samy se~sebou pomocí těchto propojení: asociace, generalizace, rozšíření vztahu, vztah zahrnuje.
+Nejpoužívanější jsou diagramy tříd a~případů užití. Diagram tříd popisuje strukturu systému, znázorňuje datové struktury a~operace u~objektů a~souvislosti mezi nimi. Skládá se~z~tříd, rozhraní, abstraktních tříd. Tyto tři prvky se~dále skládají z~názvu třídy/rozhraní, atributů (rozhraní neobsahuje atributy) a~operací (metody/funkce). Diagram případů užití se~nejčastěji používá při~komunikaci se~zákazníkem a~méně technicky znalou stranou. Skládá se~z~herců (\emph{actor}) a~případů užití. Tyto strany jsou propojeny mezi sebou i~samy se~sebou pomocí těchto vztahů: asociace, generalizace, rozšíření vztahu, vztah zahrnuje.
 
 \textbf{Objektově orientovaný návrh} je jeden ze~způsobů jak reprezentovat informaci. Vychází z~principů reálného světa, neboli je jednoduše srozumitelný pro~člověka. Není spojen s~žádným programovacím jazykem, ale jazyk, který bude použit pro~implementaci, musí splňovat objektově orientované principy. Výhodou OON může být, že při~návrhu lze určit co jaká část programu komunikuje z~jakou a~co každá dělá, takže se~sníží počet chyb v~kódu a~tím i~náklady. OON se~nezabývá konkrétní implementací, ale pouze vazbami mezi objekty.
 
@@ -115,7 +115,7 @@ Násobnost vztahů určuje počet vazeb objektu. \enquote{$1:n$} popisuje jeden 
 
 Zkoumá otázku algoritmické řešitelnosti problému z~pohledu řešitelnosti, ne časové náročnosti. Vyčíslitelnost je zkoumána pomocí teoretických výpočetních modelů\,--\,deterministický a~nedeterministický konečný automat, zásobníkový automat, Turingův stroj a~další.
 
-Složitost je vztah algoritmu k~prostředkům (čas a~velikost paměti). Paměťová složitost je závislost paměťových nároků na~vstupních datech, zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na~základě délky vstupních dat. V~potaz by se měly oba dva typy složitosti, jelikož může nastat situace, kdy lze problém řešit dvěma algoritmy: jedním s~malou časovou složitostí a~druhým s~malou paměťovou. Výběr z~těchto složitostí závisí na~hardware a~situaci použití.
+Složitost je vztah algoritmu k~prostředkům (čas a~velikost paměti). Paměťová složitost je závislost paměťových nároků na~vstupních datech, zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na~základě délky vstupních dat. V~potaz by se měly brát oba dva typy složitosti, jelikož může nastat situace, kdy lze problém řešit dvěma algoritmy: jedním s~malou časovou složitostí a~druhým s~malou paměťovou. Výběr z~těchto složitostí závisí na~hardware a~situaci použití.
 
 \subsection{Asymptotická složitost}
 
@@ -333,7 +333,7 @@ Binární strom je strom, který má nanejvýše dva potomky na~jeden uzel. Za~\
 
 \subsection{Binarní vyhledávací stromy}
 
-U~těchto stromů musí platit, že levá část potomků musí být vždy menší než kořen a~pravá část vždy vetší, tzn. prvky jsou seřazeny. Tyto stromy mohou být nevyvážené ale častěji se~také vyvažují, aby bylo dosaženo jejich optimální složitosti O($\log{n}$). Mohl by totiž nastat případ, kdy by ze~stromu vznikl pouze strom.
+U~těchto stromů musí platit, že levá část potomků musí být vždy menší než kořen a~pravá část vždy vetší, tzn. prvky jsou seřazeny. Tyto stromy mohou být nevyvážené ale častěji se~také vyvažují, aby bylo dosaženo jejich optimální složitosti O($\log{n}$). Mohl by totiž nastat případ, kdy by ze~stromu vznikl pouze seznam (viz obrázek \ref{noneven_binary_tree} na~straně~\pageref{noneven_binary_tree}). U~vyvážených binárních stromů by rozdíl hloubky levé a~pravé části měl být 0 nebo 1.
 
 \begin{figure}[ht]
 	\begin{minipage}[b]{0.47\textwidth}
@@ -365,8 +365,6 @@ U~těchto stromů musí platit, že levá část potomků musí být vždy menš
 		\label{noneven_binary_tree}
 	\end{minipage}
 \end{figure}
-
-U~nevyvážené stromu na~obrázku \ref{noneven_binary_tree} lze vidět, že by se~jednalo spíše o~seznam. U~vyvážených binárních stromů by rozdíl hloubky levé a~pravé části měl být 0 nebo 1.
 
 \paragraph{Vyhledávaní v~binárních vyvážených stromech} Postupuje se od~kořene dolů. Při~každém sestupu se porovná hledaná hodnota s~hodnotou listu: pokud je shodná, byl prvek nalezen. Pokud není, algoritmus sestoupí do~levého uzlu (pokud je~hledaná hodnota menší než~aktuání uzel) nebo~do~pravého uzlu (pokud je~hledaná hodnota větší). Pokud je sestoupeno až k~listu a~hodnota neodpovídá, hledaný prvek ve~stromu není.
 
@@ -433,6 +431,8 @@ Vyvažuje se~dvěma typy rotace, u~kterých pak dále rozlišujeme stranu%
 		\caption{Rotace $\nearrow$ nebo $\nwarrow$.}
 	\end{minipage}
 \end{figure}
+
+% TODO Chybí tu dvojtá rotace
 
 \subsection{Red-Black stromy}
 

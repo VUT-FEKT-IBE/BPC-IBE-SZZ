@@ -33,7 +33,7 @@ Mezi útoky patří \textbf{MAC address spoofing} (příjem cizích dat pomocí 
 
 Bezpečná konfigurace je~popsána výše v~podkapitole \ref{question2-1}.
 
-Mezi typické útoky na~směrovače patří pokiusy o~\textbf{průnik do~nastavení} (zneužití výchozích hesel), \textbf{Routing Table Poisoning} (\emph{spoofování} routovacích protokolů a~vyvolání nežádoucích změn ve~směrovacích tabulkách), \textbf{Hit and Run} (posílání škodlivých paketů v~náhodných intervalech), \textbf{(D)DoS} (vytížení CPU/RAM velkým množstvím paketů, logické útoky typu \href{https://en.wikipedia.org/wiki/Christmas_tree_packet}{Christmas tree packet} attack).
+Mezi typické útoky na~směrovače patří pokusy o~\textbf{průnik do~nastavení} (zneužití výchozích hesel), \textbf{Routing Table Poisoning} (\emph{spoofování} routovacích protokolů a~vyvolání nežádoucích změn ve~směrovacích tabulkách), \textbf{Hit and Run} (posílání škodlivých paketů v~náhodných intervalech), \textbf{(D)DoS} (vytížení CPU/RAM velkým množstvím paketů, logické útoky typu \href{https://en.wikipedia.org/wiki/Christmas_tree_packet}{Christmas tree packet} attack).
 
 \clearpage
 \section{Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).}
@@ -183,7 +183,7 @@ V~\textbf{jednovrstvé} architektuře je IPS/IDS tvořen jedinou komponentou, kt
 
 \section{Dělení penetračních testů (dle znalosti, způsobu realizace a cíle), metodologie testování (pět kroků testování). Penetrační testování webových aplikací (OWASP, průzkum prostředí, závěrečný report).}
 
-Penetrační testování je posouzení bezpečnost pomocí pokusu o~průnik do~testovaného systému. Umožňuje komplexní prozkoušení nově nasazených aplikací, bezpečnostních systémů, firewallů, IPS/IDS apod. Nutností je mít souhlas majitele systému.\footnote{\textit{Pozor!} Posouzení zranitelnosti není to stejné jako penetrační test. \textit{Penetrační test} je komplexní činností, kde se hledají, identifikují a~následně zneužívají (v~omezeném rozsahu) zranitelnosti. Oproti tomu \textit{posouzení zranitelností} je především automatizovanou činností, která zranitelnosti hledá, ale nedemonstruje jejich zneužití.}
+Penetrační testování je posouzení bezpečnosti pomocí pokusu o~průnik do~testovaného systému. Umožňuje komplexní prozkoušení nově nasazených aplikací, bezpečnostních systémů, firewallů, IPS/IDS apod. Nutností je mít souhlas majitele systému.\footnote{\textit{Pozor!} Posouzení zranitelnosti není to stejné jako penetrační test. \textit{Penetrační test} je komplexní činností, kde se hledají, identifikují a~následně zneužívají (v~omezeném rozsahu) zranitelnosti. Oproti tomu \textit{posouzení zranitelností} je především automatizovanou činností, která zranitelnosti hledá, ale nedemonstruje jejich zneužití.}
 
 \subsection{Dělení penetračních testů}
 
@@ -333,7 +333,7 @@ Avalanche (hardware, do~40Gbps), Apache jMeter, LOIC.
 
 \textbf{sociální inženýrství}: psychická manipulace s~lidmi za~účelem zisku informací, přístupu ke~službě nebo provedení podvodu \\
 \textbf{phishing}: kontaktování uživatelů s~cílem získání citlivých informaci pro~škodlivé účely \\
-\textbf{spear phisthing}: phishing mířený na~konkrétní osoby \\
+\textbf{spear phishing}: phishing mířený na~konkrétní osoby \\
 \textbf{clone phishing}: vytvoření phishing zprávy z~původně legitimní \\
 \textbf{whaling}: cílení na~vlivné představitele firm či organizací nebo na~veřejné osoby \\
 \textbf{baiting}: zanechání malware na~médiu, které má oběť objevit a~připojit ke~svému sytému \\
@@ -407,7 +407,7 @@ Pracuje na~síťové vrstvě (L3): end-to-end šifrování TCP/UDP komunikace me
 \includegraphics[width=\textwidth]{images/ipsec}
 \end{figure}
 
-\textbf{Authentication header} zajišťuje integritu a~autentičnost IP paketů, chrání proti replay útokům. \textbf{Encapsulationg Security Payloads} zajišťuje důvěrnost pomocí šifrování. \textbf{Security Association} popisuje IPSec spojení včetně parametrů zabezpečení. Aktivní spojení je uloženo v~databázi (SAD), management a~pravidla jsou uložena v~SPD (Security Policy Database).
+\textbf{Authentication header} zajišťuje integritu a~autentičnost IP paketů, chrání proti replay útokům. \textbf{Encapsulationg Security Payloads} zajišťuje důvěrnost pomocí šifrování. \textbf{Security Association} popisuje IPSec spojení včetně parametrů zabezpečení. Aktivní spojení je uloženo v~databázi (SAD), management a~pravidla jsou uložena v~SPD (\emph{Security Policy Database}).
 
 Pro~ustanovení klíče IPSec využívá symetrickou kryptografii: pre-shared key, IKE1/2, Kerberos.
 

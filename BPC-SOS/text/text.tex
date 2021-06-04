@@ -449,8 +449,8 @@ Pokud je paměť prázdná ($counter = 0$), spotřebitel přečte hodnotu sdíle
 \subsection{Uvíznutí, tj. Deadlock}
 
 Skupina procesů je ve~stavu uvíznutí, pokud každý z~nich čeká na~událost, kterou může způsobit pouze jiný proces z~této skupiny. Uvíznutí může nastat nad různými prostředky (hardwarové či softwarové), které dělíme na~\emph{sdílitelné} (globální proměnné, sdílený úsek paměti, záznam v~databázi, ...) a~\emph{nesdílitelné} (tiskárny, scannery, DVD, ...). Sdílené prostředky mohou být uzamčené. Dále lze rozdělit na~\emph{přepínatelné}%
-\footnote{Uvíznutí nenastává nad sdílitelnými prostředky bez jejich uzamčení, nebo nad přepínatelnými prostředky kde lze uvíznutí předejít předáním jinému procesu.}%
- a~\emph{nepřepínatelné}%
+\footnote{Uvíznutí nenastává nad sdílitelnými prostředky bez jejich uzamčení, nebo nad přepínatelnými prostředky kde lze uvíznutí předejít předáním jinému procesu.} %
+a~\emph{nepřepínatelné}%
 \footnote{Odebrání přepínatelného prostředku nezpůsobí žádnou škodu -- např. hlavní paměť. Nepřepínatelný prostředek je takový, jehož odebrání způsobí nefunkčnost procesu.}%
 .
 
