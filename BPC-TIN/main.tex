@@ -15,7 +15,7 @@
 \newcommand{\subtitle}{Otázky a odpovědi BPC-TIN (Teoretická informatika)}
 \author{jedla}
 \newcommand{\grammar}{kamen-u-cesty}
-\newcommand{\formatting}{kamen-u-cesty}
+\newcommand{\formatting}{kamen-u-cesty, Czechbol}
 
 %%%%%%%%%%%%%%%%%%%%
 % OBECNÉ NASTAVENÍ %
@@ -71,6 +71,10 @@
 \usepackage{csquotes}
 % Vynucení umístění poznámek pod čarou vespod stránky
 \usepackage[bottom]{footmisc}
+% Automatické zarovnání textu k předcházení vdov a parchantů
+\usepackage[defaultlines=4,all=true]{nowidow}
+% Pro možnost zalomení části textu pokud není na současné stránce dost místa
+\usepackage{needspace}
 
 % Bezpatkové sázení nadpisů
 \allsectionsfont{\sffamily}

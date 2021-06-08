@@ -15,7 +15,7 @@
 \newcommand{\subtitle}{Otázky a odpovědi BPC-IC2 (Bezpečnost ICT 2)}     % Popis dokumentu - Nepovinný
 \author{kamen-u-cesty}                % Autor           - Nepovinný
 \newcommand{\grammar}{--}             % Korektura       - Nepovinný
-\newcommand{\formatting}{--}          % Formátování     - Nepovinný
+\newcommand{\formatting}{Czechbol}          % Formátování     - Nepovinný
 
 % ##################
 % # PŘIDANÉ BALÍKY #
@@ -54,6 +54,10 @@
 \usepackage{tikz}               % pro vykreslování orientovaných grafů
 \usepackage[newfloat]{minted}   % syntax highlighting kódu
 \usepackage{wrapfig}            % zarovnání obrázků do bloku
+% Automatické zarovnání textu k předcházení vdov a parchantů
+\usepackage[defaultlines=4,all=true]{nowidow}
+% Pro možnost zalomení části textu pokud není na současné stránce dost místa
+\usepackage{needspace}
 
 % ####################
 % # NASTAVENÍ BALÍKŮ #
