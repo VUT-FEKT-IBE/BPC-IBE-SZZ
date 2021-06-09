@@ -394,7 +394,7 @@ PKI neboli \emph{Public Key Infrastructure} je souhrn technických a~organizačn
 \subsection{X.509}
 Struktura:
 \begin{itemize}[noitemsep]
-    \item verze (\texttt{0}: x.509 verze 1, \texttt{1}: x.509 verze 2, \texttt{2}: x.509 verze 3),
+    \item verze (\texttt{0}: X.509 verze 1, \texttt{1}: X.509 verze 2, \texttt{2}: X.509 verze 3),
     \item sériové číslo,
     \item algoritmus použitý pro~podpis,
     \item vydavatel (identifikace certifikační autority dle x.500),
@@ -405,7 +405,7 @@ Struktura:
     \item digitální podpis certifikátu.
 \end{itemize}
 
-Certifikáty x.509 se ukládají ve~formátu PEM (\emph{Privacy Enhanced Mail}; hlavička a~ASCII formát v~base64), DER/BER (\emph{Distinguished Encoding Rules}, \emph{Basic Encoding Rules}; binární formát, při~jehož konverzi a~přidání hlavičky vznikne PEM) a ASN.1 (popis dat dobře čitelný lidmi).
+Certifikáty X.509 se ukládají ve~formátu PEM (\emph{Privacy Enhanced Mail}; hlavička a~ASCII formát v~base64), DER/BER (\emph{Distinguished Encoding Rules}, \emph{Basic Encoding Rules}; binární formát, při~jehož konverzi a~přidání hlavičky vznikne PEM) a ASN.1 (popis dat dobře čitelný lidmi).
 
 \subsection{Certifikační autorita CA}
 

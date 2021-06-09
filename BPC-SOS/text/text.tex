@@ -6,10 +6,10 @@
 \label{kernel}
 
 Operační systém si lze zjednodušeně představit jako program skládající se z~\emph{jádra} (\emph{kernel}) a~\emph{systémových programů}. Systémové programy jsou takové programy, které poskytují prostředí pro~spouštění a~běh \emph{aplikačních programů} (které nejsou součástí OS). Dále pak systémová volání fungují jako jakési API~pro~systémové programy, aby mohly volat funkce z~jádra (toto např. umožňuje čtení ze~souborů%
-\footnote{Čtení ze~souboru probíhá pomocí systémového volání \texttt{open}, kde můžeme nastavovat různé možnosti, jako \texttt{O\_APPEND}, \texttt{O\_CREAT}.}%
- nebo jejich vytváření%
- \footnote{Soubor lze vytvořit například pomocí systémového volání \emph{open} s~možností \texttt{O\_CREAT}, která soubor vytvoří pokud neexistuje.}%
- ).
+\footnote{Čtení ze~souboru probíhá pomocí systémového volání \texttt{open}, kde můžeme nastavovat různé možnosti, jako \texttt{O\_APPEND}, \texttt{O\_CREAT}.} %
+nebo jejich vytváření%
+\footnote{Soubor lze vytvořit například pomocí systémového volání \emph{open} s~možností \texttt{O\_CREAT}, která soubor vytvoří pokud neexistuje.}%
+).
 
 \begin{enumerate}
 	\item Systémové programy -- knihovny
@@ -77,7 +77,7 @@ Každý virtuální stroj má své jádro, který musí běžet v~kontextu jádr
 \section{Procesy -- uživatelský kontext, kontext jádra, vlákna}
 \label{procesy}
 
-Proces si lze představit jako program, který je realizován operačním systémem; jeden program může realizovat několik procesů. Každý proces má svůj vlastní \emph{PID} (Process IDentifier), což je celočíselná hodnota určená k~identifikaci každého procesu. Tento identifikátor je přidělen procesu jádrem v~okamžiku jeho vytvoření. Některé čísla jsou vyhrazena%
+Proces si lze představit jako program, který je realizován operačním systémem; jeden program může realizovat několik procesů. Každý proces má svůj vlastní \emph{PID} (Process IDentifier), což je celočíselná hodnota určená k~identifikaci každého procesu. Tento identifikátor je přidělen procesu jádrem v~okamžiku jeho vytvoření. Některá čísla jsou vyhrazena%
 \footnote{PID~0 je rezervován pro~proces \emph{swapper}, který je zodpovědný za~činnost virtuální paměti. Jedná se o~jediný proces, který se nevytvoří voláním funkce \emph{fork} a~pracuje pouze v~režimu jádra. PID~1 je tzv. \emph{init}, který tvoří vrchol stromové struktury procesů. Nelze jej ukončit, protože ho systém vždy spustí znovu.}%
 , ale jinak obecně neplatí, že by se podle PID dalo poznat o~který proces se jedná. Identifikátor je přiřazován lineárně a~při vyčerpání se začne od~znovu.
 
@@ -99,7 +99,7 @@ Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dyna
 	\item textová část (text segment) -- Programové instrukce a~přístup k~této části je pouze pro~čtení. Díky tomu může více procesů téhož programu sdílet stejnou textovou část.
 	\item datová část (data segment) -- Data, která proces potřebuje již od~svého startu, tedy globální proměnné, textové řetězce, datová pole atd.
 	\item halda (\emph{heap}) -- Stromová struktura, kde se mohou dynamicky alokovat data za~běhu programu.
-	\item zásobník (\emph{stack}) -- Také dynamicky alokovaný, ale zde se ukládají parametry procesem volaných funkcí. Je obvyklé, že zásobník roste směrem k~nižším adresám (tj.~vrchol jde dolů). Jedná se o~LIFO (Last-in First-out) zásobník%
+	\item zásobník (\emph{stack}) -- Také dynamicky alokovaný, ale  ukládají se zde parametry procesem volaných funkcí. Je obvyklé, že zásobník roste směrem k~nižším adresám (tj.~vrchol jde dolů). Jedná se o~LIFO (Last-in First-out) zásobník%
 	\footnote{Mezera mezi haldou a~zásobníkem představuje volné místo, které dovoluje dynamickou změnu zásobníku a~haldy během procesu.}%
 	.
 \end{itemize}
@@ -245,7 +245,7 @@ Proces je vykonáván buď v~režimu jádra nebo v~uživatelském režimu, kde p
 \footnote{Jediný rozdíl je v~tom jak se proces do~tohoto stavu dostal.}%
 ). Plánovač pak vybere jiný proces k~vykonávání.
 
-Druhou možností je, že proces se dobrovolně ukončí před uplynutím maximálního časového intervalu a~opět přejde do~stavu \enquote{připraven ke~zpracování v~hlavní paměti}.
+Druhou možností je dobrovolné ukončení procesu před uplynutím maximálního časového intervalu a~přechod do~stavu \enquote{připraven ke~zpracování v~hlavní paměti}.
 
 \subsubsection{Uspání procesu}
 
@@ -275,7 +275,7 @@ V~dnešní době se plánování procesů (\emph{scheduling}) provádí na~více
 
 \subsection{Okamžiky rozhodnutí}
 
-Okamžiky, kdy se plánovač musí rozhodnout který proces bude vykonáván jsou následující: \emph{vytvoření procesu} (bude se vykonávat rodič, potome, nebo jiný proces?), \emph{ukončení}, \emph{blokování} a~\emph{přerušení} od~zařízení nebo hodin (bude se vykonávat jaký proces?).
+Okamžiky, kdy se plánovač musí rozhodnout který proces bude vykonáván jsou následující: \emph{vytvoření procesu} (Bude se vykonávat rodič, potomek, nebo jiný proces?), \emph{ukončení}, \emph{blokování} a~\emph{přerušení} od~zařízení nebo hodin (bude se vykonávat jaký proces?).
 
 Průběh při~výkonu dvou procesů lze jednoduše ukázat na~obrázku \ref{proc_changing}. Procesy se střídají podle toho, který zrovna čeká (např. na~I/O operaci). Při~takovém přerušení může dojít k~rozhodnutí o~přepnutí procesu. Toto přepnutí může být provedeno při~každém \emph{n}-tém přerušení.
 
@@ -311,9 +311,9 @@ Tyto systémy jsou typické pro~nákladná a~výkonná informační centra, kde 
 
 \subsubsection{Interaktivní systémy}
 
-Chod systému je ovlivňován uživatelem a~jeho požadavky by měly být vyřizovány přednostně. Uživatel předpokládá, že program který má právě v~popředí bude pracovat co nejrychleji a~stejně tak reagovat, interaktivní systémy se snaží tento předpoklad splnit. Plánovač sice nemůže ovlivnit složitost úlohy a~rychlost zpracování, může však přispět ke~splnění očekávání uživatele. Je zřejmé, že se upřednostňuje užívání preemptivního přepínání, aby nemohl žádný proces zabrat CPU na~příliš dlouhou dobu.
+Chod systému je ovlivňován uživatelem a~jeho požadavky by měly být vyřizovány přednostně. Uživatel předpokládá že program který má právě v~popředí bude pracovat co nejrychleji a~stejně tak reagovat, interaktivní systémy se snaží tento předpoklad splnit. Plánovač sice nemůže ovlivnit složitost úlohy a~rychlost zpracování, může však přispět ke~splnění očekávání uživatele. Je zřejmé, že se upřednostňuje užívání preemptivního přepínání, aby nemohl žádný proces zabrat CPU na~příliš dlouhou dobu.
 
-Sleduje se čas odezvy (od~vyslání příkazu po~obdržení výsledku) a~přeiměřenost (složitost úlohy k~době jejího zpracování).
+Sleduje se čas odezvy (od~vyslání příkazu po~obdržení výsledku) a~přiměřenost (složitost úlohy k~době jejího zpracování).
 
 Jedná se o~klasické desktop systémy jako Windows, MacOS a~různé distribuce OS Linux.
 
@@ -321,7 +321,7 @@ Jedná se o~klasické desktop systémy jako Windows, MacOS a~různé distribuce 
 
 Používají se pro~zpracování úloh které slouží jako vstup dalších navazujících činností. Tyto systémy musí splnit úlohu v~reálném čase (v~předem daném časovém úseku). Tyto systémy jsou používány v~automatizovaných procesech, robotice a~telekomunikacích. Používá se opět preemptivní plánování.
 
-Podle toho jak moc se tlačí na~splnění požadavků v~daném času můžeme tyto systémy dělit na~\emph{soft} (časové zárky jsou pouze přibližné a~určité časové odchylky jsou povoleny) a~\emph{hard} (časové záruky jsou plně zajištěny).
+Podle toho jak moc se tlačí na~splnění požadavků v~daném času můžeme tyto systémy dělit na~\emph{soft} (časové záruky jsou pouze přibližné a~určité časové odchylky jsou povoleny) a~\emph{hard} (časové záruky jsou plně zajištěny).
 
 Jsou sledovány parametry jako dodržování časových termínů (což je nejdůležitější požadavek) a~předvídatelnost a~pravidelnost (např. systémy se zpracováním multimediálních dat).
 
@@ -342,7 +342,7 @@ Podle této nové priority je proces přiřazen do~fronty. Fronta bývá zvolena
 
 $V$ je čítač představující využití procesoru. Tato hodnota se inkrementuje s~každým taktem procesorových hodin (pokud je proces vykonáván na~procesoru). Tímto způsobem se upřednostňují nové procesy, které ještě nezískaly procesorový čas. Zároveň lze procesy co zrovna využily procesor penalizovat pomocí navýšení původní hodnoty $V$ o~aktuální hodnotu z~daného intervalu a~výsledek je vydělen dvěma. Tímto způsobem jsou penalizovány nedávno vykonané procesy a~předchází se \emph{stárnutí procesů}.
 
-Hodnota $N$ (tj. \emph{nice}) je implicitně nastavena na~0 (povolený rozsah je -20 až +19) a~je zděděna od~rodičovského procesu. Běžný uživatel může nastavovat hodnoty $0$ -- $19$ a~tím penalizovat vlastní procesy, administrátor může procesy preferovat snížením hodnoty nice na~$-20$ -- $-1$.
+Hodnota $N$ (tj. \emph{nice}) je implicitně nastavena na~0 (povolený rozsah je $-20$ až $+19$) a~je zděděna od~rodičovského procesu. Běžný uživatel může nastavovat hodnoty $0$ -- $19$ a~tím penalizovat vlastní procesy, administrátor může procesy preferovat snížením hodnoty nice na~$-20$ -- $-1$.
 
 $B$ (\emph{báze}) je použita pokud se proces zablokuje (např. protože čeká na~I/O operaci). Je odstraněn z~plánovací fronty (jelikož není ve~stavu \emph{připraven}). Je znovu zařazen do~fronty po~přijetí události, ale s~jinou prioritou. Volba fronty/priority závisí na~události, na~kterou proces čekal (nastaví se hodnota $B$).
 
@@ -372,7 +372,7 @@ Toto čtení nekonzistentních dat z~důvodu přepnutí kontextu nazýváme \emp
 
 Proces musí čekat na~dokončení celé množiny operací, než může pokračovat. Toho lze docílit pomocí paralelního programování za~využití vláken a~tzv. \emph{bariér}/\emph{časových mezníků}.
 
-Představme si aplikaci používající vlákna. Všechny vlákna musí dokončit svou úlohu z~fáze 1 než mohou přejít do~fáze 2 a~i když vlákna vykonávají stejný kód, tak mohou pracovat různými rychlostmi. Pokud nějaké vlákno skončí s~úlohou z~fáze 1 dřív jak jiné, bude pozastaveno než je dokončí všechny ostatní vlákna.
+Představme si aplikaci používající vlákna. Všechna vlákna musí dokončit svou úlohu z~fáze 1 než mohou přejít do~fáze 2 a~i když vlákna vykonávají stejný kód, tak mohou pracovat různými rychlostmi. Pokud nějaké vlákno skončí s~úlohou z~fáze 1 dřív jak jiné, bude pozastaveno než je dokončí všechny ostatní vlákna.
 
 \begin{figure}[ht]
 	\centering
@@ -380,6 +380,8 @@ Představme si aplikaci používající vlákna. Všechny vlákna musí dokonči
 	\caption{Bariéra}
 	\label{proc_barrier}
 \end{figure}
+
+\subsection{Vzájemné vyloučení}
 
 \subsubsection{Vzájemné vyloučení pomocí kritické sekce}
 
@@ -493,7 +495,7 @@ Tato situace lze řešít předcházením uvíznutí, připuštěním že se sys
 Paměť dělíme na~dvě části:
 \begin{itemize}
 	\item Fyzický Adresový Prostor (FAP; hlavní paměť, RAM) -- reálná kapacita fyzické paměti v~počítači která je dána nainstalovanou pamětí. Aby proces byl vykonáván musí být celý, nebo jeho vykonávaná část, v~RAM paměti. Hlavní důvod je rychlost přístupu do~této paměti.
-	\item Logický Adresový Prosto (LAP; vedlejší paměť, virtuální paměť) -- jedná se o~paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť), tak \emph{odkládací prostor}.
+	\item Logický Adresový Prostor (LAP; vedlejší paměť, virtuální paměť) -- jedná se o~paměť tak jak ji vidí procesy. Určená adresami, které je proces/OS schopen generovat. LAP zahrnuje jak FAP (tedy RAM paměť), tak \emph{odkládací prostor}.
 \end{itemize}
 
 \begin{figure}[ht]
@@ -528,6 +530,7 @@ Paměťový prostor procesu je rozdělen na~stejně velké části, tzv. \emph{s
 
 \begin{center}
 	\includegraphics[scale=1]{images/mem_page_table.png}
+	\caption{Stránkování paměti}
 \end{center}
 
 Díky pevné velikosti stránek je lze efektivně umístit do~stejně velkých rámců. Díky tomu nedochází k~\emph{externí fragmentaci} volného prostoru v~hlavní paměti. Nevýhodou je, že proces do~této struktury nevidí, tudíž neví, že části které patří k~sobě by se měly přesouvat do~paměti společně za~účelem zredukování množství \emph{page fault}.
@@ -559,7 +562,7 @@ Na~rozdíl od~stránkování je segmentace mechanismus, který je procesu vidite
 	\label{mem_segment_table}
 \end{figure}
 
-Nevýhodou oproti stránkování je dynamická velikost segmentů, což způsobuje externí fragmentaci paměti.
+Nevýhodou oproti stránkování je variabilní velikost segmentů, což způsobuje externí fragmentaci paměti.
 
 %%%%%%%%%%%%%%%%%%
 % VYUŽITÍ PAMĚTI %
@@ -689,7 +692,7 @@ Procesu odstranění tohoto problému se říká \emph{defragmentace}. Všechny 
 
 \subsubsection{Ukládání bloků nesouvisle s~ukazateli v~bloku}
 
-Bloky nejsou na~médiu rozděleny souvisle, místo toho je část jejich prostoru obětován ukazateli na~další blok souboru. Při~vytvoření souboru je nalezen volný blok kdekoliv na~paměťovém médiu a~je použit pro~nová data\footnote{Pokud má soubor nulovou velikost je ukazatel nastaven jako neplatný.}. Takto prakticky funguje jako \emph{linked list} a~nenastává problém s~externí fragmentací.
+Bloky nejsou na~médiu rozděleny souvisle, místo toho je část jejich prostoru obětována ukazateli na~další blok souboru. Při~vytvoření souboru je nalezen volný blok kdekoliv na~paměťovém médiu a~je použit pro~nová data\footnote{Pokud má soubor nulovou velikost je ukazatel nastaven jako neplatný.}. Takto prakticky funguje jako \emph{linked list} a~nenastává problém s~externí fragmentací.
 
 Avšak přesně tento přístup je nevýhodou této možnosti. Při~čtení je potřeba nejprve načíst první blok a~postupně hledat bloky pomocí ukazatelů. Každé načtení je tedy z~jiného sektoru disku a~zpomaluje program. Další problém je, že ukazatel ubírá místo z~bloku. Řešením pro~tento problém je seskupit bloky a~zavést ukazatel na~ně, pointer pak zabírá menší procenty paměti a~urychluje se práce s~daty. Bohužel ale dochází k~\emph{interní fragmentaci}\footnote{Existuje i~možnost poškození ukazatele, pokud se jedná o~první ukazatel tak se přijde o~celý soubor.}.
 
@@ -715,7 +718,7 @@ Přístupy pro~práci s~indexačními bloky:
 
 \subsection{Ukládání dat a~metadat na~HDD}
 
-Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá více hlav.} (které jsou uspořádány nad sebou), které jsou rozděleny na~stopy a~ty zase na~sektory. Sektor je nejmenší jednotka pro~ukládání dat na~pevném disku. Datové bloky souborových systémů, mohou zabírat jeden nebo více sektorů. Při~práci s~daty se nejprve načtou metadata o~souboru (přístupová práva a~o uložení dat), tedy hlavice musí přejít na~pozici metadat a~až poté na~pozici dat\footnote{Přilíž velkému množství přesunů se zamezuje pomocí organizace do~tzv. \emph{cylindrů}, což je sada nad sebou umístěných stop. Tyto společně udržují data a~metadata.}.
+Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá více hlav.} (které jsou uspořádány nad sebou), které jsou rozděleny na~stopy a~ty zase na~sektory. Sektor je nejmenší jednotka pro~ukládání dat na~pevném disku. Datové bloky souborových systémů, mohou zabírat jeden nebo více sektorů. Při~práci s~daty se nejprve načtou metadata o~souboru (přístupová práva a~o uložení dat), tedy hlavice musí přejít na~pozici metadat a~až poté na~pozici dat\footnote{Přiliš velkému množství přesunů se zamezuje pomocí organizace do~tzv. \emph{cylindrů}, což je sada nad~sebou umístěných stop. Tyto společně udržují data a~metadata.}.
 
 \begin{figure}[ht]
 	\centering
@@ -734,7 +737,7 @@ Pevný disk se skládá z~ploten\footnote{Pro čtení z~ploten se používá ví
 Když se v~souborovém systému pracuje s~daty (zapisování a~mazání), může dojít k~situaci kdy se data dostanou do~nekonzistentního stavu, z~důvodu pádu systému. Nekonzistentními situacemi mohou být:
 
 \begin{itemize}
-	\item Soubor nebyl smazán, i~když k~tomu byl zadá požadavek.
+	\item Soubor nebyl smazán, i~když k~tomu byl zadán požadavek.
 	\item Část dat byla aktualizována zápisem, další část ne.
 \end{itemize}
 
@@ -751,7 +754,7 @@ Pokud dojde k~pádu systému mezi kroky 1 a~2, tak zůstane i-uzel v~použitém 
 \subsection{Ukládání metadat}
 
 Metadata se ukládají ve~speciální struktuře, zvané \emph{i-uzel} (tj. \emph{i-node})%
-\footnote{Detaily budou specifické pro~OS Linux} %
+\footnote{Detaily budou specifické pro~OS Linux}%
 . Tyto struktury obsahují metadata o~souboru jako typ souboru, vlastník, skupina vlastníka, přístupová práva, délka souboru, čas vytvoření, čas posledního přístupu a~čas modifikace. Dále i-uzel obsahuje ukazatele na~bloky souboru.
 
 V~adresářích se vyskytují položky obsahující jméno souboru a~číslo relevantního \emph{i-uzlu}. Tyto informace jsou důležité pro~nalezení souborů. Navíc může být v~různých adresářích více souborů se stejným jménem ukazující na~jeden soubor/\emph{i-uzel} (tj. \emph{pevné odkazy}/\emph{hard link})%
@@ -773,7 +776,7 @@ Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. 
 	\begin{enumerate}
 		\item Změna záznamu o~velikosti souboru v~jeho i-uzlu (metadata).
 		\item Z volných datových bloků je vybrán prostor pro~nová data (metadata).
-		\item Do vybraných bloků jsou zapsány data (data).
+		\item Do vybraných bloků jsou zapsána data (data).
 	\end{enumerate}
 	Pokud dojde k~pádu systému před třetím krokem, budou v~žurnálu zaznamenány datové bloky, ale v~těch bude náhodná změť paměti.
 	\item Při~ukládání s~daty souborů jsou do~žurnálu ukládány kopie všech datových bloků do~kterých se bude zapisovat. Pokud dojde k~pádu, je operace zápisu provedena znovu nad kopií datových bloků. To značně zpomaluje operaci zápisu. Využívá se pouze v~systémech, kde vyžadujeme naprostou ochranu dat.
@@ -782,7 +785,7 @@ Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. 
 Základní implementace:
 
 \begin{enumerate}
-	\item Kopie žurnálu mohou být umístěny na~různých paměťových médiích za~účelem zálohování v~případě poruchy jiného média.
+	\item Kopie žurnálu mohou být umístěny na~různých paměťových médiích za~účelem zálohování v~případě poruchy média.
 	\item Plánované změny v~žurnálu mohou být dále ukládány v~jiném žurnálu z~důvodu zvýšení redundance.
 	\item Žurnál je ukládán na~stejném nebo jiném médiu, z~důvodu vyšší rychlosti.
 \end{enumerate}
@@ -852,7 +855,7 @@ Správa soketů v~OS Linux se provádí pomocí systémových volání.
 \begin{itemize}
 \item \textbf{socket}: Založení nového soketu.
 \item \textbf{connect}: Systémové volání na~straně klienta pro~navázání spojení se soketem na~straně serveru. Navazování spojení probíhá pomocí three-way handshake (viz obrázek \ref{network_three_handshake}).
-\item \textbf{bind}: Přiřadí soketu IP adresu a~port na~straně serveru. Bez~zavolání by byl soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U~serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP 21, SSH 22, HTTP 80, HTTPS 443, \dots). U~klienta je port generován z~dynamického rozsahu, toto volání se tedy nepoužívá.
+\item \textbf{bind}: Přiřadí soketu IP adresu a~port na~straně serveru. Bez~zavolání by byl soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U~serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP 21, SSH 22, HTTP 80, HTTPS 443, \dots). U~klienta je port generován z~dynamického rozsahu.
 \item \textbf{listen}: Převede soket na~straně serveru do~pasivního režimu kdy přijímá příchozí spojení (pomocí systémového volání accept). Vytvoří se vstupní fronta pro~příchozí spojení.
 \item \textbf{accept}: Voláno na~straně severu k~vyzvednutí požadavku o~spojení ze~vstupní fronty. Volání vytvoří nový soket podle parametrů žádosti o~spojení. Pokud je accept zavolán v~době, kdy je vstupní fronta prázdná, spojení je zablokováno do~doby než žádost přijde.
 \item \textbf{close}: Uzavírá soket. Ukončení spojení zmíněno dříve.
