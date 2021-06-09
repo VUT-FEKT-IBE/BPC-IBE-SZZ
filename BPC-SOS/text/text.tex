@@ -528,10 +528,11 @@ Proces ale lze rozdělit mezi hlavní a~odkládací paměť díky jeho rozdělen
 
 Paměťový prostor procesu je rozdělen na~stejně velké části, tzv. \emph{stránky} (\emph{pages}), které jsou v~případě potřeby přesouvány z~odkládací paměti do~stejně velkých míst v~hlavní paměti tzv. \emph{rámců} (\emph{frames}). Přenesení stránek do~hlavní paměti je zavolání tzv. \emph{page fault} (\emph{výpadek stránky}), tedy že proces potřebuje pracovat se stránkou která právě v~paměti není. Proces sám však \emph{page fault} nevyvolá, procesor rozpozná, že chybí stránka a~zavolá \emph{výpadek}\footnote{Proces tuto výměnu ani nevidí, viditelný je pro~OS, který vede evidenci jednotlivých stránek.}. Umístění stránek je uloženo v~\emph{tabulce stránek} (page table).
 
-\begin{center}
+\begin{figure}[ht]
+	\centering
 	\includegraphics[scale=1]{images/mem_page_table.png}
 	\caption{Stránkování paměti}
-\end{center}
+\end{figure}
 
 Díky pevné velikosti stránek je lze efektivně umístit do~stejně velkých rámců. Díky tomu nedochází k~\emph{externí fragmentaci} volného prostoru v~hlavní paměti. Nevýhodou je, že proces do~této struktury nevidí, tudíž neví, že části které patří k~sobě by se měly přesouvat do~paměti společně za~účelem zredukování množství \emph{page fault}.
 
