@@ -1,6 +1,8 @@
 \section{Správa paměti, statické přidělování paměti, dynamické přidělování paměti, garbage collector, reprezentace informace v~paměti.}
 
 \begin{multicols}{2}
+	V~32bitových systémech je každému procesu přidělen virtuální adresní prostor o~velikosti 4~GiB ($2^{32}$~b), v~64bitových systémech je to $2^{64}$~b. Do~horních adres (\texttt{0xFFFFFFFF} a~níže) se zapisuje \emph{stack}, do~spodních (\texttt{0x00000000} a~výše) zbytek dat (včetně části prostoru která je vyhrazena jádru).
+
 	Každá paměť, která je přiřazena procesu, se~dělí na~4 základní bloky:
 
 	\begin{itemize}
@@ -11,16 +13,16 @@
 	\end{itemize}
 
 	\centering
-	\includegraphics[scale=0.6]{images/pamet.png}
+	\includegraphics[scale=0.7]{images/pamet.png}
 \end{multicols}
 
-\emph{\textbf{Code}} je množina strojových instrukcí, které naprosto jednoznačně provádí program. Dle těchto instrukcí počítač postupuje ve~výpočtu.
+\emph{\textbf{Code}} (nebo také \emph{\textbf{Text}}) je množina strojových instrukcí, které program provádí.
 
-V~části \emph{\textbf{Data}} můžou být uložena data, která jsou známa při~překladu programu (hodnoty polí, konstant, proměnných, některé textové řetězce).
+V~části \emph{\textbf{Data}} jsou uložena data známá při~překladu programu (hodnoty polí, konstant, proměnných, některé textové řetězce).
 
 Bloky \emph{Code} a~\emph{Data} jsou známy v~době překladu a~jejich velikost se~v~průběhu nemění.
 
-\emph{\textbf{Heap}} slouží k~alokaci dynamické paměti. Je založena na~stromové datové struktuře. Obsahuje objekty a~instance proměnných (atributy třídy).
+\emph{\textbf{Heap}} slouží k~alokaci dynamické paměti; obsahuje objekty a~instance proměnných (atributy třídy). Je založena na~stromové datové struktuře.
 
 \emph{\textbf{Stack}} funguje na~principu LIFO a~je důležitý pro~volaní správných funkcí. S~uložením funkce na~stack se~posunuje ukazatel na~pozici v~registru (\emph{stack pointer}). Po~dokončení té funkce je odstraněna ze~zásobníku a~ukazatel změněn na~předchozí funkci. Obsahuje metody/funkce, lokální proměnné a~reference na~proměnné.
 
@@ -33,11 +35,9 @@ Staticky se~ukládají datové struktury, které jsou definovány při~překladu
 
 \subsection{Dynamické přidělování paměti}
 
-Dynamicky se~paměť přiděluje na~základě požadavku při~průběhu programu. K~dynamicky přidělenému paměťovému úseku se~dá přistoupit pouze nepřímo pomocí ukazatele. Ukazatel je součástí statické nebo dynamické struktury. Dynamicky přidělovaná paměť se~čerpá z~vyhrazeného prostoru paměti počítače.
+Dynamicky se~paměť přiděluje na~základě požadavku při~průběhu programu. K~dynamicky přidělenému paměťovému úseku se~dá přistoupit pouze nepřímo pomocí ukazatele. Ukazatel je součástí statické nebo dynamické struktury. Dynamicky přidělovaná paměť se~čerpá z~vyhrazeného prostoru paměti počítače. \textbf{Regenerace} paměti je její pročištění od~nepoužívaných částí paměti.
 
 \subsubsection{Dynamické přidělování paměti bez~regenerace}
-
-Regenerace paměti je její pročištění od~nepoužívaných částí paměti.
 
 Dynamické přidělovaní paměti bez~regenerace přiděluje požadované úseky postupně tak jak Jsou za~sebou umístěny až do~vyčerpaní vyhrazené paměti. Využívá pracovního ukazatele, který ukazuje na~první adresu volné paměti. Nejčastěji pomocí operace \emph{new} zapíše do~paměti a~změní ukazatel na~novou hodnotu, která ukazuje na~novou adresu volné části a~v indikátoru paměti hodnotu obsazení označí \emph{true}. Operace \emph{free/delete} okamžitě neuvolní paměť, ale přepíše indikátor paměti na~\emph{false}; regenerace probíhá později po~větších částech.
 
@@ -58,7 +58,7 @@ Je nejpokročilejším způsobem dynamického přidělovaní paměti. Oproti př
 Tyto tři fáze se~opakují dokola, pokud nedojde k~situaci, že nový úsek není dostačující pro~fázi alokace: v~tom případě dojde k~ukončení programu.
 
 \paragraph{Reprezentace informace v~paměti} Pokud je datový typ primitivní, je uložen na~přímo v~paměti a~u objektů je reprezentován pouze ukazatelem na~místo v~paměti%
-\footnote{Zatímco jeden \textit{integer} v~paměti zabere 32bitů, \textit{objekt} (v~C si lze představit jako \textit{struct}) obsahující dva integery bude v~paměti reprezentován jako \textit{odkaz} (pointer) na~část paměti kde začíná první integer. Nedá se~úplně s~jistotou říct, že zabere 64bitů, jelikož se~zpravidla dodá padding pro~metadata).}%
+\footnote{\textit{Integer} zabírá 32~bitů, \textit{objekt} (v~C \textit{struct}) obsahující dva integery bude reprezentován jako odkaz na~část paměti kde začíná první integer. Nejspíše bude zabírat více než 64~b kvůli metadatům.}%
 .
 
 \clearpage
