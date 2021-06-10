@@ -2,7 +2,7 @@
 
 Jsou extrémně důležitá pro téměř všechny kryptosystémy: asymetrické šifrování, digitální podpisy, ustanovení klíčů i~vyšší systémy (TLS, PKI).
 
-Prvočísel je nekonečně mnoho, počet $\pi(n)$ menší než $n$ lze pro~velké hodnoty aproximovat jako $\pi(n) = \frac{n}{\ln(n)}$. Současné kryptosystémy využívají prvočísla o~velikosti 2048-4096b (600 - 1200 cifer).
+Prvočísel je nekonečně mnoho, počet $\pi(n)$ menší než $n$ lze pro~velké hodnoty aproximovat jako $\pi(n) = \frac{n}{\ln(n)}$. Současné kryptosystémy využívají prvočísla o~velikosti 2048--4096b (600--1200 cifer).
 
 \subsection{Typy prvočísel}
 
@@ -19,7 +19,7 @@ Prakticky se buď volí bezpečná prvočísla, nebo se náhodně vygeneruje č�
 \subsection{Pravděpodobnostní testy}
 
 \textbf{Fermatův test} je založen na~modulárním mocnění. Zvolíme libovolné $a: 1 \leq a \leq n-1$, spočteme $a^{n-1} \stackrel{?}{\equiv} 1 \Pmod n$. Pokud kongruence platí, opakujeme pro~jiné $a$, pokud neplatí, $n$ prvočíslo není. Čím více pokusů, tím větší šance že se o~prvočíslo jedná. Nedokáže odlišit prvočísla a~Carmichaelova čísla\footnote{%
-Carmichaelovo číslo splnňuje kongurenci $b^{n-1} \equiv 1 \Pmod n$ pro~všechna $b$ nesoudělná s~$n$.
+Carmichaelovo číslo splňuje kongurenci $b^{n-1} \equiv 1 \Pmod n$ pro~všechna $b$ nesoudělná s~$n$.
 }.
 
 \noindent \textbf{Miller-Rabinův test} je spolehlivější než~Fermatův; složená čísla projdou iterací s~maximálně 25\% pravděpodobností.
@@ -42,7 +42,7 @@ a^r \not\equiv 1 \Pmod n & \mathrm{bod\ 3} \\
 \subsection{Skutečné testy}
 
 \textbf{Lucas-Lehmerův test} funguje pouze pro~Mersenova prvočísla ($M_p = 2^s - 1$). \\
-$u_0 = 4$, $u_{n+1} = (u_n^2 - 2) \Mod n$, \dots, $u_{s-2} \stackrel{?}{=} 0$.
+$u_0 = 4$, $u_{n+1} = (u_n^2 - 2)$, \dots, $u_{s-2} \stackrel{?}{=} 0 \Pmod n$.
 
 \clearpage
 \section{Teorie čísel, algebraické struktury -- popište účel a~způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.}
@@ -70,11 +70,11 @@ Algebraické struktury představují množiny prvků s~operacemi a~různými vla
 \begin{itemize}[noitemsep]
     \item uzavřenost (pro všechny prvky $a, b$ v~G je i~$a \circ b$ prvkem G)
     \item asociativita $(a \circ b) \circ c = a \circ (b \circ c)$
-    \item existence neutrálního prvku (existuje prvek e v G takový že pro všechna $a$ v~G platí $a \circ e = e \circ a = a$)
-    \item existence inverzního prvku (pro každý prvek $a$ existuje prvek $b$ takový že $a \circ b = b \circ a = e$, tj. že jejich složení je rovno neutrálnímu prvku. Prvku $b$ se říká inverzní)
+    \item existence neutrálního prvku (existuje prvek $e$ v~G takový že pro všechna $a$ v~G platí $a \circ e = e \circ a = a$)
+    \item existence inverzního prvku (pro každý prvek $a$ existuje prvek $b$ takový že $a \circ b = b \circ a = e$, tj. že jejich složení je rovno neutrálnímu prvku. Prvku $b$ se říká inverzní.
 \end{itemize}
 
-Grupa (G, $\circ$) je \textbf{cyklická}, jestliže existuje prvek $a$ v~G takový, že pro každé $b$ v~G existuje celé číslo $i$ takové, že $b = a^i$. Takový prvek se nazývá generátor grupy. 
+Grupa (G, $\circ$) je \textbf{cyklická}, jestliže existuje prvek $g$ v~G takový, že pro každé $b$ v~G existuje celé číslo $i$ takové, že $b = g^i$. Takový prvek se nazývá generátor grupy. 
 
 Řád prvku $a$ je definován jako nejmenší kladné celé číslo $t$ takové že $a^t = 1$ pokud takové $t$ existuje. 
 
@@ -85,7 +85,7 @@ Příklady praktických grup pro~kryptografii:
     \item Množina celých čísel $\mathbb{Z}$ spolu s operací sčítání (+) tvoří abelovskou grupu.
     \item Množina $\mathbb{Z}_n$ s operací sčítání modulo $n$ tvoří grupu řádu $n$.
     \item Množina $\mathbb{Z}_n$ s operací násobení modulo $n$ ($\mathbb{Z}_n^*$) netvoří grupu, protože inverzní prvek neexistuje ke všem prvkům ze $\mathbb{Z}_n$.
-    \item Množina $\mathbb{Z}_p$ s operací násobení modulo prvočíslo $p$ tvoří grupu, protože inverzní prvek existuje ke všem prvkům ze $\mathbb{Z}_p$. 
+    \item Množina $\mathbb{Z}_p^*$ s~operací násobení modulo prvočíslo $p$ tvoří grupu, protože inverzní prvek existuje ke všem prvkům ze $\mathbb{Z}_p$.
 \end{itemize}
 
 Příklad pro $\mathbb{Z}^*_{17}$:
@@ -106,7 +106,7 @@ Nalezení generátoru:
 \end{itemize}
 
 \clearpage
-\section{Modulární aritmetika -- popište algoritmus Square and Multiply a Čínskou větu o zbytcích.}
+\section{Modulární aritmetika -- popište algoritmus Square and Multiply a~Čínskou větu o~zbytcích.}
 
 Modulární aritmetika pracuje s~celými čísly v~daném intervalu. Pro~čísla platí: \\
 -- \textbf{reflexivita}: $a \equiv a \Pmod n$ \\
@@ -385,7 +385,7 @@ Tomuto útoku se říká \href{https://en.wikipedia.org/wiki/Birthday_attack}{na
 224b/256b/384b/512b \textbf{SHA-3} využívá algoritmus Keccak (\enquote{princip houby}) a~je součást SHA rodiny od~roku 2015.
 
 \clearpage
-\section{PKI -- certifikát X.509 struktura, certifikační autorita základní části, časová razítka, autorita časových razítek.}
+\section{PKI -- certifikát X.509 struktura, certifikační autorita (základní části), časová razítka, autorita časových razítek.}
 
 \subsection{Public key infrastructure}
 
@@ -459,9 +459,9 @@ Další části CA jsou registrační autority (RA), online RA, IVR nebo telefon
 
 \subsection{Autorita časových razítek (TSA)}
 
-TSA musí podepisovat každé časové razítko privátnín klíčem vyhrazeným pouze k tomuto účelu. TSA musí být napojena bezpečným způsobem a v pravidelných časových intervalech synchronizována proti nejlépe třem na sobě nezávislým zdrojům. TSA využívají mezinárodní standard coordinated universal time UTC.
+TSA musí podepisovat každé časové razítko privátnín klíčem vyhrazeným pouze k tomuto účelu. TSA musí být napojena bezpečným způsobem a v pravidelných časových intervalech synchronizována proti nejlépe třem na sobě nezávislým zdrojům. TSA využívají mezinárodní standard UTC (\emph{Coordinated Universal Time}).
 
-\noindent Požadavkům na zdroj času lze dosáhnout využitím PKI, zajišťující důvěrnost, integritu, neodmítnutelnost a autenticitu při časové synchronizaci. Požadavky na zdroj času jsou:
+\noindent Požadavkům na zdroj času lze dosáhnout využitím PKI, zajišťující důvěrnost, integritu, nepopiratelnost a~autenticitu při časové synchronizaci. Požadavky na zdroj času jsou:
 
 \begin{itemize}[noitemsep]
     \item Musí pocházet z oficiálního důvěryhodného zdroje.
@@ -471,7 +471,7 @@ TSA musí podepisovat každé časové razítko privátnín klíčem vyhrazeným
 
 \subsection{Vydání časového razítka}
 
-Uživatel zažádá pomocí klientské aplikace. Klient vytvoří a odešle žádost o časoví razítko ve standardizovaném formátu. Žádost je datová struktura obsahující hash dokumentu. TSA v případě kladné odpovědi odesílá odpověď obsahující časové razítko.
+Uživatel zažádá pomocí klientské aplikace. Klient vytvoří a odešle žádost o~časové razítko ve~standardizovaném formátu. Žádost je datová struktura obsahující hash dokumentu. TSA v případě kladné odpovědi odesílá odpověď obsahující časové razítko.
 
 \begin{center}
 \includegraphics[scale=0.7]{images/Timestamp.jpg}
@@ -536,7 +536,7 @@ Služba bezpečnosti je realizovaná protokolem příslušné vrstvy. Existuje 5
 
 \textbf{Autentizace} je proces ověřovaní identity uživatele (entity). Existuje autentizace uživatelů (peer entity authentication), které nezabraňují útoky zopakováním zpráv. Dále existuje autentizace zdroje dat (data origin authentication), která provádí autentizaci všech dat a zabraňuje útokům zopakováním zpráv.
 
-\textbf{Řízení přístupu}: kontrola přístupu (možnost povolit nebo odepřít použití určitého zdroje určitému subjektu, řízení přístupu k materiálním, logickým, nebo digitálním zdrojům \textbf{neplést si s autorizací}). Umožňuje přístup  do systému k službám a dalším. Chrání před neautorizovaným přístupem, kde se nejčastěji nachází v aplikaci nebo OS.
+\textbf{Řízení přístupu}: kontrola přístupu (možnost povolit nebo odepřít použití určitého zdroje určitému subjektu, řízení přístupu k materiálním, logickým, nebo digitálním zdrojům; \textbf{neplést si s autorizací}). Umožňuje přístup  do systému k službám a dalším. Chrání před neautorizovaným přístupem, kde se nejčastěji nachází v aplikaci nebo OS.
 
 \textbf{Zabezpečení důvěrnosti dat} je ochrana obsahu dat, ochrana toku dat při přenosu proti analýze (zjištění odesílatele, adresáta, \dots). 
 
@@ -553,7 +553,7 @@ Integritu rozdělujeme na slabou a silnou.
 
 \noindent \textbf{Slabá integrita} slouží pro objevování útoků (modifikace zprávy šumem, náhodná změna pořadí paketů, náhodná duplicita \dots) pomocí aplikací kontrolních součtů, CRC, pořadová čísla paketů atd.
 
-\noindent \textbf{Silná integrita} zabezpečuje proti úmyslným, aktivním útokům (subjektivní útoky) jako jsou podvržení zprávy, úmyslné pozměnění zprávy. Celkově silnou integritu tvoří prostředky slabé integrity a kryptografické prostředky
+\noindent \textbf{Silná integrita} zabezpečuje proti úmyslným, aktivním útokům (subjektivní útoky) jako jsou podvržení zprávy nebo úmyslné pozměnění zprávy. Celkově silnou integritu tvoří prostředky slabé integrity a kryptografické prostředky
 
 
 \textbf{Ochrana proti odmítnutí původu zprávy} zajišťuje důkaz o původnosti dat, prokazuje původ (příjemce, odesílatel) a prokazuje doručení (odesílaní, přijetí).
@@ -586,6 +586,6 @@ Mechanizmy bezpečnosti jsou šifrování, digitální podpis, řízení příst
 
 Na síťové vrstvě se o bezpečnost stará hlavně IPsec. Zajišťuje důvěrnost a integritu přenášených dat. O integritu se stará autentizační hlavička IP datagramu. Důvěrnost se zajišťuje pomocí mechanismu zapouzdření.
 
-Na transportní vrstvě je bezpečnost zajištěna pomocí TLS (SSL bylo znehodnoceno v 2015) protokolu pro protokoly na aplikační vrstvě. Zajišťuje autentizaci mezi serverem a klientem, šifruje se spojení. Tímto zajišťuje autentizaci a důvěrnost.
+Na transportní vrstvě je bezpečnost zajištěna pomocí TLS (SSL bylo prohlášeno za~nedostatečné v~roce 2015) protokolu pro~protokoly na~aplikační vrstvě. Zajišťuje autentizaci mezi serverem a~klientem, šifruje se spojení. Tímto zajišťuje autentizaci a~důvěrnost.
 
-Na aplikační vrstvě několik protokolů jako HTTPS, SSH a další. HTTPS zajišťuje důvěrnost, autentizaci a integritu. SSH zajišťuje autentizaci, integritu a důvěrnost přenášených dat.
+Na~aplikační vrstvě několik protokolů jako HTTPS, SSH a~další -- oba tyto zmíněné protokoly zajišťují důvěrnost, autentizaci a~integritu.
