@@ -407,7 +407,7 @@ Krom vzájemné vyloučení je potřeba zajistit i~následující podmínky:
 \paragraph{Sdílená dvouhodnotová proměnná}
 
 Mějme sdílenou proměnnou \emph{lock}, která může nabývat stavů \emph{FALSE} a~\emph{TRUE}. \emph{FALSE} značí, že v~kritické sekci není žádný proces a~\emph{TRUE} značí obsazenou kritickou sekci. Proces tedy před vstupem do~KS zkontroluje proměnnou a~postupuje tak jak bylo popsáno dříve. Pokud je \emph{lock} uzamčený (\emph{TRUE}), proces čeká v~čekající smyčce%
-\footnote{Čekání ve~smyčce na~odemknutí zámku se nazývá aktivní čekání a~jedná se o~skvělý způsob jak plýtvat zdroji.}
+\footnote{Čekání ve~smyčce na~odemknutí zámku se nazývá aktivní čekání a~nezanedbatelně plýtvá zdroji.}
 na~uvolnění prostředků.
 
 Tento způsob je náchylný na~souběh. Může se stát, že proces A přistoupí k~zámku a~načte jeho hodnotu jako \emph{FALSE}, poté plánovač přepne kontext na~proces B, který vstoupí do~kritické sekce, a~nastaví \emph{lock} na~\emph{TRUE}. Plánovač opět přepne kontext a~proces A vstoupí do~kritické sekce, výsledkem jsou dva procesy v~kritické sekci najednou.
@@ -522,7 +522,7 @@ Aby se mohl tento úsek vytvořit je třeba přesunout všechny procesy do~jedno
 	\label{mem_fragmentace}
 \end{figure}
 
-Proces ale lze rozdělit mezi hlavní a~odkládací paměť díky jeho rozdělení na~dílčí části (\emph{overlays}). Lze ho vykonávat pokud má v~paměti svou první část, po~dokončení se načte druhá apod. Nebo je možné držet v~paměti více částí procesu najednou. (viz obrázek \ref{mem_lap}).
+Proces ale lze rozdělit mezi hlavní a~odkládací paměť díky jeho rozdělení na~dílčí části (\emph{overlays}). Lze ho vykonávat pokud má v~paměti svou první část, po~dokončení se načte druhá apod. Nebo je možné držet v~paměti více částí procesu najednou (viz obrázek \ref{mem_lap}).
 
 \subsection{Stránkování}
 
@@ -547,7 +547,7 @@ Pomocí segmentace je paměťový prostor procesů dělen na~logicky souvisejíc
 \begin{itemize}
 	\item Textový -- instrukce programu.
 	\item Datový -- inicializované globální a~statické proměnné.
-	\item BSS (Block Started by Symbol) -- neinicializované globální a~statické proměnné, kde hodnota může být náhodná hodnota z~paměti nebo O (pro ukazatele \emph{null}).
+	\item BSS (Block Started by Symbol) -- neinicializované globální a~statické proměnné, kde hodnota může být náhodná hodnota z~paměti nebo 0 (pro ukazatele \emph{null}).
 	\item Halda -- dynamické proměnné.
 	\item Zásobník
 \end{itemize}
@@ -603,7 +603,7 @@ Při~odložení z~hlavní paměti mohou nastat dvě situace podle dat ve~stránc
 
 Stránky mohou být svázány s~určitým souborem v~sytému, takový soubor může obsahovat kód procesu (read-only data) nebo se jedná o~soubor připojený do~uživatelského kontextu procesu, tzv. \emph{paměťově mapovaný soubor}%
 \footnote{Tyto soubory v~paměti mohou být jak v~režimu pouze pro~čtení tak i~pro~zápis.}%
-. Takto lze jednoduše sdílet soubor mezi procesy. Pro~práci s~tímto souborem se používají paměťové funkce, což zvyšuje rychlost operací čtení a~zápisu. Nevýhodou může potencionální plýtvání paměti%
+. Takto lze jednoduše sdílet soubor mezi procesy. Pro~práci s~tímto souborem se používají paměťové funkce, což zvyšuje rychlost operací čtení a~zápisu. Nevýhodou může potenciální plýtvání paměti%
 \footnote{Uvažujme stránky o~velikosti 4KiB a~soubor o~velikosti 6KiB, pak musíme využít dvě stránky ale z~toho jsou 2KiB nevyužity.}%
 .
 

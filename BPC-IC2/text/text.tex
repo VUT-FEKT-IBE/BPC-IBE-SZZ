@@ -295,15 +295,10 @@ Více např. \url{https://owasp.org/www-project-web-security-testing-guide/v42/5
 \subsubsection{Logické útoky}
 
 \textbf{Teardrop}: fragmenty paketů se špatně nastaveným offsetem: cíl není schopen správně sestavit celý packet \\
-% TODO Opravdu je to "Land"?
 \textbf{Land}: TCP-SYN mají cílovou IP adresu i~port shodné se~zdrojovou adresou \\
 \textbf{Ping of~Death}: ICMP ping s~velikostí nad~65kB \\
-\textbf{ReDoS}: extrémní zátěž pomocí regulérních výrazů
-
-\subsubsection{Další typy útoků}
-
-\textbf{RandomUnreachableHost}, \textbf{UnreachableHost}: neautorizované přerušení spojení \\
-\textbf{XMasTree}: TCP paket má v~hlavičce nastaveny příznaky FIN, URG, PST \\
+\textbf{ReDoS}: extrémní zátěž pomocí regulérních výrazů \\
+\href{https://www.youtube.com/watch?v=XiFkyR35v2Y}{\textbf{XMasTree}}: TCP paket má v~hlavičce nastaveny příznaky FIN, URG, PST \\
 \textbf{Slow-Loris}: nekompletní pomalý GET dotaz
 
 \clearpage
