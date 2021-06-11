@@ -42,7 +42,7 @@ a^r \not\equiv 1 \Pmod n & \mathrm{bod\ 3} \\
 \subsection{Skutečné testy}
 
 \textbf{Lucas-Lehmerův test} funguje pouze pro~Mersenova prvočísla ($M_p = 2^s - 1$). \\
-$u_0 = 4$, $u_{n+1} = (u_n^2 - 2)$, \dots, $u_{s-2} \stackrel{?}{=} 0 \Pmod n$.
+$u_0 = 4$, $u_{n+1} = (u_n^2 - 2)$, \dots, $u_{s-2} \stackrel{?}{=} 0 \Pmod {M_p}$.
 
 \clearpage
 \section{Teorie čísel, algebraické struktury -- popište účel a~způsob výpočtu Eulerovy funkce. Popište požadavky na grupu a způsob generování grupy pro algoritmy založené na problému DL.}
@@ -346,15 +346,6 @@ $k = aB \Mod p$ && $k = bA \Mod p$ \\
 \end{tabular}
 \caption*{Znázornění ECDH výměny.}
 \end{table}
-
-\subsection{Digitální podpisy}
-
-RSA, ElGamal, DSA, ECDSA, ověření certifikátu, blockchain, PKCS\#1, X.509, \dots
-
-\begin{center}
-{\huge \dots} zde je třeba doplnit zbytek {\huge \dots} \\
-(vlastně sám nevím co by tu přesně mělo být)
-\end{center}
 
 \clearpage
 \section{Hašovací funkce -- vlastnosti, princip, použití, kolize, odolnost proti kolizím, příklady.}
