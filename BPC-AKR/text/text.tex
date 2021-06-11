@@ -60,6 +60,10 @@ V kryptografii se nejčastěji setkáme s dělitelností (zbytek a~modulo), nejv
         prvočísla & $\phi(n) = n-1$ \\
         mocniny prvočísel & $\phi(p^k) = (p-1) p^{k-1}$ \\
         složená čísla & $\phi(a \cdot b) = \phi(a) \cdot \phi(b)$ \\
+        obecná čísla & $\phi(n) = n \cdot (1 - \frac{1}{p_1}) (1 - \frac{1}{p_2}) \cdots (1 - \frac{1}{p_r})$ \\
+        & kde $p_1$, $p_2$, \dots, $p_r$ jsou prvočísla ze~kterých se $n$ skládá, nebo \\
+        & $\phi(n) = (p_1 -1) p_1^{k_1-1} \cdot (p_2 -1) p_2^{k_2-1} \cdots (p_r -1) \cdot p_r^{k_r-1}$ \\
+        & kde platí $n = p_1^{k_1} \cdot p_2^{k_2} \cdots p_r^{k_r}$.
     \end{tabular}
 \end{table}
 
