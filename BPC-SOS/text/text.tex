@@ -100,8 +100,8 @@ Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dyna
 	\item datová část (data segment) -- Data, která proces potřebuje již od~svého startu, tedy globální proměnné, textové řetězce, datová pole atd.
 	\item halda (\emph{heap}) -- Stromová struktura, kde se mohou dynamicky alokovat data za~běhu programu.
 	\item zásobník (\emph{stack}) -- Také dynamicky alokovaný, ale  ukládají se zde parametry procesem volaných funkcí. Je obvyklé, že zásobník roste směrem k~nižším adresám (tj.~vrchol jde dolů). Jedná se o~LIFO (Last-in First-out) zásobník%
-	\footnote{Mezera mezi haldou a~zásobníkem představuje volné místo, které dovoluje dynamickou změnu zásobníku a~haldy během procesu.}%
-	.
+	      \footnote{Mezera mezi haldou a~zásobníkem představuje volné místo, které dovoluje dynamickou změnu zásobníku a~haldy během procesu.}%
+	      .
 \end{itemize}
 
 \begin{figure}[ht]
@@ -110,9 +110,9 @@ Uživatelský kontext procesu se skládá z~neměnné (statické) části a~dyna
 		\includegraphics[width=\textwidth]{images/proc_user_context.png}
 		\caption{Uživatelský kontext procesu}
 		\label{proc_user_context}
- 	\end{minipage}
-\hspace*{1em}
- 	\begin{minipage}[b]{0.47\textwidth}
+	\end{minipage}
+	\hspace*{1em}
+	\begin{minipage}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{images/proc_data_segment.png}
 		\caption{Datová část paměti procesu}
 		\label{proc_data_segment}
@@ -123,9 +123,9 @@ Datový segment lze rozdělit na:
 
 \begin{itemize}
 	\item inicializovaná data dostupná pouze pro~čtení -- datové prvky inicializované programem,
-	které nelze měnit,
+	      které nelze měnit,
 	\item inicializovaná data dostupná pro~čtení i~zápis -- datové prvky inicializované programem,
-	ovšem jejich hodnoty mohou být za~běhu procesu měněny,
+	      ovšem jejich hodnoty mohou být za~běhu procesu měněny,
 	\item neinicializovaná data -- datové prvky, které program neinicializoval. Neinicializovaná data lze měnit za~běhu procesu.
 \end{itemize}
 
@@ -145,11 +145,11 @@ Jsou zde udržovány informace o~rozložení uživatelského kontextu a~další 
 \begin{table}[ht]
 	\centering
 	\begin{tabular}{l|l}
-	nový       & připraven k~vytvoření \\
-	připravený & proces čeká na~přidělení procesoru \\
-	vykonávaný & instrukce jsou prováděny \\
-	čekající   & proces čeká na~událost (načtení dat) \\
-	ukončený   & proces dokončil vykonávání instrukcí \\
+		nový       & připraven k~vytvoření                \\
+		připravený & proces čeká na~přidělení procesoru   \\
+		vykonávaný & instrukce jsou prováděny             \\
+		čekající   & proces čeká na~událost (načtení dat) \\
+		ukončený   & proces dokončil vykonávání instrukcí \\
 	\end{tabular}
 	\caption{Stavy procesu}
 \end{table}
@@ -303,8 +303,8 @@ Tyto systémy jsou typické pro~nákladná a~výkonná informační centra, kde 
 
 \begin{itemize}
 	\item Výkonnost -- počet úloh zpracovaných za~jednotku času%
-	\footnote{Plánovač zvyšující výkonnost nemusí nutně zvyšovat rychlost obsluhy. Za~účelem zvýšení výkonnosti může upřednostňovat kratší úlohy, na~které se však musí déle čekat. Výkonnost stoupá, ale rychlost obsluhy klesá.}%
-	.
+	      \footnote{Plánovač zvyšující výkonnost nemusí nutně zvyšovat rychlost obsluhy. Za~účelem zvýšení výkonnosti může upřednostňovat kratší úlohy, na~které se však musí déle čekat. Výkonnost stoupá, ale rychlost obsluhy klesá.}%
+	      .
 	\item Rychlost obsluhy -- průměrný čas od~doby přijetí požadavku do~jeho splnění.
 	\item Využití CPU -- preferuje se maximální využití a~minimální prostoje.
 \end{itemize}
@@ -438,7 +438,7 @@ Předešlé metody využívají aktivního čekání, které má následující 
 
 \begin{itemize}
 	\item Plýtvání časem CPU%
-	\footnote{Za~předpokladu, že se nebude čekat moc dlouho, jde využít aktivního čekání.}.
+	      \footnote{Za~předpokladu, že se nebude čekat moc dlouho, jde využít aktivního čekání.}.
 	\item Porušení základní podmínky, že čekání na~vstup do~kritické sekce musí být konečná.
 \end{itemize}
 
@@ -477,11 +477,11 @@ Tato situace lze řešít předcházením uvíznutí, připuštěním že se sys
 
 \begin{itemize}
 	\item Procesy ve~stavu uvíznutí jsou násilně ukončeny:
-	\begin{enumerate}
-		\item postupně -- pomalejší řešení, po~každém ukončeném procesu je potřeba znovu spustit detekční algoritmus, volba procesu může být například na~základě stáří
-		\item všechny najednou -- rychlejší řešení s~velkými náklady (například ztráta předešlých výpočtů a~dat)
-	\end{enumerate}
-	
+	      \begin{enumerate}
+		      \item postupně -- pomalejší řešení, po~každém ukončeném procesu je potřeba znovu spustit detekční algoritmus, volba procesu může být například na~základě stáří
+		      \item všechny najednou -- rychlejší řešení s~velkými náklady (například ztráta předešlých výpočtů a~dat)
+	      \end{enumerate}
+
 	\item Procesům jsou násilně odebrány všechny prostředky a~předávány jiným procesům ve~stavu uvíznutí. Po~každém odebrání je opět potřeba spustit detekční algoritmus, aby se zjistilo zda bylo uvíznutí vyřešeno.
 \end{itemize}
 
@@ -629,8 +629,6 @@ Nedávno používané stránky budou patrně použity znovu a~ty starší pravd�
 
 Jedna z~možností je použití hardware s~64bitovým čítačem, který je inkrementován po~vykonání každé instrukce. Každá stránka má přiděleno jedno návěští kde je hodnota čítače. Po~použití stránky se do~návěští uloží aktuální hodnota čítače. Když je potřeba odstranit stránku je vybrána ta s~nejnižší hodnotou čítače, jelikož byla nižší hodnota čítače znamená, že již proběhlo mnoho instrukcí $\rightarrow$ stará stránka.
 
-\clearpage
-
 Druhá možnost spočívá ve~využití matic (opět v~hardware). Pro~$n$ možných stránek ve~FAP je použita matice $n \times n$ bitů. Při~každém použití stránky $k$ se nastaví bity řádku $k$ na~1 a~poté se vynuluje sloupec $k$. Řádek s~nejnižší binární hodnotu patří stránce nejdéle nepoužité a~je tedy vybrán%
 \footnote{Skripta na~straně 72 mají pěkný příklad.}%
 .
@@ -774,12 +772,12 @@ Do~žurnálu lze ukládat pouze metadata nebo metadata a~vlastní data souboru. 
 
 \begin{itemize}
 	\item Při~ukládání pouze metadat může dojít k~inkonzistenci mezi metadaty. Např. při~přidání dat do~souboru:
-	\begin{enumerate}
-		\item Změna záznamu o~velikosti souboru v~jeho i-uzlu (metadata).
-		\item Z volných datových bloků je vybrán prostor pro~nová data (metadata).
-		\item Do vybraných bloků jsou zapsána data (data).
-	\end{enumerate}
-	Pokud dojde k~pádu systému před třetím krokem, budou v~žurnálu zaznamenány datové bloky, ale v~těch bude náhodná změť paměti.
+	      \begin{enumerate}
+		      \item Změna záznamu o~velikosti souboru v~jeho i-uzlu (metadata).
+		      \item Z volných datových bloků je vybrán prostor pro~nová data (metadata).
+		      \item Do vybraných bloků jsou zapsána data (data).
+	      \end{enumerate}
+	      Pokud dojde k~pádu systému před třetím krokem, budou v~žurnálu zaznamenány datové bloky, ale v~těch bude náhodná změť paměti.
 	\item Při~ukládání s~daty souborů jsou do~žurnálu ukládány kopie všech datových bloků do~kterých se bude zapisovat. Pokud dojde k~pádu, je operace zápisu provedena znovu nad kopií datových bloků. To značně zpomaluje operaci zápisu. Využívá se pouze v~systémech, kde vyžadujeme naprostou ochranu dat.
 \end{itemize}
 
@@ -854,13 +852,13 @@ Spojení může ukončit jakákoliv strana zasláním segmentu s~příznakem FIN
 Správa soketů v~OS Linux se provádí pomocí systémových volání.
 
 \begin{itemize}
-\item \textbf{socket}: Založení nového soketu.
-\item \textbf{connect}: Systémové volání na~straně klienta pro~navázání spojení se soketem na~straně serveru. Navazování spojení probíhá pomocí three-way handshake (viz obrázek \ref{network_three_handshake}).
-\item \textbf{bind}: Přiřadí soketu IP adresu a~port na~straně serveru. Bez~zavolání by byl soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U~serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP 21, SSH 22, HTTP 80, HTTPS 443, \dots). U~klienta je port generován z~dynamického rozsahu.
-\item \textbf{listen}: Převede soket na~straně serveru do~pasivního režimu kdy přijímá příchozí spojení (pomocí systémového volání accept). Vytvoří se vstupní fronta pro~příchozí spojení.
-\item \textbf{accept}: Voláno na~straně severu k~vyzvednutí požadavku o~spojení ze~vstupní fronty. Volání vytvoří nový soket podle parametrů žádosti o~spojení. Pokud je accept zavolán v~době, kdy je vstupní fronta prázdná, spojení je zablokováno do~doby než žádost přijde.
-\item \textbf{close}: Uzavírá soket. Ukončení spojení zmíněno dříve.
-\item \textbf{write}, \textbf{read}: Systémová volání pro~přenos dat. Data jsou přenášena s~dříve zmíněnými příznaky segmentů PSH a~ACK.
+	\item \textbf{socket}: Založení nového soketu.
+	\item \textbf{connect}: Systémové volání na~straně klienta pro~navázání spojení se soketem na~straně serveru. Navazování spojení probíhá pomocí three-way handshake (viz obrázek \ref{network_three_handshake}).
+	\item \textbf{bind}: Přiřadí soketu IP adresu a~port na~straně serveru. Bez~zavolání by byl soket svázán s~náhodným portem z~dynamického rozsahu (49152-65535). U~serveru se ovšem očekává, že bude naslouchat na~portu svázaném se službou (FTP 21, SSH 22, HTTP 80, HTTPS 443, \dots). U~klienta je port generován z~dynamického rozsahu.
+	\item \textbf{listen}: Převede soket na~straně serveru do~pasivního režimu kdy přijímá příchozí spojení (pomocí systémového volání accept). Vytvoří se vstupní fronta pro~příchozí spojení.
+	\item \textbf{accept}: Voláno na~straně severu k~vyzvednutí požadavku o~spojení ze~vstupní fronty. Volání vytvoří nový soket podle parametrů žádosti o~spojení. Pokud je accept zavolán v~době, kdy je vstupní fronta prázdná, spojení je zablokováno do~doby než žádost přijde.
+	\item \textbf{close}: Uzavírá soket. Ukončení spojení zmíněno dříve.
+	\item \textbf{write}, \textbf{read}: Systémová volání pro~přenos dat. Data jsou přenášena s~dříve zmíněnými příznaky segmentů PSH a~ACK.
 \end{itemize}
 
 \subsection{Serverové procesy}
