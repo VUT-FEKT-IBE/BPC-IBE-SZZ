@@ -6,6 +6,7 @@
 *.log
 *.out
 *.synctex.gz
+*.synctex(busy)
 *.toc
 # Cache directories
 **/cache*
