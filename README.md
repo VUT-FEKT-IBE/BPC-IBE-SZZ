@@ -2,6 +2,14 @@
 
 Kliknutím **[zde](https://github.com/jedla97/BPC-IBE-SZZ/releases/latest)** se dostanete k nejnovějším verzím otázek.
 
+I když je otázka označena jako dokončená (v tomto souboru níže), může mít nějaké nedostatky. Ty jsou značeny v kódu značkou
+
+```LaTeX
+% TODO Popis problému nebo chybějícího obsahu
+```
+
+Ročníky *po nás* již otázky nemusí vypracovat samostatně a od nuly, tyto dokumenty zůstanou i dále dostupné. Pokud naleznete chybu nebo si doplníte nedostatek, v tomto repozitáři to nahlašte a ideálně otevřete PR s opravou. Díky tomu budou data udržována aktuální a prospěšná i v dalších letech.
+
 ---
 
 Otázky a odpovědi k státní závěrečné zkoušce (SZZ) oboru Informační bezpečnost na FEKT VUT.
