@@ -13,7 +13,7 @@
 
 \title{BPC-KKR}                     % Název dokumentu - Povinný
 \newcommand{\subtitle}{Otázky a odpovědi BPC-KKR (Kyberkriminalita)}     % Popis dokumentu - Nepovinný
-\author{jedla}                           % Autor           - Nepovinný
+\author{Yakub, Vikča}                           % Autor           - Nepovinný
 \newcommand{\grammar}{--}             % Korektura       - Nepovinný
 \newcommand{\formatting}{--}          % Formátování     - Nepovinný
 % ##################
@@ -50,10 +50,6 @@
 											    % plně "prohledávatelné" a "kopírovatelné"
 \usepackage{tikz}               % pro vykreslování orientovaných grafů
 \usepackage[newfloat]{minted}   % syntax highlighting kódu
-% Automatické zarovnání textu k předcházení vdov a parchantů
-\usepackage[defaultlines=4,all=true]{nowidow}
-% Pro možnost zalomení části textu pokud není na současné stránce dost místa
-\usepackage{needspace}
 
 % ####################
 % # NASTAVENÍ BALÍKŮ #
@@ -69,7 +65,7 @@
     urlcolor=blue
 }
 \usetikzlibrary{shapes,arrows}     % tikz rozšíření
-\usemintedstyle{pastie}            % nastavení vzhledu syntax highlightingu
+\usemintedstyle{pastie}            % nastavení vzhledu syntax highlightingu 
                                         %(musí být odkomentované přidání balíčku minted)
 
 \newenvironment{code}{\captionsetup{type=listing}}{}
@@ -84,6 +80,7 @@
 
 \include{title}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
 
 \include{text/text}
