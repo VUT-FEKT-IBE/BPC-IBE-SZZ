@@ -108,16 +108,16 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-MDS
 
-- [ ] Jaké jsou základní měřitelné parametry kvality služeb v multimediálních sítích? Popište, jakým způsobem se zajišťuje kvalita služeb prostřednictvím integrovaných (Intserv) a diferencovaných (Diffserv) služeb, diskutujte hlavní rozdíly. K čemu slouží QoE?
-- [ ] Popište výhody a nevýhody multicastového přenosu. Popište modely mulsticastu ASM, SSM, jejich rozdíly a funkci protokolu protokol IGMP.
-- [ ] Popište protokoly RTP a RTCP – k čemu protokoly slouží, jaké informace poskytují, kdy a proč se používají.
-- [ ] Popište protokol SDP – k čemu protokol slouží, jaké informace poskytuje, kdy a proč se používá.
-- [ ] Popište rozdíly mezi progresivním stahováním, streamováním a adaptivním streamováním. Popište standardy MPEG DASH, HLS a RTSP
-- [ ] Popište komunikaci prostřednictvím rodiny protokolů H.323, vyjmenujte čtyři základní prvky sítě H.323, popište jejich funkce. Jaké protokoly se v rámci komunikace H.323 používají pro signalizaci hovoru, kompresi AV dat a přenos AV dat.
-- [ ] Popište komunikaci prostřednictvím protokolu SIP, žádosti a odpovědi definované v doporučení RFC3261, prvky sítě SIP a základní schéma spojení bod-bod, bod-proxy server-bod.
-- [ ] Webinar, Webcast, Videokonference, teleprezence – popište základní rozdíly (výhody/nevýhody), využívané protokoly, standardní i proprietární).
-- [ ] Komprese statických obrazových dat dle standardů JPEG - základní schéma, popis jednotlivých bloků - jejich funkce.
-- [ ] Komprese pohyblivých obrazových dat dle standardů MPEG - základní schéma, popis jednotlivých bloků - jejich funkce, oblast použití kodeků. 
+- [x] Jaké jsou základní měřitelné parametry kvality služeb v multimediálních sítích? Popište, jakým způsobem se zajišťuje kvalita služeb prostřednictvím integrovaných (Intserv) a diferencovaných (Diffserv) služeb, diskutujte hlavní rozdíly. K čemu slouží QoE?
+- [x] Popište výhody a nevýhody multicastového přenosu. Popište modely mulsticastu ASM, SSM, jejich rozdíly a funkci protokolu protokol IGMP.
+- [x] Popište protokoly RTP a RTCP – k čemu protokoly slouží, jaké informace poskytují, kdy a proč se používají.
+- [x] Popište protokol SDP – k čemu protokol slouží, jaké informace poskytuje, kdy a proč se používá.
+- [x] Popište rozdíly mezi progresivním stahováním, streamováním a adaptivním streamováním. Popište standardy MPEG DASH, HLS a RTSP
+- [x] Popište komunikaci prostřednictvím rodiny protokolů H.323, vyjmenujte čtyři základní prvky sítě H.323, popište jejich funkce. Jaké protokoly se v rámci komunikace H.323 používají pro signalizaci hovoru, kompresi AV dat a přenos AV dat.
+- [x] Popište komunikaci prostřednictvím protokolu SIP, žádosti a odpovědi definované v doporučení RFC3261, prvky sítě SIP a základní schéma spojení bod-bod, bod-proxy server-bod.
+- [x] Webinar, Webcast, Videokonference, teleprezence – popište základní rozdíly (výhody/nevýhody), využívané protokoly, standardní i proprietární).
+- [x] Komprese statických obrazových dat dle standardů JPEG - základní schéma, popis jednotlivých bloků - jejich funkce.
+- [x] Komprese pohyblivých obrazových dat dle standardů MPEG - základní schéma, popis jednotlivých bloků - jejich funkce, oblast použití kodeků. 
 
 ### BPC-SOS
 
@@ -150,16 +150,16 @@ Každá aktualizace spouští automatický build všech předmětových otázek,
 
 ### BPC-KKR
 
-- [ ] Vzájemný vztah pojmů kyberkriminalita, kybernetická bezpečnost a kybernetická obrana.
-- [ ] Prameny práva (národní, evropské i mezinárodní) obsahují hmotněprávní a procesněprávní úpravy kyberkriminality.
-- [ ] Úmluva o kyberkriminalitě a směrnice o útocích na informační systémy (obsah úpravy a vztah k české právní úpravě)
-- [ ] Postupy a kriteria při kvalifikaci trestné činnosti (vč. problematiky kvalifikované a privilegované skutkové podstaty)
-- [ ] Kategorizace kyberkriminality (včetně příkladů trestné činnosti v jednotlivých kategoriích).
-- [ ] Kyberkriminalita v užším smyslu slova (příklady trestné činnosti a kvalifikace dle zvláštní části TZ).
-- [ ] Elektronické důkazy a jejich specifika v trestním řízení.
-- [ ] Procesní nástroje pro zajišťování elektronických důkazů.
-- [ ] Specializované útvary OČTŘ ve vztahu ke kyberkriminalitě.
-- [ ] Mezinárodní spolupráce v oblasti kyberkriminality.
+- [x] Vzájemný vztah pojmů kyberkriminalita, kybernetická bezpečnost a kybernetická obrana.
+- [x] Prameny práva (národní, evropské i mezinárodní) obsahují hmotněprávní a procesněprávní úpravy kyberkriminality.
+- [x] Úmluva o kyberkriminalitě a směrnice o útocích na informační systémy (obsah úpravy a vztah k české právní úpravě)
+- [x] Postupy a kriteria při kvalifikaci trestné činnosti (vč. problematiky kvalifikované a privilegované skutkové podstaty)
+- [x] Kategorizace kyberkriminality (včetně příkladů trestné činnosti v jednotlivých kategoriích).
+- [x] Kyberkriminalita v užším smyslu slova (příklady trestné činnosti a kvalifikace dle zvláštní části TZ).
+- [x] Elektronické důkazy a jejich specifika v trestním řízení.
+- [x] Procesní nástroje pro zajišťování elektronických důkazů.
+- [x] Specializované útvary OČTŘ ve vztahu ke kyberkriminalitě.
+- [x] Mezinárodní spolupráce v oblasti kyberkriminality.
 
 ### BPC-PNA
 
