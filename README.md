@@ -1,6 +1,6 @@
 # BPC-IBE-SZZ
 
-Kliknutím **[zde](https://github.com/jedla97/BPC-IBE-SZZ/releases/latest)** se dostanete k nejnovějším verzím otázek.
+Kliknutím **[zde](https://github.com/VUT-FEKT-IBE/BPC-IBE-SZZ/releases/latest)** se dostanete k nejnovějším verzím otázek.
 
 I když je otázka označena jako dokončená (v tomto souboru níže), může mít nějaké nedostatky. Ty jsou značeny v kódu značkou
 
