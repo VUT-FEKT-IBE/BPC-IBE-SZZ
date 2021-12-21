@@ -1,0 +1,61 @@
+name: Test if all subjects are possible to build
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    branches:
+      - main
+
+jobs:
+  # zjištění všech složek předmětů
+  listOfDirectories: 
+    runs-on: ubuntu-latest
+    
+    outputs:
+      # aktuálních složek pro vytvoření jobs matrix předmětů
+      dir: ${{ steps.set-dirs.outputs.dir }}
+    
+    steps:
+      # naklonování repa
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Prepare list of directories for jobs
+        # název výstupu
+        id: set-dirs
+        
+        # vypis všech dir | odstranění template/ dir | odstranění prázdného řádku po template/dir
+        # | odstranění všech speciálních znaků | rozdělení na json data pro matrix build
+        run: echo "::set-output name=dir::$(ls -d */ | sed "s/template\///" | sed "/^$/d" |
+         tr -dc '[:alnum:]\n\r-' | jq -R -s -c 'split("\n")[:-1]')"
+  
+  # build všech předmětů 
+  subjects:
+    runs-on: ubuntu-latest
+    needs: listOfDirectories
+
+    # vytvoření samostatného jobu pro každý předmět
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.listOfDirectories.outputs.dir) }} 
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      # kompilace
+      - name: Build ${{ matrix.dir }}
+        uses: xu-cheng/latex-action@v2
+        with:
+          latexmk_shell_escape: true
+          working_directory: ${{ matrix.dir }}
+          root_file: main.tex
+
+      # nahrání pro pozdější stáhnutí
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          # název zip souboru se specifickým jméne předmětu
+          name: ${{ matrix.dir }}
+          # co se má uložit do zip souboru
+          path: ${{ matrix.dir }}/main.pdf
