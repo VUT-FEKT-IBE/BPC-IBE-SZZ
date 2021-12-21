@@ -1,155 +1,25 @@
-% Soubory musí být v kódování, které je nastaveno v příkazu \usepackage[...]{inputenc}
+\newcommand{\subject}{BPC-UP2A}
+\newcommand{\subjectname}{Úvod do~práva ICT 2}
+% Pokud jste přidali otázku nebo její část, přidejte své jméno sem
+\newcommand{\authors}{kámen u~cesty, jedla}
+% Pokud jste opravili gramatickou, logickou nebo formátovací chybu, přidejte své jméno sem
+\newcommand{\corrections}{kámen u~cesty, Czechbol}
 
-\documentclass[             % Základní nastavení
-    12pt,                   % Velikost základního písma je 12 bodů
-    a4paper,                % Formát papíru je A4
-    oneside,                % Jednostranný tisk
-    unicode,                % Záložky a metainformace ve výsledném  PDF budou v kódování unicode
-]{article}                  % Dokument třídy 'zpráva', vhodná pro sazbu závěrečných prací s kapitolami
-
-% ############
-% # DŮLEŽITÉ #
-% ############
-
-\title{BPC-UP2A}
-\newcommand{\subtitle}{Otázky a odpovědi BPC-UP2A (Úvod do práva ICT2)}
-\author{kámen u~cesty, jedla}
-\newcommand{\grammar}{Czechbol}
-\newcommand{\formatting}{kámen-u-cesty, Czechbol}
-
-%%%%%%%%%%%%%%%%%%%%
-% OBECNÉ NASTAVENÍ %
-%%%%%%%%%%%%%%%%%%%%
-
-% Kódování zdrojových souborů
-\usepackage[utf8]{inputenc}
-% Kódování výstupního souboru
-\usepackage[T1]{fontenc}
-% Podpora češtiny
-\usepackage[czech]{babel}
-
-% Geometrie stránky
-\usepackage[
-    % Vnitřní a vnější okraj
-    hmargin={25mm,25mm},
-    % Horní a dolní okraj
-    vmargin={25mm,25mm},
-    % Velikost zápatí
-    footskip=17mm,
-    % Vypnutí záhlaví
-    nohead,
-]{geometry}
-
-% Zajištění kopírovatelnosti a prohledávanosti vytvořených PDF
-\usepackage{cmap}
-% Podmínky (pro použití v titulní straně)
-\usepackage{ifthen}
-
-%%%%%%%%%%%%%%%
-% FORMÁTOVÁNÍ %
-%%%%%%%%%%%%%%%
-
-% Nastavení stylu nadpisů
-\usepackage{sectsty}
-% Zmenšení prostoru kolem nadpisů
-\usepackage{titlesec}
-\titlespacing\subsection{0pt}{4pt plus 2pt minus 2pt}{0pt plus 2pt minus 0pt}
-\titlespacing\subsubsection{0pt}{4pt plus 2pt minus 2pt}{-2pt plus 2pt minus 0pt}
-% Formátování obsahů
-\usepackage{tocloft}
-% V obsahu ukazovat pouze nadpisy prvního řádu
-\setcounter{tocdepth}{1}
-% Odstranění vertikálního prostoru v seznamech
-\usepackage{enumitem}
-\setlist{noitemsep, topsep=-0.5em, after=\vspace*{0.5em}}
-% Sázení správných uvozovek pomocí '\enquote{}'
-\usepackage{csquotes}
-% Vynucení umístění poznámek pod čarou vespod stránky
-\usepackage[bottom]{footmisc}
-% Automatické zarovnání textu k předcházení vdov a parchantů
-\usepackage[defaultlines=4,all=true]{nowidow}
-% Pro možnost zalomení části textu pokud není na současné stránce dost místa
-\usepackage{needspace}
-
-% Bezpatkové sázení nadpisů
-\allsectionsfont{\sffamily}
-% Změna formátování nadpisu a podnadpisů v Obsahu
-\renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily}
-\renewcommand{\cftsubsecdotsep}{\cftdotsep}
-% Zrušení odsazení prvního řádku odstavce
-\setlength\parindent{0pt}
-% Zapnutí vertikálního oddělení odstavců
-\setlength\parskip{0.6em}
-
-%%%%%%%%%%
-% ODKAZY %
-%%%%%%%%%%
-
-% Tvorba hypertextových odkazů
-\usepackage[
-    breaklinks=true,
-    hypertexnames=false,
-]{hyperref}
-% Nastavení barvení odkazů
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=blue
-}
-
-%%%%%%%%%%%%%%%%%%
-% OBRÁZKY, GRAFY %
-%%%%%%%%%%%%%%%%%%
-
-% Vkládání obrázků
-\usepackage{graphicx}
-% Nastavení popisů obrázků, výpisů a tabulek
-\usepackage{caption}
-% Grafy a vektorové obrázky
-\usepackage{tikz}
-\usetikzlibrary{shapes,arrows}
-
-%%%%%%%%%%%%%%
-% MATEMATIKA %
-%%%%%%%%%%%%%%
-
-% Sázení matematiky a matematických symbolů ('\mathbb{}')
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% Náhrada za \mod a \pmod, které mají přehaně velký prostor před svou značkou
-\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
-\newcommand{\Pmod}[1]{\ (\mathrm{mod}\ #1)}
-% Náhrada za \forall, které kolem sebe prostor nemá žádný
-\newcommand{\Forall}{\ \forall\ }
-
-%%%%%%%%%%%%%%%%%
-% ZDROJOVÉ KÓDY %
-%%%%%%%%%%%%%%%%%
-
-% Sazba zdrojových kódů
-\usepackage[formats]{listings}
-% Sazba zdrojových kódů
-\usepackage[newfloat]{minted}
-% Formátování 'minted' kódů
-\usemintedstyle{pastie}
-% Přepnutí prostředí 'code' do režimu výpisu kódu
-\newenvironment{code}{\captionsetup{type=listing}}{}
-
-% #########
-% # START #
-% #########
+\input{../shared}
+\clearpage
 
 \begin{document}
 
-\SetupFloatingEnvironment{listing}{name=Výpis kódu}
+\pagenumbering{gobble}
+\setcounter{page}{0}
 
-\include{title}
+\titulka{}
 
 \tableofcontents
+\clearpage
 
-\include{text/text}
+\pagenumbering{arabic}
+
+\include{text}
 
 \end{document}

@@ -1,164 +1,25 @@
-% Soubory musí být v kódování, které je nastaveno v příkazu \usepackage[...]{inputenc}
+\newcommand{\subject}{BPC-TIN}
+\newcommand{\subjectname}{Teoretická informatika}
+% Pokud jste přidali otázku nebo její část, přidejte své jméno sem
+\newcommand{\authors}{kámen u~cesty}
+% Pokud jste opravili gramatickou, logickou nebo formátovací chybu, přidejte své jméno sem
+\newcommand{\corrections}{kámen u~cesty, Czechbol}
 
-\documentclass[
-    12pt,
-    a4paper,
-    oneside,
-    unicode,
-]{article}
-
-% ############
-% # DŮLEŽITÉ #
-% ############
-
-\title{BPC-TIN}
-\newcommand{\subtitle}{Otázky a odpovědi BPC-TIN (Teoretická informatika)}
-\author{jedla}
-\newcommand{\grammar}{kamen-u-cesty}
-\newcommand{\formatting}{kamen-u-cesty, Czechbol}
-
-%%%%%%%%%%%%%%%%%%%%
-% OBECNÉ NASTAVENÍ %
-%%%%%%%%%%%%%%%%%%%%
-
-% Kódování zdrojových souborů
-\usepackage[utf8]{inputenc}
-% Kódování výstupního souboru
-\usepackage[T1]{fontenc}
-% Podpora češtiny
-\usepackage[czech]{babel}
-
-% Geometrie stránky
-\usepackage[
-    % Vnitřní a vnější okraj
-    hmargin={25mm,25mm},
-    % Horní a dolní okraj
-    vmargin={25mm,25mm},
-    % Velikost zápatí
-    footskip=17mm,
-    % Vypnutí záhlaví
-    nohead,
-]{geometry}
-
-% Zajištění kopírovatelnosti a prohledávanosti vytvořených PDF
-\usepackage{cmap}
-% Podmínky (pro použití v titulní straně)
-\usepackage{ifthen}
-
-% Obrázky a tabulky na samostatných stranách jsou umisťovány nahoře
-\makeatletter
-\setlength{\@fptop}{0pt plus 10pt minus 0pt}
-\makeatother
-
-% Úprava vertikálního místa u popisů obrázků a tabulek
-\setlength{\abovecaptionskip}{10pt}
-\setlength{\belowcaptionskip}{20pt}
-
-%%%%%%%%%%%%%%%
-% FORMÁTOVÁNÍ %
-%%%%%%%%%%%%%%%
-
-% Nastavení stylu nadpisů
-\usepackage{sectsty}
-% Formátování obsahů
-\usepackage{tocloft}
-% Rozdělení textu do více sloupců
-\usepackage{multicol}
-% Odstranění vertikálního prostoru v seznamech
-\usepackage{enumitem}
-\setlist{nosep}
-% Sázení správných uvozovek pomocí '\enquote{}'
-\usepackage{csquotes}
-% Vynucení umístění poznámek pod čarou vespod stránky
-\usepackage[bottom]{footmisc}
-% Automatické zarovnání textu k předcházení vdov a parchantů
-\usepackage[defaultlines=4,all=true]{nowidow}
-% Pro možnost zalomení části textu pokud není na současné stránce dost místa
-\usepackage{needspace}
-
-% Bezpatkové sázení nadpisů
-\allsectionsfont{\sffamily}
-% Změna formátování nadpisu a podnadpisů v Obsahu
-\renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily}
-\renewcommand{\cftsubsecdotsep}{\cftdotsep}
-% Zrušení odsazení prvního řádku odstavce
-\setlength\parindent{0pt}
-% Zapnutí vertikálního oddělení odstavců
-\setlength\parskip{0.6em}
-
-%%%%%%%%%%
-% ODKAZY %
-%%%%%%%%%%
-
-% Tvorba hypertextových odkazů
-\usepackage[
-    breaklinks=true,
-    hypertexnames=false,
-]{hyperref}
-% Nastavení barvení odkazů
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=blue
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% OBRÁZKY, GRAFY, TABULKY %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Vkládání obrázků
-\usepackage{graphicx}
-% Nastavení popisů obrázků, výpisů a tabulek
-\usepackage{caption}
-\captionsetup{justification=centering}
-% Grafy a vektorové obrázky
-\usepackage{tikz}
-\usetikzlibrary{shapes,arrows}
-% Rozšířené možnosti tabulek
-\usepackage{tabularx}
-
-%%%%%%%%%%%%%%
-% MATEMATIKA %
-%%%%%%%%%%%%%%
-
-% Sázení matematiky a matematických symbolů ('\mathbb{}')
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% Náhrada za \mod a \pmod, které mají přehaně velký prostor před svou značkou
-\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
-\newcommand{\Pmod}[1]{\ (\mathrm{mod}\ #1)}
-% Náhrada za \forall, které kolem sebe prostor nemá žádný
-\newcommand{\Forall}{\ \forall\ }
-
-%%%%%%%%%%%%%%%%%
-% ZDROJOVÉ KÓDY %
-%%%%%%%%%%%%%%%%%
-
-% Sazba zdrojových kódů
-\usepackage[formats]{listings}
-% Sazba zdrojových kódů
-\usepackage[newfloat]{minted}
-% Formátování 'minted' kódů
-\usemintedstyle{pastie}
-% Přepnutí prostředí 'code' do režimu výpisu kódu
-\newenvironment{code}{\captionsetup{type=listing}}{}
-
-% #########
-% # START #
-% #########
+\input{../shared}
+\clearpage
 
 \begin{document}
 
-\SetupFloatingEnvironment{listing}{name=Výpis kódu}
+\pagenumbering{gobble}
+\setcounter{page}{0}
 
-\include{title}
+\titulka{}
 
-\setcounter{tocdepth}{1}
 \tableofcontents
+\clearpage
 
-\include{text/text}
+\pagenumbering{arabic}
+
+\include{text}
 
 \end{document}
