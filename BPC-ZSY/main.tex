@@ -1,0 +1,25 @@
+\newcommand{\subject}{BPC-ZSY}
+\newcommand{\subjectname}{Zabezpečovací systémy}
+% Pokud jste přidali otázku nebo její část, přidejte své jméno sem
+\newcommand{\authors}{dikubi}
+% Pokud jste opravili gramatickou, logickou nebo formátovací chybu, přidejte své jméno sem
+\newcommand{\corrections}{--}
+
+\input{../shared}
+\clearpage
+
+% Načtení PDF
+\usepackage{pdfpages}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\setcounter{page}{0}
+
+\titulka{}
+
+\clearpage
+
+\includepdf[pages=-]{word-export.pdf}
+
+\end{document}
