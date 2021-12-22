@@ -1,22 +1,38 @@
-# BPC-IBE-SZZ
+# Státnicové otázky BPC-IBE
 
-Kliknutím **[zde](https://github.com/VUT-FEKT-IBE/BPC-IBE-SZZ/releases/latest)** se dostanete k nejnovějším verzím otázek.
+Nejnovější export je dostupný [zde](https://github.com/VUT-FEKT-IBE/BPC-IBE-SZZ/releases/latest).
 
-I když je otázka označena jako dokončená (v tomto souboru níže), může mít nějaké nedostatky. Ty jsou značeny v kódu značkou
+**Teorie informační bezpečnosti**
 
-```LaTeX
-% TODO Popis problému nebo chybějícího obsahu
-```
+Vybírají se právě čtyři předměty.
 
-Ročníky *po nás* již otázky nemusí vypracovat samostatně a od nuly, tyto dokumenty zůstanou i dále dostupné. Pokud naleznete chybu nebo si doplníte nedostatek, v tomto repozitáři to nahlašte a ideálně otevřete PR s opravou. Díky tomu budou data udržována aktuální a prospěšná i v dalších letech.
+- [BPC-AKR](#BPC-AKR) Aplikovaná kryptografie
+- [BPC-IC2](#BPC-IC2) Bezpečnost ICT 2
+- [BPC-KOM](#BPC-KOM) Komunikační technologie
+- [BPC-TIN](#BPC-TIN) Teoretická informatika
 
----
+**Informační bezpečnost v praxi**
 
-Otázky a odpovědi k státní závěrečné zkoušce (SZZ) oboru Informační bezpečnost na FEKT VUT.
+Vybírají se právě tři předměty.
 
-Používáme LaTeX šablonu [FEKT.tex](https://github.com/czechbol/FEKT.tex) od [czechbol](https://github.com/czechbol).
+***Informatika***
 
-Každá aktualizace spouští automatický build všech předmětových otázek, nejnovější verze je vždy dostupná jako release (od [kamen-u-cesty](https://github.com/kamen-u-cesty)). Aby se tento build zbytečně nepouštěl i ve všech fork repozitářích, je Actions třeba v jejich nastavení vypnout (Settings > Actions > Disable Actions).
+Vybírají se jeden až dva předměty.
+
+- [BPC-DAK](#BPC-DAK) Datové komunikace
+- [BPC-HWS](#BPC-HWS) Hardware počítačových sítí
+- [BPC-MDS](#BPC-MDS) Multimediální služby
+- [BPC-SOS](#BPC-SOS) Síťové operační systémy
+- [BPC-ZSY](#BPC-ZSY) Zabezpečovací systémy
+
+***Právo***
+
+Vybírají se dva až tři předměty.
+
+- [BPC-KKR](#BPC-KKR) Kyberkriminalita
+- [BPC-PNA](#BPC-PNA) Právní nauka
+- [BPC-SPR](#BPC-SPR) Softwarové právo
+- [BPC-UP2A](#BPC-UP2A) Úvod do práva ICT 2
 
 ---
 
