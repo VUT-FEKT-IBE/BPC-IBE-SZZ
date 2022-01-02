@@ -15,13 +15,13 @@ on:
 
 jobs:
   # zjištění všech složek předmětů
-  listOfDirectories: 
+  listOfDirectories:
     runs-on: ubuntu-latest
-    
+
     outputs:
       # aktuálních složek pro vytvoření jobs matrix předmětů
       dir: ${{ steps.set-dirs.outputs.dir }}
-    
+
     steps:
       # naklonování repa
       - name: Set up Git repository
@@ -30,13 +30,13 @@ jobs:
       - name: Prepare list of directories for jobs
         # název výstupu
         id: set-dirs
-        
+
         # vypis všech dir | odstranění template/ dir | odstranění prázdného řádku po template/dir
         # | odstranění všech speciálních znaků | rozdělení na json data pro matrix build
         run: echo "::set-output name=dir::$(ls -d */ | sed "s/template\///" | sed "/^$/d" |
          tr -dc '[:alnum:]\n\r-' | jq -R -s -c 'split("\n")[:-1]')"
-  
-  # build všech předmětů 
+
+  # build všech předmětů
   subjects:
     runs-on: ubuntu-latest
     needs: listOfDirectories
@@ -44,7 +44,7 @@ jobs:
     # vytvoření samostatného jobu pro každý předmět
     strategy:
       matrix:
-        dir: ${{ fromJson(needs.listOfDirectories.outputs.dir) }} 
+        dir: ${{ fromJson(needs.listOfDirectories.outputs.dir) }}
 
     steps:
       - name: Set up Git repository
@@ -70,6 +70,7 @@ jobs:
   # vytvoření prázdného releasu
   release:
     runs-on: ubuntu-latest
+    needs: subjects
 
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -99,13 +100,13 @@ jobs:
   addSubjects:
     runs-on: ubuntu-latest
     # potřeba listOfDirectories pro vytvoření jobs matrix
-    needs: [ listOfDirectories, subjects, release ]
+    needs: [ release, listOfDirectories ]
 
     # vytvoření samostatného jobu pro každý předmět
     strategy:
       matrix:
         dir: ${{ fromJson(needs.listOfDirectories.outputs.dir) }}
-  
+
     steps:
     - uses: actions/checkout@v2
 
