@@ -1,3 +1,7 @@
+% FEKT.tex
+% https://github.com/VUT-FEKT-IBE/FEKT.tex
+% Git hash repozitáře v době kopírování: 35133a18ec74b314184f538e33c7f92054123d09
+
 \documentclass[
     % Velikost základního písma je 12 bodů
     12pt,
@@ -22,10 +26,12 @@
 
 % Geometrie stránky
 \usepackage[
-    % Vnitřní a vnější okraj
-    hmargin={20mm,30mm},
     % Horní a dolní okraj
-    vmargin={25mm,25mm},
+    tmargin=25mm,
+    bmargin=25mm,
+    % Vnitřní a vnější okraj
+    lmargin=30mm,
+    rmargin=20mm,
     % Velikost zápatí
     footskip=17mm,
     % Vypnutí záhlaví
@@ -48,7 +54,13 @@
 \setcounter{tocdepth}{1}
 % Odstranění mezer mezi řádky v seznamech
 \usepackage{enumitem}
-\setlist[itemize]{noitemsep}
+\setlist{nosep}
+\setitemize{leftmargin=1em}
+\setenumerate{leftmargin=1.5em}
+\renewcommand{\labelitemi}{--}
+\renewcommand{\labelitemii}{--}
+\renewcommand{\labelitemiii}{--}
+\renewcommand{\labelitemiv}{--}
 % Sázení správných uvozovek pomocí '\enquote{}'
 \usepackage{csquotes}
 % Vynucení umístění poznámek pod čarou vespod stránky
@@ -124,6 +136,9 @@
 \setlength{\@fptop}{0pt plus 10pt minus 0pt}
 \makeatother
 
+% Vynucení vypsání floating prostředí pomocí \FloatBarrier
+\usepackage{placeins}
+
 %%%%%%%%%%%%%%
 % MATEMATIKA %
 %%%%%%%%%%%%%%
@@ -134,28 +149,45 @@
 % Sázení fyzikálních veličin
 \usepackage{siunitx}
 
-% Náhrada za \mod a \pmod, které mají přehaně velký prostor před svou značkou
-\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
-\newcommand{\Pmod}[1]{\ (\mathrm{mod}\ #1)}
-% Náhrada za \forall, které kolem sebe prostor nemá žádný
-\newcommand{\Forall}{\ \forall\ }
-
 %%%%%%%%%%%%%%%%%
 % ZDROJOVÉ KÓDY %
 %%%%%%%%%%%%%%%%%
 
 % Sazba zdrojových kódů
 \usepackage[formats]{listings}
-% Sazba zdrojových kódů
-\usepackage[newfloat]{minted}
-% Formátování 'minted' kódů
-\usemintedstyle{pastie}
 % Přepnutí prostředí 'code' do režimu výpisu kódu
 \newenvironment{code}{\captionsetup{type=listing}}{}
+
+% Balíček 'minted' budeme používat pouze pokud je jeho hodnota nastavena na 'true'
+\providecommand{\docminted}{false}
+\ifthenelse{\equal{\docminted}{true}}
+{
+    % Sazba zdrojových kódů
+    \usepackage[newfloat]{minted}
+    % Nastavení barev 'minted' kódů
+    \usemintedstyle{pastie}
+}
+{
+    % \docminted není 'true', nic neprovádíme
+    % Pokud je v dokumentu 'minted' prostředí, dokument se nepodaří přeložit.
+}
 
 %%%%%%%%%%%
 % TITULKA %
 %%%%%%%%%%%
+
+\IfFileExists{../.repo.tex}{
+    % Soubor '.repo.tex' může (re)definovat povinné a nepovinné argumenty
+    % souboru 'main.tex'. To lze využít v případech kdy v jednom repozitáři
+    % existuje více dokumentů najednou (např. státnicové otázky).
+    \input{../.repo}
+}{}
+
+% Pokud byly nepovinné argumenty zakomentovány nebo vymazány, přidáme prázdné
+% definice příkazů, aby bylo dokument možné správně přeložit.
+\providecommand{\docdesc}{}
+\providecommand{\docgroup}{}
+\providecommand{\docurl}{}
 
 \newcommand{\titulka}{
     \vspace*{2em}
@@ -168,23 +200,24 @@
 
         \vspace*{2em}
 
-        {\Large Otázky ke státnicím}
-        
+        {\Large \docdesc}
+
         \vspace*{1em}
 
-        Bakalářský obor Informační bezpečnost, FEKT VUT
-        \\
-        \url{https://github.com/VUT-FEKT-IBE/BPC-IBE-SZZ}
+        \docgroup
+
+        \url{\docurl}
     \end{center}
 
     \vfill
 
     \begin{tabular}{ll}
-        Text: & \authors \\
+        Text:      & \authors     \\
         Korektura: & \corrections \\
     \end{tabular}
     \hfill
     \today
 
-    \clearpage
+    \thispagestyle{empty}
+    \newpage
 }

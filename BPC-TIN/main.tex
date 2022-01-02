@@ -10,15 +10,17 @@
 
 \begin{document}
 
-\pagenumbering{gobble}
-\setcounter{page}{0}
-
 \titulka{}
 
+{
+% Speciální úprava aby se Obsah vešel na jednu stranu.
+% Když je na stranách dvou, rozbíjí se twopage nebo číslování.
+\singlespacing
 \tableofcontents
-\clearpage
+\thispagestyle{empty}
+}
 
-\pagenumbering{arabic}
+\setcounter{page}{0}
 
 \include{text}
 

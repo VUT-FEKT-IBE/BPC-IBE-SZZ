@@ -6,22 +6,24 @@
 \newcommand{\corrections}{czechbol}
 
 \input{../shared}
-\clearpage
+
+% Náhrada za \mod a \pmod, které mají přehaně velký prostor před svou značkou
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+\newcommand{\Pmod}[1]{\ (\mathrm{mod}\ #1)}
+% Náhrada za \forall, které kolem sebe prostor nemá žádný
+\newcommand{\Forall}{\ \forall\ }
 
 % Sázení fonetické výslovnosti
 \usepackage{tipa}
 
 \begin{document}
 
-\pagenumbering{gobble}
-\setcounter{page}{0}
-
 \titulka{}
 
 \tableofcontents
-\clearpage
+\thispagestyle{empty}
 
-\pagenumbering{arabic}
+\setcounter{page}{0}
 
 \include{text}
 
