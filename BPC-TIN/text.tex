@@ -39,7 +39,7 @@ Dynamicky se~paměť přiděluje na~základě požadavku při~průběhu programu
 
 \subsubsection{Dynamické přidělování paměti bez~regenerace}
 
-Dynamické přidělovaní paměti bez~regenerace přiděluje požadované úseky postupně tak jak jsou za~sebou umístěny až do~vyčerpaní vyhrazené paměti. Využívá pracovního ukazatele, který ukazuje na~první adresu volné paměti. Nejčastěji pomocí operace \emph{new} zapíše do~paměti a~změní ukazatel na~novou hodnotu, která ukazuje na~novou adresu volné části a~v indikátoru paměti hodnotu obsazení označí \emph{true}. Operacje \emph{free/delete} okamžitě neuvolní paměť, ale přepíše indikátor paměti na~\emph{false}; regenerace probíhá později po~větších částech.
+Dynamické přidělovaní paměti bez~regenerace přiděluje požadované úseky postupně tak jak jsou za~sebou umístěny až do~vyčerpaní vyhrazené paměti. Využívá pracovního ukazatele, který ukazuje na~první adresu volné paměti. Nejčastěji pomocí operace \emph{new} zapíše do~paměti a~změní ukazatel na~novou hodnotu, která ukazuje na~novou adresu volné části a~v indikátoru paměti hodnotu obsazení označí \emph{true}. Operace \emph{free/delete} okamžitě neuvolní paměť, ale přepíše indikátor paměti na~\emph{false}; regenerace probíhá později po~větších částech.
 
 \subsubsection{Dynamické přidělování paměti s~regenerací}
 
@@ -499,19 +499,19 @@ Hashovací tabulka je rychlejší na~vyhledávání pokud je dobře napsána has
 
 \subsection{Typy řazení}
 
-\textbf{Řazení výběrem}: najde se~vždy nejmenší se~zbývajících prvků a~uloží se~na~konec už seřazených.
+\textbf{Řazení výběrem}: najde se~vždy nejmenší ze~zbývajících prvků a~uloží se~na~konec už seřazených.
 
 \textbf{Řazení vkládáním}: z~neseřazené množiny se~postupně bere prvek po~prvku a~vkládá se~na~správné místo přičemž začáteční množina už seřazených je prázdná.
 
 \textbf{Řazení záměnou}: v~množině najdeme vždy dvojici, která je ve~špatném pořadí a~přehodíme ji.
 
-\textbf{Řazení slučováním}: vstupní množinu rozdělíme na~části, které se~seřadí. Tyto seřazené části se~poté sloučí způsobem který vede k~seřazení.
+\textbf{Řazení slučováním}: vstupní množinu rozdělíme na~části, které se~seřadí. Tyto seřazené části se~poté sloučí způsobem, který vede k~seřazení.
 
 \subsection{Porovnání algoritmů}
 
 Třídění pomocí algoritmů Bubble Sort, Insert Sort a~Select Sort má složitost O(\( n^2 \)). Algoritmus Quick Sort má složitost \( \Theta \)(\( n\log{n} \)), kdy v~nejhorším případě může nabývat až O(\( n^2 \)). Algoritmus Merge Sort má složitost O(\( n\log{n} \)).
 
-\subsection{Stabilita řízení}
+\subsection{Stabilita řazení}
 
 Dělíme na~stabilní a~nestabilní. Vstupní data můžou obsahovat několik prvků se~stejnou hodnotou. Stabilní algoritmus při~řazení zachovává vzájemné pořadí položek se~stejnou hodnotou a~u nestabilního jejich zachování není zaručeno. Stabilní je vhodné využívat při~řazení dle dvou parametrů.
 
@@ -521,7 +521,7 @@ Když je řazen seznam osob dle křestního jména a~poté příjmení, stabiln�
 
 Je jednoduchý stabilní řadící algoritmus se~složitostí O(\( n^2 \)).
 
-Porovnávají se~dva sousední prvky, pokud je nižší číslo nalevo od~vyššího tak se~prohodí. A tak probublávají postupně dokud se~neseřadí. Pokud jsou čísla v~průběhu už správně seřazena tak je neprohodí ale postupuje dále.%
+Porovnávají se~dva sousední prvky, pokud je nižší číslo nalevo od~vyššího, tak se~prohodí. A tak probublávají postupně dokud se~neseřadí. Pokud jsou čísla v~průběhu už správně seřazena, tak je neprohodí, ale postupuje dále.%
 \footnote{Animace Bubble sort: \url{https://www.algoritmy.net/article/3/Bubble-sort}.}
 
 \subsection{Insertion sort}
@@ -543,7 +543,7 @@ Je nestabilní kvadratický řadící algoritmus se~složitostí O(\( n^2 \)). F
 
 Je stabilní složitý řadící algoritmus se~složitostí O(\( n\log{n} \)).
 
-Nesetříděné pole je děleno na~poloviny, dokud nová pole nemají velikost 1. Poté se skládají dohromady: porovná se první prvek z~pole A s~prvním prvkem pole~B a~seřadí se, porovná se druhý prvek z~pole A s~druhým prvkem pole B, seřadí se a~umístí za~první prvky. Tento proces je~opakován dokud nejspou spojeny všechny prvky původního pole.%
+Nesetříděné pole je děleno na~poloviny, dokud nová pole nemají velikost 1. Poté se skládají dohromady: porovná se první prvek z~pole A s~prvním prvkem pole~B a~seřadí se, porovná se druhý prvek z~pole A s~druhým prvkem pole B, seřadí se a~umístí za~první prvky. Tento proces je~opakován dokud nejsou spojeny všechny prvky původního pole.%
 \footnote{Video Merge sort: \url{https://www.youtube.com/watch?v=qdv3i6X0PiQ}.}
 
 \begin{figure}[ht]
@@ -593,7 +593,7 @@ Graf je definován jako uspořádaná dvojice množiny vrcholů \( V \)~a~množi
 
 \paragraph{Nalezení kostry grafu spanning tree} Kostra grafu je nějaký strom, který neobsahuje cykly. Kostra se~vytváří tak, aby propojila všechny body a~celková váha byla co minimální. Při~hledání kostry s~co nejmenší váhou tento postup nazýváme minimal spanning tree. Nejznámějším algoritmem je Kruskalův algoritmus a~distribuovaný algoritmus.
 
-\paragraph{Kruskalův algoritmus} Funguje na~principu shlukování dvou množin hran. Ze všech hran se~vybere hrana s~nejnižší hodnotou a~množiny vrcholů jenž hrana propojuje se~seskupí do~jedné množiny. Tak se~postupuje tak dlouho dokud všechny vrcholy nejsou v~jedné množině. Pokud cesta propojuje vrcholy ze~stejné množiny vrcholů tak se~nepoužije a~pokračuje se~z~následující hranou. Využívá se~pokud známe celou topologii grafu.%
+\paragraph{Kruskalův algoritmus} Funguje na~principu shlukování dvou množin hran. Ze všech hran se~vybere hrana s~nejnižší hodnotou a~množiny vrcholů, jenž hrana propojuje se~seskupí do~jedné množiny. Tak se~postupuje tak dlouho dokud všechny vrcholy nejsou v~jedné množině. Pokud cesta propojuje vrcholy ze~stejné množiny vrcholů tak se~nepoužije a~pokračuje se~z~následující hranou. Využívá se~pokud známe celou topologii grafu.%
 \footnote{Animace Kruskal: \url{https://www.cs.usfca.edu/~galles/visualization/Kruskal.html}.}
 
 \paragraph{Distribuovaný algoritmus} Zde se~pracuje na~principu, že se~kostra tvoří na~každé množině zároveň. Z~každého vrcholu se~vyrazí směrem po~nejmenší hodnotě hrany. Pokud se~vrcholy na~cestě potkají tak vytvoří množinu pokud se~nepotkají nic se~neděje. Dále se~pak vysílají znovu po~nejmenší hodnotě hrany. Toto se~děje dokud se~celá kostra nenajde. Tento algoritmus se~nejčastěji využívá v~telekomunikačních sítích, kde neznáme celou topologii grafu.
@@ -608,7 +608,7 @@ Graf je definován jako uspořádaná dvojice množiny vrcholů \( V \)~a~množi
 
 \subsection{Slepé prohledávání}
 
-\textbf{BFS} využívá frontu do~které nejprve vloží vstupní vrchol. Z~tohoto vrcholu se~vezmou všichni sousedé a~vloží se~do~fronty, z~které se~bere postupně a~jejich sousedé se~přidávají do~fronty. Při~tomto se~každý už navštívený vrchol ukládá do~nějakého pole/seznamu navštívených abychom ho nenavštěvovali znovu.%
+\textbf{BFS} využívá frontu, do~které nejprve vloží vstupní vrchol. Z~tohoto vrcholu se~vezmou všichni sousedé a~vloží se~do~fronty, ze~které se~bere postupně a~jejich sousedé se~přidávají do~fronty. Při~tomto se~každý už navštívený vrchol ukládá do~nějakého pole/seznamu navštívených, abychom ho nenavštěvovali znovu.%
 \footnote{Video BFS: \url{https://www.youtube.com/watch?v=oDqjPvD54Ss}.}
 
 \textbf{DFS}\,--\,pracuje na~principu, že prozkoumává prvně vrchol na~jednu stranu a~v ní pokračuje dokud nedojde na~konec nebo nedorazí do~už navštíveného vrcholu. Využívá zásobník.%
@@ -623,7 +623,7 @@ DFS je méně paměťově náročné, BFS je optimální.
 \end{figure}
 
 \clearpage
-\section{Omezené prohledávání do~hloubky (DLS). Iterativní prohledávání do~šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
+\section{Omezené prohledávání do~hloubky (DLS). Iterativní prohledávání do~hloubky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
 
 \subsection{Pokračování slepého prohledávání}
 
@@ -632,7 +632,7 @@ DFS je méně paměťově náročné, BFS je optimální.
 \textbf{IDLS} je iterativní prohledávaní do~hloubky. Vychází z~DFS ale v~každé iteraci se~prohledává jen o~hloubku níž.%
 \footnote{Video IDLS: \url{https://www.youtube.com/watch?v=Y85ECk_H3h4}.}
 
-\textbf{Dijkstrův algoritmus} využívá prioritní frontu a~seznam navštívených vrcholů. Z~prvního vrcholu se~přidají všechny soudní vrcholy z~jejich hodnotou hrany do~prioritní fonty. Z~prioritní fronty se~vždy vezme nejmenší prvek. Z~nejnižšího vrcholu se~prozkoumají znovu sousedé ale tentokrát se~nepoužije pouze vzdálenost mezi nimi ale přičte se~už i~vzdálenost k~aktuálnímu vrcholu. Tak se~bere dokud se~nedorazí k~cílovému vrcholu.%
+\textbf{Dijkstrův algoritmus} využívá prioritní frontu a~seznam navštívených vrcholů. Z~prvního vrcholu se~přidají všechny sousední vrcholy s~jejich hodnotou hrany do~prioritní fonty. Z~prioritní fronty se~vždy vezme nejmenší prvek. Z~nejnižšího vrcholu se~prozkoumají znovu sousedé, ale tentokrát se~nepoužije pouze vzdálenost mezi nimi, ale přičte se~už i~vzdálenost k~aktuálnímu vrcholu. Tak se~bere dokud se~nedorazí k~cílovému vrcholu.%
 \footnote{Video Dijkstrův algoritmus: \url{https://www.youtube.com/watch?v=GazC3A4OQTE}.}
 
 \subsection{A*}
@@ -647,7 +647,7 @@ Optimalizace a~jejími úlohami se~setkáváme při~řešení praktických úloh
 
 \subsection{Evoluční algoritmy}
 
-Je jeden ze~způsobů optimalizace. Byly vytvořeny aby sjednotily optimalizační metody co využívají \enquote{evoluční} principy. Evoluční algoritmy zastřešují řadu přístupů využívajících modely biologické evoluce. Tyto modely jsou: přirozený výběr (výběr silnějšího jedince, podle fitness funkce), náhodný genetický drift (mutace, decimuje jedince s~vysokou fitness) a~reprodukční proces (křížení jedinců). Spadají zde přístupy jako genetické algoritmy, genetické programovaní, evoluční strategie, evoluční programovaní.
+Je jeden ze~způsobů optimalizace. Byly vytvořeny, aby sjednotily optimalizační metody, co využívají \enquote{evoluční} principy. Evoluční algoritmy zastřešují řadu přístupů využívajících modely biologické evoluce. Tyto modely jsou: přirozený výběr (výběr silnějšího jedince, podle fitness funkce), náhodný genetický drift (mutace, decimuje jedince s~vysokou fitness) a~reprodukční proces (křížení jedinců). Spadají zde přístupy jako genetické algoritmy, genetické programovaní, evoluční strategie, evoluční programovaní.
 
 Obecný evoluční algoritmus začíná s~základní populací. Z~této populace se vytvoří výběr jedinců, které se zříží. Tito jedinci následně zmutují a~vytvoří novou populaci. Tyto kroky se~opakují v~\( N \) iteracích. Ukončení je stanoveno předem: počtem iterací, dosažení požadovaného jedince, minimální změnou fitness populace po~několik iterací.
 
@@ -657,7 +657,7 @@ Genetické algoritmy jsou založeny na~Darwinově myšlence \enquote{přežije n
 
 Genetické algoritmy začínají s~populací přípustných řešení, které jsou převedeny na~řetězce/pole. Poté jsou vybráni jedinci, kteří se budou podílet na~nové generaci: každý je ohodnocen fitness funkcí a~na~výsledku jsou vybráni nejvhodnější kandidáti (ale metod výběru je více). Tito jedinci se mezi sebou kříží a~na~konci cyklu mutují.
 
-Výhody GA jsou že nevyžadují žádné speciální znalosti o~cílové funkci, jsou odolné proti klouzání do~lokálního optima. Mají problém s~nalezením přesného optima a~vyžadují velké množství vyhodnocování cílové funkce.
+Výhody GA jsou, že nevyžadují žádné speciální znalosti o~cílové funkci, jsou odolné proti klouzání do~lokálního optima. Mají problém s~nalezením přesného optima a~vyžadují velké množství vyhodnocování cílové funkce.
 
 \subsection{Genetické programování}
 
@@ -673,11 +673,11 @@ Hledá samotnou funkci a~ne její parametry. Oproti GA se~liší v~reprezentaci 
 
 \textbf{Gen} na \( i \)-té pozici reprezentuje stejnou charakteristiku v~každém jedinci.
 
-\textbf{Alela} je hodnota kterou může nabývat gen (např \( \{0, 1\} \)).
+\textbf{Alela} je hodnota, kterou může nabývat gen (např \( \{0, 1\} \)).
 
 \textbf{Fitness funkce} kvantitativně vyjadřuje kvalitu každého řešení, např. dosažení požadované přesnosti algoritmu, množství času potřebné pro~výpočet algoritmu, množství chyb mezi skutečným a~požadovaným výstupem. Je více druhů metod vytvoření fitness funkce: hrubá, standardizovaná, přizpůsobená, normalizovaná.
 
-\textbf{Selekce ruletový výběr, varianta 1}: pravděpodobnost výběru závisí na~kvalitě jedince (kolik místa na~ruletě zabírá). Pokud jedinec ostatní převyšuje výraznou měrou, nová populace bude tvořeny téměř výhradně geny. K~tomu se~využívají techniky potlačení/podpory.
+\textbf{Selekce ruletový výběr, varianta 1}: pravděpodobnost výběru závisí na~kvalitě jedince (kolik místa na~ruletě zabírá). Pokud jedinec ostatní převyšuje výraznou měrou, nová populace bude tvořena téměř výhradně jeho geny. K~tomu se~využívají techniky potlačení/podpory.
 
 \textbf{Selekce ruletový výběr, varianta 2}: jedinci jsou seřazeni vzestupně podle hodnoty fitness a~velikost místa je určena rovnicí. Tímto se~potlačují nadprůměrní jedinci, kteří by negativně ovlivňovali další generace.
 
@@ -787,7 +787,7 @@ Umožňuje všem procesorům přístup ke~všem pamětím jako globálnímu adre
 
 \paragraph{Distribuovaná paměť}
 
-Vyžadují komunikační síť pro~propojení meziprocesorové paměti. Každý procesor má vlastní lokální paměť (tj. neexistuje sdílená paměť jako v~předchozím případě). Procesory pracují nezávisle a~je na~programátorovi aby zajistil synchronizaci dat.
+Vyžadují komunikační síť pro~propojení meziprocesorové paměti. Každý procesor má vlastní lokální paměť (tj. neexistuje sdílená paměť jako v~předchozím případě). Procesory pracují nezávisle a~je na~programátorovi, aby zajistil synchronizaci dat.
 
 Výhodou je škálovatelnost s~počtem procesorů a~rychlý přístup k~paměti. Nevýhodou je zodpovědnost programátora za~spousty detailů při~synchronizaci procesů.
 
