@@ -637,7 +637,7 @@ DFS je méně paměťově náročné, BFS je optimální.
 
 \subsection{A*}
 
-\textbf{Informovaná metoda} A* využívá prioritní frontu a~seznam navštívených vrcholů. Každému z~vrcholů přidělíme vzdálenost od~cíle. Postupuje se~stejně jako u~Dijktrova algoritmu, akorát se sčítá vzdálenost s~hodnotu hrany. Dle této sečtené hodnoty je vybrán další navštívený prvek z~prioritní fronty.%
+\textbf{Informovaná metoda} A* využívá prioritní frontu a~seznam navštívených vrcholů. Každému z~vrcholů přidělíme vzdálenost od~cíle. Postupuje se~stejně jako u~Dijktrova algoritmu, akorát se sčítá vzdálenost s~hodnotou heuristiky uzlu. Dle této sečtené hodnoty je vybrán další navštívený prvek z~prioritní fronty.%
 \footnote{Video A*: \url{https://www.youtube.com/watch?v=ySN5Wnu88nE}.}
 
 \clearpage
@@ -659,9 +659,11 @@ Genetické algoritmy začínají s~populací přípustných řešení, které js
 
 Výhody GA jsou, že nevyžadují žádné speciální znalosti o~cílové funkci, jsou odolné proti klouzání do~lokálního optima. Mají problém s~nalezením přesného optima a~vyžadují velké množství vyhodnocování cílové funkce.
 
+Princip: Výchozí populace \(\rightarrow\) výběr \(\rightarrow\) křížení \(\rightarrow\) mutování \(\rightarrow\) nová populace \(\rightarrow\) ukončit? Pokud ne, zpátky na výběr, atd.
+
 \subsection{Genetické programování}
 
-Hledá samotnou funkci a~ne její parametry. Oproti GA se~liší v~reprezentaci jedinců. V~GP jsou jedinci vytvořeni stromem s~proměnlivou délkou chromozomu. Zjednodušeně je to převedení GA do~programovacích jazyků.
+Hledá samotnou funkci a~ne její parametry (hledá optimální program pro řešení úlohy, ne jen vlastnosti jedinců). Oproti GA se~liší v~reprezentaci jedinců. V~GP jsou jedinci vytvořeni stromem s~proměnlivou délkou chromozomu. Zjednodušeně je to převedení GA do~programovacích jazyků.
 
 \subsection{Základní pojmy}
 
