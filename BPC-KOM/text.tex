@@ -202,7 +202,7 @@ Příklady jsou například přenos souborů, elektronická pošta nebo vzdálen
 
 Navzdory názvu TCP/IP označuje celou sadu protokolů a~náhledů na~stavění a~fungování datových sítí. Na~rozdíl od ISO/OSI je praktická pro~reálnou implementaci.
 
-Při~vytváření RM OSI měly hlavní slovo organizace kladoucí důraz na~vlastnosti sítě (na~jejich spojovaný a~spolehlivý charakter) s~tím, že připojované hostitelské počítače nebudou muset provádět tolik práce. Vyšší vrstvy ale nemohly spoléhat na~opravy vrstev vyšších a~spolehlivost si musely zajišťovat samy, a~ve výsledku se tím zabývala každá vrstva.
+Při~vytváření RM OSI měly hlavní slovo organizace kladoucí důraz na~vlastnosti sítě (na~jejich spojovaný a~spolehlivý charakter) s~tím, že připojované hostitelské počítače nebudou muset provádět tolik práce. Vyšší vrstvy ale nemohly spoléhat na~opravy vrstev nižších a~spolehlivost si musely zajišťovat samy, a~ve výsledku se tím zabývala každá vrstva.
 
 Tvůrci TCP/IP naopak vycházeli z~předpokladu, že zajištění spolehlivosti je problémem koncových zákazníků a~mělo by být řešeno až na~úrovni transportní vrstvy a~výše. Komunikační síť nemusí ztrácet část přenosové kapacity kontrolou a~opakovaným vysíláním paketů a~je tak plně využita vlastními datovými přenosy. V~síti může dojít ke~ztrátě či zahození paketu bez varování a~snahy o~nápravu, pakety by však neměly být zahazovány bezdůvodně (naopak by se o~doručení měly snažit: \emph{best effort}). \textbf{TCP/IP předpokládá jednoduchou a~rychlou podsíť ke~které se připojují inteligentní počítače}.
 
@@ -285,7 +285,7 @@ V~\textbf{paketovém} módu je možné vysílat různě velké zprávy v~libovol
 \textbf{Duplexní spojení} umožňuje současnou komunikaci oběma směry. V~nejjednodušším případě existuje mezi oběma stanicemi dvojice kanálů, u~rádiových přenosů se \emph{full-duplex} emuluje časovým nebo frekvenčním dělením.
 
 \clearpage
-\section{Fyzická vrstva přenosových systémů -- přenosová média, analogové a~digitální modulace, klíčovací techniky, princip digitalizace řečového signálu.}
+\section{Fyzická vrstva přenosových systémů -- přenosová média a jejich základní vlastnosti, aktivní síťové prvky fyzické vrstvy.}
 
 \subsection{Přenosová media}
 
@@ -357,6 +357,13 @@ Digitalizace řečového signálu je převod mluveného slova na~digitální sig
 \begin{center}
     \includegraphics[scale=0.75]{images/-022.jpg}
 \end{center}
+
+\subsection{Aktivní síťové prvky fyzické vrstvy}
+\begin{itemize}
+    \item \textbf{Opakovač} -- repeater (regeneruje signál, jen 1 vstup a 1 výstup)
+    \item \textbf{Rozbočovač} -- hub (regeneruje, posílá na všechna připojená média kromě toho, odkud signál přišel)
+\end{itemize}
+Tyto prvky nemají adresu, nelze je rozpoznat na trase, nerozumí přenášeným datům. Pracují jen se signálem. Použití opakovače je např.\,u podmořských optických kabelů, rozbočovače se používaly na metalické síti, dnes už spíše ne.
 
 \clearpage
 \section{Spojová vrstva přenosových systémů -- podvrstvy, rámce spojové vrstvy, adresace, metody zajištění spolehlivého přenosu.}
@@ -530,6 +537,8 @@ Dynamické směrovaní průběžně reaguje na~změny a~upravuje tak směrovací
 
 Nejznámější distribuované protokoly jsou \textbf{RIP} (nejmenší počet skoků, obnova informací každých 30 sekund); \textbf{OSPF} (hledání nejkratší cesty, obnova informací až při~změně v~síti) nabízí také možnost hierarchického směrování. Většina dynamických směrovacích protokolů využívá nějakého algoritmu na~nalezení nejkratší cesty. Základní požadavky na~protokoly jsou minimalizace velikosti směrovacích tabulek (rychlost vyhledávání), minimalizace počtu přenášených zpráv (menší zátěž), robustnost (aby nedošlo k~zacyklení paketu) a~využití optimálních tras (nemusí být vždy nejrychlejší nebo nejkratší).
 
+Dynamické protokoly se dělí na \textit{Distance Vector} (starší, periodicky posílají celou routing table všem sousedům, zástupce je RIP) a \textit{Link State} (tabulku přeposílají jen při nějaké události, zejména změna stavu média, zástupci jsou OSPF, IS-IS). Link State konverguje rychle i ve velkých sítích, zatímco u Distance Vector protokolů trvá dlouho, než se změna přepíše do všech směrovačů v síti.
+
 \clearpage
 \section{Síťová vrstva přenosových systémů -- tunelování paketů, ARP, NAT, ICMPv4, IPv6.}
 
@@ -622,7 +631,18 @@ Existují 3 druhy adresování:
 \section{Transportní vrstva přenosových systémů -- služby transportní vrstvy, UDP protokol, TCP protokol.}
 
 \subsection{Služby transportní vrstvy}
+\textbf{Shrnutí:}
+\begin{itemize}
+    \item \textbf{Komunikace procesů} (odlišuje komunikaci různých procesů mezi stejnými stanicemi)
+    \item \textbf{Adresování} (port)
+    \item \textbf{Zapouzdření dat} (datagram L4 = \uv{segment})
+    \item \textbf{Multiplexování a demultiplexování v transportní vrstvě} (řazení požadavků vyšších vrstev do fronty, předání síťové vrstvě)
+    \item \textbf{Řízení přenosu v transportní vrstvě} (flow control, error control, congestion control, součástí UDP je jen error control v hlavičce, ostatní jsou jen v TCP)
+    \item \textbf{Charakter poskytovaných služeb} -- bez spojení / se spojením
+    \item \textbf{Network and Port Address Translation} (NAT, PAT společně se síťovou vrstvou)
+\end{itemize}
 
+\textbf{Delší verze:}\\
 Transportní vrstva poskytuje komunikační prostředky pro komunikaci procesů v~TCP/IP. Slouží pro rozlišení a~doručení konkrétnímu procesu na~zařízení.
 
 Pro adresaci na~transportní vrstvě je třeba rozlišit 4 adresy, kterými jsou lokální host (stanice), lokální proces (aplikace), vzdálený host (stanice), vzdálený proces (aplikace). Komunikuje jako klient-server. Adresaci stanic má na~starosti síťová vrstva a~o adresy procesu se stará transportní vrstva. Protokoly UDP a~TCP adresují na~základě portů.
@@ -727,13 +747,17 @@ Postup dotazu na~fekt.vutbr.cz. Klient se zeptá lokálního DNS serveru na~IP p
 
 \subsection{FTP file transfer protokol}
 
-FTP je protokol na~aplikační vrstvě sloužící pro přenos souborů mezi dvěma stanicemi. Využívá TCP porty 20 a~21, kdy 20 slouží k~přenosu dat a~na 21 naslouchá na~příchozí spojení. Funguje na~principu klient-server, kdy spojení navazuje pouze klient. Datová spojení jsou jednorázová a~přenos je zabezpečený na~rozdíl od telnetu.
+FTP je protokol na~aplikační vrstvě sloužící pro přenos souborů mezi dvěma stanicemi. Využívá TCP porty 20 a~21, kdy 20 slouží k~přenosu dat a~na 21 naslouchá na~příchozí spojení. Funguje na~principu klient-server, kdy spojení navazuje pouze klient. Datová spojení jsou jednorázová a~přenos není zabezpečený (i heslo se přenáší v prostém textu).
 
 Přihlásit se lze buď anonymně, že server nepožaduje žádnou autentizaci uživatele nebo zadáním konkrétního přihlašovacího jména a~hesla (při přenosu nejsou šifrovány).
 
 Po navázání spojení klient posílá řídící příkazy (interpretace pomocí NVT protokolu) a~server na~tyto příkazy odpovídá (rozlišují se pomocí tří číselného kódu).
 
 Pracovní režim rozdělujeme na~aktivní a~pasivní. V aktivní režimu klient otevře náhodný port $> 1023$ a~pošle serveru vybrané číslo portu. Následně klient na~portu naslouchá a~čeká na~navázání datového spojení. Můžou nastat problémy pokud síť využívá filtrování nevyžádaného provozu, je za NATem nebo další. V pasivním režimu probíhá spojení naopak. Server otevírá port $> 1023$ a~vyzve klienta k~navázání spojení. Pasivní režim je výhodný pokud je klient uvnitř privátní sítě s~vlastní adresou a~server se nemůže na~jeho port připojit.
+
+\subsubsection{Zabezpečené alternativy}
+\textbf{SCP} (Secure Copy Protocol), využívá SSH (Secure Shell) šifrovaný kanál. Port serveru je 22 (stejně jako SSH).\\
+\textbf{SFTP} (SSH File Transfer Protocol), taky využívá SSH, funkcionalita postavená na FTP. Port je taky 22.
 
 \subsection{Webové protokoly}
 

@@ -507,6 +507,8 @@ TRNG z~fyzikálního generátoru se~spojí s~PRNG výstupem pomocí XOR.
 
 \textbf{EGD (Entropy Gathering Daemon)} využívají některé linuxové programy (OpenSSL, GPG, Apache HTTP) pokud není dostatečné množství náhodných bitů v~\texttt{/dev/random}. Entropii sbírá ve~stavu CPU, IO nebo sítě.
 
+\textbf{LCG} -- Známe z CPT, \(X_{b+1}=\left(aX_n+c\right)\mod m\), ne moc dobrý PRNG
+
 \subsection{Testování}
 
 K~ověření vlastností PRNG se využívají statistické testy. Odhalí nekvalitní PRNG, ale neprokážou kvalitní PRNG. Testy vrací $p$-hodnotu, která vyjadřuje sílu důkazů proti nulové hypotéze (\enquote{Testovaná posloupnost je náhodná.}). Pokud $p$-hodnota překročí určitou mez, nulovou hypotézu považujeme za~neplatnou.

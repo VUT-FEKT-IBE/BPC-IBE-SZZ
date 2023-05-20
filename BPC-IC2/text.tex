@@ -7,6 +7,7 @@
 \textbf{ochrana}      & opatření ke~snížení rizika, četnosti nebo velikosti ztrát \\
 \textbf{bezpečnost}   & stav, kdy riziko ztráty aktiv nepřesahuje určitou míru \\
 \textbf{zranitelnost} & místo bez~dostatečné ochrany \\
+\textbf{riziko} & \textbf{pravděpodobnost} realizace hrozby\\
 \textbf{incident}     & realizace hrozby \\
 \textbf{dopad}        & důsledek útoku, rozsah škod \\
 \end{tabular}
@@ -22,10 +23,12 @@ L1:~rozbočovač (hub) a~opakovač (repeater), L2:~most (bridge) a~přepínač (
 
 Jako v~případě veškerého síťového hardware je třeba \textbf{fyzicky zabezpečit přístup} k~přepínači (klíče, kódy, biometrie), připojit UPS, nepoužívané fyzické porty umístit do~\enquote{mrtvé} VLAN (aby~nebylo možné jen tak připojit nové zařízení). Je nutné zkontrolovat \textbf{požadavky na~síťový přístup} (HTTPS, dostatečné SSH klíče, logování přístupů a~manipulace, ACL), \textbf{vypnout služby a~porty} které nejsou využívány, \textbf{zapnout bezpečnostní funkce} (\href{https://en.wikipedia.org/wiki/DHCP_snooping}{DHCP Snooping}, \href{https://en.wikipedia.org/wiki/MAC_filtering}{MAC filtering/Port Security}, AAA, IPS, VPN). Také je třeba \textbf{zálohovat} konfigurace, nastavení testovat a~ověřovat, \textbf{aktualizovat} software i~firmware.
 
+Manuálně / přes management protokoly (SNMP), One Step Lockdown, Autosecure, Port security\dots
+
 % TODO Tuto sekci je třeba projít a zkontrolovat, nevyznám se v tom dost na to, abych tomu plně věřil
 \subsection{Zabezpečení přepínače}
 
-\textbf{\href{https://en.wikipedia.org/wiki/MAC_filtering}{Port Security}} je omezení počtu MAC adres na~port/ochrana před~MAC útoky. \textbf{PortFast} nastavení porty na~forwarding state ihned po~zapojení (připojení stanic a~serverů). \textbf{BPDU Guard} chrání síť před~zasíláním BPDU zpráv (Spanning Tree) na~porty, které by takové zprávy v~normálním provozu z~těchto portů nedostaly. \textbf{Root Guard} zabraňuje nahrazení Root Bridge \emph{spoofovanou} zprávou od~útočníka, nastaví všechny root porty pro~STP.
+\textbf{\href{https://en.wikipedia.org/wiki/MAC_filtering}{Port Security}} je omezení počtu MAC adres na~port/ochrana před~MAC útoky. \textbf{PortFast} nastavení porty na~forwarding state ihned po~zapojení (připojení stanic a~serverů), je to součást STP protokolu. \textbf{BPDU Guard} chrání síť před~zasíláním BPDU zpráv (Spanning Tree) na~porty, které by takové zprávy v~normálním provozu z~těchto portů nedostaly. \textbf{Root Guard} zabraňuje nahrazení Root Bridge \emph{spoofovanou} zprávou od~útočníka, nastaví všechny root porty pro~STP.
 
 Mezi útoky patří \textbf{MAC address spoofing} (příjem cizích dat pomocí nelegitimní změny směrovacích tabulek), \textbf{ARP Poisoning} (úprava ARP cache vede k~MitM), \textbf{Rough DHCP Server Spoofing} (falešný DHCP server odpovídá rychleji $\rightarrow$ MitM, DoS), \textbf{DHCP Starvation} (DHCP je zaplaven velkým množstvím dotazů s~cílem vyčerpání paměti IP adres), \textbf{STP Manipulation} (útočník jako Root Bridge pro~příjem provozu v~síti), \textbf{MAC address table overflow} (vyčerpá se MAC tabulka adres na~přepínači, který se přepne na~HUB a~data posílá všemi porty), \textbf{LAN storm} (přepínače přeposílají broadcast všemi porty, čímž se~přetíží CPU a~dojde k~DoS).
 
@@ -34,6 +37,8 @@ Mezi útoky patří \textbf{MAC address spoofing} (příjem cizích dat pomocí 
 Bezpečná konfigurace je~popsána výše v~podkapitole \ref{question2-1}.
 
 Mezi typické útoky na~směrovače patří pokusy o~\textbf{průnik do~nastavení} (zneužití výchozích hesel), \textbf{Routing Table Poisoning} (\emph{spoofování} routovacích protokolů a~vyvolání nežádoucích změn ve~směrovacích tabulkách), \textbf{Hit and Run} (posílání škodlivých paketů v~náhodných intervalech), \textbf{(D)DoS} (vytížení CPU/RAM velkým množstvím paketů, logické útoky typu \href{https://en.wikipedia.org/wiki/Christmas_tree_packet}{Christmas tree packet} attack).
+
+\textbf{Hardening} znamená zvyšování odolnosti proti útokům. Jedná se o vypínání nepotřebných protokolů, omezování oprávnění na minimální nutná, zapínání ochranných funkcí a šifrování komunikace při správě zařízení.
 
 \clearpage
 \section{Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).}
@@ -242,7 +247,6 @@ Publikace shrnující aktuálních deset nejhorších zranitelností. Vychází 
     \item Nedostatek loggingu a~monitoringu
 \end{enumerate}
 
-\clearpage
 
 \subsubsection{OWASP Testing Guide}
 
