@@ -7,7 +7,7 @@
         \textbf{ochrana}      & opatření ke~snížení rizika, četnosti nebo velikosti ztrát \\
         \textbf{bezpečnost}   & stav, kdy riziko ztráty aktiv nepřesahuje určitou míru    \\
         \textbf{zranitelnost} & místo bez~dostatečné ochrany                              \\
-        \textbf{riziko}       & \textbf{pravděpodobnost} realizace hrozby                 \\
+        \textbf{riziko}       & \textbf{pravděpodobnost} využití zranitelného místa       \\
         \textbf{incident}     & realizace hrozby                                          \\
         \textbf{dopad}        & důsledek útoku, rozsah škod                               \\
     \end{tabular}
@@ -232,19 +232,19 @@ Síťová infrastruktura. Webové aplikace. Programy. Telefonní aplikace. IoT z
 
 \subsubsection{OWASP Top 10}
 
-Publikace shrnující aktuálních deset nejhorších zranitelností. Vychází z~domluvy firem z~odvětví a~OWASP, nemusí tedy nutně znamenat, že se vyskytují nejčastěji. Postupně se jedná o zranitelnosti (2017):
+Publikace shrnující aktuálních deset nejhorších zranitelností. Vychází z~domluvy firem z~odvětví a~OWASP, nemusí tedy nutně znamenat, že se vyskytují nejčastěji. Postupně se jedná o zranitelnosti (2021):
 
 \begin{enumerate}[noitemsep]
-    \item Injekce (SQL injection, Code injection)
-    \item Nekorektní funkce autentizace (obecné chyby autentizačních mechanismů)
-    \item Odhalení citlivých dat (např. nezabezpečená komunikace aplikace jako HTTP/FTP, výpis chyb na~stránce, \dots)
-    \item XML externí entity tj. XXE (code execution přes~chybu v~parseru XML\footnote{XXE: \url{https://www.youtube.com/watch?v=gjm6VHZa_8s}.})
     \item Chybná kontrola přístupu (chyba v~ACL)
-    \item Špatná konfigurace bezpečnostních politik (nenastavení lockout mechanismu po~určitém počtu neúspěšných přihlášení)
-    \item Cross Site Scripting tj. XSS (vykonávání JavaScriptu na~straně uživatele\footnote{XSS: \url{https://www.youtube.com/watch?v=EoaDgUgS6QA}.})
-    \item Nebezpečná deserializace (při~převodu binárních dat na~interní reprezentaci v~programu může dojít k~vykonání kódu\footnote{Deserializace: \url{https://www.youtube.com/watch?v=HaW15aMzBUM}.})
+    \item Kryptografické chyby (např.\,nezabezpečená komunikace aplikace jako HTTP/FTP)
+    \item Injekce (SQL injection, Code injection)\footnote{XSS: \url{https://www.youtube.com/watch?v=EoaDgUgS6QA}.}
+    \item Nezabezpečený design (chyba vzniklá už při plánování projektu)
+    \item Špatná konfigurace bezpečnostních politik (nenastavení lockout mechanismu po~určitém počtu neúspěšných přihlášení)\footnote{I XML External Entities -- XXE: \url{https://www.youtube.com/watch?v=gjm6VHZa_8s}.}
     \item Užívání komponent se známou zranitelností
-    \item Nedostatek loggingu a~monitoringu
+    \item Nekorektní funkce autentizace a identifikace (obecné chyby autentizačních mechanismů)
+    \item Chyby integrity dat a software\footnote{Nebezpečná deserializace: \url{https://www.youtube.com/watch?v=HaW15aMzBUM}.}
+    \item Chyby bezpečného loggingu a~monitoringu
+    \item Server-Side Request Forgery (vykonávání requestu jménem serveru)
 \end{enumerate}
 
 
@@ -406,7 +406,7 @@ Pracuje na~síťové vrstvě (L3): end-to-end šifrování TCP/UDP komunikace me
     \includegraphics[width=\textwidth]{images/ipsec}
 \end{figure}
 
-\textbf{Authentication header} zajišťuje integritu a~autentičnost IP paketů, chrání proti replay útokům. \textbf{Encapsulationg Security Payloads} zajišťuje důvěrnost pomocí šifrování. \textbf{Security Association} popisuje IPSec spojení včetně parametrů zabezpečení. Aktivní spojení je uloženo v~databázi (SAD), management a~pravidla jsou uložena v~SPD (\emph{Security Policy Database}).
+\textbf{Authentication header} zajišťuje integritu a~autentičnost IP paketů, chrání proti replay útokům. \textbf{Encapsulating Security Payloads} zajišťuje důvěrnost pomocí šifrování. \textbf{Security Association} popisuje IPSec spojení včetně parametrů zabezpečení. Aktivní spojení je uloženo v~databázi (SAD), management a~pravidla jsou uložena v~SPD (\emph{Security Policy Database}).
 
 Pro~ustanovení klíče IPSec využívá symetrickou kryptografii: pre-shared key, IKE1/2, Kerberos.
 
