@@ -82,7 +82,7 @@ Grupa (G, $\circ$) je \textbf{cyklická}, jestliže existuje prvek $g$ v~G takov
 
 Řád prvku $a$ je definován jako nejmenší kladné celé číslo $t$ takové že $a^t = 1$ pokud takové $t$ existuje. 
 
-Řád generátoru grupy se rovná řádu grupy. Počet generátorů lze zjistit jako $\phi(\phi(n))$.
+Řád generátoru grupy se rovná řádu grupy. Počet generátorů lze u prvočíselných multiplikativních grup zjistit jako $\phi(\phi(n))$.
 
 Příklady praktických grup pro~kryptografii:
 \begin{itemize}[noitemsep]
@@ -108,6 +108,9 @@ Nalezení generátoru:
     \item Pro každého prvočíselného dělitele se vypočte $g^{\phi(n)/p_i} \equiv 1 \mod n$.
     \item Pokud předchozí rovnice neplatí pro žádné $p_i$ jedná se generátor.
 \end{itemize}
+
+\subsection{Volba parametrů grupy pro algoritmy založené na problému DL}
+Předem je zvolená bitová délka prvočísla, je vygenerováno prvočíslo \(p\) o této bitové délce. Poté je potřeba zvolit řád prvku \(q\). Víme, že \(q|\phi(p)\). Některé algoritmy (např.\,DSA) navíc vyžadují, ať je \(q\) také prvočíselná hodnota. Poté je hledán prvek \(g\) o řádu \(q\). Následně je vygenerován soukromý klíč \(x\), \(x<q\) a je zveřejněn veřejný klíč \(y\), \(y\equiv g^x \mod p\).
 
 \clearpage
 \section{Modulární aritmetika -- popište algoritmus Square and Multiply a~Čínskou větu o~zbytcích.}

@@ -65,9 +65,11 @@ Lze zavést i~tzv. \emph{hybridní jádro}, kde je mikrojádro rozšířeno o~do
 
 \subsection{Virtuální stroje}
 
-Základní myšlenkou je tzv. \emph{abstrakce hardware} do~několika různých prostředí, ve~kterých mohou běžet oddělené operační systémy. K~tomuto se využívá přepínání běhu procesů na~procesoru a~použití konceptu virtuální paměti\footnote{Každý proces potřebuje část paměti RAM. Pokud jí není dost, tak se paměť procesu \enquote{přesune} na~disk do~tzv. \emph{paging file}. Více např. \url{https://en.wikipedia.org/wiki/Virtual_memory}.}.
+Základní myšlenkou je tzv. \emph{abstrakce hardware} do~několika různých prostředí, ve~kterých mohou běžet oddělené operační systémy. O tuto abstrakci se stará program s názvem \textbf{hypervisor}. K~zajištění běhu několika virtuálních systému na stejném HW se využívá přepínání běhu procesů na~procesoru a~použití konceptu virtuální paměti\footnote{Každý proces potřebuje část paměti RAM. Pokud jí není dost, tak se paměť procesu \enquote{přesune} na~disk do~tzv. \emph{paging file}. Více např. \url{https://en.wikipedia.org/wiki/Virtual_memory}.}.
 
 Každý virtuální stroj má své jádro, který musí běžet v~kontextu jádra. Zároveň se však jedná o~uživatelský proces, proto se vytváří virtuální uživatelský kontext a~virtuální kontext jádra který však běží v~uživatelském režimu na~hostovacím systému. Pokud dojde ve~virtuálním prostředí k~systémovému volání, bude obsloužení emulováno pomocí virtualizačního software, což je značně pomalejší než reálný systém.
+
+Existují hypervisory dvou druhů. Hypervisor typu 1 běží přímo nad BIOSem (firmware) a na něm jsou spouštěny virtuální OS. Hypervisor typu 2 je spouštěn nad operačním systémem (teprve ten běží nad BIOSem). Zástupce hypervisoru typu 1 je Microsoft Hyper-V, typ 2 jsou pak Docker, Oracle VirtualBox, VMWare WorkStation a další.
 
 %%%%%%%%%%%
 % PROCESY %
@@ -180,7 +182,7 @@ Z~pohledu správy lze vlákna rozdělit na~dva typy: \emph{vlákna jádra} (z~pr
 
 \begin{itemize}
 	\item Mnoho k~jednomu -- Jednomu procesu jádra patří více uživatelských vláken. Použití vláken není závislé na~jejich podpoře v~OS a~jejich správa je zajištěna často v~podobě \emph{vláknových knihoven} (v~uživatelském režimu). Tyto knihovny vytváří a~plánují běh, přepínají a~ruší vlákna. Nevýhodou je fakt, že zavolání blokujícího systémového volání jedním z~vláken zablokuje celý proces (tedy všechna vlákna), jelikož jádro s~vlákny nepracuje.
-	\item Jeden k~jednomu -- Každé uživatelské jádro má korespondující vlákno v~jádře a~tedy má i~na~starosti jejich správu. Výhodou je, že blokující systémové volání neblokuje všechna ostatní vlákna. Dále je umožněn běh paralelně na~více procesorech. Nevýhodou je značná režie, skrz vysoké množství vláken.
+	\item Jeden k~jednomu -- Každé uživatelské vlákno má korespondující vlákno v~jádře a~tedy má i~na~starosti jejich správu. Výhodou je, že blokující systémové volání neblokuje všechna ostatní vlákna. Dále je umožněn běh paralelně na~více procesorech. Nevýhodou je značná režie, skrz vysoké množství vláken.
 	\item Mnoho k~mnoha -- Kombinace předešlých, přiřazuje vláknům stejný nebo menší počet vláken v~jádru. Počet těchto vláken může být omezen vzhledem k~aplikaci nebo druhu zařízení (např. jednoprocesorové vs. víceprocesorové).
 \end{itemize}
 
@@ -261,7 +263,7 @@ Je třeba mít na~vědomí, že plánovač II. úrovně vybírá procesy tak aby
 
 \subsubsection{Ukončení procesu}
 
-Proces v~uživatelském režimu zavolá sys. volání (např. dříve zmíněný \emph{exit}), přejde tedy do~režimu jádra a~dále do~stavu \enquote{zombie}. V~tomto stavu proces neexistuje, ale je o~něm stále udržován záznam v~tabulce procesů. Jakmile rodič zpracuje informaci o~jeho ukončení, tak je proces definitivně ukončen.
+Proces v~uživatelském režimu zavolá sys. volání (např. dříve zmíněný \emph{exit}), přejde tedy do~režimu jádra a~dále do~stavu \enquote{zombie}. V~tomto stavu proces neexistuje, ale je o~něm stále udržován záznam v~tabulce procesů. Jakmile rodič zpracuje informaci o~jeho ukončení, tak je proces definitivně ukončen a jeho záznam odstraněn.
 
 %%%%%%%%%%%%%%
 % SCHEDULING %
@@ -319,7 +321,7 @@ Jedná se o~klasické desktop systémy jako Windows, MacOS a~různé distribuce 
 
 \subsubsection{Real-Time systémy}
 
-Používají se pro~zpracování úloh které slouží jako vstup dalších navazujících činností. Tyto systémy musí splnit úlohu v~reálném čase (v~předem daném časovém úseku). Tyto systémy jsou používány v~automatizovaných procesech, robotice a~telekomunikacích. Používá se opět preemptivní plánování.
+Používají se pro~zpracování úloh které slouží jako vstup dalších navazujících činností. Tyto systémy musí splnit úlohu v~reálném čase (v~předem daném časovém úseku). Tyto systémy jsou používány v~automatizovaných procesech, robotice a~telekomunikacích. Používá se preemptivní plánování.
 
 Podle toho jak moc se tlačí na~splnění požadavků v~daném času můžeme tyto systémy dělit na~\emph{soft} (časové záruky jsou pouze přibližné a~určité časové odchylky jsou povoleny) a~\emph{hard} (časové záruky jsou plně zajištěny).
 

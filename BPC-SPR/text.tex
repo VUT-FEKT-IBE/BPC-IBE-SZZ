@@ -270,7 +270,7 @@ Autorskoprávní ochrana chrání databázi pouze jako dílo souborné, tj.~jeho
 % TODO Judikatura
 
 \clearpage
-\section{Smlouvy a~software -- licenční smlouva, smlouva o~dílo a~SLA -- pojem, strany, obsah, forma a~proces uzavírání}
+\section{Softwarové smlouvy -- licenční smlouva, smlouva o analýze, smlouva o vývoji software, smlouva o implemetaci software, smlouva o údržbě software, SLA}
 
 \subsection{Licenční smlouva}
 
@@ -295,6 +295,79 @@ Mezi základní informace patří smluvní strany, specifikace autorského díla
 Dále práva na~podlicencování či~přeprodání, odpovědnost za~škodu a~právní vady software, oprávnění k~rozmnožování nebo úpravu software, nárok na~upgrade software, způsob zániku licence a~postupu po~zániku, automatické prodlužování licence.
 
 Hlavním účelem je ochrana~díla~a~specifikace, jak s~ním lze nakládat. Například jestli lze upravovat nebo předělávat SW, rozmnožovat ho a~popřípadě upravenou verzi licencovat.
+
+\subsection{Smlouva o analýze}
+Účelem je analýza k návrhu softwarového řešení (popis aktuální situace, požadovaný konečný stav a rozdíly mezi těmito dvěma stavy). Výsledkem je dílo, lze považovat za typ smlouvy o dílo. Obsahuje závazky:
+\begin{itemize}
+    \item Provést analýzu a navrhnout řešení (k tomu se zavazuje zhotovitel).
+    \item Poskytnutí součinnosti a odměny (k tomu se zavazuje objednavatel).
+\end{itemize}
+Ve smlouvě by měly být tyto náležitosti:
+\begin{itemize}
+    \item Účel (cíle, které mají být splněny -- předpoklady provedení -- výsledek musí být do určité doby a za úplatu)
+    \item Součinnost (nemůžu nedat analyzátorovi přístup do systému, který má analyzovat)
+    \item Protokolace
+    \item Zpracování a odsouhlasení
+    \item Způsob a termín uzavření smlouvy o vývoji a implementaci software (takže smlouva o analýze je také smlouva o smlouvě budoucí)
+    \item Odměna (hodinová sazba nebo odměna za celou práci)
+    \item Odpovědnost za vady a škodu
+    \item Autorská práva a licence k analýze
+    \item Mlčenlivost (zákaz využití třetí firmou)
+    \item Podmínky ukončení od smlouvy -- odstoupení
+\end{itemize}
+
+\subsection{Smlouva o vývoji software}
+Jedná se o smlouvu o dílo s nehmotným výsledkem (nemusí být předáno na nosiči). Je jen potřeba umožnit používání díla. Součást je taky pracovní smlouva / dohoda o provedení práce / dohoda o provedení činnosti.
+Náležitosti jsou:
+\begin{itemize}
+    \item Vymezení účelu (je potřeba definovat, kdy je dílo považováno za hotové)
+    \item Předmět smlouvy (pozitivní a negativní vymezení -- když je objednaný program, nebudu se vázat k tomu dodat hardware, na kterém to bude spouštěno)
+    \item Doba a místo plnění
+    \item Typ vývoje (waterfall / agile)
+    \item Při nutnosti změny smlouvy -- změnové řízení
+    \item Dodávání HW a SW třetích stran (věci opatřené k provedení díla)
+    \item Licencování při použití SW třetích osob (zprostředkovatelská nebo mandátní smlouva)
+    \item Projektové řízení
+    \item Školení, dokumentace
+    \item Cenové ujednání
+    \item Ukončení smlouvy
+    \item Definice provedení, dokončení, předání a převzetí
+    \begin{itemize}
+        \item Provedeno = dokončeno + předáno
+        \item Dokončeno = způsobilé sloužit svému účelu
+        \item Předáno = dokončeno  + umožněno užití díla
+        \item Pokud je dílo dokončeno se zjevnými vadami, pokud není stanoveno jinak, objednatel musí převzít (převzetí s výhradami)
+        \item Při převzetí bez výhrad zanikají nároky ze zjevných vad
+        \item Je tedy vhodné smluvně opravit okamžik předání (např.\,bude považované za předané až po otestování)
+        \item Dílo lze převzít po částech
+    \end{itemize}
+\end{itemize}
+
+Při prodlení u zhotovitele -- povinnost na vlastní náklady odstranit vady, náhrada škody, právo odstoupení od smlouvy objednatelem (při podstatném porušení smlouvy), při sjednání smluvních pokut z prodlení je musí zhotovitel hradit.
+
+Při prodlení u objednatele (nepřevzal včas / neposkytl součinnost) -- možná smluvní pokuta, náhrada vzniklé škody, právo na odstoupení od smlouvy (podstatné prodlení), posunutí termínu plnění nebo náhradní plnění.
+
+\subsection{Smlouva o implementaci software}
+Nasazení a zprovoznění dříve vyvinutého software pro účely objednatele (\uv{making it work}). Je potřeba stanovit milníky a akceptační testy (odpovídá implementace tomu, co je specifikované ve smlouvě?). Vyžaduje licenční smlouvu na implementovaný software. Tato smlouva může být (a často bývá) součástí smlouvy o vývoji.
+
+Je nutná součinnost stran (nelze nasadit řešení na server objednatele, když objednatel nezařídí na server přístup s dostatečnými oprávněními).
+
+\subsection{Smlouva o údržbě software}
+Účel smlouvy je bezvadný provoz. Zahrnuje aktualizaci a úpravy pro kompatibilitu různých SW a možný rozvoj (hraničí s vývojem a implementací). Servis může být reaktivní nebo proaktivní. Také lze mít smlouvu na servis systému jako celku nebo jen dodané části.
+
+Náležitosti:
+\begin{itemize}
+    \item Specifikace současného HW, SW
+    \item Specifikace servisní činnosti HW, SW a údržby SW
+    \item Odměna a platební podmínky
+    \item Definice a kategorizace vad (incidentů), reakční doby odstranění a sankcí za nesplnění
+    \item Způsob upozorňování na incidenty
+    \item Mlčenlivost
+    \item Dobu trvání a způsob ukončení smlouvy
+    \item Licence
+    \item Servisní okna (odstávky)
+    \item Součinnost (při jejím nesplnění -- výluka z povinnosti odstranit vadu)
+\end{itemize}
 
 \subsection{Smlouva o~dílo}
 

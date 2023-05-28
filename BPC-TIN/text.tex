@@ -31,7 +31,7 @@ Bloky \emph{Heap} a~\emph{Stack} jsou dynamické a~jejich velikost roste/zmenšu
 
 \subsection{Statické přidělování paměti}
 
-Staticky se~ukládají datové struktury, které jsou definovány při~překladu programu. K~jednotlivým paměťovým úsekům lze přistupovat pomocí názvu proměnné. V~průběhu se~adresa nemůže měnit.
+Staticky se~ukládají datové struktury, které jsou definovány při~překladu programu. K~jednotlivým paměťovým úsekům lze přistupovat pomocí názvu proměnné. V~průběhu se~adresa ani velikost bloku nemůže měnit.
 
 \subsection{Dynamické přidělování paměti}
 
@@ -111,7 +111,7 @@ Násobnost vztahů určuje počet vazeb objektu. \enquote{\( 1:n \)} popisuje je
 % TODO Zde by to chtělo nějaké schéma kde budou použity všechny typy vztahů. Např. e-shop: výrobce, kategorie, produkt, hodnocení produktu.
 
 \clearpage
-\section{Třídy složitosti paměťové a~časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů.}
+\section{Třídy složitosti paměťové a~časové. Notace Theta. Notace Omega. Notace velké-O. Asymptotický popis složitosti algoritmu. Posouzení složitosti algoritmů. Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a nelineárních struktur. Vztah časové a paměťové složitosti.}
 
 \textbf{Teorie vyčíslitelnosti} zkoumá otázku algoritmické řešitelnosti problému z~pohledu řešitelnosti, ne časové náročnosti. Vyčíslitelnost je zkoumána pomocí teoretických výpočetních modelů\,--\,deterministický a~nedeterministický konečný automat, zásobníkový automat, Turingův stroj a~další.
 
@@ -150,9 +150,23 @@ Vybrané algoritmy a~jejich složitost jsou popsány v~dalších otázkách. Zde
 
 Třídění pomocí algoritmů Bubble Sort, Insert Sort a~Select Sort má složitost O(\( n^2 \)). Algoritmus Quick Sort má složitost \( \Theta \)(\( n\log{n} \))/O(\( n^2 \)). Algoritmus Merge Sort má složitost O(\( n\log{n} \)).
 
-\subsubsection{Algoritmy hledaní}
+\subsection{Algoritmy hledání}
 
-Binární vyhledávání má složitost O(\( \log{n} \)) a~lineární/sekvenční má složitost O(\( n \)).
+Dva základní algoritmy pro~hledání jsou \textit{Binary search}%
+\footnote{Binární vyhledávání funguje na~principu půlení seřazeného seznamu. Pokud je hledaná hodnota menší než střední hodnota, vyhledává se v~první polovině, pokud je větší tak v~druhé. Takto se iteruje dokud není číslo nalezeno. Více např. \url{https://www.youtube.com/watch?v=KXJSjte_OAI}.} %
+a~\textit{Linear search}%
+\footnote{Lineární vyhledávání je naprosto jednoduchý lineární průchod seznamem, kde se~postupně hledá požadovaná hodnota. Alternativa je \emph{Linear Sentinel search}, která přidá hledanou hodnotu na~konec seznamu. Více např. \url{https://www.geeksforgeeks.org/linear-search/} nebo \url{https://algorithmoftheweek.blog/2020/06/10/sentinel-linear-search/}.}%
+. Binární funguje lépe než lineární, ale pouze pro~větší a~seřazené seznamy.
+
+\begin{table}[h]
+	\centering
+	\caption{Big-O složitosti vyhledávacích algoritmů}
+	\begin{tabular}{|c||c|c|}\hline
+		algoritmus           & časová náročnost & paměťová náročnost \\\hline\hline
+		lineární vyhledávání & O(\( n \))       & O(\( 1 \))         \\\hline
+		binární vyhledávání  & O(\( \log n \))  & O(\( 1 \))         \\\hline
+	\end{tabular}
+\end{table}
 
 \subsection{Třídy složitosti}
 
@@ -174,26 +188,14 @@ Rozdělení:
 	\item Kvantový Turingův stroj\,--\,založen na~superpozicích stavů, dokáže řešit \enquote{exponenciální explozi} a~převést ji na~problém se~složitostí v~polynomiálním čase.
 \end{itemize}
 
+
+\subsection{Vztah časové a~paměťové složitosti}
+
+Většina algoritmů je kompromisem mezi těmito dvěma druhy složitosti. Pokud bychom měli algoritmus s~vysokými nároky na~časovou složitost (aby byl co nejrychlejší) tak jeho paměťová složitost bude vzrůstat. Většinu algoritmů je nějakým způsobem optimalizovaná nebo ji lze optimalizovat.
+
 \clearpage
-\section{Posouzení složitosti algoritmu vyhledávání. Srovnání lineárních a~nelineárních struktur. Vztah časové a~paměťové složitosti. Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a~vyhledávání prvku v~ADT lineární seznam. ADT zásobník, ADT fronta.}
+\section{Abstraktní datový typ (ADT). ADT lineární seznam. ADT cyklický seznam. Operace vkládání, mazání a~vyhledávání prvku v~ADT lineární seznam. ADT zásobník, ADT fronta.}
 
-\subsection{Algoritmy hledání}
-
-Dva základní algoritmy pro~hledání jsou \textit{Binary search}%
-\footnote{Binární vyhledávání funguje na~principu půlení seřazeného seznamu. Pokud je hledaná hodnota menší než střední hodnota, vyhledává se v~první polovině, pokud je větší tak v~druhé. Takto se iteruje dokud není číslo nalezeno. Více např. \url{https://www.youtube.com/watch?v=KXJSjte_OAI}.} %
-a~\textit{Linear search}%
-\footnote{Lineární vyhledávání je naprosto jednoduchý lineární průchod seznamem, kde se~postupně hledá požadovaná hodnota. Alternativa je \emph{Linear Sentinel search}, která přidá hledanou hodnotu na~konec seznamu. Více např. \url{https://www.geeksforgeeks.org/linear-search/} nebo \url{https://algorithmoftheweek.blog/2020/06/10/sentinel-linear-search/}.}%
-. Binární funguje lépe než lineární, ale pouze pro~větší a~seřazené seznamy.
-
-\begin{table}[h]
-	\centering
-	\caption{Big-O složitosti vyhledávacích algoritmů}
-	\begin{tabular}{|c||c|c|}\hline
-		algoritmus           & časová náročnost & paměťová náročnost \\\hline\hline
-		lineární vyhledávání & O(\( n \))       & O(\( 1 \))         \\\hline
-		binární vyhledávání  & O(\( \log n \))  & O(\( 1 \))         \\\hline
-	\end{tabular}
-\end{table}
 
 \subsection{Lineární a~nelineární struktury}
 
@@ -214,9 +216,6 @@ a~\textit{Linear search}%
 
 \textbf{Nelineární} jsou například stromy, které, pokud jsou nějak vyvažovány, mají náročnost O(\( \log{n} \)). Pokud se~nevyvažují, náročnost je O(\( n \)). Tyto složitosti jsou pro~všechny operace stejné.
 
-\subsection{Vztah časové a~paměťové složitosti}
-
-Většina algoritmů je kompromisem mezi těmito dvěma druhy složitosti. Pokud bychom měli algoritmus s~vysokými nároky na~časovou složitost (aby byl co nejrychlejší) tak jeho paměťová složitost bude vzrůstat. Většinu algoritmů je nějakým způsobem optimalizovaná nebo ji lze optimalizovat.
 
 \subsection{Abstraktní datový typ}
 
@@ -410,7 +409,7 @@ Strom a~výsledky procházení jsou na~obrázku \ref{tree}.
 \end{figure}
 
 \clearpage
-\section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy]{Problematika nevyvážených stromů. Vyvažování stro-mů AVL -- rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy.
+\section[Problematika nevyvážených stromů. Vyvažování stromů AVL - rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy]{Problematika nevyvážených stromů. Vyvažování stromů AVL -- rotace: jednoduchá levá, jednoduchá pravá, dvojitá levá, dvojitá pravá. Red-Black stromy. Posouzení z pohledu časové a paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromu a hashovacích tabulek.
  }
 
 Složitost u~nevyváženého stromu může klesnout z~O(\( \log{n} \)) až na~O(\( n \)), a~proto se stromy vyvažují. Vyvážený strom má rozdíl hloubky levého a~pravého podstromu rovnou vždy 0 nebo 1. Pokud má hloubku větší, označuje se za~nevyvážený a~z~pohledu problematiky by se~měl vyvážit například metodou AVL nebo Red-Black stromů.
@@ -434,6 +433,27 @@ Vyvažuje se~dvěma typy rotace, u~kterých pak dále rozlišujeme stranu%
 	\end{minipage}
 \end{figure}
 
+\begin{figure}[htb]
+    \begin{minipage}[b]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{images/jednoduchaleva.png}
+        \caption{Jednoduchá levá rotace (podle prezentací)}
+    \end{minipage}
+    \hspace*{1em}
+    \begin{minipage}[b]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{images/jednoduchaprava.png}
+        \caption{Jednoduchá pravá (podle prezentací)}
+    \end{minipage}
+    \vspace{1em}
+    \begin{minipage}[b]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{images/dvojnasobnaleva.png}
+        \caption{Dvojnásobná levá rotace (podle prezentací)}
+    \end{minipage}
+    \hspace*{1em}
+    \begin{minipage}[b]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{images/dvojnasobnaprava.png}
+        \caption{Dvojnásobná pravá rotace (podle prezentací)}
+    \end{minipage}
+\end{figure}
 % TODO Chybí tu dvojtá rotace
 
 \subsection{Red-Black stromy}
@@ -444,13 +464,12 @@ Nejsou tak dobře vyvážené jako AVL, ale řeší problém mnohonásobné rota
 \begin{itemize}
 	\item Každý uzel je červený nebo černý.
 	\item Kořen je vždy černý.
-	\item Všechny listy jsou černé.
 	\item Potomci červeného jsou vždy černí.
 	\item Každá cesta z~libovolného uzlu do~jeho podřízených listů obsahuje stejný počet černých uzlů.
 \end{itemize}
 
-\clearpage
-\section{Posouzení z~pohledu časové a~paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a~hashovacích tabulek.}
+% \clearpage
+% \section{Posouzení z~pohledu časové a~paměťové složitosti. ADT hashovací tabulky. Řešení kolizí hashovacích tabulek. Srovnání výkonnosti binárních vyhledávacích stromů a~hashovacích tabulek.}
 
 \subsection{Hashovací tabulka}
 
