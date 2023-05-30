@@ -30,7 +30,7 @@ Manuálně / přes management protokoly (SNMP), One Step Lockdown, Autosecure, P
 
 \textbf{\href{https://en.wikipedia.org/wiki/MAC_filtering}{Port Security}} je omezení počtu MAC adres na~port/ochrana před~MAC útoky. \textbf{PortFast} nastavení porty na~forwarding state ihned po~zapojení (připojení stanic a~serverů), je to součást STP protokolu. \textbf{BPDU Guard} chrání síť před~zasíláním BPDU zpráv (Spanning Tree) na~porty, které by takové zprávy v~normálním provozu z~těchto portů nedostaly. \textbf{Root Guard} zabraňuje nahrazení Root Bridge \emph{spoofovanou} zprávou od~útočníka, nastaví všechny root porty pro~STP.
 
-Mezi útoky patří \textbf{MAC address spoofing} (příjem cizích dat pomocí nelegitimní změny směrovacích tabulek), \textbf{ARP Poisoning} (úprava ARP cache vede k~MitM), \textbf{Rough DHCP Server Spoofing} (falešný DHCP server odpovídá rychleji $\rightarrow$ MitM, DoS), \textbf{DHCP Starvation} (DHCP je zaplaven velkým množstvím dotazů s~cílem vyčerpání paměti IP adres), \textbf{STP Manipulation} (útočník jako Root Bridge pro~příjem provozu v~síti), \textbf{MAC address table overflow} (vyčerpá se MAC tabulka adres na~přepínači, který se přepne na~HUB a~data posílá všemi porty), \textbf{LAN storm} (přepínače přeposílají broadcast všemi porty, čímž se~přetíží CPU a~dojde k~DoS).
+Mezi útoky patří \textbf{MAC address spoofing} (příjem cizích dat pomocí nelegitimní změny směrovacích tabulek), \textbf{ARP Poisoning} (úprava ARP cache vede k~MitM), \textbf{Rogue DHCP Server Spoofing} (falešný DHCP server odpovídá rychleji $\rightarrow$ MitM, DoS), \textbf{DHCP Starvation} (DHCP je zaplaven velkým množstvím dotazů s~cílem vyčerpání paměti IP adres), \textbf{STP Manipulation} (útočník jako Root Bridge pro~příjem provozu v~síti), \textbf{MAC address table overflow} (vyčerpá se MAC tabulka adres na~přepínači, který se přepne na~HUB a~data posílá všemi porty), \textbf{LAN storm} (přepínače přeposílají broadcast všemi porty, čímž se~přetíží CPU a~dojde k~DoS).
 
 \subsection{Zabezpečení směrovače}
 
@@ -39,6 +39,33 @@ Bezpečná konfigurace je~popsána výše v~podkapitole \ref{question2-1}.
 Mezi typické útoky na~směrovače patří pokusy o~\textbf{průnik do~nastavení} (zneužití výchozích hesel), \textbf{Routing Table Poisoning} (\emph{spoofování} routovacích protokolů a~vyvolání nežádoucích změn ve~směrovacích tabulkách), \textbf{Hit and Run} (posílání škodlivých paketů v~náhodných intervalech), \textbf{(D)DoS} (vytížení CPU/RAM velkým množstvím paketů, logické útoky typu \href{https://en.wikipedia.org/wiki/Christmas_tree_packet}{Christmas tree packet} attack).
 
 \textbf{Hardening} znamená zvyšování odolnosti proti útokům. Jedná se o vypínání nepotřebných protokolů, omezování oprávnění na minimální nutná, zapínání ochranných funkcí a šifrování komunikace při správě zařízení.
+
+\subsection{Útoky}
+\subsubsection{VLAN hopping}
+Cisco switche mají defaultně zapnutý protokol DTP (dynamic trunking protocol). Po připojení rogue switche s DTP nastaveným na \texttt{desirable}, stane se z linku trunk. Díky tomu je možné komunikkovat s více VLANy. Další možnost je VLAN double-tagging (jiný druh VLAN hopping), kde vnější VLAN tag patří do nativní VLAN a je odebrán na nejbližším switchi. Je tedy jednosměrně možné komunikovat s jiným VLANem (jeho ID je ve vnitřním tagu rámce).
+
+Mitigace je možná vypnutím DTP a nastavení Native VLAN na jinde nepoužívanou VLAN.
+
+\subsubsection{MAC address spoofing}
+Příjem cizích zpráv kvůli spoofed adrese. Realizováno vysláním rámce s podvrhnutou zdrojovou adresou, přepíše v přepínači záznam v MAC tabulce. Mitigace pomocí Port Security.
+
+\subsubsection{ARP poisoning}
+MitM pomocí nelegitimních unsolicited ARP odpovědí. Mitigace pomocí DAI (dynamic ARP inspection, na Cisco zařízeních je potřeba zapnutí DHCP snooping pro provoz DAI).
+
+\subsubsection{DHCP spoofing / Rogue DHCP}
+Útočník odpoví na DHCP dotaz dříve než legitimní DHCP server, v DHCP oznámí svoji IP jako gateway. Mitigace pomocí DHCP snooping.
+
+\subsubsection{DHCP starvation}
+Útočník využije celý pool adres, mitigace pomocí DHCP snooping.
+
+\subsubsection{STP manipulation}
+Útočník postaví svůj rogue switch do role Root Bridge v STP. Mitigace pomocí PortFast a BPDU-Guard.
+
+\subsubsection{MAC address table overflow}
+Při přeplnění tabulky v přepínači se začne chovat jako HUB. Proto je možné zachytit i cizí komunikaci. Mitigace pomocí Port Security.
+
+\subsubsection{LAN Storm}
+Při vytvoření cyklů v síti, mitigace pomocí STP.
 
 \clearpage
 \section{Problematika logování, hlavní cíle a rozdělení (definice logu, základní kategorie, formát, obsah logu, struktura záznamu, ochrana logů).}
@@ -126,7 +153,7 @@ Anomáliemi mohou být nadměrný provoz, změna chování síťového prvku, p�
 
 \emph{Intrusion Detection Systems} odchytávají pakety a~provádí jejich analýzu, \emph{Intrusion Prevention Systems} k~tomu umí vytvářet vlastní aktivitu v~potlačování nevhodné aktivity.
 
-Typicky jsou nasazeny \enquote{inline} jako síťové firewally. Umístění je rozhodující pro~jejich správnou funkčnost, často to bývá mezi komponetnami síťové infrastruktury.
+Typicky jsou nasazeny \enquote{inline} jako síťové firewally. Umístění je rozhodující pro~jejich správnou funkčnost, často to bývá mezi komponentnami síťové infrastruktury. Na obrázku je příklad rozmístění IDS/IPS senzorů.
 
 \begin{figure}[ht]
     \centering
@@ -153,6 +180,8 @@ Typicky jsou nasazeny \enquote{inline} jako síťové firewally. Umístění je 
         \draw [arrow] (ids-in) -- (lan);
     \end{tikzpicture}
 \end{figure}
+
+Další možnost umístění je na hostiteli (na koncové stanici) -- takové IDS/IPS jsou softwarovými řešeními. Na jednotlivá zařízení lze rozmístit agenty, kteří budou komunikovat s manažerem.
 
 IDS/IPS existují ve~třech variantách: \textbf{komplexní} zařízení je hardware a~software vytvořený k~efektivnímu odchytávání a~analýze provozu, \textbf{softwarová} zařízení jsou speciální programy nainstalované na~server (Snort, Suricata), \textbf{cloudová} jsou dostupná od~ISP (Radware, F5).
 

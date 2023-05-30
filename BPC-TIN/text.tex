@@ -118,6 +118,7 @@ Násobnost vztahů určuje počet vazeb objektu. \enquote{\( 1:n \)} popisuje je
 \textbf{Složitost} je vztah algoritmu k~prostředkům (čas a~velikost paměti). Paměťová složitost je závislost paměťových nároků na~vstupních datech, zatímco časová je dána hrubým odhadem počtu kroků, který daný algoritmus musí provést na~základě délky vstupních dat. V~potaz by se měly brát oba dva typy složitosti, jelikož může nastat situace, kdy lze problém řešit dvěma algoritmy: jedním s~malou časovou složitostí a~druhým s~malou paměťovou. Výběr z~těchto složitostí závisí na~hardware a~situaci použití.
 
 \subsection{Asymptotická složitost}
+Definice: \(O(f(n))\) značí, že složitost algoritmu je menší než \(A+B\cdot f(n)\), kde \(A\) a \(B\) jsou konstanty. Tzn.\,\(O(1000\cdot n^2+1700 + n) = O(n^2)\) (v úvahu je brané jen chování funkce pro velké hodnoty).
 
 Jelikož vždy nelze určit přesnou složitost algoritmu, byla definována asymptotická složitost, která chování funkce aproximuje ze~tří pohledů:
 
@@ -181,6 +182,15 @@ Rozdělení:
 \subsection{Turingův stroj}
 
 \begin{itemize}
+    \item Definice: Uspořádaná šestice \(T=(Q,\Sigma, \Gamma, \delta, q_0, q_F)\)
+    \begin{itemize}
+        \item \(Q\) -- množina vnitřních stavů
+        \item \(\Sigma\) -- vstupní abeceda (znaky, které mohou být na pásce na začátku běhu), \(\Sigma\subseteq \Gamma\setminus \{\Delta\}\), kde \(\Delta\) je prázdný symbol
+        \item \(\Gamma\) -- pásková abeceda (všechny znaky, které se na pásce mohou vyskytnout)
+        \item \(\delta\) -- přechodová funkce, \(\delta:(Q\setminus \{q_F\})\times \Gamma \rightarrow Q\times (\Gamma\cup \{L,R\})\), kde \(L\) a \(R\) jsou posuvy pásky doleva nebo doprava
+        \item \(q_0\) -- výchozí stav
+        \item \(q_F\) -- konečný stav (někdy se také uvádí \(F\) jako množina konečných stavů)
+    \end{itemize}
 	\item Turingův stroj\,--\,nelze měnit program.
 	\item Univerzální Turingův stroj\,--\,program lze přepsat; dnešní PC, mobily, atd.
 	\item Nedeterministický Turingův stroj\,--\,doposud nesestaven, sestrojení by znamenalo konec asymetrické kryptografie, neví se~jestli ho lze vůbec sestrojit (P vs PN).
@@ -291,7 +301,7 @@ Dynamická datová struktura umožnující vkládaní a~odebírání hodnot tak,
 
 \subsection{Fronta}
 
-Dynamická datová struktura, kde se~odebírají prvky v~tom pořadí v~jakém byli vloženy (FIFO). Základní operace jsou stejné jako u~zásobníku. Existuje tzv. prioritní fronta, která funguje na~principu fronty ale bere z~ní podle priority.
+Dynamická datová struktura, kde se~odebírají prvky v~tom pořadí v~jakém byly vloženy (FIFO). Základní operace jsou stejné jako u~zásobníku. Existuje tzv. prioritní fronta, která funguje na~principu fronty ale bere z~ní podle priority.
 
 \clearpage
 \section{Abstraktní datový typ strom. Abstraktní datový typ binární strom. Úplný binární strom. Abstraktní datový typ binární vyhledávací strom (operace vložení, odstranění, smazání uzlu stromu). Průchody stromy in-order, pre-order, post-order.}
@@ -485,9 +495,9 @@ Při~\textbf{vkládání} se z~vkládaného prvku udělá hash. Tento hash se~p�
 	\caption{Časová složitost v~dobře a~špatně optimalizovaných tabulkách}
 	\begin{tabular}{|c||c|c|}\hline
 		operace   & průměrná & nejhorší   \\\hline\hline
-		vkládání  & O(1)     & O(\( n \)) \\\hline
-		mazání    & O(1)     & O(\( n \)) \\\hline
-		vyhledání & O(1)     & O(\( n \)) \\\hline
+		vkládání  & \(\Theta\)(1)     & O(\( n \)) \\\hline
+		mazání    & \(\Theta\)(1)     & O(\( n \)) \\\hline
+		vyhledání & \(\Theta\)(1)     & O(\( n \)) \\\hline
 	\end{tabular}
 \end{table}
 
