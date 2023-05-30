@@ -139,7 +139,7 @@ ISO/OSI RM nespecifikuje přesnou podobu sítě, ale uvádí všeobecné princip
 
 Nejnižší dvě vrstvy bývají \textbf{hardwarové}, ostatní bývají implementovány \textbf{softwarově}.
 
-První čtyři vrstvy lze označit jako \textbf{poskytovatele} transportní služby, třetí až~sedmou jako jejího \textbf{uživatele}.
+První čtyři vrstvy lze označit jako \textbf{poskytovatele} transportní služby, pátou až~sedmou jako jejího \textbf{uživatele}.
 
 První tři vrstvy jsou \textbf{lokální}, protože zajišťují komunikaci na~lokální síťové infrastruktuře, čtyři vrchní jsou \textbf{koncové} a~umožňují propojení komunikujících aplikací.
 
@@ -323,6 +323,13 @@ Typy modulace:
 Amplitudová modulace \hspace{1.5cm} Kmitočtová modulace \hspace{1.5cm} Fázová modulace
 
 \subsubsection{Digitální modulace}
+Využívá se přenos v základním pásmu (po médiu jsou přenášeny pravoúhlé signály kódované linkovými kódy) nebo v přeneseném pásmu (diskrétní data jsou klíčována na nosnou frekvenci). Linkové kódy jsou uvedeny na obrázku \ref{fig:linkove_kody}.
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{images/q05_link_codes.png}
+    \caption{Linkové kódy}
+    \label{fig:linkove_kody}
+\end{figure}
 
 Přenos digitálního signálu v~přenesením pásmu probíhá pomocí klíčování (modulace). Rozdílem oproti analogovým modulacím je že modulační signál je diskrétní. Digitální klíčovací techniky se často využívají v~bezdrátových přenosových signálech nebo i~u~ADSL.
 
