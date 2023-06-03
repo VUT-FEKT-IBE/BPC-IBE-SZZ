@@ -596,7 +596,7 @@ Je vybrán pivot (špatným výběrem lze složitost zhoršit; často bývá vyb
 \footnote{Video Quick sort: \url{https://www.youtube.com/watch?v=ZHVk2blR45Q}.}
 
 \clearpage
-\section{Grafy, formální definice. Vyhledávání v~grafech. Algoritmus BFS (prohledávání do~šířky). Reprezentace BFS v~paměti. Algoritmus DFS (prohledávání do~hloubky).}
+\section{Grafy, formální definice. Vyhledávání v~grafech. Algoritmus BFS (prohledávání do~šířky). Reprezentace BFS v~paměti. Algoritmus DFS (prohledávání do~hloubky). Omezené prohledávání do hloubky (DLS). Iterativní prohledávání do šířky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*.}
 
 \subsection{Graf a~teorie grafů}
 
@@ -620,27 +620,13 @@ Graf je definován jako uspořádaná dvojice množiny vrcholů \( V \)~a~množi
 	\item Informované metody: snaží se~odhadnout, kudy pokračovat ve~vyhledávání aby byly co nejdříve v~cíli.
 \end{itemize}
 
-\paragraph{Nalezení kostry grafu spanning tree} Kostra grafu je nějaký strom, který neobsahuje cykly. Kostra se~vytváří tak, aby propojila všechny body a~celková váha byla co minimální. Při~hledání kostry s~co nejmenší váhou tento postup nazýváme minimal spanning tree. Nejznámějším algoritmem je Kruskalův algoritmus a~distribuovaný algoritmus.
-
-\paragraph{Kruskalův algoritmus} Funguje na~principu shlukování dvou množin hran. Ze všech hran se~vybere hrana s~nejnižší hodnotou a~množiny vrcholů, jenž hrana propojuje se~seskupí do~jedné množiny. Tak se~postupuje tak dlouho dokud všechny vrcholy nejsou v~jedné množině. Pokud cesta propojuje vrcholy ze~stejné množiny vrcholů tak se~nepoužije a~pokračuje se~z~následující hranou. Využívá se~pokud známe celou topologii grafu.%
-\footnote{Animace Kruskal: \url{https://www.cs.usfca.edu/~galles/visualization/Kruskal.html}.}
-
-\paragraph{Distribuovaný algoritmus} Zde se~pracuje na~principu, že se~kostra tvoří na~každé množině zároveň. Z~každého vrcholu se~vyrazí směrem po~nejmenší hodnotě hrany. Pokud se~vrcholy na~cestě potkají tak vytvoří množinu pokud se~nepotkají nic se~neděje. Dále se~pak vysílají znovu po~nejmenší hodnotě hrany. Toto se~děje dokud se~celá kostra nenajde. Tento algoritmus se~nejčastěji využívá v~telekomunikačních sítích, kde neznáme celou topologii grafu.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.5]{images/distributed1.PNG}
-	\includegraphics[scale=0.5]{images/distributed2.PNG}
-	\caption{Distribuovaný algoritmus}
-	\label{distributed}
-\end{figure}
 
 \subsection{Slepé prohledávání}
 
 \textbf{BFS} využívá frontu, do~které nejprve vloží vstupní vrchol. Z~tohoto vrcholu se~vezmou všichni sousedé a~vloží se~do~fronty, ze~které se~bere postupně a~jejich sousedé se~přidávají do~fronty. Při~tomto se~každý už navštívený vrchol ukládá do~nějakého pole/seznamu navštívených, abychom ho nenavštěvovali znovu.%
 \footnote{Video BFS: \url{https://www.youtube.com/watch?v=oDqjPvD54Ss}.}
 
-\textbf{DFS}\,--\,pracuje na~principu, že prozkoumává prvně vrchol na~jednu stranu a~v ní pokračuje dokud nedojde na~konec nebo nedorazí do~už navštíveného vrcholu. Využívá zásobník.%
+\textbf{DFS} pracuje na~principu, že prozkoumává prvně vrchol na~jednu stranu a~v ní pokračuje dokud nedojde na~konec nebo nedorazí do~už navštíveného vrcholu. Využívá zásobník.%
 \footnote{Video DFS: \url{https://www.youtube.com/watch?v=pcKY4hjDrxk?t=279}.}
 
 DFS je méně paměťově náročné, BFS je optimální.
@@ -650,11 +636,6 @@ DFS je méně paměťově náročné, BFS je optimální.
 	\includegraphics[width=0.8\textwidth]{images/bfs-dfs.png}
 	\caption{Vyhledávání BFS a~DFS}
 \end{figure}
-
-\clearpage
-\section{Omezené prohledávání do~hloubky (DLS). Iterativní prohledávání do~hloubky (IDLS), Dijkstrův algoritmus (Uniform Cost Search), A*}
-
-\subsection{Pokračování slepého prohledávání}
 
 \textbf{DLS} vychází z~DFS, ale je omezen na~maximální hloubku.
 
@@ -668,6 +649,53 @@ DFS je méně paměťově náročné, BFS je optimální.
 
 \textbf{Informovaná metoda} A* využívá prioritní frontu a~seznam navštívených vrcholů. Každému z~vrcholů přidělíme vzdálenost od~cíle. Postupuje se~stejně jako u~Dijktrova algoritmu, akorát se sčítá vzdálenost s~hodnotou heuristiky uzlu. Dle této sečtené hodnoty je vybrán další navštívený prvek z~prioritní fronty.%
 \footnote{Video A*: \url{https://www.youtube.com/watch?v=ySN5Wnu88nE}.}
+\clearpage
+
+\section{Hledání kostry v grafu. Centralizovaná a paralelní varianta nalezení kostry v grafu.}
+
+\subsection{Hledání kostry v grafu}
+
+Kostra grafu je strom, spojující všechny vrcholy (neobsahuje cykly). Vytváří se tak, aby propojila všechny body a~celková váha hran byla co nejmenší. Hledání kostry s~co nejmenší váhou nazýváme \textit{minimal spanning tree}. Nejznámějšími algoritmy jsou Kruskalův algoritmus (centralizovaný) a~distribuovaný algoritmus (paralelní). U souvislého grafu se hledá podmnožina hran, která tvoří strom (obsahující všechny uzly) a jejíž celková váha (součet délek hran grafu) je minimální. V případě nesouvislého grafu o více komponentách, algoritmus hledá les minimálních koster, tedy minimální kostru každé komponenty.
+
+
+
+Uplatnění:
+\begin{itemize}
+    \item Odstranění cyklů z grafu (např. přepínač)
+    \item Návrh sítí (telefonické, elektrické, hydraulické, TV kabelové, počítačové, silniční,...)
+    \item Analýza shluků (hledání shluků kvazarů a Seyfert galaxií, analyzování plísní prostorových modelů)
+    \item Přibližná řešení tzv. NP-těžkých problémů (metrický TSP (Traveling Salesman Problem), Steiner stromy)
+\end{itemize}
+
+Nepřímá uplatnění:
+\begin{itemize}
+    \item Rakovinový výzkum
+    \item Učení charakteristických rysů pro real-time verifikaci tváře
+    \item Modelování lokálnosti interakce částic turbulentního toku kapalin
+    \item Snižuje množství ukládaných dat pro popis aminokyselin v proteinu
+\end{itemize}
+
+\subsection{Centralizovaná a paralelní varianta nalezení kostry v grafu}
+
+\paragraph{Kruskalův algoritmus} Funguje na~principu shlukování dvou množin hran. Ze všech hran se~vybere hrana s~nejnižší hodnotou a~množiny vrcholů, jenž hrana propojuje se~seskupí do~jedné množiny. Tak se~postupuje tak dlouho dokud všechny vrcholy nejsou v~jedné množině. Pokud cesta propojuje vrcholy ze~stejné množiny vrcholů tak se~nepoužije a~pokračuje se~z~následující hranou. Využívá se~pokud známe celou topologii grafu.%
+\footnote{Animace Kruskal: \url{https://www.cs.usfca.edu/~galles/visualization/Kruskal.html}.}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/kruskal_graf.jpg}
+	\caption{Kruskalův algoritmus}
+	\label{kruskal}
+\end{figure}
+
+\paragraph{Distribuovaný algoritmus} Zde se~pracuje na~principu, že se~kostra tvoří na~každé množině zároveň. Z~každého vrcholu se~vyrazí směrem po~nejmenší hodnotě hrany. Pokud se~vrcholy na~cestě potkají, tak vytvoří množinu. Pokud se~nepotkají, nic se~neděje. Dále se~pak vysílají znovu po~nejmenší hodnotě hrany. Toto se~děje, dokud se~celá kostra nenajde (všechny uzly náleží stejné množině). Tento algoritmus se~nejčastěji využívá v~telekomunikačních sítích, kde neznáme celou topologii grafu.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1\textwidth]{images/paralelni_graf.jpg}
+	\caption{Distribuovaný algoritmus}
+	\label{distributed}
+\end{figure}
+
 
 \clearpage
 \section{Evoluční algoritmy. Genetické algoritmy, genetické programování. Pojmy populace, mutace, křížení, chromozom. Princip evolučních algoritmů.}
@@ -738,116 +766,116 @@ Napodobují genetickou evoluci a~pomáhají ve~vývoji. Čtyři základní metod
 	\label{mutace}
 \end{figure}
 
-\clearpage
-\section{Paralelní výpočty a~architektury, procesy, vlákna a~jejich synchronizace, Deadlock.}
-
-Sériové výpočty běží na~jediném CPU s~použitím jednoho vlánka, kde je problém rozdělen na~posloupnost instrukcí. Každá instrukce se~vykonává postupně, kdy v~daném času může být spuštěna pouze jedna instrukce.
-
-\textbf{Paralelní výpočty} na~rozdíl od~sériových běží na~několika CPU. Zde jsou problémy rozděleny na~části a~až tyto části problému jsou rozděleny na~posloupnost instrukcí. Instrukce každého problému jsou poté vykonávány souběžně na~několika CPU.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.7]{images/serialComputing.JPG}
-	\hspace*{1em}
-	\includegraphics[scale=0.7]{images/parallelComputing.JPG}
-
-	\caption{Sériové a~paralelní výpočty}
-\end{figure}
-
-Veškeré paralelní výpočty lze provádět sekvenčně, ale ne všechny sekvenční algoritmy lze paralelizovat. Příklady výpočetních zdrojů:
-\begin{itemize}
-	\item Počítač s~několika procesory
-	      \begin{itemize}
-		      \item Multiprocesor se~sdílenou pamětí (propojení více procesorů dohromady)
-		      \item Multiprocesor obsahující několik procesorů (jader) na~jednom čipu (obyčejné CPU).
-	      \end{itemize}
-	\item Libovolný počet počítačů propojený počítačovou sítí (Cluster computer)
-	\item Spojení výše uvedeného do~jednoho systému.
-\end{itemize}
-
-\subsection{Sériové a~paralelní modely (architektura)}
-
-Modely dělíme hlavně dle Flynnovy klasifikace z~dvou hledisek: toku instrukcí a~toku dat.
-
-\begin{table}[ht]
-	\centering
-	\caption{Modely dle Flynnovy klasifikace}
-
-	\begin{tabular}{c|cc}
-		{}            & Single Intruction & Multiple Instructions \\
-		\hline
-		Single Data   & sériový           & paralelní             \\
-		Multiple Data & paralelní         & paralelní             \\
-	\end{tabular}
-\end{table}
-
-\paragraph{SISD}
-
-Nejjednodušší model, který si lze představit jako (jednojádrový) procesor. Vykonává pouze jednu instrukci nad~jedinými daty uloženými v~paměti. Instrukce jsou posílány do~řídící jednotky z~paměti, následně jsou dekódovány a~poslány procesní jednotky. Ta~data zpracuje a~pošle je zpátky.
-
-Nejčastěji se~vyskytuje v~počítačích založených na~von Neumann architektuře.
-
-\paragraph{SIMD}
-
-Systémy, u~kterých existuje celá řada zpracovaných datových toků na~základě jediného seznamu instrukcí. V~každém okamžiku veškeré procesory vykonávají stejnou instrukci, kdy každá výpočetní jednotka může pracovat s~libovolnými daty. Tento model je vhodný pro~problémy, kde je charakteristická velká míra pravidelnosti (zpracovaní obrazu/videa, násobení matic). Existují dvě varianty v~podobě procesorového pole a~vektorové \enquote{potrubí/pipeliny}.
-
-Příklad sčítání dvou polí vektorů. Pole jsou rozděleny na~bloky a~každý procesor pracuje s~daným blokem. Položky jsou poté vybírány na~základě ID procesu/vlákna.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.7]{images/SIMD.JPG}
-\end{figure}
-
-\paragraph{MISD}
-
-Jeden datový proud je napojen na~několik procesorů. Každý procesor pracuje se~stejnými daty, ale může s~nimi vykonávat jiné operace. MISD jsou vhodné pro~vícenásobné frekvenční filtry pracující na~jednom signálovém proudu nebo kryptografické algoritmy pokoušející se~prolomit jednu zakódovanou zprávu.
-
-Lze je použít například ve~vícenásobných vyhledávacích algoritmech, kde tyto algoritmy mohou pracovat se~stejnými daty. Také mohou tyto algoritmy používat různou strategii a~hledat různé vzory.
-
-\paragraph{MIMD}
-
-Tento model umožňuje zpracovávat různé posloupnosti instrukcí a~pracovat s~různými daty. Spouštění může být synchronizované, asynchronizované, deterministické nebo nedeterministické.
-
-Jsou vhodné pro~intenzivní paralelní výpočty. Tento model se~využívá ve~většině superpočítačů a~výpočetních klusterech propojených přes síť.
-
-\subsection{Architektura paralelní počítačové paměti}
-
-\paragraph{Sdílená paměť}
-
-Umožňuje všem procesorům přístup ke~všem pamětím jako globálnímu adresovému prostoru. Procesory mohou pracovat nezávisle a~sdílet stejné paměťové prostředky, změna paměti je viditelná všem procesorům.
-
-\paragraph{Distribuovaná paměť}
-
-Vyžadují komunikační síť pro~propojení meziprocesorové paměti. Každý procesor má vlastní lokální paměť (tj. neexistuje sdílená paměť jako v~předchozím případě). Procesory pracují nezávisle a~je na~programátorovi, aby zajistil synchronizaci dat.
-
-Výhodou je škálovatelnost s~počtem procesorů a~rychlý přístup k~paměti. Nevýhodou je zodpovědnost programátora za~spousty detailů při~synchronizaci procesů.
-
-\paragraph{Hybridní distribuovaná sdílení paměť}
-
-Využívá se~obvykle SMP (Symetrické MultiProcessory: HW architektura kde více procesorů sdílí jeden paměťový prostor). Procesory na~daném SMP mohou adresovat paměť tohoto procesoru jako globální. SMP znají pouze vlastní paměť a~ne jiného SMP. Pro přesun dat se~využívá sítová komunikace.
-
-\subsection{Paralelní programovací modely}
-
-\paragraph{Sdílená paměť}
-
-Úkol sdílí společný adresní prostor, který čte a~zapisuje asynchronně. Výhodou je neexistence vlastnictví, takže není výslovně potřebné specifikovat komunikaci dat mezi úkoly. Řídit přístup ke~sdílené paměti lze pomocí zámků a~semaforů.
-
-\paragraph{Vláknový model}
-
-Jeden proces může mít více souběžných cest provádění. Vlákno lze popsat jako podprogram v~rámci hlavního programu, kde má každé vlákno lokální data a~kde mezi sebou vlákna komunikují pomocí globální paměti. Mezi vlákny musí být zajištěna synchronizace aby nedošlo k~přístupu ke~stejné globální adrese více jak jedním vláknem.
-
-\subsection{Procesy a~vlákna}
-
-\textbf{Vlákna} jsou méně náročná na~systémové prostředky, sdílí paměť, snadnější programování, ale mají omezenou škálovatelnost. \textbf{Procesy} jsou náročnější na~vytvoření, komunikace probíhá předáváním zpráv (nesdílí data), jsou náročnější na~programování, ale dobře se škálují.
-
-\paragraph{Synchronizace vláken}
-
-Bez zajištění synchronizace může dojít k~souběhu nebo uváznutí (deadlock). Cílem synchronizace je zabránit konfliktům mezi vlákny při~přístupu ke~sdíleným prostředkům.
-
-\paragraph{Souběh}
-
-K~souběhu dochází v~případě, kdy ke~stejným datům přistupuje více vláken a~jedno druhému přepíše data. Tím vzniká chyba za~běhu programu.
-
-\paragraph{Deadlock}
-
-Nastává v~případě, kdy na~sebe dvě vlákna nebo dva procesy čekají na~situaci, kdy se jim uvolní vzájemně uzamčené zdroje. Stává se při~nesprávném použití synchronizačních mechanismů. Je nedeterministický a~tedy obtížně testovatelný.
+% \clearpage
+% \section{Paralelní výpočty a~architektury, procesy, vlákna a~jejich synchronizace, Deadlock.}
+%
+% Sériové výpočty běží na~jediném CPU s~použitím jednoho vlánka, kde je problém rozdělen na~posloupnost instrukcí. Každá instrukce se~vykonává postupně, kdy v~daném času může být spuštěna pouze jedna instrukce.
+%
+% \textbf{Paralelní výpočty} na~rozdíl od~sériových běží na~několika CPU. Zde jsou problémy rozděleny na~části a~až tyto části problému jsou rozděleny na~posloupnost instrukcí. Instrukce každého problému jsou poté vykonávány souběžně na~několika CPU.
+%
+% \begin{figure}[ht]
+% 	\centering
+% 	\includegraphics[scale=0.7]{images/serialComputing.JPG}
+% 	\hspace*{1em}
+% 	\includegraphics[scale=0.7]{images/parallelComputing.JPG}
+%
+% 	\caption{Sériové a~paralelní výpočty}
+% \end{figure}
+%
+% Veškeré paralelní výpočty lze provádět sekvenčně, ale ne všechny sekvenční algoritmy lze paralelizovat. Příklady výpočetních zdrojů:
+% \begin{itemize}
+% 	\item Počítač s~několika procesory
+% 	      \begin{itemize}
+% 		      \item Multiprocesor se~sdílenou pamětí (propojení více procesorů dohromady)
+% 		      \item Multiprocesor obsahující několik procesorů (jader) na~jednom čipu (obyčejné CPU).
+% 	      \end{itemize}
+% 	\item Libovolný počet počítačů propojený počítačovou sítí (Cluster computer)
+% 	\item Spojení výše uvedeného do~jednoho systému.
+% \end{itemize}
+%
+% \subsection{Sériové a~paralelní modely (architektura)}
+%
+% Modely dělíme hlavně dle Flynnovy klasifikace z~dvou hledisek: toku instrukcí a~toku dat.
+%
+% \begin{table}[ht]
+% 	\centering
+% 	\caption{Modely dle Flynnovy klasifikace}
+%
+% 	\begin{tabular}{c|cc}
+% 		{}            & Single Intruction & Multiple Instructions \\
+% 		\hline
+% 		Single Data   & sériový           & paralelní             \\
+% 		Multiple Data & paralelní         & paralelní             \\
+% 	\end{tabular}
+% \end{table}
+%
+% \paragraph{SISD}
+%
+% Nejjednodušší model, který si lze představit jako (jednojádrový) procesor. Vykonává pouze jednu instrukci nad~jedinými daty uloženými v~paměti. Instrukce jsou posílány do~řídící jednotky z~paměti, následně jsou dekódovány a~poslány procesní jednotky. Ta~data zpracuje a~pošle je zpátky.
+%
+% Nejčastěji se~vyskytuje v~počítačích založených na~von Neumann architektuře.
+%
+% \paragraph{SIMD}
+%
+% Systémy, u~kterých existuje celá řada zpracovaných datových toků na~základě jediného seznamu instrukcí. V~každém okamžiku veškeré procesory vykonávají stejnou instrukci, kdy každá výpočetní jednotka může pracovat s~libovolnými daty. Tento model je vhodný pro~problémy, kde je charakteristická velká míra pravidelnosti (zpracovaní obrazu/videa, násobení matic). Existují dvě varianty v~podobě procesorového pole a~vektorové \enquote{potrubí/pipeliny}.
+%
+% Příklad sčítání dvou polí vektorů. Pole jsou rozděleny na~bloky a~každý procesor pracuje s~daným blokem. Položky jsou poté vybírány na~základě ID procesu/vlákna.
+%
+% \begin{figure}[ht]
+% 	\centering
+% 	\includegraphics[scale=0.7]{images/SIMD.JPG}
+% \end{figure}
+%
+% \paragraph{MISD}
+%
+% Jeden datový proud je napojen na~několik procesorů. Každý procesor pracuje se~stejnými daty, ale může s~nimi vykonávat jiné operace. MISD jsou vhodné pro~vícenásobné frekvenční filtry pracující na~jednom signálovém proudu nebo kryptografické algoritmy pokoušející se~prolomit jednu zakódovanou zprávu.
+%
+% Lze je použít například ve~vícenásobných vyhledávacích algoritmech, kde tyto algoritmy mohou pracovat se~stejnými daty. Také mohou tyto algoritmy používat různou strategii a~hledat různé vzory.
+%
+% \paragraph{MIMD}
+%
+% Tento model umožňuje zpracovávat různé posloupnosti instrukcí a~pracovat s~různými daty. Spouštění může být synchronizované, asynchronizované, deterministické nebo nedeterministické.
+%
+% Jsou vhodné pro~intenzivní paralelní výpočty. Tento model se~využívá ve~většině superpočítačů a~výpočetních klusterech propojených přes síť.
+%
+% \subsection{Architektura paralelní počítačové paměti}
+%
+% \paragraph{Sdílená paměť}
+%
+% Umožňuje všem procesorům přístup ke~všem pamětím jako globálnímu adresovému prostoru. Procesory mohou pracovat nezávisle a~sdílet stejné paměťové prostředky, změna paměti je viditelná všem procesorům.
+%
+% \paragraph{Distribuovaná paměť}
+%
+% Vyžadují komunikační síť pro~propojení meziprocesorové paměti. Každý procesor má vlastní lokální paměť (tj. neexistuje sdílená paměť jako v~předchozím případě). Procesory pracují nezávisle a~je na~programátorovi, aby zajistil synchronizaci dat.
+%
+% Výhodou je škálovatelnost s~počtem procesorů a~rychlý přístup k~paměti. Nevýhodou je zodpovědnost programátora za~spousty detailů při~synchronizaci procesů.
+%
+% \paragraph{Hybridní distribuovaná sdílení paměť}
+%
+% Využívá se~obvykle SMP (Symetrické MultiProcessory: HW architektura kde více procesorů sdílí jeden paměťový prostor). Procesory na~daném SMP mohou adresovat paměť tohoto procesoru jako globální. SMP znají pouze vlastní paměť a~ne jiného SMP. Pro přesun dat se~využívá sítová komunikace.
+%
+% \subsection{Paralelní programovací modely}
+%
+% \paragraph{Sdílená paměť}
+%
+% Úkol sdílí společný adresní prostor, který čte a~zapisuje asynchronně. Výhodou je neexistence vlastnictví, takže není výslovně potřebné specifikovat komunikaci dat mezi úkoly. Řídit přístup ke~sdílené paměti lze pomocí zámků a~semaforů.
+%
+% \paragraph{Vláknový model}
+%
+% Jeden proces může mít více souběžných cest provádění. Vlákno lze popsat jako podprogram v~rámci hlavního programu, kde má každé vlákno lokální data a~kde mezi sebou vlákna komunikují pomocí globální paměti. Mezi vlákny musí být zajištěna synchronizace aby nedošlo k~přístupu ke~stejné globální adrese více jak jedním vláknem.
+%
+% \subsection{Procesy a~vlákna}
+%
+% \textbf{Vlákna} jsou méně náročná na~systémové prostředky, sdílí paměť, snadnější programování, ale mají omezenou škálovatelnost. \textbf{Procesy} jsou náročnější na~vytvoření, komunikace probíhá předáváním zpráv (nesdílí data), jsou náročnější na~programování, ale dobře se škálují.
+%
+% \paragraph{Synchronizace vláken}
+%
+% Bez zajištění synchronizace může dojít k~souběhu nebo uváznutí (deadlock). Cílem synchronizace je zabránit konfliktům mezi vlákny při~přístupu ke~sdíleným prostředkům.
+%
+% \paragraph{Souběh}
+%
+% K~souběhu dochází v~případě, kdy ke~stejným datům přistupuje více vláken a~jedno druhému přepíše data. Tím vzniká chyba za~běhu programu.
+%
+% \paragraph{Deadlock}
+%
+% Nastává v~případě, kdy na~sebe dvě vlákna nebo dva procesy čekají na~situaci, kdy se jim uvolní vzájemně uzamčené zdroje. Stává se při~nesprávném použití synchronizačních mechanismů. Je nedeterministický a~tedy obtížně testovatelný.
